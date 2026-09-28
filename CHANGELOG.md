@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.12 — 2026-09-28
+
+- Guide di installazione dedicate per ogni assistente in `site/installa/`: Claude Code, Claude Desktop, ChatGPT e Codex, GitHub Copilot (VS Code e CLI), Gemini CLI, Mistral Vibe CLI.
+- Intestazione, footer e griglia degli assistenti come include SSI in `site/_partials/`; generatore `scripts/build-site.py`.
+- README: configurazioni per tutti i client e link alle guide.
+- Nginx: `ssi on` e partial accessibili solo via include.
+
 ## 0.1.11 — 2026-09-28
 
 - Landing: il link a Zuzai torna alla home.

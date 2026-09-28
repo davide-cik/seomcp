@@ -4,7 +4,7 @@
 
 [🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · Licenza [MIT](LICENSE)
 
-`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette a Claude (Claude Code, Claude Desktop), a ChatGPT (app desktop e Codex) e ad altri client MCP di leggere i dati dei tuoi siti da Search Console e Bing Webmaster Tools. Così puoi chiedere, in italiano:
+`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console e Bing Webmaster Tools. Così puoi chiedere, in italiano:
 
 > Quali query sono in posizione 4-20 negli ultimi 90 giorni, e quali pagine dovrei ottimizzare per prime?
 >
@@ -53,22 +53,27 @@ Serve **Node.js 22 o superiore**. Configura solo le fonti che usi: Google e Bing
 - **Google Search Console:** segui la [guida passo passo](docs/google-setup.md). Puoi scegliere tra un service account (comodo per i team) e OAuth con un client tuo (comodo per il singolo professionista).
 - **Bing Webmaster Tools:** genera una API key in due minuti, come spiegato nella [guida](docs/bing-setup.md).
 
-### 2. Aggiungilo a Claude Code
+### 2. Collegalo al tuo assistente
+
+Il comando è sempre lo stesso, cambia solo dove si scrive. Trovi una guida passo passo per ogni assistente su **[seomcp.contentisking.guru/installa](https://seomcp.contentisking.guru/installa/)**; qui sotto le configurazioni in breve.
+
+#### Claude Code
+
+Da terminale:
 
 ```bash
 claude mcp add seomcp -s user \
   -e GOOGLE_APPLICATION_CREDENTIALS=/percorso/service-account.json \
   -e BING_WEBMASTER_API_KEY=la-tua-chiave \
   -e SEOMCP_GSC_SITE=sc-domain:tuosito.it \
-  -e SEOMCP_BING_SITE=https://www.tuosito.it/ \
   -- npx -y @contentisking/seomcp
 ```
 
 Poi verifica con `/mcp` che `seomcp` risulti connesso.
 
-### Oppure a Claude Desktop
+#### Claude Desktop
 
-In `claude_desktop_config.json`:
+In `claude_desktop_config.json` (Impostazioni → Sviluppatore → Modifica configurazione):
 
 ```json
 {
@@ -86,9 +91,9 @@ In `claude_desktop_config.json`:
 }
 ```
 
-### Oppure a ChatGPT (app desktop o Codex)
+#### ChatGPT (app desktop) e Codex
 
-Da **Impostazioni → MCP servers → Add server**, scegli **STDIO** e inserisci il comando `npx -y @contentisking/seomcp` con le variabili d'ambiente. In alternativa aggiungi a `~/.codex/config.toml`:
+Da *Impostazioni → MCP servers → Add server → STDIO*, oppure in `~/.codex/config.toml`:
 
 ```toml
 [mcp_servers.seomcp]
@@ -101,7 +106,87 @@ BING_WEBMASTER_API_KEY = "la-tua-chiave"
 SEOMCP_GSC_SITE = "sc-domain:tuosito.it"
 ```
 
-> **Versioni web non supportate.** Claude sul web (claude.ai) e ChatGPT sul web (chatgpt.com) accettano solo server MCP remoti, raggiungibili su internet. `seomcp` gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.
+#### GitHub Copilot in VS Code
+
+Comando *MCP: Open User Configuration*, poi nel file `mcp.json`:
+
+```json
+{
+  "servers": {
+    "seomcp": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@contentisking/seomcp"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
+        "BING_WEBMASTER_API_KEY": "la-tua-chiave",
+        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
+      }
+    }
+  }
+}
+```
+
+Usa la chat di Copilot in modalità *Agent*.
+
+#### GitHub Copilot CLI
+
+In `~/.copilot/mcp-config.json`:
+
+```json
+{
+  "mcpServers": {
+    "seomcp": {
+      "type": "local",
+      "command": "npx",
+      "args": ["-y", "@contentisking/seomcp"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
+        "BING_WEBMASTER_API_KEY": "la-tua-chiave",
+        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
+      },
+      "tools": ["*"]
+    }
+  }
+}
+```
+
+#### Gemini CLI
+
+In `~/.gemini/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "seomcp": {
+      "command": "npx",
+      "args": ["-y", "@contentisking/seomcp"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
+        "BING_WEBMASTER_API_KEY": "la-tua-chiave",
+        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
+      }
+    }
+  }
+}
+```
+
+Dal giugno 2026 Gemini CLI richiede una chiave API Gemini a pagamento o una licenza enterprise.
+
+#### Mistral Vibe CLI
+
+In `~/.vibe/config.toml`:
+
+```toml
+[[mcp_servers]]
+name = "seomcp"
+transport = "stdio"
+command = "npx"
+args = ["-y", "@contentisking/seomcp"]
+env = { "GOOGLE_APPLICATION_CREDENTIALS" = "/percorso/service-account.json", "BING_WEBMASTER_API_KEY" = "la-tua-chiave", "SEOMCP_GSC_SITE" = "sc-domain:tuosito.it" }
+```
+
+> **Versioni web non supportate.** Le versioni web (claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot, Mistral Vibe sul web) accettano solo server MCP remoti, raggiungibili su internet. `seomcp` gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.
 
 ### 3. Controlla che funzioni
 

@@ -19,7 +19,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "seomcp",
-    "description": "Server MCP open source per Google Search Console e Bing Webmaster Tools, per Claude, ChatGPT e altri client MCP.",
+    "description": "Server MCP open source per Google Search Console e Bing Webmaster Tools. Funziona con Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP.",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Windows, macOS, Linux",
     "license": "https://opensource.org/licenses/MIT",
@@ -54,12 +54,12 @@
         <div>
           <p class="eyebrow">Open source · Gratuito · In italiano</p>
           <h1>Search Console e Bing Webmaster, <span class="accent">dentro Claude e ChatGPT</span>.</h1>
-          <p class="lead">Un server MCP che permette a Claude e ChatGPT di leggere i dati dei tuoi siti. Fai domande in italiano e ottieni analisi sui dati veri. Le credenziali restano sul tuo computer.</p>
+          <p class="lead">Un server MCP che permette al tuo assistente AI di leggere i dati dei tuoi siti. Fai domande in italiano e ottieni analisi sui dati veri. Le credenziali restano sul tuo computer.</p>
           <div class="cta">
             <a class="btn btn-primary" href="#installa">Installa in 3 passi</a>
             <a class="btn btn-ghost" href="https://github.com/davide-cik/seomcp">Leggi il codice</a>
           </div>
-          <p class="meta">Licenza MIT · Node.js 22+ · Claude Code, Claude Desktop, app desktop di ChatGPT, Codex e altri client MCP</p>
+          <p class="meta">Funziona con Claude, ChatGPT, GitHub Copilot, Gemini CLI e Mistral Vibe · Licenza MIT · Node.js 22+</p>
         </div>
 
         <figure class="chat" aria-label="Esempio di conversazione">
@@ -177,13 +177,38 @@
           </li>
           <li>
             <h3>Collegalo al tuo assistente</h3>
-            <p class="small"><strong>Claude Code</strong>, da terminale:</p>
+            <p>Scegli il tuo e copia la configurazione. Il comando è sempre lo stesso: cambia solo dove si scrive.</p>
+            <div class="clients">
+              <details class="client" open>
+                <summary>Claude Code</summary>
+                <p class="small">Da terminale:</p>
 <pre class="code"><code>claude mcp add seomcp -s user \
   -e GOOGLE_APPLICATION_CREDENTIALS=/percorso/service-account.json \
   -e BING_WEBMASTER_API_KEY=la-tua-chiave \
   -e SEOMCP_GSC_SITE=sc-domain:tuosito.it \
   -- npx -y github:davide-cik/seomcp</code></pre>
-            <p class="small"><strong>ChatGPT</strong>, app desktop o Codex: da <em>Impostazioni → MCP servers → Add server → STDIO</em>, oppure in <code>~/.codex/config.toml</code>:</p>
+                <p class="small">Poi verifica con <code>/mcp</code> che <code>seomcp</code> risulti connesso.</p>
+              </details>
+              <details class="client">
+                <summary>Claude Desktop</summary>
+                <p class="small">In <code>claude_desktop_config.json</code> (Impostazioni → Sviluppatore → Modifica configurazione):</p>
+<pre class="code"><code>{
+  "mcpServers": {
+    "seomcp": {
+      "command": "npx",
+      "args": ["-y", "github:davide-cik/seomcp"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
+        "BING_WEBMASTER_API_KEY": "la-tua-chiave",
+        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
+      }
+    }
+  }
+}</code></pre>
+              </details>
+              <details class="client">
+                <summary>ChatGPT (app desktop) e Codex</summary>
+                <p class="small">Da <em>Impostazioni → MCP servers → Add server → STDIO</em>, oppure in <code>~/.codex/config.toml</code>:</p>
 <pre class="code"><code>[mcp_servers.seomcp]
 command = "npx"
 args = ["-y", "github:davide-cik/seomcp"]
@@ -192,7 +217,75 @@ args = ["-y", "github:davide-cik/seomcp"]
 GOOGLE_APPLICATION_CREDENTIALS = "/percorso/service-account.json"
 BING_WEBMASTER_API_KEY = "la-tua-chiave"
 SEOMCP_GSC_SITE = "sc-domain:tuosito.it"</code></pre>
-            <p class="small">Claude e ChatGPT <strong>sul web</strong> (claude.ai, chatgpt.com) accettano solo server remoti: servono le app desktop o la riga di comando. Per Claude Desktop trovi la configurazione JSON nel <a href="https://github.com/davide-cik/seomcp#oppure-a-claude-desktop">README</a>.</p>
+              </details>
+              <details class="client">
+                <summary>GitHub Copilot in VS Code</summary>
+                <p class="small">Comando <em>MCP: Open User Configuration</em>, poi nel file <code>mcp.json</code>:</p>
+<pre class="code"><code>{
+  "servers": {
+    "seomcp": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "github:davide-cik/seomcp"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
+        "BING_WEBMASTER_API_KEY": "la-tua-chiave",
+        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
+      }
+    }
+  }
+}</code></pre>
+                <p class="small">Usa la chat di Copilot in modalità <em>Agent</em>.</p>
+              </details>
+              <details class="client">
+                <summary>GitHub Copilot CLI</summary>
+                <p class="small">In <code>~/.copilot/mcp-config.json</code>:</p>
+<pre class="code"><code>{
+  "mcpServers": {
+    "seomcp": {
+      "type": "local",
+      "command": "npx",
+      "args": ["-y", "github:davide-cik/seomcp"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
+        "BING_WEBMASTER_API_KEY": "la-tua-chiave",
+        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
+      },
+      "tools": ["*"]
+    }
+  }
+}</code></pre>
+              </details>
+              <details class="client">
+                <summary>Gemini CLI</summary>
+                <p class="small">In <code>~/.gemini/settings.json</code>:</p>
+<pre class="code"><code>{
+  "mcpServers": {
+    "seomcp": {
+      "command": "npx",
+      "args": ["-y", "github:davide-cik/seomcp"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
+        "BING_WEBMASTER_API_KEY": "la-tua-chiave",
+        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
+      }
+    }
+  }
+}</code></pre>
+                <p class="small">Dal giugno 2026 Gemini CLI richiede una chiave API Gemini a pagamento o una licenza enterprise.</p>
+              </details>
+              <details class="client">
+                <summary>Mistral Vibe CLI</summary>
+                <p class="small">In <code>~/.vibe/config.toml</code>:</p>
+<pre class="code"><code>[[mcp_servers]]
+name = "seomcp"
+transport = "stdio"
+command = "npx"
+args = ["-y", "github:davide-cik/seomcp"]
+env = { "GOOGLE_APPLICATION_CREDENTIALS" = "/percorso/service-account.json", "BING_WEBMASTER_API_KEY" = "la-tua-chiave", "SEOMCP_GSC_SITE" = "sc-domain:tuosito.it" }</code></pre>
+              </details>
+            </div>
+            <p class="small"><strong>Versioni web non supportate.</strong> Le versioni web (claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot, Mistral Vibe sul web) accettano solo server MCP remoti, raggiungibili su internet. <code>seomcp</code> gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.</p>
           </li>
           <li>
             <h3>Controlla che funzioni</h3>
@@ -234,7 +327,7 @@ strikingDistance(rows);</code></pre>
       <p class="made"><span class="made-text">Piattaforma MCP sviluppata in Italia con <span role="img" aria-label="amore">❤️</span>, <span role="img" aria-label="cervello">🧠</span>, <span role="img" aria-label="forza">💪</span> e <span role="img" aria-label="robot">🤖</span> da <a href="https://contentisking.guru">Content is King Srl</a></span><span class="lic">Licenza <a href="https://github.com/davide-cik/seomcp/blob/main/LICENSE">MIT</a> · <a href="https://github.com/davide-cik/seomcp">GitHub</a></span></p>
       <p class="small">© 2026 Zuzai · <a href="https://contentisking.guru">Content is King Srl</a> · via Carducci 8, 20814 Varedo (MB) · P.IVA IT11732600967</p>
       <p class="small">Progetto indipendente, non affiliato a Google, Microsoft, Anthropic né OpenAI. Search Console, Bing Webmaster Tools, Claude e ChatGPT sono marchi dei rispettivi proprietari.</p>
-      <p class="small promo">Hai già provato <a href="https://zuzai.io/">Zuzai</a>? È il nostro URL shortener fenomenale.</p>
+      <p class="small promo">Hai già provato <a href="https://zuzai.io/" target="_blank" rel="noopener">Zuzai</a>? È il nostro URL shortener fenomenale.</p>
     </div>
   </footer>
   <script src="app.js" defer></script>

@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://seomcp.contentisking.guru/</loc><lastmod>2026-09-28</lastmod></url>
+  <url><loc>https://seomcp.contentisking.guru/installa/</loc><lastmod>2026-09-28</lastmod></url>
+  <url><loc>https://seomcp.contentisking.guru/installa/claude-code/</loc><lastmod>2026-09-28</lastmod></url>
+  <url><loc>https://seomcp.contentisking.guru/installa/claude-desktop/</loc><lastmod>2026-09-28</lastmod></url>
+  <url><loc>https://seomcp.contentisking.guru/installa/chatgpt/</loc><lastmod>2026-09-28</lastmod></url>
+  <url><loc>https://seomcp.contentisking.guru/installa/vscode-copilot/</loc><lastmod>2026-09-28</lastmod></url>
+  <url><loc>https://seomcp.contentisking.guru/installa/copilot-cli/</loc><lastmod>2026-09-28</lastmod></url>
+  <url><loc>https://seomcp.contentisking.guru/installa/gemini-cli/</loc><lastmod>2026-09-28</lastmod></url>
+  <url><loc>https://seomcp.contentisking.guru/installa/mistral-vibe/</loc><lastmod>2026-09-28</lastmod></url>
 </urlset>
