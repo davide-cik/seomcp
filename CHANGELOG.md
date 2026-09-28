@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.6 — 2026-09-28
+
+- Landing e README: installazione da GitHub (`github:davide-cik/seomcp`) in attesa della pubblicazione su npm.
+- Landing: le ancore del menu non finiscono più sotto l'intestazione fissa.
+
 ## 0.1.5 — 2026-09-28
 
 - Script `prepare`: il pacchetto si può installare direttamente da GitHub (`npx -y github:davide-cik/seomcp`), la build avviene durante l'installazione.

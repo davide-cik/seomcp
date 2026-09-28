@@ -166,6 +166,9 @@
       <div class="wrap">
         <h2>Installa in 3 passi</h2>
         <p class="section-lead">Configura solo le fonti che usi: Google e Bing sono entrambe facoltative.</p>
+        <div class="notice" role="note">
+          <p><strong>Provalo subito da GitHub.</strong> Il pacchetto npm <code>@contentisking/seomcp</code> è in arrivo. Nel frattempo i comandi qui sotto installano seomcp direttamente dal <a href="https://github.com/davide-cik/seomcp">repository</a>. Il primo avvio richiede qualche secondo in più, perché il codice viene compilato sul tuo computer. Serve anche <a href="https://git-scm.com/downloads">git</a> installato.</p>
+        </div>
         <ol class="steps">
           <li>
             <h3>Prepara le credenziali</h3>
@@ -179,11 +182,11 @@
   -e GOOGLE_APPLICATION_CREDENTIALS=/percorso/service-account.json \
   -e BING_WEBMASTER_API_KEY=la-tua-chiave \
   -e SEOMCP_GSC_SITE=sc-domain:tuosito.it \
-  -- npx -y @contentisking/seomcp</code></pre>
+  -- npx -y github:davide-cik/seomcp</code></pre>
             <p class="small"><strong>ChatGPT</strong>, app desktop o Codex: da <em>Impostazioni → MCP servers → Add server → STDIO</em>, oppure in <code>~/.codex/config.toml</code>:</p>
 <pre class="code"><code>[mcp_servers.seomcp]
 command = "npx"
-args = ["-y", "@contentisking/seomcp"]
+args = ["-y", "github:davide-cik/seomcp"]
 
 [mcp_servers.seomcp.env]
 GOOGLE_APPLICATION_CREDENTIALS = "/percorso/service-account.json"
@@ -193,7 +196,7 @@ SEOMCP_GSC_SITE = "sc-domain:tuosito.it"</code></pre>
           </li>
           <li>
             <h3>Controlla che funzioni</h3>
-<pre class="code"><code>npx @contentisking/seomcp doctor</code></pre>
+<pre class="code"><code>npx -y github:davide-cik/seomcp doctor</code></pre>
             <p>Prova ogni fonte e ti dice esattamente cosa manca. Per esempio: «aggiungi <code>seomcp@progetto.iam.gserviceaccount.com</code> come utente della proprietà».</p>
           </li>
         </ol>

@@ -157,3 +157,9 @@ section { padding: 72px 0; }
   .btn-primary:hover { background: #7DB2EA; }
 }
 .foot .made { font-weight: 600; color: var(--heading); margin-bottom: 10px; }
+
+.notice { border: 1px solid var(--accent); border-left-width: 4px; background: var(--surface); border-radius: 8px; padding: 14px 18px; margin: -12px 0 32px; max-width: 820px; }
+.notice p { margin: 0; }
+
+/* Le ancore del menu non devono finire sotto l'intestazione fissa. */
+section[id] { scroll-margin-top: 72px; }

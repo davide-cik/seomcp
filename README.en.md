@@ -38,6 +38,8 @@
 
 ## Install
 
+> **Try it now from GitHub.** The npm package is not published yet. Meanwhile, replace `@contentisking/seomcp` with `github:davide-cik/seomcp` in the commands below (e.g. `npx -y github:davide-cik/seomcp doctor`). The first run builds the code on your machine and requires git.
+
 Requires **Node.js 22+**. Configure only the sources you use.
 
 1. **Credentials:** see the setup guides for [Google](docs/google-setup.md) and [Bing](docs/bing-setup.md). They are in Italian, and the steps are the same in English UIs.

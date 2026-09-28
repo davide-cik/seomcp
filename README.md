@@ -44,6 +44,8 @@ Le analisi più complesse (cannibalizzazione, content gap, report) le fa l'assis
 
 ## Installazione
 
+> **Provalo subito da GitHub.** Il pacchetto npm non è ancora pubblicato. Nel frattempo, nei comandi qui sotto sostituisci `@contentisking/seomcp` con `github:davide-cik/seomcp`, per esempio `npx -y github:davide-cik/seomcp doctor`. Il primo avvio compila il codice sul tuo computer e richiede git installato.
+
 Serve **Node.js 22 o superiore**. Configura solo le fonti che usi: Google e Bing sono entrambe facoltative.
 
 ### 1. Prepara le credenziali
