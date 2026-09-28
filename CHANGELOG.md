@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4 — 2026-09-28
+
+- Documentato che le versioni web di Claude e ChatGPT non sono supportate (accettano solo server MCP remoti).
+
 ## 0.1.3 — 2026-09-28
 
 - Ragione sociale esatta (Content is King Srl) in `LICENSE` e nel campo `author` di `package.json`.

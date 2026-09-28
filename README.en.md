@@ -52,7 +52,9 @@ Requires **Node.js 22+**. Configure only the sources you use.
      -- npx -y @contentisking/seomcp
    ```
 
-   **ChatGPT desktop app / Codex:** *Settings → MCP servers → Add server → STDIO* with `npx -y @contentisking/seomcp`, or add it to `~/.codex/config.toml` (see the [Italian README](README.md#oppure-a-chatgpt-app-desktop-o-codex)). ChatGPT on the web only supports remote MCP servers.
+   **ChatGPT desktop app / Codex:** *Settings → MCP servers → Add server → STDIO* with `npx -y @contentisking/seomcp`, or add it to `~/.codex/config.toml` (see the [Italian README](README.md#oppure-a-chatgpt-app-desktop-o-codex)). 
+
+   > **Web versions are not supported.** Claude on the web (claude.ai) and ChatGPT on the web (chatgpt.com) only accept remote MCP servers. `seomcp` runs locally so your credentials never leave your machine: use the desktop apps or the CLI.
 
 3. **Check:** `npx @contentisking/seomcp doctor`
 

@@ -99,7 +99,7 @@ BING_WEBMASTER_API_KEY = "la-tua-chiave"
 SEOMCP_GSC_SITE = "sc-domain:tuosito.it"
 ```
 
-ChatGPT sul web (chatgpt.com) supporta solo server MCP remoti, quindi serve l'app desktop.
+> **Versioni web non supportate.** Claude sul web (claude.ai) e ChatGPT sul web (chatgpt.com) accettano solo server MCP remoti, raggiungibili su internet. `seomcp` gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.
 
 ### 3. Controlla che funzioni
 
