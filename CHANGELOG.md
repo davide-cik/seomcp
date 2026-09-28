@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 — 2026-09-28
+
+- Landing statica per seomcp.contentisking.guru in `site/`: nessuna risorsa esterna, nessun tracker, tema chiaro/scuro, JSON-LD, sitemap, llms.txt.
+- Configurazione Nginx e istruzioni di deploy in `deploy/`.
+
 ## 0.1.0 — non ancora pubblicata
 
 - Prima versione: server MCP (stdio) e libreria.

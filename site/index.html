@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>seomcp — Search Console e Bing Webmaster dentro Claude</title>
+  <meta name="description" content="Server MCP open source e gratuito che collega Google Search Console e Bing Webmaster Tools a Claude. Sola lettura, credenziali sul tuo computer, nessuna telemetria.">
+  <link rel="canonical" href="https://seomcp.contentisking.guru/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="seomcp — Search Console e Bing Webmaster dentro Claude">
+  <meta property="og:description" content="Open source, gratuito, in italiano. Sola lettura, le credenziali restano sul tuo computer.">
+  <meta property="og:url" content="https://seomcp.contentisking.guru/">
+  <meta property="og:locale" content="it_IT">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "seomcp",
+    "description": "Server MCP open source per Google Search Console e Bing Webmaster Tools.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Windows, macOS, Linux",
+    "license": "https://opensource.org/licenses/MIT",
+    "url": "https://seomcp.contentisking.guru/",
+    "codeRepository": "https://github.com/davide-cik/seomcp",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "author": { "@type": "Organization", "name": "Content is King", "url": "https://contentisking.guru" }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Vai al contenuto</a>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="/" aria-label="seomcp, home">
+        <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M8 20l5-5 4 4 7-8" fill="none" stroke="var(--bg)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>seomcp</span>
+      </a>
+      <nav aria-label="Principale">
+        <a href="#fiducia">Perché fidarsi</a>
+        <a href="#tool">Tool</a>
+        <a href="#installa">Installa</a>
+        <a class="btn btn-ghost btn-sm" href="https://github.com/davide-cik/seomcp">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Open source · Gratuito · In italiano</p>
+          <h1>Search Console e Bing Webmaster, <span class="accent">dentro Claude</span>.</h1>
+          <p class="lead">Un server MCP che permette a Claude di leggere i dati dei tuoi siti. Fai domande in italiano e ottieni analisi sui dati veri. Le credenziali restano sul tuo computer.</p>
+          <div class="cta">
+            <a class="btn btn-primary" href="#installa">Installa in 3 passi</a>
+            <a class="btn btn-ghost" href="https://github.com/davide-cik/seomcp">Leggi il codice</a>
+          </div>
+          <p class="meta">Licenza MIT · Node.js 22+ · Claude Code, Claude Desktop e altri client MCP</p>
+        </div>
+
+        <figure class="chat" aria-label="Esempio di conversazione">
+          <div class="chat-bar"><span></span><span></span><span></span><em>Claude</em></div>
+          <div class="msg msg-user">Quali query di esempio.it sono in posizione 4-20 negli ultimi 90 giorni? Dammi le 3 con più potenziale.</div>
+          <div class="msg msg-ai">
+            <p class="tool-call"><code>gsc_striking_distance</code> · 90 giorni</p>
+            <table>
+              <thead><tr><th>Query</th><th>Pos.</th><th>Impr.</th></tr></thead>
+              <tbody>
+                <tr><td>scarpe trekking donna</td><td>6,2</td><td>8.410</td></tr>
+                <tr><td>scarponi impermeabili</td><td>11,8</td><td>5.120</td></tr>
+                <tr><td>zaino 30 litri</td><td>4,9</td><td>3.760</td></tr>
+              </tbody>
+            </table>
+            <p>La prima è la più vicina: la pagina è già sesta. Aggiungerei una sezione sulle taglie e una FAQ…</p>
+          </div>
+          <figcaption>Esempio illustrativo con dati di fantasia.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="fiducia" class="band">
+      <div class="wrap">
+        <h2>Perché fidarsi</h2>
+        <p class="section-lead">Affidare le credenziali di Search Console a uno strumento è una decisione seria. Per questo seomcp è fatto per essere verificato, non solo usato.</p>
+        <div class="cards">
+          <article class="card">
+            <h3>Sola lettura</h3>
+            <p>Chiede a Google solo lo scope <code>webmasters.readonly</code>: non può modificare nulla nelle tue proprietà.</p>
+          </article>
+          <article class="card">
+            <h3>Credenziali in locale</h3>
+            <p>Gira sul tuo computer. Nessun server intermedio, nessun gateway di terzi: i dati vanno da Google e Bing direttamente a te.</p>
+          </article>
+          <article class="card">
+            <h3>Nessuna telemetria</h3>
+            <p>Non raccoglie statistiche d'uso e non contatta altri server. Nemmeno questa pagina usa cookie o tracker.</p>
+          </article>
+          <article class="card">
+            <h3>Solo librerie ufficiali</h3>
+            <p>SDK MCP, <code>@googleapis/searchconsole</code> e <code>google-auth-library</code>. Bing è una semplice chiamata REST.</p>
+          </article>
+          <article class="card">
+            <h3>Codice leggibile</h3>
+            <p>Circa 1.500 righe di TypeScript, con test e CI. Si legge in un'ora, prima di installarlo.</p>
+          </article>
+          <article class="card">
+            <h3>Rispetta le regole</h3>
+            <p>Non usa la Google Indexing API, che Google riserva alle offerte di lavoro e alle dirette video.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="domande">
+      <div class="wrap">
+        <h2>Cosa puoi chiedere</h2>
+        <p class="section-lead">Il server restituisce dati puliti. Le analisi le fa Claude, ragionando su quei dati.</p>
+        <ul class="prompts">
+          <li>Confronta questo mese con lo stesso periodo dell'anno scorso e segnala i cali di clic sopra il 30%.</li>
+          <li>Ci sono query per cui competono due pagine diverse del sito?</li>
+          <li>Questa pagina è indicizzata? Quale canonical ha scelto Google?</li>
+          <li>Su Bing come va la query "corso SEO" rispetto a Google?</li>
+          <li>Qual è il volume di ricerca su Bing di "noleggio bici Garda"?</li>
+          <li>Le sitemap hanno errori? Quando le ha scaricate Google l'ultima volta?</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="tool" class="band">
+      <div class="wrap">
+        <h2>11 tool, tutti in sola lettura</h2>
+        <div class="tool-grid">
+          <div>
+            <h3>Google Search Console</h3>
+            <dl class="tools">
+              <dt><code>gsc_performance</code></dt><dd>Clic, impressioni, CTR e posizione per query, pagina, paese, dispositivo, data</dd>
+              <dt><code>gsc_compare_periods</code></dt><dd>Confronto con il periodo precedente o l'anno prima</dd>
+              <dt><code>gsc_striking_distance</code></dt><dd>Query in posizione 4-20, ordinate per potenziale</dd>
+              <dt><code>gsc_inspect_url</code></dt><dd>Indicizzazione, canonical, ultima scansione, rich result</dd>
+              <dt><code>gsc_list_sitemaps</code></dt><dd>Sitemap inviate, errori e avvisi</dd>
+              <dt><code>gsc_list_sites</code></dt><dd>Proprietà accessibili</dd>
+            </dl>
+          </div>
+          <div>
+            <h3>Bing Webmaster Tools</h3>
+            <dl class="tools">
+              <dt><code>bing_query_stats</code></dt><dd>Performance per query</dd>
+              <dt><code>bing_page_stats</code></dt><dd>Performance per pagina</dd>
+              <dt><code>bing_keyword_stats</code></dt><dd>Volumi di ricerca, di default Italia / italiano</dd>
+              <dt><code>bing_list_sites</code></dt><dd>Siti del tuo account</dd>
+            </dl>
+            <h3>Diagnostica</h3>
+            <dl class="tools">
+              <dt><code>seomcp_status</code></dt><dd>Cosa è configurato e cosa manca, con le istruzioni per sistemarlo</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="installa">
+      <div class="wrap">
+        <h2>Installa in 3 passi</h2>
+        <p class="section-lead">Configura solo le fonti che usi: Google e Bing sono entrambe facoltative.</p>
+        <ol class="steps">
+          <li>
+            <h3>Prepara le credenziali</h3>
+            <p>Per Google scegli tra service account e OAuth con un client tuo. Per Bing ti basta una API key, che si genera in due minuti. Le guide sono passo passo e in italiano.</p>
+            <p class="links"><a href="https://github.com/davide-cik/seomcp/blob/main/docs/google-setup.md">Guida Google →</a> <a href="https://github.com/davide-cik/seomcp/blob/main/docs/bing-setup.md">Guida Bing →</a></p>
+          </li>
+          <li>
+            <h3>Aggiungilo a Claude Code</h3>
+<pre class="code"><code>claude mcp add seomcp -s user \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/percorso/service-account.json \
+  -e BING_WEBMASTER_API_KEY=la-tua-chiave \
+  -e SEOMCP_GSC_SITE=sc-domain:tuosito.it \
+  -- npx -y @contentisking/seomcp</code></pre>
+            <p class="small">Usi Claude Desktop? Trovi la configurazione JSON nel <a href="https://github.com/davide-cik/seomcp#oppure-a-claude-desktop">README</a>.</p>
+          </li>
+          <li>
+            <h3>Controlla che funzioni</h3>
+<pre class="code"><code>npx @contentisking/seomcp doctor</code></pre>
+            <p>Prova ogni fonte e ti dice esattamente cosa manca. Per esempio: «aggiungi <code>seomcp@progetto.iam.gserviceaccount.com</code> come utente della proprietà».</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="wrap gift">
+        <div>
+          <h2>Un regalo alla community SEO</h2>
+          <p>Ci serviva uno strumento così e non ne abbiamo trovato uno di cui fidarci. Così l'abbiamo scritto noi, e invece di tenerlo in casa l'abbiamo reso pubblico. Non vendiamo niente.</p>
+          <p>Lo manteniamo nel tempo libero, senza garanzie di supporto. Ogni segnalazione ci aiuta, e se sei uno sviluppatore puoi partire da una delle issue già pronte.</p>
+          <div class="cta">
+            <a class="btn btn-primary" href="https://github.com/davide-cik/seomcp/labels/good%20first%20issue">Issue per iniziare</a>
+            <a class="btn btn-ghost" href="https://github.com/davide-cik/seomcp/issues/new/choose">Segnala un problema</a>
+          </div>
+        </div>
+        <div class="lib">
+          <p class="eyebrow">Anche come libreria</p>
+<pre class="code"><code>import { GscClient, strikingDistance }
+  from '@contentisking/seomcp';
+
+const gsc = new GscClient(auth);
+const rows = await gsc.query({ siteUrl, startDate,
+  endDate, dimensions: ['query', 'page'] });
+strikingDistance(rows);</code></pre>
+          <p class="small">I client non leggono né file né variabili d'ambiente, quindi si possono usare anche in un'applicazione multi-utente.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <p>Un progetto di <a href="https://contentisking.guru">Content is King</a> · Licenza <a href="https://github.com/davide-cik/seomcp/blob/main/LICENSE">MIT</a> · <a href="https://github.com/davide-cik/seomcp">GitHub</a></p>
+      <p class="small">Non affiliato a Google né a Microsoft. Search Console e Bing Webmaster Tools sono marchi dei rispettivi proprietari.</p>
+    </div>
+  </footer>
+  <script src="app.js" defer></script>
+</body>
+</html>
