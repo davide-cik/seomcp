@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>seomcp in ChatGPT e Codex: Search Console e Bing Webmaster</title>
-  <meta name="description" content="Come collegare Google Search Console e Bing Webmaster Tools a ChatGPT e Codex con seomcp, il server MCP open source. Configurazione pronta da copiare.">
+  <title>seomcp in ChatGPT: Search Console e Bing Webmaster</title>
+  <meta name="description" content="Come collegare Google Search Console e Bing Webmaster Tools a ChatGPT con seomcp, il server MCP open source. Configurazione pronta da copiare.">
   <link rel="canonical" href="https://seomcp.contentisking.guru/installa/chatgpt/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="seomcp in ChatGPT e Codex: Search Console e Bing Webmaster">
-  <meta property="og:description" content="Come collegare Google Search Console e Bing Webmaster Tools a ChatGPT e Codex con seomcp, il server MCP open source. Configurazione pronta da copiare.">
+  <meta property="og:title" content="seomcp in ChatGPT: Search Console e Bing Webmaster">
+  <meta property="og:description" content="Come collegare Google Search Console e Bing Webmaster Tools a ChatGPT con seomcp, il server MCP open source. Configurazione pronta da copiare.">
   <meta property="og:url" content="https://seomcp.contentisking.guru/installa/chatgpt/">
   <meta property="og:locale" content="it_IT">
   <link rel="stylesheet" href="/style.css">
@@ -20,9 +20,9 @@
 
   <main id="main" class="doc">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › <a href="/installa/">Installa</a> › ChatGPT e Codex</nav>
-      <p class="eyebrow">OpenAI · app desktop e riga di comando</p>
-      <h1>seomcp in ChatGPT e Codex</h1>
+      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › <a href="/installa/">Installa</a> › ChatGPT</nav>
+      <p class="eyebrow">OpenAI</p>
+      <h1>seomcp in ChatGPT</h1>
       <p class="lead">L'app desktop di ChatGPT, Codex CLI e l'estensione per IDE condividono la stessa configurazione MCP. Ci vogliono due minuti, credenziali a parte.</p>
 
       <section class="doc-block">
@@ -34,8 +34,7 @@
         <p class="small">Il pacchetto npm è in arrivo: per ora seomcp si installa direttamente da GitHub. Il primo avvio richiede qualche secondo in più, perché il codice viene compilato sul tuo computer.</p>
       </section>
 
-      <section class="doc-block">
-        <h2>Configurazione</h2>
+      <section class="doc-block" id="chatgpt">
         <ol class="steps">
           <li>
             <h3>Apri la configurazione</h3>
@@ -58,8 +57,8 @@ SEOMCP_GSC_SITE = "sc-domain:tuosito.it"</code></pre>
             <p>Riavvia l'app o Codex: i tool di seomcp saranno disponibili nelle nuove conversazioni.</p>
           </li>
         </ol>
-        <p class="small"><strong>Versione web:</strong> ChatGPT sul web (chatgpt.com) accetta solo server MCP remoti: serve l'app desktop o Codex.</p>
       </section>
+      <p class="small"><strong>Versione web:</strong> ChatGPT sul web (chatgpt.com) accetta solo server MCP remoti: serve l'app desktop o Codex.</p>
 
       <section class="doc-block">
         <h2>Prova con una domanda</h2>
@@ -75,7 +74,7 @@ SEOMCP_GSC_SITE = "sc-domain:tuosito.it"</code></pre>
 <pre class="code"><code>npx -y github:davide-cik/seomcp doctor</code></pre>
         <ul class="tips">
           <li><strong>macOS con nvm, fnm o Volta:</strong> le app desktop non vedono il PATH del terminale. Se il server non parte, in <code>command</code> metti il percorso completo di npx, che ottieni con <code>which npx</code>.</li>
-          <li>Le variabili d'ambiente vanno impostate nella configurazione del client, non nel terminale: il client avvia seomcp con le sue.</li>
+          <li>Le variabili d'ambiente vanno impostate nella configurazione dell'assistente, non nel terminale: è l'assistente ad avviare seomcp.</li>
           <li>Ancora bloccato? <a href="https://github.com/davide-cik/seomcp/issues/new/choose">Apri una segnalazione</a>, allegando l'output di <code>doctor</code> senza chiavi.</li>
         </ul>
       </section>

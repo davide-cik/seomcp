@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>seomcp in Claude Code: Search Console e Bing Webmaster</title>
-  <meta name="description" content="Come collegare Google Search Console e Bing Webmaster Tools a Claude Code con seomcp, il server MCP open source. Configurazione pronta da copiare.">
-  <link rel="canonical" href="https://seomcp.contentisking.guru/installa/claude-code/">
+  <title>seomcp in Mistral: Search Console e Bing Webmaster</title>
+  <meta name="description" content="Come collegare Google Search Console e Bing Webmaster Tools a Mistral con seomcp, il server MCP open source. Configurazione pronta da copiare.">
+  <link rel="canonical" href="https://seomcp.contentisking.guru/installa/mistral/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="seomcp in Claude Code: Search Console e Bing Webmaster">
-  <meta property="og:description" content="Come collegare Google Search Console e Bing Webmaster Tools a Claude Code con seomcp, il server MCP open source. Configurazione pronta da copiare.">
-  <meta property="og:url" content="https://seomcp.contentisking.guru/installa/claude-code/">
+  <meta property="og:title" content="seomcp in Mistral: Search Console e Bing Webmaster">
+  <meta property="og:description" content="Come collegare Google Search Console e Bing Webmaster Tools a Mistral con seomcp, il server MCP open source. Configurazione pronta da copiare.">
+  <meta property="og:url" content="https://seomcp.contentisking.guru/installa/mistral/">
   <meta property="og:locale" content="it_IT">
   <link rel="stylesheet" href="/style.css">
 </head>
@@ -20,10 +20,10 @@
 
   <main id="main" class="doc">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › <a href="/installa/">Installa</a> › Claude Code</nav>
-      <p class="eyebrow">Anthropic · riga di comando</p>
-      <h1>seomcp in Claude Code</h1>
-      <p class="lead">Claude Code aggiunge i server MCP con un solo comando da terminale. Ci vogliono due minuti, credenziali a parte.</p>
+      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › <a href="/installa/">Installa</a> › Mistral</nav>
+      <p class="eyebrow">Mistral AI</p>
+      <h1>seomcp in Mistral</h1>
+      <p class="lead">Mistral Vibe CLI legge i server MCP dal file <code>config.toml</code>. Ci vogliono due minuti, credenziali a parte.</p>
 
       <section class="doc-block">
         <h2>Prima di iniziare</h2>
@@ -34,29 +34,29 @@
         <p class="small">Il pacchetto npm è in arrivo: per ora seomcp si installa direttamente da GitHub. Il primo avvio richiede qualche secondo in più, perché il codice viene compilato sul tuo computer.</p>
       </section>
 
-      <section class="doc-block">
-        <h2>Configurazione</h2>
+      <section class="doc-block" id="mistral-vibe">
         <ol class="steps">
           <li>
             <h3>Apri la configurazione</h3>
-            <p>Apri un terminale. Non serve modificare file: il comando <code>claude mcp add</code> scrive la configurazione al posto tuo.</p>
+            <p>Apri (o crea) il file <code>~/.vibe/config.toml</code>. Per un solo progetto puoi usare <code>.vibe/config.toml</code> nella cartella del progetto.</p>
           </li>
           <li>
             <h3>Aggiungi seomcp</h3>
-<pre class="code"><code>claude mcp add seomcp -s user \
-  -e GOOGLE_APPLICATION_CREDENTIALS=/percorso/service-account.json \
-  -e BING_WEBMASTER_API_KEY=la-tua-chiave \
-  -e SEOMCP_GSC_SITE=sc-domain:tuosito.it \
-  -- npx -y github:davide-cik/seomcp</code></pre>
+<pre class="code"><code>[[mcp_servers]]
+name = "seomcp"
+transport = "stdio"
+command = "npx"
+args = ["-y", "github:davide-cik/seomcp"]
+env = { "GOOGLE_APPLICATION_CREDENTIALS" = "/percorso/service-account.json", "BING_WEBMASTER_API_KEY" = "la-tua-chiave", "SEOMCP_GSC_SITE" = "sc-domain:tuosito.it" }</code></pre>
             <p class="small">Sostituisci percorso, chiave e sito con i tuoi. Se usi una sola fonte, togli la variabile dell'altra.</p>
-          <p class="small">L'opzione <code>-s user</code> rende seomcp disponibile in tutti i tuoi progetti, non solo in quello corrente.</p>
           </li>
           <li>
             <h3>Verifica</h3>
-            <p>Avvia <code>claude</code> e digita <code>/mcp</code>: <code>seomcp</code> deve risultare connesso.</p>
+            <p>Riavvia <code>vibe</code>: i tool di seomcp saranno disponibili nella sessione.</p>
           </li>
         </ol>
       </section>
+      <p class="small"><strong>Versione web:</strong> Mistral Vibe sul web (l'ex Le Chat) accetta solo connettori MCP remoti: serve Vibe CLI.</p>
 
       <section class="doc-block">
         <h2>Prova con una domanda</h2>
@@ -71,7 +71,7 @@
         <p>Questo comando controlla la configurazione e prova ogni fonte, dicendoti esattamente cosa manca:</p>
 <pre class="code"><code>npx -y github:davide-cik/seomcp doctor</code></pre>
         <ul class="tips">
-          <li>Le variabili d'ambiente vanno impostate nella configurazione del client, non nel terminale: il client avvia seomcp con le sue.</li>
+          <li>Le variabili d'ambiente vanno impostate nella configurazione dell'assistente, non nel terminale: è l'assistente ad avviare seomcp.</li>
           <li>Ancora bloccato? <a href="https://github.com/davide-cik/seomcp/issues/new/choose">Apri una segnalazione</a>, allegando l'output di <code>doctor</code> senza chiavi.</li>
         </ul>
       </section>

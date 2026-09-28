@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.15 — 2026-09-28
+
+- Guide riorganizzate: una pagina per AI (Claude, ChatGPT, GitHub Copilot, Gemini, Mistral), con una sezione per ogni prodotto.
+- Lista degli assistenti semplificata: solo i nomi.
+- Redirect 301 dalle vecchie pagine per prodotto e pagina 404 personalizzata (`deploy/nginx-seomcp-extra.conf`).
+
 ## 0.1.14 — 2026-09-28
 
 - llms.txt: rimosso il link al pacchetto npm non ancora pubblicato.

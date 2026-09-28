@@ -183,13 +183,14 @@ section[id] { scroll-margin-top: 72px; }
 .doc .prompts { grid-template-columns: 1fr; }
 kbd { font-family: var(--mono); font-size: 0.85em; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; background: var(--bg-soft); }
 
-/* Griglia degli assistenti (partial clients.html) */
-.client-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); margin: 20px 0; }
-.client-card { display: flex; flex-direction: column; gap: 4px; padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); text-decoration: none; color: var(--text); transition: border-color 0.15s; }
-.client-card:hover { border-color: var(--accent); }
-.client-card strong { color: var(--heading); }
-.client-card strong::after { content: " →"; color: var(--accent); }
-.client-card span { font-size: 0.88rem; color: var(--muted); }
 
 /* Spazio per il pulsante Copia sopra il codice, così non copre il testo. */
 .code:has(.copy) { padding-top: 40px; }
+
+/* Lista degli assistenti (partial clients.html): semplice e leggera. */
+.ai-list { list-style: none; padding: 0; margin: 16px 0; max-width: 420px; border-top: 1px solid var(--border); }
+.ai-list li { border-bottom: 1px solid var(--border); }
+.ai-list a { display: flex; justify-content: space-between; align-items: center; padding: 11px 4px; text-decoration: none; color: var(--heading); font-weight: 600; }
+.ai-list a::after { content: "→"; color: var(--accent); font-weight: 400; transition: transform 0.15s; }
+.ai-list a:hover { color: var(--accent); }
+.ai-list a:hover::after { transform: translateX(3px); }

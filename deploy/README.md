@@ -26,6 +26,18 @@ sudo sed -i 's#^    \# Mai servire file nascosti\.#    location /_partials/ { in
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
+## Aggiornamento: redirect e pagina 404
+
+Redirect 301 e pagina 404 stanno in `deploy/nginx-seomcp-extra.conf`, generato dallo script. Va incluso una volta sola:
+
+```bash
+F=/etc/nginx/sites-available/seomcp.contentisking.guru.conf
+sudo sed -i 's#^    ssi on;#    ssi on;\n    include /home/datareport/seomcp/deploy/nginx-seomcp-extra.conf;#' $F
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+Dopo ogni rigenerazione che cambia i redirect basta `sudo nginx -t && sudo systemctl reload nginx`.
+
 ## Pagine generate
 
 Le guide in `site/installa/` e il partial `site/_partials/clients.html` si rigenerano con:

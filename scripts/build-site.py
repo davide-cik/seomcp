@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Genera le pagine di installazione per ogni client in site/installa/.
+"""Genera le pagine di installazione per ogni AI in site/installa/.
 
 Intestazione e footer vengono presi da site/index.html, così restano allineati.
 Uso: python3 scripts/build-site.py
 """
 import html
+import shutil
 from datetime import date
 from pathlib import Path
 
@@ -162,6 +163,17 @@ CLIENTS = [
 ]
 
 
+# Una pagina per AI; ogni pagina ha una sezione per ciascun prodotto.
+VENDORS = [
+    {"slug": "claude", "name": "Claude", "vendor": "Anthropic", "products": ["claude-code", "claude-desktop"]},
+    {"slug": "chatgpt", "name": "ChatGPT", "vendor": "OpenAI", "products": ["chatgpt"]},
+    {"slug": "copilot", "name": "GitHub Copilot", "vendor": "GitHub", "products": ["vscode-copilot", "copilot-cli"]},
+    {"slug": "gemini", "name": "Gemini", "vendor": "Google", "products": ["gemini-cli"]},
+    {"slug": "mistral", "name": "Mistral", "vendor": "Mistral AI", "products": ["mistral-vibe"]},
+]
+BY_SLUG = {c["slug"]: c for c in CLIENTS}
+
+
 INCLUDE = '<!--#include virtual="/_partials/{name}.html" -->'
 
 
@@ -211,20 +223,11 @@ PREREQ = f"""      <section class="doc-block">
       </section>"""
 
 
-def client_body(c):
-    tips = "".join(f"\n          <li>{t}</li>" for t in c["tips"])
-    web = f'\n        <p class="small"><strong>Versione web:</strong> {c["web"]}</p>' if c.get("web") else ""
-    note = f'\n          <p class="small">{c["code_note"]}</p>' if c["code_note"] else ""
-    return f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › <a href="/installa/">Installa</a> › {html.escape(c['name'])}</nav>
-      <p class="eyebrow">{html.escape(c['vendor'])} · {html.escape(c['kind'])}</p>
-      <h1>seomcp in {html.escape(c['name'])}</h1>
-      <p class="lead">{c['intro']} Ci vogliono due minuti, credenziali a parte.</p>
-
-{PREREQ}
-
-      <section class="doc-block">
-        <h2>Configurazione</h2>
-        <ol class="steps">
+def product_section(c, multi):
+    note = f'\n            <p class="small">{c["code_note"]}</p>' if c["code_note"] else ""
+    heading = f'      <h2>{html.escape(c["name"])}</h2>\n      <p>{c["intro"]}</p>\n' if multi else ""
+    return f"""      <section class="doc-block" id="{c['slug']}">
+{heading}        <ol class="steps">
           <li>
             <h3>Apri la configurazione</h3>
             <p>{c['open']}</p>
@@ -238,8 +241,33 @@ def client_body(c):
             <h3>Verifica</h3>
             <p>{c['verify']}</p>
           </li>
-        </ol>{web}
-      </section>
+        </ol>
+      </section>"""
+
+
+def vendor_body(v):
+    prods = [BY_SLUG[p] for p in v["products"]]
+    multi = len(prods) > 1
+    names = " e ".join(p["name"] for p in prods)
+    lead = (f"Istruzioni per {names}. Ci vogliono due minuti, credenziali a parte." if multi
+            else f"{prods[0]['intro']} Ci vogliono due minuti, credenziali a parte.")
+    tips, seen = [], set()
+    for p in prods:
+        for t in p["tips"]:
+            if t not in seen:
+                seen.add(t); tips.append(t)
+    webs = [p["web"] for p in prods if p.get("web")]
+    web = f'\n      <p class="small"><strong>Versione web:</strong> {webs[0]}</p>' if webs else ""
+    tips_html = "".join(f"\n          <li>{t}</li>" for t in tips)
+    sections = "\n\n".join(product_section(p, multi) for p in prods)
+    return f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › <a href="/installa/">Installa</a> › {html.escape(v['name'])}</nav>
+      <p class="eyebrow">{html.escape(v['vendor'])}</p>
+      <h1>seomcp in {html.escape(v['name'])}</h1>
+      <p class="lead">{lead}</p>
+
+{PREREQ}
+
+{sections}{web}
 
       <section class="doc-block">
         <h2>Prova con una domanda</h2>
@@ -253,8 +281,8 @@ def client_body(c):
         <h2>Se qualcosa non va</h2>
         <p>Questo comando controlla la configurazione e prova ogni fonte, dicendoti esattamente cosa manca:</p>
 <pre class="code"><code>npx -y {PKG} doctor</code></pre>
-        <ul class="tips">{tips}
-          <li>Le variabili d'ambiente vanno impostate nella configurazione del client, non nel terminale: il client avvia seomcp con le sue.</li>
+        <ul class="tips">{tips_html}
+          <li>Le variabili d'ambiente vanno impostate nella configurazione dell'assistente, non nel terminale: è l'assistente ad avviare seomcp.</li>
           <li>Ancora bloccato? <a href="{REPO}/issues/new/choose">Apri una segnalazione</a>, allegando l'output di <code>doctor</code> senza chiavi.</li>
         </ul>
       </section>
@@ -266,11 +294,8 @@ def client_body(c):
 
 
 def clients_partial():
-    items = "\n".join(
-        f'  <a class="client-card" href="/installa/{c["slug"]}/"><strong>{html.escape(c["name"])}</strong><span>{html.escape(c["vendor"])} · {html.escape(c["kind"])}</span></a>'
-        for c in CLIENTS
-    )
-    return f'<div class="client-grid">\n{items}\n</div>\n'
+    items = "\n".join(f'  <li><a href="/installa/{v["slug"]}/">{html.escape(v["name"])}</a></li>' for v in VENDORS)
+    return f'<ul class="ai-list">\n{items}\n</ul>\n'
 
 
 WEB_NOTE = ("<strong>Versioni web non supportate.</strong> claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot e Mistral Vibe sul web "
@@ -282,31 +307,59 @@ def main():
     out.mkdir(exist_ok=True)
     (SITE / "_partials" / "clients.html").write_text(clients_partial())
 
+    # Rimuove pagine di assistenti non più presenti in VENDORS.
+    keep = {v["slug"] for v in VENDORS}
+    for d in out.iterdir():
+        if d.is_dir() and d.name not in keep:
+            shutil.rmtree(d)
+
     hub = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Installa</nav>
       <h1>Installa seomcp</h1>
-      <p class="lead">Scegli il tuo assistente: ogni pagina spiega dove incollare la configurazione e come verificare che funzioni.</p>
+      <p class="lead">Scegli il tuo assistente.</p>
       {INCLUDE.format(name="clients")}
       <p class="small">{WEB_NOTE}</p>
 {PREREQ}"""
     (out / "index.html").write_text(
-        page("Installa seomcp: Claude, ChatGPT, Copilot, Gemini CLI, Mistral Vibe",
+        page("Installa seomcp: Claude, ChatGPT, GitHub Copilot, Gemini, Mistral",
              "Guide di installazione di seomcp, il server MCP per Search Console e Bing Webmaster, per ogni assistente AI.",
              "installa", hub))
 
-    for c in CLIENTS:
-        d = out / c["slug"]
+    for v in VENDORS:
+        d = out / v["slug"]
         d.mkdir(exist_ok=True)
-        title = f"seomcp in {c['name']}: Search Console e Bing Webmaster"
-        desc = f"Come collegare Google Search Console e Bing Webmaster Tools a {c['name']} con seomcp, il server MCP open source. Configurazione pronta da copiare."
-        (d / "index.html").write_text(page(title, desc, f"installa/{c['slug']}", client_body(c)))
+        title = f"seomcp in {v['name']}: Search Console e Bing Webmaster"
+        desc = f"Come collegare Google Search Console e Bing Webmaster Tools a {v['name']} con seomcp, il server MCP open source. Configurazione pronta da copiare."
+        (d / "index.html").write_text(page(title, desc, f"installa/{v['slug']}", vendor_body(v)))
+
+    # 301 dalle vecchie pagine per prodotto alla pagina della loro AI.
+    lines = ["# Generato da scripts/build-site.py: non modificare a mano.", "",
+             "error_page 404 /404.html;", "location = /404.html { internal; }", ""]
+    for v in VENDORS:
+        for prod in v["products"]:
+            if prod == v["slug"]:
+                continue
+            target = f"/installa/{v['slug']}/" + (f"#{prod}" if len(v["products"]) > 1 else "")
+            lines.append(f"location ~ ^/installa/{prod}/?$ {{ return 301 {target}; }}")
+    (ROOT / "deploy" / "nginx-seomcp-extra.conf").write_text("\n".join(lines) + "\n")
+
+    not_found = f"""      <p class="eyebrow">Errore 404</p>
+      <h1>Pagina non trovata</h1>
+      <p class="lead">L'indirizzo che hai aperto non esiste, oppure è stato spostato.</p>
+      <p><a class="btn btn-primary" href="/">Torna alla home</a></p>
+      <section class="doc-block">
+        <h2>Installa seomcp</h2>
+        {INCLUDE.format(name="clients")}
+      </section>"""
+    (SITE / "404.html").write_text(page("Pagina non trovata · seomcp", "La pagina richiesta non esiste.", "404", not_found)
+                                   .replace('<link rel="canonical" href="https://seomcp.contentisking.guru/404/">', '<meta name="robots" content="noindex">'))
 
     today = date.today().isoformat()
-    urls = ["/", "/installa/"] + [f"/installa/{c['slug']}/" for c in CLIENTS]
+    urls = ["/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls)
         + "</urlset>\n")
-    print(f"Generate {len(CLIENTS) + 1} pagine, partial clients.html e sitemap ({len(urls)} URL)")
+    print(f"Generate {len(VENDORS) + 1} pagine, partial clients.html e sitemap ({len(urls)} URL)")
 
 
 if __name__ == "__main__":

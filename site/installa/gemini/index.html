@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>seomcp in Claude Desktop: Search Console e Bing Webmaster</title>
-  <meta name="description" content="Come collegare Google Search Console e Bing Webmaster Tools a Claude Desktop con seomcp, il server MCP open source. Configurazione pronta da copiare.">
-  <link rel="canonical" href="https://seomcp.contentisking.guru/installa/claude-desktop/">
+  <title>seomcp in Gemini: Search Console e Bing Webmaster</title>
+  <meta name="description" content="Come collegare Google Search Console e Bing Webmaster Tools a Gemini con seomcp, il server MCP open source. Configurazione pronta da copiare.">
+  <link rel="canonical" href="https://seomcp.contentisking.guru/installa/gemini/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="seomcp in Claude Desktop: Search Console e Bing Webmaster">
-  <meta property="og:description" content="Come collegare Google Search Console e Bing Webmaster Tools a Claude Desktop con seomcp, il server MCP open source. Configurazione pronta da copiare.">
-  <meta property="og:url" content="https://seomcp.contentisking.guru/installa/claude-desktop/">
+  <meta property="og:title" content="seomcp in Gemini: Search Console e Bing Webmaster">
+  <meta property="og:description" content="Come collegare Google Search Console e Bing Webmaster Tools a Gemini con seomcp, il server MCP open source. Configurazione pronta da copiare.">
+  <meta property="og:url" content="https://seomcp.contentisking.guru/installa/gemini/">
   <meta property="og:locale" content="it_IT">
   <link rel="stylesheet" href="/style.css">
 </head>
@@ -20,10 +20,10 @@
 
   <main id="main" class="doc">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › <a href="/installa/">Installa</a> › Claude Desktop</nav>
-      <p class="eyebrow">Anthropic · app desktop</p>
-      <h1>seomcp in Claude Desktop</h1>
-      <p class="lead">Claude Desktop, per macOS e Windows, legge i server MCP da un file di configurazione JSON. Ci vogliono due minuti, credenziali a parte.</p>
+      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › <a href="/installa/">Installa</a> › Gemini</nav>
+      <p class="eyebrow">Google</p>
+      <h1>seomcp in Gemini</h1>
+      <p class="lead">Gemini CLI legge i server MCP dal file <code>settings.json</code>. Ci vogliono due minuti, credenziali a parte.</p>
 
       <section class="doc-block">
         <h2>Prima di iniziare</h2>
@@ -34,12 +34,11 @@
         <p class="small">Il pacchetto npm è in arrivo: per ora seomcp si installa direttamente da GitHub. Il primo avvio richiede qualche secondo in più, perché il codice viene compilato sul tuo computer.</p>
       </section>
 
-      <section class="doc-block">
-        <h2>Configurazione</h2>
+      <section class="doc-block" id="gemini-cli">
         <ol class="steps">
           <li>
             <h3>Apri la configurazione</h3>
-            <p>Apri <em>Impostazioni → Sviluppatore → Modifica configurazione</em>. Si apre il file <code>claude_desktop_config.json</code>:<ul><li>macOS: <code>~/Library/Application Support/Claude/claude_desktop_config.json</code></li><li>Windows: <code>%APPDATA%\Claude\claude_desktop_config.json</code></li></ul></p>
+            <p>Apri (o crea) il file <code>~/.gemini/settings.json</code>. Per un solo progetto puoi usare invece <code>.gemini/settings.json</code> nella cartella del progetto.</p>
           </li>
           <li>
             <h3>Aggiungi seomcp</h3>
@@ -57,14 +56,15 @@
   }
 }</code></pre>
             <p class="small">Sostituisci percorso, chiave e sito con i tuoi. Se usi una sola fonte, togli la variabile dell'altra.</p>
-          <p class="small">Se il file contiene già altri server, aggiungi solo il blocco <code>"seomcp"</code> dentro <code>mcpServers</code>.</p>
+            <p class="small">Se il file contiene già altre impostazioni, aggiungi solo il blocco <code>mcpServers</code>.</p>
           </li>
           <li>
             <h3>Verifica</h3>
-            <p>Chiudi Claude Desktop del tutto (non basta chiudere la finestra) e riaprilo. Nel menu degli strumenti della chat deve comparire <code>seomcp</code>.</p>
+            <p>Avvia <code>gemini</code> e digita <code>/mcp</code>: <code>seomcp</code> deve comparire con i suoi 11 tool.</p>
           </li>
         </ol>
       </section>
+      <p class="small"><strong>Versione web:</strong> L'app Gemini sul web non supporta server MCP locali: serve Gemini CLI.</p>
 
       <section class="doc-block">
         <h2>Prova con una domanda</h2>
@@ -79,9 +79,8 @@
         <p>Questo comando controlla la configurazione e prova ogni fonte, dicendoti esattamente cosa manca:</p>
 <pre class="code"><code>npx -y github:davide-cik/seomcp doctor</code></pre>
         <ul class="tips">
-          <li><strong>macOS con nvm, fnm o Volta:</strong> le app desktop non vedono il PATH del terminale. Se il server non parte, in <code>command</code> metti il percorso completo di npx, che ottieni con <code>which npx</code>.</li>
-          <li><strong>Windows:</strong> se il server non parte, sostituisci <code>"command": "npx"</code> con <code>"command": "cmd"</code> e metti <code>"/c", "npx"</code> all'inizio di <code>args</code>.</li>
-          <li>Le variabili d'ambiente vanno impostate nella configurazione del client, non nel terminale: il client avvia seomcp con le sue.</li>
+          <li>Dal giugno 2026 Gemini CLI richiede una chiave API Gemini a pagamento o una licenza enterprise.</li>
+          <li>Le variabili d'ambiente vanno impostate nella configurazione dell'assistente, non nel terminale: è l'assistente ad avviare seomcp.</li>
           <li>Ancora bloccato? <a href="https://github.com/davide-cik/seomcp/issues/new/choose">Apri una segnalazione</a>, allegando l'output di <code>doctor</code> senza chiavi.</li>
         </ul>
       </section>
