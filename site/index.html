@@ -33,20 +33,7 @@
 <body>
   <a class="skip" href="#main">Vai al contenuto</a>
 
-  <header class="top">
-    <div class="wrap top-inner">
-      <a class="brand" href="/" aria-label="seomcp, home">
-        <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M8 20l5-5 4 4 7-8" fill="none" stroke="var(--bg)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>seomcp</span>
-      </a>
-      <nav aria-label="Principale">
-        <a href="#fiducia">Perché fidarsi</a>
-        <a href="#tool">Tool</a>
-        <a href="#installa">Installa</a>
-        <a class="btn btn-ghost btn-sm" href="https://github.com/davide-cik/seomcp">GitHub</a>
-      </nav>
-    </div>
-  </header>
+  <!--#include virtual="/_partials/header.html" -->
 
   <main id="main">
     <section class="hero">
@@ -177,115 +164,9 @@
           </li>
           <li>
             <h3>Collegalo al tuo assistente</h3>
-            <p>Scegli il tuo e copia la configurazione. Il comando è sempre lo stesso: cambia solo dove si scrive.</p>
-            <div class="clients">
-              <details class="client" open>
-                <summary>Claude Code</summary>
-                <p class="small">Da terminale:</p>
-<pre class="code"><code>claude mcp add seomcp -s user \
-  -e GOOGLE_APPLICATION_CREDENTIALS=/percorso/service-account.json \
-  -e BING_WEBMASTER_API_KEY=la-tua-chiave \
-  -e SEOMCP_GSC_SITE=sc-domain:tuosito.it \
-  -- npx -y github:davide-cik/seomcp</code></pre>
-                <p class="small">Poi verifica con <code>/mcp</code> che <code>seomcp</code> risulti connesso.</p>
-              </details>
-              <details class="client">
-                <summary>Claude Desktop</summary>
-                <p class="small">In <code>claude_desktop_config.json</code> (Impostazioni → Sviluppatore → Modifica configurazione):</p>
-<pre class="code"><code>{
-  "mcpServers": {
-    "seomcp": {
-      "command": "npx",
-      "args": ["-y", "github:davide-cik/seomcp"],
-      "env": {
-        "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
-        "BING_WEBMASTER_API_KEY": "la-tua-chiave",
-        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
-      }
-    }
-  }
-}</code></pre>
-              </details>
-              <details class="client">
-                <summary>ChatGPT (app desktop) e Codex</summary>
-                <p class="small">Da <em>Impostazioni → MCP servers → Add server → STDIO</em>, oppure in <code>~/.codex/config.toml</code>:</p>
-<pre class="code"><code>[mcp_servers.seomcp]
-command = "npx"
-args = ["-y", "github:davide-cik/seomcp"]
-
-[mcp_servers.seomcp.env]
-GOOGLE_APPLICATION_CREDENTIALS = "/percorso/service-account.json"
-BING_WEBMASTER_API_KEY = "la-tua-chiave"
-SEOMCP_GSC_SITE = "sc-domain:tuosito.it"</code></pre>
-              </details>
-              <details class="client">
-                <summary>GitHub Copilot in VS Code</summary>
-                <p class="small">Comando <em>MCP: Open User Configuration</em>, poi nel file <code>mcp.json</code>:</p>
-<pre class="code"><code>{
-  "servers": {
-    "seomcp": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "github:davide-cik/seomcp"],
-      "env": {
-        "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
-        "BING_WEBMASTER_API_KEY": "la-tua-chiave",
-        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
-      }
-    }
-  }
-}</code></pre>
-                <p class="small">Usa la chat di Copilot in modalità <em>Agent</em>.</p>
-              </details>
-              <details class="client">
-                <summary>GitHub Copilot CLI</summary>
-                <p class="small">In <code>~/.copilot/mcp-config.json</code>:</p>
-<pre class="code"><code>{
-  "mcpServers": {
-    "seomcp": {
-      "type": "local",
-      "command": "npx",
-      "args": ["-y", "github:davide-cik/seomcp"],
-      "env": {
-        "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
-        "BING_WEBMASTER_API_KEY": "la-tua-chiave",
-        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
-      },
-      "tools": ["*"]
-    }
-  }
-}</code></pre>
-              </details>
-              <details class="client">
-                <summary>Gemini CLI</summary>
-                <p class="small">In <code>~/.gemini/settings.json</code>:</p>
-<pre class="code"><code>{
-  "mcpServers": {
-    "seomcp": {
-      "command": "npx",
-      "args": ["-y", "github:davide-cik/seomcp"],
-      "env": {
-        "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
-        "BING_WEBMASTER_API_KEY": "la-tua-chiave",
-        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
-      }
-    }
-  }
-}</code></pre>
-                <p class="small">Dal giugno 2026 Gemini CLI richiede una chiave API Gemini a pagamento o una licenza enterprise.</p>
-              </details>
-              <details class="client">
-                <summary>Mistral Vibe CLI</summary>
-                <p class="small">In <code>~/.vibe/config.toml</code>:</p>
-<pre class="code"><code>[[mcp_servers]]
-name = "seomcp"
-transport = "stdio"
-command = "npx"
-args = ["-y", "github:davide-cik/seomcp"]
-env = { "GOOGLE_APPLICATION_CREDENTIALS" = "/percorso/service-account.json", "BING_WEBMASTER_API_KEY" = "la-tua-chiave", "SEOMCP_GSC_SITE" = "sc-domain:tuosito.it" }</code></pre>
-              </details>
-            </div>
-            <p class="small"><strong>Versioni web non supportate.</strong> Le versioni web (claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot, Mistral Vibe sul web) accettano solo server MCP remoti, raggiungibili su internet. <code>seomcp</code> gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.</p>
+            <p>Scegli il tuo: ogni guida spiega dove incollare la configurazione e come verificare che funzioni.</p>
+            <!--#include virtual="/_partials/clients.html" -->
+            <p class="small"><strong>Versioni web non supportate.</strong> claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot e Mistral Vibe sul web accettano solo server MCP remoti. seomcp gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.</p>
           </li>
           <li>
             <h3>Controlla che funzioni</h3>
@@ -322,14 +203,7 @@ strikingDistance(rows);</code></pre>
     </section>
   </main>
 
-  <footer class="foot">
-    <div class="wrap foot-inner">
-      <p class="made"><span class="made-text">Piattaforma MCP sviluppata in Italia con <span role="img" aria-label="amore">❤️</span>, <span role="img" aria-label="cervello">🧠</span>, <span role="img" aria-label="forza">💪</span> e <span role="img" aria-label="robot">🤖</span> da <a href="https://contentisking.guru">Content is King Srl</a></span><span class="lic">Licenza <a href="https://github.com/davide-cik/seomcp/blob/main/LICENSE">MIT</a> · <a href="https://github.com/davide-cik/seomcp">GitHub</a></span></p>
-      <p class="small">© 2026 Zuzai · <a href="https://contentisking.guru">Content is King Srl</a> · via Carducci 8, 20814 Varedo (MB) · P.IVA IT11732600967</p>
-      <p class="small">Progetto indipendente, non affiliato a Google, Microsoft, Anthropic né OpenAI. Search Console, Bing Webmaster Tools, Claude e ChatGPT sono marchi dei rispettivi proprietari.</p>
-      <p class="small promo">Hai già provato <a href="https://zuzai.io/" target="_blank" rel="noopener">Zuzai</a>? È il nostro URL shortener fenomenale.</p>
-    </div>
-  </footer>
+  <!--#include virtual="/_partials/footer.html" -->
   <script src="app.js" defer></script>
 </body>
 </html>

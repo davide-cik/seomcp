@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.13 — 2026-09-28
+
+- Landing convertita agli include SSI; il passo 2 porta alle guide dei singoli assistenti.
+- Link a Zuzai in una nuova scheda.
+- Correzioni mobile: percorso di navigazione visibile, pulsante Copia che non copre il codice.
+
 ## 0.1.12 — 2026-09-28
 
 - Guide di installazione dedicate per ogni assistente in `site/installa/`: Claude Code, Claude Desktop, ChatGPT e Codex, GitHub Copilot (VS Code e CLI), Gemini CLI, Mistral Vibe CLI.

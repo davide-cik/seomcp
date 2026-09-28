@@ -70,10 +70,10 @@ code { font-family: var(--mono); font-size: 0.88em; background: var(--bg-soft); 
 .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; color: var(--heading); text-decoration: none; }
 .brand svg { color: var(--accent); }
-nav { display: flex; align-items: center; gap: 20px; }
-nav a:not(.btn) { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
-nav a:not(.btn):hover { color: var(--heading); }
-@media (max-width: 640px) { nav a:not(.btn) { display: none; } }
+.top nav { display: flex; align-items: center; gap: 20px; }
+.top nav a:not(.btn) { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+.top nav a:not(.btn):hover { color: var(--heading); }
+@media (max-width: 640px) { .top nav a:not(.btn) { display: none; } }
 
 /* Bottoni */
 .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px; border-radius: var(--radius-btn); font-weight: 600; text-decoration: none; border: 1px solid transparent; }
@@ -168,18 +168,6 @@ section[id] { scroll-margin-top: 72px; }
 .foot .promo { margin-top: 14px; }
 .foot .promo a { font-weight: 600; }
 
-/* Configurazioni per client: sezioni espandibili, senza JavaScript. */
-.clients { display: grid; gap: 10px; margin: 16px 0; }
-.client { border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); }
-.client summary { cursor: pointer; padding: 12px 16px; font-weight: 600; color: var(--heading); list-style: none; display: flex; justify-content: space-between; align-items: center; }
-.client summary::-webkit-details-marker { display: none; }
-.client summary::after { content: "+"; font-weight: 400; font-size: 1.3rem; line-height: 1; color: var(--accent); }
-.client[open] summary::after { content: "−"; }
-.client[open] summary { border-bottom: 1px solid var(--border); }
-.client > p, .client > pre { margin-left: 16px; margin-right: 16px; }
-.client > p { margin-top: 12px; }
-.client > pre { margin-bottom: 14px; }
-.clients > * { min-width: 0; }
 
 /* Pagine di guida (installa/*) */
 .doc { padding: 40px 0 72px; }
@@ -202,3 +190,6 @@ kbd { font-family: var(--mono); font-size: 0.85em; border: 1px solid var(--borde
 .client-card strong { color: var(--heading); }
 .client-card strong::after { content: " →"; color: var(--accent); }
 .client-card span { font-size: 0.88rem; color: var(--muted); }
+
+/* Spazio per il pulsante Copia sopra il codice, così non copre il testo. */
+.code:has(.copy) { padding-top: 40px; }
