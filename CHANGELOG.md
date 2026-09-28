@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.21 — 2026-09-28
+
+- Sito: le novità sono raggruppate in un unico menu a tendina "Novità" (schema.org, GEO/AEO, Core Web Vitals, Google Analytics 4), che funziona anche senza JavaScript e si chiude con Esc o cliccando fuori.
+
 ## 0.1.20 — 2026-09-28
 
 - **Validatore schema.org** (`schema_validate`), su URL o JSON-LD incollato, in locale:

@@ -16,3 +16,18 @@ document.querySelectorAll('pre.code').forEach((pre) => {
   });
   pre.appendChild(btn);
 });
+
+// Menu "Novità": si chiude cliccando fuori, con Esc o scegliendo una voce.
+const menu = document.querySelector('.nav-menu');
+if (menu) {
+  document.addEventListener('click', (e) => {
+    if (menu.open && !menu.contains(e.target)) menu.open = false;
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.open) {
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    }
+  });
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => (menu.open = false)));
+}
