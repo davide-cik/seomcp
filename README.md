@@ -1,2 +1,142 @@
 # seomcp
-MCP server per tutti
+
+**Google Search Console e Bing Webmaster Tools dentro Claude.** Open source, gratuito, in italiano.
+
+[🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · Licenza [MIT](LICENSE)
+
+`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette a Claude (Claude Code, Claude Desktop e altri client MCP) di leggere i dati dei tuoi siti da Search Console e Bing Webmaster Tools. Così puoi chiedere, in italiano:
+
+> Quali query sono in posizione 4-20 negli ultimi 90 giorni, e quali pagine dovrei ottimizzare per prime?
+>
+> Confronta questo mese con lo stesso periodo dell'anno scorso e segnala i cali di clic sopra il 30%.
+>
+> Questa pagina è indicizzata? Quale canonical ha scelto Google?
+>
+> Su Bing come va rispetto a Google la query "scarpe da trekking"?
+
+## Perché fidarsi
+
+Affidare le credenziali di Search Console a uno strumento è una decisione seria. `seomcp` è costruito per essere facile da verificare:
+
+- **Sola lettura.** Chiede a Google solo lo scope `webmasters.readonly`: non può modificare nulla nelle tue proprietà.
+- **Le credenziali restano sul tuo computer.** Nessun server intermedio, nessun gateway di terzi, nessuna telemetria.
+- **Solo librerie ufficiali:** l'SDK MCP, `@googleapis/searchconsole` e `google-auth-library`. Bing è una semplice chiamata REST.
+- **Codice piccolo e leggibile.** Circa 1.500 righe di TypeScript in [`src/`](src): leggerlo prima di installarlo è alla portata di chiunque.
+- **Nessun uso improprio della Google Indexing API**, che Google riserva alle offerte di lavoro e alle dirette video.
+
+## Tool disponibili
+
+| Tool | Cosa fa |
+|---|---|
+| `seomcp_status` | Verifica cosa è configurato e spiega cosa manca |
+| `gsc_list_sites` | Proprietà Search Console accessibili |
+| `gsc_performance` | Clic, impressioni, CTR e posizione per query, pagina, paese, dispositivo, data, con filtri |
+| `gsc_compare_periods` | Confronto con il periodo precedente o con l'anno prima: cali e crescite |
+| `gsc_striking_distance` | Query "a distanza di tiro" (posizione 4-20) ordinate per potenziale |
+| `gsc_inspect_url` | Stato di indicizzazione, canonical, ultima scansione, rich result |
+| `gsc_list_sitemaps` | Sitemap inviate, errori e avvisi |
+| `bing_list_sites` | Siti nel tuo account Bing Webmaster |
+| `bing_query_stats` | Performance per query su Bing |
+| `bing_page_stats` | Performance per pagina su Bing |
+| `bing_keyword_stats` | Volumi di ricerca di una keyword (default Italia / italiano) |
+
+Le analisi più complesse (cannibalizzazione, content gap, report) le fa Claude ragionando sui dati: non serve codificarle nel server.
+
+## Installazione
+
+Serve **Node.js 22 o superiore**. Configura solo le fonti che usi: Google e Bing sono entrambe facoltative.
+
+### 1. Prepara le credenziali
+
+- **Google Search Console:** segui la [guida passo passo](docs/google-setup.md). Puoi scegliere tra un service account (comodo per i team) e OAuth con un client tuo (comodo per il singolo professionista).
+- **Bing Webmaster Tools:** genera una API key in due minuti, come spiegato nella [guida](docs/bing-setup.md).
+
+### 2. Aggiungilo a Claude Code
+
+```bash
+claude mcp add seomcp -s user \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/percorso/service-account.json \
+  -e BING_WEBMASTER_API_KEY=la-tua-chiave \
+  -e SEOMCP_GSC_SITE=sc-domain:tuosito.it \
+  -e SEOMCP_BING_SITE=https://www.tuosito.it/ \
+  -- npx -y @contentisking/seomcp
+```
+
+Poi verifica con `/mcp` che `seomcp` risulti connesso.
+
+### Oppure a Claude Desktop
+
+In `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "seomcp": {
+      "command": "npx",
+      "args": ["-y", "@contentisking/seomcp"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
+        "BING_WEBMASTER_API_KEY": "la-tua-chiave",
+        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
+      }
+    }
+  }
+}
+```
+
+### 3. Controlla che funzioni
+
+```bash
+npx @contentisking/seomcp doctor
+```
+
+Il comando prova ogni fonte e ti dice esattamente cosa manca. Ad esempio: "aggiungi `seomcp@progetto.iam.gserviceaccount.com` come utente della proprietà".
+
+## Configurazione
+
+| Variabile | Descrizione |
+|---|---|
+| `GOOGLE_APPLICATION_CREDENTIALS` | Percorso del file JSON del service account |
+| `SEOMCP_GOOGLE_CLIENT_ID` / `SEOMCP_GOOGLE_CLIENT_SECRET` | Client OAuth tuo, in alternativa al service account |
+| `BING_WEBMASTER_API_KEY` | API key di Bing Webmaster Tools |
+| `SEOMCP_GSC_SITE` | Proprietà predefinita: `sc-domain:tuosito.it` oppure `https://www.tuosito.it/` |
+| `SEOMCP_BING_SITE` | Sito Bing predefinito, es. `https://www.tuosito.it/` |
+| `SEOMCP_COUNTRY` / `SEOMCP_LANGUAGE` | Mercato per i volumi keyword Bing (default `it` / `it-IT`) |
+| `SEOMCP_CONFIG_DIR` | Cartella di configurazione (default `~/.config/seomcp`) |
+
+In alternativa alle variabili d'ambiente puoi usare `~/.config/seomcp/config.json`:
+
+```json
+{
+  "google": { "serviceAccountFile": "/percorso/service-account.json" },
+  "bing": { "apiKey": "la-tua-chiave" },
+  "defaults": { "gscSite": "sc-domain:tuosito.it", "bingSite": "https://www.tuosito.it/" }
+}
+```
+
+Se il file contiene chiavi, rendilo leggibile solo a te: `chmod 600 ~/.config/seomcp/config.json`.
+
+## Usarlo come libreria
+
+I client funzionano anche senza MCP e non leggono né file né variabili d'ambiente. Per questo puoi usarli dentro un'applicazione tua, anche multi-utente, passando le credenziali di ciascun utente:
+
+```ts
+import { GscClient, BingClient, strikingDistance, lastNDays } from '@contentisking/seomcp';
+import { OAuth2Client } from 'google-auth-library';
+
+const auth = new OAuth2Client({ clientId, clientSecret });
+auth.setCredentials({ refresh_token: utente.googleRefreshToken });
+
+const gsc = new GscClient(auth);
+const rows = await gsc.query({ siteUrl: 'sc-domain:esempio.it', ...lastNDays(90), dimensions: ['query', 'page'], rowLimit: 5000 });
+const opportunita = strikingDistance(rows);
+
+const bing = new BingClient({ apiKey: utente.bingApiKey });
+const stats = await bing.getQueryStats('https://www.esempio.it/');
+```
+
+## Stato del progetto e supporto
+
+`seomcp` è mantenuto da [Content is King](https://contentisking.guru) **nel tempo libero**, senza garanzie di supporto. Segnalazioni e pull request sono benvenute: leggi [CONTRIBUTING.md](CONTRIBUTING.md). Per le vulnerabilità segui invece [SECURITY.md](SECURITY.md).
+
+Non è un prodotto Google né Microsoft e non è affiliato a nessuna delle due aziende. Search Console e Bing Webmaster Tools sono marchi dei rispettivi proprietari.
