@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.9 — 2026-09-28
+
+- Landing: riga nel footer che presenta Zuzai, l'URL shortener di Content is King.
+
 ## 0.1.8 — 2026-09-28
 
 - Landing: "Licenza MIT · GitHub" allineato a destra nel footer.

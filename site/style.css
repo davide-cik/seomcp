@@ -165,3 +165,5 @@ section { padding: 72px 0; }
 section[id] { scroll-margin-top: 72px; }
 .foot .made { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 24px; }
 .foot .made .lic { font-weight: 400; color: var(--text); white-space: nowrap; margin-left: auto; }
+.foot .promo { margin-top: 14px; }
+.foot .promo a { font-weight: 600; }
