@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.8 — 2026-09-28
+
+- Landing: "Licenza MIT · GitHub" allineato a destra nel footer.
+
 ## 0.1.7 — 2026-09-28
 
 - Landing: footer "Piattaforma MCP sviluppata in Italia", con licenza e GitHub sulla stessa riga.

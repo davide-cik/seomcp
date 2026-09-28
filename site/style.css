@@ -163,5 +163,5 @@ section { padding: 72px 0; }
 
 /* Le ancore del menu non devono finire sotto l'intestazione fissa. */
 section[id] { scroll-margin-top: 72px; }
-.foot .made .sep { margin: 0 0.6em; color: var(--muted); font-weight: 400; }
-.foot .made .lic { font-weight: 400; color: var(--text); white-space: nowrap; }
+.foot .made { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 24px; }
+.foot .made .lic { font-weight: 400; color: var(--text); white-space: nowrap; margin-left: auto; }
