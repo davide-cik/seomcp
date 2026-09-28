@@ -156,3 +156,4 @@ section { padding: 72px 0; }
   .btn-primary, .btn-primary:hover, .steps > li::before { color: #06101C; }
   .btn-primary:hover { background: #7DB2EA; }
 }
+.foot .made { font-weight: 600; color: var(--heading); margin-bottom: 10px; }

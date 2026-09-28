@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>seomcp — Search Console e Bing Webmaster dentro Claude</title>
-  <meta name="description" content="Server MCP open source e gratuito che collega Google Search Console e Bing Webmaster Tools a Claude. Sola lettura, credenziali sul tuo computer, nessuna telemetria.">
+  <title>seomcp — Search Console e Bing Webmaster dentro Claude e ChatGPT</title>
+  <meta name="description" content="Server MCP open source e gratuito che collega Google Search Console e Bing Webmaster Tools a Claude e ChatGPT. Sola lettura, credenziali sul tuo computer, nessuna telemetria.">
   <link rel="canonical" href="https://seomcp.contentisking.guru/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="seomcp — Search Console e Bing Webmaster dentro Claude">
+  <meta property="og:title" content="seomcp — Search Console e Bing Webmaster dentro Claude e ChatGPT">
   <meta property="og:description" content="Open source, gratuito, in italiano. Sola lettura, le credenziali restano sul tuo computer.">
   <meta property="og:url" content="https://seomcp.contentisking.guru/">
   <meta property="og:locale" content="it_IT">
@@ -19,14 +19,14 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "seomcp",
-    "description": "Server MCP open source per Google Search Console e Bing Webmaster Tools.",
+    "description": "Server MCP open source per Google Search Console e Bing Webmaster Tools, per Claude, ChatGPT e altri client MCP.",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Windows, macOS, Linux",
     "license": "https://opensource.org/licenses/MIT",
     "url": "https://seomcp.contentisking.guru/",
     "codeRepository": "https://github.com/davide-cik/seomcp",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
-    "author": { "@type": "Organization", "name": "Content is King", "url": "https://contentisking.guru" }
+    "author": { "@type": "Organization", "name": "Content is King Srl", "url": "https://contentisking.guru", "vatID": "IT11732600967", "address": { "@type": "PostalAddress", "streetAddress": "via Carducci 8", "postalCode": "20814", "addressLocality": "Varedo", "addressRegion": "MB", "addressCountry": "IT" } }
   }
   </script>
 </head>
@@ -53,13 +53,13 @@
       <div class="wrap hero-grid">
         <div>
           <p class="eyebrow">Open source · Gratuito · In italiano</p>
-          <h1>Search Console e Bing Webmaster, <span class="accent">dentro Claude</span>.</h1>
-          <p class="lead">Un server MCP che permette a Claude di leggere i dati dei tuoi siti. Fai domande in italiano e ottieni analisi sui dati veri. Le credenziali restano sul tuo computer.</p>
+          <h1>Search Console e Bing Webmaster, <span class="accent">dentro Claude e ChatGPT</span>.</h1>
+          <p class="lead">Un server MCP che permette a Claude e ChatGPT di leggere i dati dei tuoi siti. Fai domande in italiano e ottieni analisi sui dati veri. Le credenziali restano sul tuo computer.</p>
           <div class="cta">
             <a class="btn btn-primary" href="#installa">Installa in 3 passi</a>
             <a class="btn btn-ghost" href="https://github.com/davide-cik/seomcp">Leggi il codice</a>
           </div>
-          <p class="meta">Licenza MIT · Node.js 22+ · Claude Code, Claude Desktop e altri client MCP</p>
+          <p class="meta">Licenza MIT · Node.js 22+ · Claude Code, Claude Desktop, app desktop di ChatGPT, Codex e altri client MCP</p>
         </div>
 
         <figure class="chat" aria-label="Esempio di conversazione">
@@ -118,7 +118,7 @@
     <section id="domande">
       <div class="wrap">
         <h2>Cosa puoi chiedere</h2>
-        <p class="section-lead">Il server restituisce dati puliti. Le analisi le fa Claude, ragionando su quei dati.</p>
+        <p class="section-lead">Il server restituisce dati puliti. Le analisi le fa l'assistente, ragionando su quei dati.</p>
         <ul class="prompts">
           <li>Confronta questo mese con lo stesso periodo dell'anno scorso e segnala i cali di clic sopra il 30%.</li>
           <li>Ci sono query per cui competono due pagine diverse del sito?</li>
@@ -173,13 +173,23 @@
             <p class="links"><a href="https://github.com/davide-cik/seomcp/blob/main/docs/google-setup.md">Guida Google →</a> <a href="https://github.com/davide-cik/seomcp/blob/main/docs/bing-setup.md">Guida Bing →</a></p>
           </li>
           <li>
-            <h3>Aggiungilo a Claude Code</h3>
+            <h3>Collegalo al tuo assistente</h3>
+            <p class="small"><strong>Claude Code</strong>, da terminale:</p>
 <pre class="code"><code>claude mcp add seomcp -s user \
   -e GOOGLE_APPLICATION_CREDENTIALS=/percorso/service-account.json \
   -e BING_WEBMASTER_API_KEY=la-tua-chiave \
   -e SEOMCP_GSC_SITE=sc-domain:tuosito.it \
   -- npx -y @contentisking/seomcp</code></pre>
-            <p class="small">Usi Claude Desktop? Trovi la configurazione JSON nel <a href="https://github.com/davide-cik/seomcp#oppure-a-claude-desktop">README</a>.</p>
+            <p class="small"><strong>ChatGPT</strong>, app desktop o Codex: da <em>Impostazioni → MCP servers → Add server → STDIO</em>, oppure in <code>~/.codex/config.toml</code>:</p>
+<pre class="code"><code>[mcp_servers.seomcp]
+command = "npx"
+args = ["-y", "@contentisking/seomcp"]
+
+[mcp_servers.seomcp.env]
+GOOGLE_APPLICATION_CREDENTIALS = "/percorso/service-account.json"
+BING_WEBMASTER_API_KEY = "la-tua-chiave"
+SEOMCP_GSC_SITE = "sc-domain:tuosito.it"</code></pre>
+            <p class="small">ChatGPT sul web supporta solo server remoti, quindi serve l'app desktop. Per Claude Desktop trovi la configurazione JSON nel <a href="https://github.com/davide-cik/seomcp#oppure-a-claude-desktop">README</a>.</p>
           </li>
           <li>
             <h3>Controlla che funzioni</h3>
@@ -218,8 +228,10 @@ strikingDistance(rows);</code></pre>
 
   <footer class="foot">
     <div class="wrap foot-inner">
-      <p>Un progetto di <a href="https://contentisking.guru">Content is King</a> · Licenza <a href="https://github.com/davide-cik/seomcp/blob/main/LICENSE">MIT</a> · <a href="https://github.com/davide-cik/seomcp">GitHub</a></p>
-      <p class="small">Non affiliato a Google né a Microsoft. Search Console e Bing Webmaster Tools sono marchi dei rispettivi proprietari.</p>
+      <p class="made">Piattaforma MCP in Italia con <span role="img" aria-label="amore">❤️</span>, <span role="img" aria-label="cervello">🧠</span>, <span role="img" aria-label="forza">💪</span> e <span role="img" aria-label="robot">🤖</span> da <a href="https://contentisking.guru">Content is King Srl</a></p>
+      <p>Licenza <a href="https://github.com/davide-cik/seomcp/blob/main/LICENSE">MIT</a> · <a href="https://github.com/davide-cik/seomcp">GitHub</a></p>
+      <p class="small">© 2026 Zuzai · <a href="https://contentisking.guru">Content is King Srl</a> · via Carducci 8, 20814 Varedo (MB) · P.IVA IT11732600967</p>
+      <p class="small">Progetto indipendente, non affiliato a Google, Microsoft, Anthropic né OpenAI. Search Console, Bing Webmaster Tools, Claude e ChatGPT sono marchi dei rispettivi proprietari.</p>
     </div>
   </footer>
   <script src="app.js" defer></script>

@@ -1,10 +1,10 @@
 # seomcp
 
-**Google Search Console and Bing Webmaster Tools inside Claude.** Open source, free, made in Italy.
+**Google Search Console and Bing Webmaster Tools inside Claude and ChatGPT.** Open source, free, made in Italy.
 
 [🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [MIT](LICENSE) license
 
-`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets Claude (Claude Code, Claude Desktop and other MCP clients) read your sites' data from Search Console and Bing Webmaster Tools. Ask things like:
+`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets Claude (Claude Code, Claude Desktop), ChatGPT (desktop app and Codex) and other MCP clients read your sites' data from Search Console and Bing Webmaster Tools. Ask things like:
 
 > Which queries rank in positions 4-20 over the last 90 days, and which pages should I optimize first?
 >
@@ -52,6 +52,8 @@ Requires **Node.js 22+**. Configure only the sources you use.
      -- npx -y @contentisking/seomcp
    ```
 
+   **ChatGPT desktop app / Codex:** *Settings → MCP servers → Add server → STDIO* with `npx -y @contentisking/seomcp`, or add it to `~/.codex/config.toml` (see the [Italian README](README.md#oppure-a-chatgpt-app-desktop-o-codex)). ChatGPT on the web only supports remote MCP servers.
+
 3. **Check:** `npx @contentisking/seomcp doctor`
 
 All environment variables are listed in the [Italian README](README.md#configurazione).
@@ -69,4 +71,4 @@ const gsc = new GscClient(oauth2ClientWithUserRefreshToken);
 
 Maintained by [Content is King](https://contentisking.guru) **in our spare time**, with no support guarantees. Issues and pull requests are welcome: see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Not affiliated with Google or Microsoft.
+Independent project, not affiliated with Google, Microsoft, Anthropic or OpenAI.

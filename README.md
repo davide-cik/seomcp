@@ -1,10 +1,10 @@
 # seomcp
 
-**Google Search Console e Bing Webmaster Tools dentro Claude.** Open source, gratuito, in italiano.
+**Google Search Console e Bing Webmaster Tools dentro Claude e ChatGPT.** Open source, gratuito, in italiano.
 
 [🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · Licenza [MIT](LICENSE)
 
-`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette a Claude (Claude Code, Claude Desktop e altri client MCP) di leggere i dati dei tuoi siti da Search Console e Bing Webmaster Tools. Così puoi chiedere, in italiano:
+`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette a Claude (Claude Code, Claude Desktop), a ChatGPT (app desktop e Codex) e ad altri client MCP di leggere i dati dei tuoi siti da Search Console e Bing Webmaster Tools. Così puoi chiedere, in italiano:
 
 > Quali query sono in posizione 4-20 negli ultimi 90 giorni, e quali pagine dovrei ottimizzare per prime?
 >
@@ -40,7 +40,7 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 | `bing_page_stats` | Performance per pagina su Bing |
 | `bing_keyword_stats` | Volumi di ricerca di una keyword (default Italia / italiano) |
 
-Le analisi più complesse (cannibalizzazione, content gap, report) le fa Claude ragionando sui dati: non serve codificarle nel server.
+Le analisi più complesse (cannibalizzazione, content gap, report) le fa l'assistente ragionando sui dati: non serve codificarle nel server.
 
 ## Installazione
 
@@ -83,6 +83,23 @@ In `claude_desktop_config.json`:
   }
 }
 ```
+
+### Oppure a ChatGPT (app desktop o Codex)
+
+Da **Impostazioni → MCP servers → Add server**, scegli **STDIO** e inserisci il comando `npx -y @contentisking/seomcp` con le variabili d'ambiente. In alternativa aggiungi a `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.seomcp]
+command = "npx"
+args = ["-y", "@contentisking/seomcp"]
+
+[mcp_servers.seomcp.env]
+GOOGLE_APPLICATION_CREDENTIALS = "/percorso/service-account.json"
+BING_WEBMASTER_API_KEY = "la-tua-chiave"
+SEOMCP_GSC_SITE = "sc-domain:tuosito.it"
+```
+
+ChatGPT sul web (chatgpt.com) supporta solo server MCP remoti, quindi serve l'app desktop.
 
 ### 3. Controlla che funzioni
 
@@ -139,4 +156,4 @@ const stats = await bing.getQueryStats('https://www.esempio.it/');
 
 `seomcp` è mantenuto da [Content is King](https://contentisking.guru) **nel tempo libero**, senza garanzie di supporto. Segnalazioni e pull request sono benvenute: leggi [CONTRIBUTING.md](CONTRIBUTING.md). Per le vulnerabilità segui invece [SECURITY.md](SECURITY.md).
 
-Non è un prodotto Google né Microsoft e non è affiliato a nessuna delle due aziende. Search Console e Bing Webmaster Tools sono marchi dei rispettivi proprietari.
+È un progetto indipendente, non affiliato a Google, Microsoft, Anthropic né OpenAI. Search Console, Bing Webmaster Tools, Claude e ChatGPT sono marchi dei rispettivi proprietari.

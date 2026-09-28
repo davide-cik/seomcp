@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2 — 2026-09-28
+
+- Supporto documentato per ChatGPT (app desktop e Codex) oltre a Claude: istruzioni in landing e README, configurazione `~/.codex/config.toml`.
+- Footer della landing con i dati di Content is King Srl.
+
 ## 0.1.1 — 2026-09-28
 
 - Landing statica per seomcp.contentisking.guru in `site/`: nessuna risorsa esterna, nessun tracker, tema chiaro/scuro, JSON-LD, sitemap, llms.txt.

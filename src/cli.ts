@@ -13,7 +13,7 @@ const log = (msg: string) => process.stderr.write(`${msg}\n`);
 const HELP = `seomcp ${VERSION} — MCP per Google Search Console e Bing Webmaster Tools
 
 Uso:
-  seomcp                 avvia il server MCP (stdio), è ciò che lancia Claude
+  seomcp                 avvia il server MCP (stdio), è ciò che lancia il client (Claude, ChatGPT…)
   seomcp doctor          verifica la configurazione e le credenziali
   seomcp auth google     autorizza l'accesso OAuth a Search Console (una tantum)
   seomcp --version
