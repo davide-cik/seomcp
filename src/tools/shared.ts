@@ -3,6 +3,7 @@ import { z } from 'zod';
 import type { BingClient } from '../core/bing.js';
 import { lastNDays, isIsoDate } from '../core/dates.js';
 import { SeoMcpError } from '../core/errors.js';
+import type { GaClient } from '../core/ga.js';
 import type { GscClient } from '../core/gsc.js';
 import type { DiagnosticItem } from '../doctor.js';
 
@@ -10,7 +11,8 @@ import type { DiagnosticItem } from '../doctor.js';
 export interface ToolContext {
   gsc: () => GscClient;
   bing: () => BingClient;
-  defaults: { gscSite?: string; bingSite?: string; country: string; language: string };
+  ga: () => GaClient;
+  defaults: { gscSite?: string; bingSite?: string; gaProperty?: string; country: string; language: string };
   diagnose: () => Promise<DiagnosticItem[]>;
 }
 
@@ -22,7 +24,8 @@ export const dateRangeShape = {
   days: z.number().int().min(1).max(480).default(28).describe('Giorni da analizzare se startDate/endDate non sono indicati.'),
 };
 
-export function resolveRange(args: { startDate?: string; endDate?: string; days: number }): {
+/** `lagDays`: giorni di ritardo dei dati (Search Console circa 3, Analytics circa 1). */
+export function resolveRange(args: { startDate?: string; endDate?: string; days: number }, lagDays = 3): {
   startDate: string;
   endDate: string;
 } {
@@ -30,7 +33,17 @@ export function resolveRange(args: { startDate?: string; endDate?: string; days:
   if (args.startDate || args.endDate) {
     throw new SeoMcpError('INVALID_INPUT', 'Indica sia startDate sia endDate, oppure nessuna delle due.');
   }
-  return lastNDays(args.days);
+  return lastNDays(args.days, lagDays);
+}
+
+export function resolveProperty(value: string | undefined, fallback: string | undefined): string {
+  const property = value ?? fallback;
+  if (property) return property;
+  throw new SeoMcpError(
+    'INVALID_INPUT',
+    'Nessuna proprietà Google Analytics indicata.',
+    'Passa property (usa ga_list_properties per vedere gli ID) oppure imposta SEOMCP_GA_PROPERTY.',
+  );
 }
 
 export function resolveSite(value: string | undefined, fallback: string | undefined, source: 'gsc' | 'bing'): string {

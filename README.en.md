@@ -1,10 +1,10 @@
 # seomcp
 
-**Google Search Console and Bing Webmaster Tools inside Claude and ChatGPT.** Open source, free, made in Italy.
+**Google Search Console, Google Analytics 4 and Bing Webmaster Tools inside your AI assistant.** Open source, free, made in Italy.
 
 [🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [MIT](LICENSE) license
 
-`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console and Bing Webmaster Tools. Ask things like:
+`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4 and Bing Webmaster Tools. Ask things like:
 
 > Which queries rank in positions 4-20 over the last 90 days, and which pages should I optimize first?
 >
@@ -14,10 +14,10 @@
 
 ## Why you can trust it
 
-- **Read-only.** It only requests the `webmasters.readonly` Google scope and cannot change anything in your properties.
+- **Read-only.** It only requests the `webmasters.readonly` and `analytics.readonly` Google scopes and cannot change anything in your properties.
 - **Your credentials stay on your machine.** No intermediate server, no third-party gateway, no telemetry.
-- **Official libraries only:** the MCP SDK, `@googleapis/searchconsole` and `google-auth-library`. Bing is a plain REST call.
-- **Small, readable codebase.** About 1,500 lines of TypeScript in [`src/`](src), easy to audit before you install it.
+- **Official libraries only:** the MCP SDK, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin` and `google-auth-library`. Bing is a plain REST call.
+- **Small, readable codebase.** About 2,000 lines of TypeScript in [`src/`](src), easy to audit before you install it.
 - **No misuse of the Google Indexing API**, which Google reserves for job postings and livestreams.
 
 ## Tools
@@ -31,6 +31,11 @@
 | `gsc_striking_distance` | "Striking distance" queries (positions 4-20), sorted by potential |
 | `gsc_inspect_url` | Index status, canonical, last crawl, rich results |
 | `gsc_list_sitemaps` | Submitted sitemaps, errors and warnings |
+| `ga_list_properties` | Accessible Google Analytics 4 properties and their IDs |
+| `ga_report` | Free-form report: any dimensions, metrics and filters |
+| `ga_organic_landing_pages` | Organic search landing pages: sessions, engagement, key events, revenue |
+| `ga_compare_periods` | Period comparison on any metric: losers and gainers |
+| `ga_realtime` | Active users in the last 30 minutes |
 | `bing_list_sites` | Sites in your Bing Webmaster account |
 | `bing_query_stats` | Bing performance by query |
 | `bing_page_stats` | Bing performance by page |
@@ -42,7 +47,7 @@
 
 Requires **Node.js 22+**. Configure only the sources you use.
 
-1. **Credentials:** see the setup guides for [Google](docs/google-setup.md) and [Bing](docs/bing-setup.md). They are in Italian, and the steps are the same in English UIs.
+1. **Credentials:** see the setup guides for [Google](docs/google-setup.md), [Google Analytics](docs/google-analytics-setup.md) and [Bing](docs/bing-setup.md). They are in Italian, and the steps are the same in English UIs.
 2. **Claude Code:**
 
    ```bash

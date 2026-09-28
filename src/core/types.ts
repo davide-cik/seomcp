@@ -88,3 +88,47 @@ export interface BingKeywordStatsRow {
   impressions: number;
   broadImpressions: number;
 }
+
+export interface GaProperty {
+  /** Formato "properties/123456789". */
+  property: string;
+  displayName: string;
+  account: string;
+  accountName: string;
+}
+
+export type GaMatchType = 'EXACT' | 'CONTAINS' | 'BEGINS_WITH' | 'ENDS_WITH' | 'FULL_REGEXP' | 'PARTIAL_REGEXP';
+
+export interface GaFilter {
+  /** Nome della dimensione, es. "sessionDefaultChannelGroup" o "landingPage". */
+  field: string;
+  matchType?: GaMatchType;
+  value: string;
+  /** true per escludere le righe che corrispondono. */
+  exclude?: boolean;
+}
+
+export interface GaReportParams {
+  property: string;
+  startDate: string;
+  endDate: string;
+  dimensions?: string[];
+  metrics: string[];
+  filters?: GaFilter[];
+  /** Metrica (o dimensione) per l'ordinamento, decrescente. Default: la prima metrica. */
+  orderBy?: string;
+  limit?: number;
+  offset?: number;
+}
+
+/** Una riga di report GA4: dimensioni come testo, metriche come numeri. */
+export interface GaRow {
+  dimensions: Record<string, string>;
+  metrics: Record<string, number>;
+}
+
+export interface GaReport {
+  rows: GaRow[];
+  /** Righe totali disponibili (oltre il limite richiesto). */
+  rowCount: number;
+}

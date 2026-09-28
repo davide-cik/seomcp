@@ -6,11 +6,14 @@
  *   import { GscClient, BingClient } from '@contentisking/seomcp';
  */
 export { GscClient, GSC_SCOPES, GSC_MAX_ROWS, type GscAuth } from './core/gsc.js';
+export { GaClient, GA_SCOPES, GA_MAX_ROWS, normalizeProperty } from './core/ga.js';
 export { BingClient, BING_API_BASE, parseBingDate, type BingClientOptions } from './core/bing.js';
 export {
   comparePeriods,
   strikingDistance,
   aggregateBingStats,
+  compareGaPeriods,
+  type GaComparisonRow,
   type PeriodComparisonRow,
   type StrikingDistanceOptions,
   type BingAggregateRow,

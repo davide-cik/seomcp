@@ -1,5 +1,7 @@
 # Configurare Google Search Console
 
+> Vuoi anche Google Analytics 4? Completa prima questa guida, poi segui la [guida Analytics](google-analytics-setup.md): usa le stesse credenziali.
+
 Hai due strade. Scegline una.
 
 | | Service account | OAuth con client tuo |

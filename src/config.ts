@@ -22,6 +22,7 @@ const fileSchema = z
       .object({
         gscSite: z.string().optional(),
         bingSite: z.string().optional(),
+        gaProperty: z.string().optional(),
         country: z.string().optional(),
         language: z.string().optional(),
       })
@@ -44,6 +45,7 @@ export interface SeoMcpConfig {
   defaults: {
     gscSite?: string;
     bingSite?: string;
+    gaProperty?: string;
     country: string;
     language: string;
   };
@@ -80,6 +82,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): SeoMcpConfig {
     defaults: {
       gscSite: env.SEOMCP_GSC_SITE || file.defaults?.gscSite,
       bingSite: env.SEOMCP_BING_SITE || file.defaults?.bingSite,
+      gaProperty: env.SEOMCP_GA_PROPERTY || file.defaults?.gaProperty,
       country: env.SEOMCP_COUNTRY || file.defaults?.country || 'it',
       language: env.SEOMCP_LANGUAGE || file.defaults?.language || 'it-IT',
     },

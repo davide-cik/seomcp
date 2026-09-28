@@ -1,6 +1,7 @@
 import { searchconsole, type searchconsole_v1 } from '@googleapis/searchconsole';
 import { isIsoDate } from './dates.js';
 import { SeoMcpError } from './errors.js';
+import { googleError } from './google-errors.js';
 import type { GscQueryParams, GscSite, GscSitemap, PerformanceRow, UrlInspection } from './types.js';
 
 /** Scope minimo: sola lettura. Il server non può modificare nulla in Search Console. */
@@ -118,29 +119,11 @@ export class GscClient {
 }
 
 function toSeoMcpError(err: unknown, siteUrl?: string): SeoMcpError {
-  const e = err as { status?: number; code?: number | string; response?: { status?: number }; message?: string };
-  const status = e.response?.status ?? e.status ?? (typeof e.code === 'number' ? e.code : undefined);
   const site = siteUrl ? ` "${siteUrl}"` : '';
-
-  if (status === 401) {
-    return new SeoMcpError(
-      'AUTH_FAILED',
-      'Autenticazione Google non valida o scaduta.',
-      'Esegui `npx @contentisking/seomcp doctor`. Con OAuth, ripeti `npx @contentisking/seomcp auth google`.',
-    );
-  }
-  if (status === 403) {
-    return new SeoMcpError(
-      'PERMISSION_DENIED',
-      `Nessun accesso alla proprietà${site} in Search Console.`,
+  return googleError(err, {
+    apiName: 'Google Search Console API',
+    permissionMessage: `Nessun accesso alla proprietà${site} in Search Console.`,
+    permissionHint:
       "Aggiungi l'email del service account (o del tuo account) come utente della proprietà in Search Console → Impostazioni → Utenti e autorizzazioni. Controlla anche il formato: \"sc-domain:esempio.it\" per le proprietà di dominio, \"https://www.esempio.it/\" per quelle con prefisso URL.",
-    );
-  }
-  if (status === 429) {
-    return new SeoMcpError('QUOTA_EXCEEDED', 'Quota della Search Console API superata.', 'Riprova tra qualche minuto.');
-  }
-  if (status === 400) {
-    return new SeoMcpError('INVALID_INPUT', `Richiesta non valida: ${e.message ?? 'parametri errati'}`);
-  }
-  return new SeoMcpError('UPSTREAM_ERROR', `Errore dalla Search Console API: ${e.message ?? 'sconosciuto'}`);
+  });
 }

@@ -1,8 +1,9 @@
 # seomcp
 
-> Server MCP open source (licenza MIT) che collega Google Search Console e Bing Webmaster Tools a Claude, ChatGPT (app desktop e Codex), GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP. Sola lettura, credenziali sul computer dell'utente, nessuna telemetria. Mantenuto da Content is King.
+> Server MCP open source (licenza MIT) che collega Google Search Console, Google Analytics 4 e Bing Webmaster Tools a Claude, ChatGPT (app desktop e Codex), GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP. Sola lettura, credenziali sul computer dell'utente, nessuna telemetria. Mantenuto da Content is King.
 
 - [Repository e README](https://github.com/davide-cik/seomcp): installazione, configurazione, elenco dei tool
+- [Google Analytics 4](https://seomcp.contentisking.guru/google-analytics/): report GA4 in sola lettura, traffico organico e conversioni
 - [Guide di installazione per ogni assistente](https://seomcp.contentisking.guru/installa/): Claude Code, Claude Desktop, ChatGPT e Codex, GitHub Copilot, Gemini CLI, Mistral Vibe
 - [Guida Google Search Console](https://github.com/davide-cik/seomcp/blob/main/docs/google-setup.md): service account oppure OAuth con client proprio
 - [Guida Bing Webmaster Tools](https://github.com/davide-cik/seomcp/blob/main/docs/bing-setup.md): generazione della API key

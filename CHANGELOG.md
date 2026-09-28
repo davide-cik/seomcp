@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.16 — 2026-09-28
+
+- **Google Analytics 4**: 5 nuovi tool in sola lettura (`ga_list_properties`, `ga_report`, `ga_organic_landing_pages`, `ga_compare_periods`, `ga_realtime`), con `GaClient` esportato anche come libreria.
+- Stesse credenziali Google di Search Console; scope aggiunto `analytics.readonly`. Chi usa OAuth deve ripetere `auth google`.
+- `doctor` controlla anche Analytics (facoltativo); nuova variabile `SEOMCP_GA_PROPERTY`.
+- Errori Google più precisi: API non abilitata, permessi mancanti e scope insufficiente ora danno indicazioni diverse (prima un'API disabilitata veniva segnalata come permesso mancante).
+- Sito: pagina dedicata `/google-analytics/` con etichetta "Novità" nel menu; guida `docs/google-analytics-setup.md`.
+
 ## 0.1.15 — 2026-09-28
 
 - Guide riorganizzate: una pagina per AI (Claude, ChatGPT, GitHub Copilot, Gemini, Mistral), con una sezione per ogni prodotto.

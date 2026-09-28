@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>seomcp — Search Console e Bing Webmaster dentro Claude e ChatGPT</title>
-  <meta name="description" content="Server MCP open source e gratuito che collega Google Search Console e Bing Webmaster Tools a Claude e ChatGPT. Sola lettura, credenziali sul tuo computer, nessuna telemetria.">
+  <title>seomcp — Search Console, Analytics e Bing Webmaster nel tuo assistente AI</title>
+  <meta name="description" content="Server MCP open source e gratuito che collega Google Search Console, Google Analytics 4 e Bing Webmaster Tools a Claude, ChatGPT e agli altri assistenti AI. Sola lettura, credenziali sul tuo computer, nessuna telemetria.">
   <link rel="canonical" href="https://seomcp.contentisking.guru/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="seomcp — Search Console e Bing Webmaster dentro Claude e ChatGPT">
+  <meta property="og:title" content="seomcp — Search Console, Analytics e Bing Webmaster nel tuo assistente AI">
   <meta property="og:description" content="Open source, gratuito, in italiano. Sola lettura, le credenziali restano sul tuo computer.">
   <meta property="og:url" content="https://seomcp.contentisking.guru/">
   <meta property="og:locale" content="it_IT">
@@ -19,7 +19,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "seomcp",
-    "description": "Server MCP open source per Google Search Console e Bing Webmaster Tools. Funziona con Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP.",
+    "description": "Server MCP open source per Google Search Console, Google Analytics 4 e Bing Webmaster Tools. Funziona con Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP.",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Windows, macOS, Linux",
     "license": "https://opensource.org/licenses/MIT",
@@ -40,7 +40,7 @@
       <div class="wrap hero-grid">
         <div>
           <p class="eyebrow">Open source · Gratuito · In italiano</p>
-          <h1>Search Console e Bing Webmaster, <span class="accent">dentro Claude e ChatGPT</span>.</h1>
+          <h1>Search Console, Analytics e Bing Webmaster, <span class="accent">dentro il tuo assistente AI</span>.</h1>
           <p class="lead">Un server MCP che permette al tuo assistente AI di leggere i dati dei tuoi siti. Fai domande in italiano e ottieni analisi sui dati veri. Le credenziali restano sul tuo computer.</p>
           <div class="cta">
             <a class="btn btn-primary" href="#installa">Installa in 3 passi</a>
@@ -76,7 +76,7 @@
         <div class="cards">
           <article class="card">
             <h3>Sola lettura</h3>
-            <p>Chiede a Google solo lo scope <code>webmasters.readonly</code>: non può modificare nulla nelle tue proprietà.</p>
+            <p>Chiede a Google solo gli scope <code>webmasters.readonly</code> e <code>analytics.readonly</code>: non può modificare nulla nelle tue proprietà.</p>
           </article>
           <article class="card">
             <h3>Credenziali in locale</h3>
@@ -88,11 +88,11 @@
           </article>
           <article class="card">
             <h3>Solo librerie ufficiali</h3>
-            <p>SDK MCP, <code>@googleapis/searchconsole</code> e <code>google-auth-library</code>. Bing è una semplice chiamata REST.</p>
+            <p>SDK MCP, i client ufficiali <code>@googleapis</code> per Search Console e Analytics e <code>google-auth-library</code>. Bing è una semplice chiamata REST.</p>
           </article>
           <article class="card">
             <h3>Codice leggibile</h3>
-            <p>Circa 1.500 righe di TypeScript, con test e CI. Si legge in un'ora, prima di installarlo.</p>
+            <p>Circa 2.000 righe di TypeScript, con test e CI. Si legge in un'ora, prima di installarlo.</p>
           </article>
           <article class="card">
             <h3>Rispetta le regole</h3>
@@ -108,6 +108,7 @@
         <p class="section-lead">Il server restituisce dati puliti. Le analisi le fa l'assistente, ragionando su quei dati.</p>
         <ul class="prompts">
           <li>Confronta questo mese con lo stesso periodo dell'anno scorso e segnala i cali di clic sopra il 30%.</li>
+          <li>Quali pagine ricevono molti clic da Google ma convertono poco?</li>
           <li>Ci sono query per cui competono due pagine diverse del sito?</li>
           <li>Questa pagina è indicizzata? Quale canonical ha scelto Google?</li>
           <li>Su Bing come va la query "corso SEO" rispetto a Google?</li>
@@ -119,7 +120,7 @@
 
     <section id="tool" class="band">
       <div class="wrap">
-        <h2>11 tool, tutti in sola lettura</h2>
+        <h2>16 tool, tutti in sola lettura</h2>
         <div class="tool-grid">
           <div>
             <h3>Google Search Console</h3>
@@ -133,6 +134,14 @@
             </dl>
           </div>
           <div>
+            <h3><a class="plain" href="/google-analytics/">Google Analytics 4</a> <span class="badge-new">Novità</span></h3>
+            <dl class="tools">
+              <dt><code>ga_organic_landing_pages</code></dt><dd>Pagine di destinazione organiche: sessioni, coinvolgimento, conversioni</dd>
+              <dt><code>ga_compare_periods</code></dt><dd>Confronto tra periodi su qualsiasi metrica</dd>
+              <dt><code>ga_report</code></dt><dd>Report libero con dimensioni, metriche e filtri</dd>
+              <dt><code>ga_realtime</code></dt><dd>Utenti attivi negli ultimi 30 minuti</dd>
+              <dt><code>ga_list_properties</code></dt><dd>Proprietà accessibili</dd>
+            </dl>
             <h3>Bing Webmaster Tools</h3>
             <dl class="tools">
               <dt><code>bing_query_stats</code></dt><dd>Performance per query</dd>

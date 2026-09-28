@@ -1,0 +1,40 @@
+# Configurare Google Analytics 4
+
+seomcp usa le **stesse credenziali Google** di Search Console: service account oppure OAuth. Se hai già configurato Search Console, ti bastano tre passaggi. Altrimenti parti dalla [guida Google](google-setup.md).
+
+L'accesso è **in sola lettura** (scope `analytics.readonly`): seomcp non può modificare nulla in Analytics.
+
+## 1. Abilita le due API di Analytics
+
+In [Google Cloud Console](https://console.cloud.google.com), nello stesso progetto usato per Search Console, apri **API e servizi → Libreria** e abilita:
+
+- **Google Analytics Data API**, per i report;
+- **Google Analytics Admin API**, per elencare le proprietà.
+
+## 2. Dai accesso alla proprietà GA4
+
+- **Con il service account:** in [Google Analytics](https://analytics.google.com) apri **Amministrazione → Gestione dell'accesso alla proprietà → + → Aggiungi utenti**. Incolla l'email del service account (`...@...iam.gserviceaccount.com`) e scegli il ruolo **Visualizzatore**.
+- **Con OAuth:** se avevi autorizzato seomcp prima dell'arrivo di Analytics, ripeti una volta l'autorizzazione, così includi anche Analytics:
+  ```bash
+  npx -y github:davide-cik/seomcp auth google
+  ```
+
+## 3. Trova l'ID della proprietà
+
+In Google Analytics apri **Amministrazione → Dettagli proprietà**: l'**ID proprietà** è un numero, per esempio `123456789`. Non va confuso con l'ID di misurazione `G-XXXXXXX`.
+
+Aggiungi l'ID alla configurazione del tuo assistente come variabile d'ambiente:
+
+```
+SEOMCP_GA_PROPERTY=123456789
+```
+
+Non è obbligatorio: senza, basta chiedere all'assistente di usare `ga_list_properties` e indicare la proprietà nella domanda.
+
+## Verifica
+
+```bash
+npx -y github:davide-cik/seomcp doctor
+```
+
+Deve comparire una riga `Google Analytics OK` con l'elenco delle proprietà accessibili.

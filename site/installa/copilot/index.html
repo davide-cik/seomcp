@@ -29,7 +29,7 @@
         <h2>Prima di iniziare</h2>
         <ul class="checklist">
           <li><strong>Node.js 22 o superiore</strong> (<a href="https://nodejs.org/it/download" target="_blank" rel="noopener">scarica</a>) e <strong>git</strong> (<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">scarica</a>).</li>
-          <li><strong>Le credenziali</strong> delle fonti che vuoi usare: <a href="https://github.com/davide-cik/seomcp/blob/main/docs/google-setup.md">Google Search Console</a> e/o <a href="https://github.com/davide-cik/seomcp/blob/main/docs/bing-setup.md">Bing Webmaster Tools</a>. Sono entrambe facoltative.</li>
+          <li><strong>Le credenziali</strong> delle fonti che vuoi usare: <a href="https://github.com/davide-cik/seomcp/blob/main/docs/google-setup.md">Google Search Console</a>, <a href="/google-analytics/">Google Analytics 4</a> e <a href="https://github.com/davide-cik/seomcp/blob/main/docs/bing-setup.md">Bing Webmaster Tools</a>. Sono tutte facoltative.</li>
         </ul>
         <p class="small">Il pacchetto npm è in arrivo: per ora seomcp si installa direttamente da GitHub. Il primo avvio richiede qualche secondo in più, perché il codice viene compilato sul tuo computer.</p>
       </section>
@@ -53,12 +53,13 @@
       "env": {
         "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
         "BING_WEBMASTER_API_KEY": "la-tua-chiave",
-        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
+        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it",
+        "SEOMCP_GA_PROPERTY": "123456789"
       }
     }
   }
 }</code></pre>
-            <p class="small">Sostituisci percorso, chiave e sito con i tuoi. Se usi una sola fonte, togli la variabile dell'altra.</p>
+            <p class="small">Sostituisci percorso, chiave, sito e proprietà con i tuoi. Togli le variabili delle fonti che non usi.</p>
             <p class="small">Attenzione: in VS Code la chiave principale è <code>servers</code>, non <code>mcpServers</code>.</p>
           </li>
           <li>
@@ -87,13 +88,14 @@
       "env": {
         "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
         "BING_WEBMASTER_API_KEY": "la-tua-chiave",
-        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it"
+        "SEOMCP_GSC_SITE": "sc-domain:tuosito.it",
+        "SEOMCP_GA_PROPERTY": "123456789"
       },
       "tools": ["*"]
     }
   }
 }</code></pre>
-            <p class="small">Sostituisci percorso, chiave e sito con i tuoi. Se usi una sola fonte, togli la variabile dell'altra.</p>
+            <p class="small">Sostituisci percorso, chiave, sito e proprietà con i tuoi. Togli le variabili delle fonti che non usi.</p>
             <p class="small"><code>"type": "local"</code> indica un server avviato sul tuo computer. <code>"tools": ["*"]</code> abilita tutti i tool.</p>
           </li>
           <li>

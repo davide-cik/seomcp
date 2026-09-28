@@ -19,6 +19,7 @@ ENV = [
     ("GOOGLE_APPLICATION_CREDENTIALS", "/percorso/service-account.json"),
     ("BING_WEBMASTER_API_KEY", "la-tua-chiave"),
     ("SEOMCP_GSC_SITE", "sc-domain:tuosito.it"),
+    ("SEOMCP_GA_PROPERTY", "123456789"),
 ]
 
 
@@ -217,7 +218,7 @@ PREREQ = f"""      <section class="doc-block">
         <h2>Prima di iniziare</h2>
         <ul class="checklist">
           <li><strong>Node.js 22 o superiore</strong> (<a href="https://nodejs.org/it/download" target="_blank" rel="noopener">scarica</a>) e <strong>git</strong> (<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">scarica</a>).</li>
-          <li><strong>Le credenziali</strong> delle fonti che vuoi usare: <a href="{REPO}/blob/main/docs/google-setup.md">Google Search Console</a> e/o <a href="{REPO}/blob/main/docs/bing-setup.md">Bing Webmaster Tools</a>. Sono entrambe facoltative.</li>
+          <li><strong>Le credenziali</strong> delle fonti che vuoi usare: <a href="{REPO}/blob/main/docs/google-setup.md">Google Search Console</a>, <a href="/google-analytics/">Google Analytics 4</a> e <a href="{REPO}/blob/main/docs/bing-setup.md">Bing Webmaster Tools</a>. Sono tutte facoltative.</li>
         </ul>
         <p class="small">Il pacchetto npm è in arrivo: per ora seomcp si installa direttamente da GitHub. Il primo avvio richiede qualche secondo in più, perché il codice viene compilato sul tuo computer.</p>
       </section>"""
@@ -235,7 +236,7 @@ def product_section(c, multi):
           <li>
             <h3>Aggiungi seomcp</h3>
 <pre class="code"><code>{html.escape(c['code'], quote=False)}</code></pre>
-            <p class="small">Sostituisci percorso, chiave e sito con i tuoi. Se usi una sola fonte, togli la variabile dell'altra.</p>{note}
+            <p class="small">Sostituisci percorso, chiave, sito e proprietà con i tuoi. Togli le variabili delle fonti che non usi.</p>{note}
           </li>
           <li>
             <h3>Verifica</h3>
@@ -298,6 +299,68 @@ def clients_partial():
     return f'<ul class="ai-list">\n{items}\n</ul>\n'
 
 
+GA_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Google Analytics</nav>
+      <p class="eyebrow">Novità</p>
+      <h1>Google Analytics 4 nel tuo assistente</h1>
+      <p class="lead">Search Console ti dice quali query portano clic. Analytics ti dice cosa succede dopo: quanto restano i visitatori, quanti convertono, quanto fatturano. Con seomcp l'assistente vede entrambe le cose insieme.</p>
+
+      <section class="doc-block">
+        <h2>Cosa puoi chiedere</h2>
+        <ul class="prompts">
+          <li>Quali pagine ricevono molti clic da Google ma convertono poco?</li>
+          <li>Il traffico organico di questo mese è calato rispetto all'anno scorso? Su quali pagine di destinazione?</li>
+          <li>Da Bing arrivano visitatori più o meno coinvolti rispetto a Google?</li>
+          <li>Quante persone stanno leggendo il nuovo articolo in questo momento?</li>
+        </ul>
+      </section>
+
+      <section class="doc-block">
+        <h2>I 5 tool</h2>
+        <dl class="tools">
+          <dt><code>ga_organic_landing_pages</code></dt><dd>Pagine di destinazione della ricerca organica, anche per singolo motore: sessioni, coinvolgimento, eventi chiave, ricavi.</dd>
+          <dt><code>ga_compare_periods</code></dt><dd>Confronto con il periodo precedente o con l'anno prima, su qualsiasi metrica, con i cali e le crescite più forti.</dd>
+          <dt><code>ga_report</code></dt><dd>Report libero con dimensioni, metriche e filtri a scelta, per le domande che gli altri tool non coprono.</dd>
+          <dt><code>ga_realtime</code></dt><dd>Utenti attivi negli ultimi 30 minuti, per pagina, paese o dispositivo.</dd>
+          <dt><code>ga_list_properties</code></dt><dd>Le proprietà GA4 a cui hai accesso, con il loro ID.</dd>
+        </dl>
+        <p class="small">Tutti in sola lettura: seomcp chiede a Google solo lo scope <code>analytics.readonly</code>.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Attivalo in 3 passi</h2>
+        <p>Usa le stesse credenziali Google di Search Console. Se non le hai ancora, parti dalla <a href="{REPO}/blob/main/docs/google-setup.md">guida Google</a>.</p>
+        <ol class="steps">
+          <li>
+            <h3>Abilita le API</h3>
+            <p>In Google Cloud Console, nello stesso progetto di Search Console, apri <em>API e servizi → Libreria</em> e abilita <strong>Google Analytics Data API</strong> e <strong>Google Analytics Admin API</strong>.</p>
+          </li>
+          <li>
+            <h3>Dai accesso alla proprietà</h3>
+            <p><strong>Service account:</strong> in Analytics apri <em>Amministrazione → Gestione dell'accesso alla proprietà</em>, aggiungi l'email del service account con ruolo <strong>Visualizzatore</strong>.</p>
+            <p><strong>OAuth:</strong> se avevi già autorizzato seomcp, ripeti una volta l'autorizzazione per includere Analytics:</p>
+<pre class="code"><code>npx -y {PKG} auth google</code></pre>
+          </li>
+          <li>
+            <h3>Indica la proprietà</h3>
+            <p>In Analytics apri <em>Amministrazione → Dettagli proprietà</em> e copia l'<strong>ID proprietà</strong>, un numero come <code>123456789</code> (non l'ID <code>G-XXXX</code>). Aggiungilo alla configurazione del tuo assistente:</p>
+<pre class="code"><code>SEOMCP_GA_PROPERTY=123456789</code></pre>
+            <p class="small">Facoltativo: senza, l'assistente può elencare le proprietà e chiederti quale usare.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="doc-block">
+        <h2>Verifica</h2>
+<pre class="code"><code>npx -y {PKG} doctor</code></pre>
+        <p>Deve comparire la riga <strong>Google Analytics OK</strong> con l'elenco delle proprietà. Se una API non è abilitata o manca un permesso, <code>doctor</code> ti dice esattamente cosa fare.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        {INCLUDE.format(name="clients")}
+      </section>"""
+
+
 WEB_NOTE = ("<strong>Versioni web non supportate.</strong> claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot e Mistral Vibe sul web "
             "accettano solo server MCP remoti. seomcp gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.")
 
@@ -353,8 +416,15 @@ def main():
     (SITE / "404.html").write_text(page("Pagina non trovata · seomcp", "La pagina richiesta non esiste.", "404", not_found)
                                    .replace('<link rel="canonical" href="https://seomcp.contentisking.guru/404/">', '<meta name="robots" content="noindex">'))
 
+    ga_dir = SITE / "google-analytics"
+    ga_dir.mkdir(exist_ok=True)
+    (ga_dir / "index.html").write_text(
+        page("Google Analytics 4 nel tuo assistente AI · seomcp",
+             "Collega Google Analytics 4 a Claude, ChatGPT e agli altri assistenti AI con seomcp: traffico organico, conversioni e confronti, in sola lettura.",
+             "google-analytics", GA_PAGE))
+
     today = date.today().isoformat()
-    urls = ["/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
+    urls = ["/", "/google-analytics/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls)

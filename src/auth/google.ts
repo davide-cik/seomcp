@@ -4,10 +4,14 @@ import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { dirname } from 'node:path';
 import { CodeChallengeMethod, GoogleAuth, OAuth2Client, type Credentials } from 'google-auth-library';
+import { GA_SCOPES } from '../core/ga.js';
 import { GSC_SCOPES, type GscAuth } from '../core/gsc.js';
 import { SeoMcpError } from '../core/errors.js';
 import type { GoogleConfig } from '../config.js';
 import { DOCS } from '../links.js';
+
+/** Tutti gli scope richiesti a Google: solo lettura, Search Console e Analytics. */
+export const GOOGLE_SCOPES = [...GSC_SCOPES, ...GA_SCOPES];
 
 /** Crea l'autenticazione Google in base alla configurazione. */
 export function createGoogleAuth(config: GoogleConfig): GscAuth {
@@ -19,7 +23,7 @@ export function createGoogleAuth(config: GoogleConfig): GscAuth {
         `Controlla il percorso in GOOGLE_APPLICATION_CREDENTIALS. Guida: ${DOCS.google}`,
       );
     }
-    return new GoogleAuth({ keyFile: config.keyFile, scopes: GSC_SCOPES });
+    return new GoogleAuth({ keyFile: config.keyFile, scopes: GOOGLE_SCOPES });
   }
 
   if (config.mode === 'oauth') {
@@ -40,7 +44,7 @@ export function createGoogleAuth(config: GoogleConfig): GscAuth {
 
   throw new SeoMcpError(
     'NOT_CONFIGURED',
-    'Google Search Console non è configurata.',
+    'Le credenziali Google (Search Console e Analytics) non sono configurate.',
     `Imposta GOOGLE_APPLICATION_CREDENTIALS (service account) oppure SEOMCP_GOOGLE_CLIENT_ID e SEOMCP_GOOGLE_CLIENT_SECRET (OAuth). Guida: ${DOCS.google}`,
   );
 }
@@ -88,7 +92,7 @@ export async function runGoogleOAuthFlow(
   const authUrl = client.generateAuthUrl({
     access_type: 'offline',
     prompt: 'consent',
-    scope: GSC_SCOPES,
+    scope: GOOGLE_SCOPES,
     state,
     code_challenge: codeChallenge,
     code_challenge_method: CodeChallengeMethod.S256,

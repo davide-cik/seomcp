@@ -1,13 +1,14 @@
 import { statSync } from 'node:fs';
 import { BingClient } from './core/bing.js';
 import { SeoMcpError } from './core/errors.js';
+import { GaClient } from './core/ga.js';
 import { GscClient } from './core/gsc.js';
 import { createGoogleAuth, serviceAccountEmail } from './auth/google.js';
 import type { SeoMcpConfig } from './config.js';
 import { DOCS } from './links.js';
 
 export interface DiagnosticItem {
-  source: 'google' | 'bing' | 'config';
+  source: 'google' | 'analytics' | 'bing' | 'config';
   status: 'ok' | 'warn' | 'error' | 'off';
   message: string;
   hint?: string;
@@ -33,6 +34,7 @@ export async function runDiagnostics(config: SeoMcpConfig): Promise<DiagnosticIt
   }
 
   items.push(await checkGoogle(config));
+  if (config.google.mode !== 'none') items.push(await checkAnalytics(config));
   items.push(await checkBing(config));
   return items;
 }
@@ -74,6 +76,43 @@ async function checkGoogle(config: SeoMcpConfig): Promise<DiagnosticItem> {
     return { source: 'google', status: 'ok', message: `Search Console OK (${g.mode}): ${list.length} proprietà — ${list.join(', ')}` };
   } catch (err) {
     return toItem('google', err, who ? `Service account: ${who}` : undefined);
+  }
+}
+
+/** Analytics è facoltativo: se l'API non è abilitata o non ci sono proprietà, lo segnala come spento. */
+async function checkAnalytics(config: SeoMcpConfig): Promise<DiagnosticItem> {
+  const g = config.google;
+  if (g.mode === 'none') return { source: 'analytics', status: 'off', message: 'Google Analytics non configurato.' };
+  const who = g.mode === 'service-account' ? serviceAccountEmail(g.keyFile) : undefined;
+  try {
+    const props = await new GaClient(createGoogleAuth(g)).listProperties();
+    if (props.length === 0) {
+      return {
+        source: 'analytics',
+        status: 'off',
+        message: 'Google Analytics: nessuna proprietà GA4 accessibile (facoltativo).',
+        hint: who
+          ? `Per attivarlo aggiungi ${who} con ruolo Visualizzatore in Analytics → Amministrazione → Gestione dell'accesso alla proprietà.`
+          : "Per attivarlo verifica che l'account autorizzato veda almeno una proprietà GA4.",
+      };
+    }
+    const list = props.map((p) => `${p.displayName} (${p.property.replace('properties/', '')})`);
+    const def = config.defaults.gaProperty?.replace(/^properties\//, '');
+    if (def && !props.some((p) => p.property === `properties/${def}`)) {
+      return {
+        source: 'analytics',
+        status: 'warn',
+        message: `La proprietà GA4 predefinita "${def}" non è tra quelle accessibili: ${list.join(', ')}`,
+        hint: 'Correggi SEOMCP_GA_PROPERTY usando uno degli ID numerici elencati.',
+      };
+    }
+    return { source: 'analytics', status: 'ok', message: `Google Analytics OK: ${props.length} proprietà — ${list.join(', ')}` };
+  } catch (err) {
+    // API non abilitata: Analytics è facoltativo, quindi è "spento", non un errore.
+    if (err instanceof SeoMcpError && err.code === 'NOT_CONFIGURED') {
+      return { source: 'analytics', status: 'off', message: `Google Analytics non attivo (facoltativo): ${err.message}`, hint: err.hint };
+    }
+    return toItem('analytics', err, who ? `Service account: ${who}` : undefined);
   }
 }
 

@@ -194,3 +194,13 @@ kbd { font-family: var(--mono); font-size: 0.85em; border: 1px solid var(--borde
 .ai-list a::after { content: "→"; color: var(--accent); font-weight: 400; transition: transform 0.15s; }
 .ai-list a:hover { color: var(--accent); }
 .ai-list a:hover::after { transform: translateX(3px); }
+
+/* Etichetta "Novità" */
+.badge-new { display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; padding: 4px 7px; border-radius: 999px; background: var(--success); color: #05230F; vertical-align: middle; margin-left: 4px; }
+.top nav a.nav-new { color: var(--heading); font-weight: 600; }
+@media (max-width: 640px) { .top nav a.nav-new { display: inline; font-size: 0.88rem; } }
+a.plain { color: inherit; text-decoration: none; }
+a.plain:hover { color: var(--accent); }
+.top nav a.nav-new { white-space: nowrap; }
+.nav-short { display: none; }
+@media (max-width: 640px) { .nav-long { display: none; } .nav-short { display: inline; } }

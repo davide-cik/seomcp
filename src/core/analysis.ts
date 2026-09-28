@@ -3,7 +3,7 @@
  * lo fa il modello ragionando sui dati: qui teniamo solo ciò che serve a
  * ridurre il volume di righe restituite.
  */
-import type { BingStatsRow, PerformanceRow } from './types.js';
+import type { BingStatsRow, GaRow, PerformanceRow } from './types.js';
 
 export interface PeriodComparisonRow {
   keys: Record<string, string>;
@@ -114,4 +114,41 @@ export function aggregateBingStats(rows: BingStatsRow[], startDate?: string, end
       avgImpressionPosition: a.impressions ? round(a.posWeighted / a.impressions) : 0,
     }))
     .sort((a, b) => b.impressions - a.impressions);
+}
+
+export interface GaComparisonRow {
+  dimensions: Record<string, string>;
+  current: Record<string, number>;
+  previous: Record<string, number>;
+  delta: Record<string, number>;
+  /** Variazione percentuale per metrica; null se il periodo precedente valeva 0. */
+  changePct: Record<string, number | null>;
+}
+
+/**
+ * Unisce due report GA4 per dimensioni e calcola le variazioni.
+ * Ordina per la variazione della prima metrica, i cali più forti in cima.
+ */
+export function compareGaPeriods(current: GaRow[], previous: GaRow[], metrics: string[]): GaComparisonRow[] {
+  const zero = Object.fromEntries(metrics.map((m) => [m, 0]));
+  const map = new Map<string, { dimensions: Record<string, string>; current: Record<string, number>; previous: Record<string, number> }>();
+  for (const r of current) map.set(rowKey(r.dimensions), { dimensions: r.dimensions, current: r.metrics, previous: zero });
+  for (const r of previous) {
+    const k = rowKey(r.dimensions);
+    const existing = map.get(k);
+    if (existing) existing.previous = r.metrics;
+    else map.set(k, { dimensions: r.dimensions, current: zero, previous: r.metrics });
+  }
+  const first = metrics[0] ?? '';
+  return [...map.values()]
+    .map(({ dimensions, current: c, previous: p }) => ({
+      dimensions,
+      current: c,
+      previous: p,
+      delta: Object.fromEntries(metrics.map((m) => [m, round((c[m] ?? 0) - (p[m] ?? 0), 4)])),
+      changePct: Object.fromEntries(
+        metrics.map((m) => [m, (p[m] ?? 0) !== 0 ? round((((c[m] ?? 0) - (p[m] ?? 0)) / (p[m] ?? 1)) * 100, 1) : null]),
+      ),
+    }))
+    .sort((a, b) => (a.delta[first] ?? 0) - (b.delta[first] ?? 0));
 }

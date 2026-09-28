@@ -2,6 +2,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { describe, expect, it } from 'vitest';
 import { SeoMcpError } from '../src/core/errors.js';
+import type { GaClient } from '../src/core/ga.js';
 import type { GscClient } from '../src/core/gsc.js';
 import { createServerWithContext, type ToolContext } from '../src/server.js';
 
@@ -19,13 +20,18 @@ const notConfigured = () => {
 
 describe('server MCP', () => {
   it('espone tutti i tool, tutti in sola lettura', async () => {
-    const client = await connect({ gsc: notConfigured, bing: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
+    const client = await connect({ gsc: notConfigured, bing: notConfigured, ga: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
     const { tools } = await client.listTools();
     expect(tools.map((t) => t.name).sort()).toEqual([
       'bing_keyword_stats',
       'bing_list_sites',
       'bing_page_stats',
       'bing_query_stats',
+      'ga_compare_periods',
+      'ga_list_properties',
+      'ga_organic_landing_pages',
+      'ga_realtime',
+      'ga_report',
       'gsc_compare_periods',
       'gsc_inspect_url',
       'gsc_list_sitemaps',
@@ -38,7 +44,7 @@ describe('server MCP', () => {
   });
 
   it('una fonte non configurata restituisce un errore con istruzioni, senza crash', async () => {
-    const client = await connect({ gsc: notConfigured, bing: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
+    const client = await connect({ gsc: notConfigured, bing: notConfigured, ga: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
     const res = await client.callTool({ name: 'bing_list_sites', arguments: {} });
     expect(res.isError).toBe(true);
     expect(JSON.stringify(res.content)).toContain('Come risolvere');
@@ -60,6 +66,7 @@ describe('server MCP', () => {
     const client = await connect({
       gsc: () => fakeGsc,
       bing: notConfigured,
+      ga: notConfigured,
       defaults: { gscSite: 'sc-domain:esempio.it', country: 'it', language: 'it-IT' },
       diagnose: async () => [],
     });
@@ -70,5 +77,36 @@ describe('server MCP', () => {
     expect(data.losers.map((r: { keys: { query: string } }) => r.keys.query)).toEqual(['giu']);
     expect(data.gainers.map((r: { keys: { query: string } }) => r.keys.query)).toEqual(['su']);
     expect(calls).toHaveLength(4);
+  });
+
+  it('ga_organic_landing_pages filtra la ricerca organica e il motore scelto', async () => {
+    const calls: { filters?: unknown; dimensions?: string[]; startDate: string; endDate: string }[] = [];
+    const fakeGa = {
+      runReport: async (p: { filters?: unknown; dimensions?: string[]; startDate: string; endDate: string }) => {
+        calls.push(p);
+        return { rows: [{ dimensions: { landingPage: '/blog/' }, metrics: { sessions: 120, keyEvents: 4 } }], rowCount: 1 };
+      },
+    } as unknown as GaClient;
+    const client = await connect({
+      gsc: notConfigured,
+      bing: notConfigured,
+      ga: () => fakeGa,
+      defaults: { gaProperty: '123', country: 'it', language: 'it-IT' },
+      diagnose: async () => [],
+    });
+    const res = await client.callTool({ name: 'ga_organic_landing_pages', arguments: { source: 'google', days: 7 } });
+    expect(res.isError).toBeFalsy();
+    expect(calls[0]?.dimensions).toEqual(['landingPage']);
+    expect(calls[0]?.filters).toEqual([
+      { field: 'sessionDefaultChannelGroup', matchType: 'EXACT', value: 'Organic Search' },
+      { field: 'sessionSource', matchType: 'CONTAINS', value: 'google' },
+    ]);
+  });
+
+  it('senza proprietà GA indicata spiega come trovarla', async () => {
+    const client = await connect({ gsc: notConfigured, bing: notConfigured, ga: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
+    const res = await client.callTool({ name: 'ga_report', arguments: {} });
+    expect(res.isError).toBe(true);
+    expect(JSON.stringify(res.content)).toContain('ga_list_properties');
   });
 });
