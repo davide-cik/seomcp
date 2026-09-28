@@ -1,6 +1,6 @@
 {
   "name": "@contentisking/seomcp",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Server MCP open source per Google Search Console e Bing Webmaster Tools, per Claude e ChatGPT. Le credenziali restano sul tuo computer.",
   "keywords": [
     "mcp",
@@ -14,7 +14,7 @@
     "indexnow"
   ],
   "license": "MIT",
-  "author": "Content is King (https://contentisking.guru)",
+  "author": "Content is King Srl (https://contentisking.guru)",
   "homepage": "https://seomcp.contentisking.guru",
   "repository": {
     "type": "git",

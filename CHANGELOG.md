@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 — 2026-09-28
+
+- Ragione sociale esatta (Content is King Srl) in `LICENSE` e nel campo `author` di `package.json`.
+
 ## 0.1.2 — 2026-09-28
 
 - Supporto documentato per ChatGPT (app desktop e Codex) oltre a Claude: istruzioni in landing e README, configurazione `~/.codex/config.toml`.
