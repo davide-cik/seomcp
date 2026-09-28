@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.10 — 2026-09-28
+
+- Landing: il link a Zuzai porta alla registrazione con codice referral SEOMCP.
+
 ## 0.1.9 — 2026-09-28
 
 - Landing: riga nel footer che presenta Zuzai, l'URL shortener di Content is King.
