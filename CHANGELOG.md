@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.17 — 2026-09-28
+
+- Sito: tutti i link esterni si aprono in una nuova scheda.
+
 ## 0.1.16 — 2026-09-28
 
 - **Google Analytics 4**: 5 nuovi tool in sola lettura (`ga_list_properties`, `ga_report`, `ga_organic_landing_pages`, `ga_compare_periods`, `ga_realtime`), con `GaClient` esportato anche come libreria.

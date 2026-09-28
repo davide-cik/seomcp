@@ -218,7 +218,7 @@ PREREQ = f"""      <section class="doc-block">
         <h2>Prima di iniziare</h2>
         <ul class="checklist">
           <li><strong>Node.js 22 o superiore</strong> (<a href="https://nodejs.org/it/download" target="_blank" rel="noopener">scarica</a>) e <strong>git</strong> (<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">scarica</a>).</li>
-          <li><strong>Le credenziali</strong> delle fonti che vuoi usare: <a href="{REPO}/blob/main/docs/google-setup.md">Google Search Console</a>, <a href="/google-analytics/">Google Analytics 4</a> e <a href="{REPO}/blob/main/docs/bing-setup.md">Bing Webmaster Tools</a>. Sono tutte facoltative.</li>
+          <li><strong>Le credenziali</strong> delle fonti che vuoi usare: <a href="{REPO}/blob/main/docs/google-setup.md" target="_blank" rel="noopener">Google Search Console</a>, <a href="/google-analytics/">Google Analytics 4</a> e <a href="{REPO}/blob/main/docs/bing-setup.md" target="_blank" rel="noopener">Bing Webmaster Tools</a>. Sono tutte facoltative.</li>
         </ul>
         <p class="small">Il pacchetto npm è in arrivo: per ora seomcp si installa direttamente da GitHub. Il primo avvio richiede qualche secondo in più, perché il codice viene compilato sul tuo computer.</p>
       </section>"""
@@ -284,7 +284,7 @@ def vendor_body(v):
 <pre class="code"><code>npx -y {PKG} doctor</code></pre>
         <ul class="tips">{tips_html}
           <li>Le variabili d'ambiente vanno impostate nella configurazione dell'assistente, non nel terminale: è l'assistente ad avviare seomcp.</li>
-          <li>Ancora bloccato? <a href="{REPO}/issues/new/choose">Apri una segnalazione</a>, allegando l'output di <code>doctor</code> senza chiavi.</li>
+          <li>Ancora bloccato? <a href="{REPO}/issues/new/choose" target="_blank" rel="noopener">Apri una segnalazione</a>, allegando l'output di <code>doctor</code> senza chiavi.</li>
         </ul>
       </section>
 
@@ -328,7 +328,7 @@ GA_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp
 
       <section class="doc-block">
         <h2>Attivalo in 3 passi</h2>
-        <p>Usa le stesse credenziali Google di Search Console. Se non le hai ancora, parti dalla <a href="{REPO}/blob/main/docs/google-setup.md">guida Google</a>.</p>
+        <p>Usa le stesse credenziali Google di Search Console. Se non le hai ancora, parti dalla <a href="{REPO}/blob/main/docs/google-setup.md" target="_blank" rel="noopener">guida Google</a>.</p>
         <ol class="steps">
           <li>
             <h3>Abilita le API</h3>

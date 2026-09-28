@@ -1,6 +1,6 @@
 {
   "name": "@contentisking/seomcp",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Server MCP open source per Google Search Console, Google Analytics 4 e Bing Webmaster Tools, per Claude, ChatGPT, GitHub Copilot, Gemini CLI e Mistral Vibe. Sola lettura, credenziali sul tuo computer.",
   "keywords": [
     "mcp",
