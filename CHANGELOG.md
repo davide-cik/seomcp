@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5 — 2026-09-28
+
+- Script `prepare`: il pacchetto si può installare direttamente da GitHub (`npx -y github:davide-cik/seomcp`), la build avviene durante l'installazione.
+
 ## 0.1.4 — 2026-09-28
 
 - Documentato che le versioni web di Claude e ChatGPT non sono supportate (accettano solo server MCP remoti).

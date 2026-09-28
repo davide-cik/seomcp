@@ -1,6 +1,6 @@
 {
   "name": "@contentisking/seomcp",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Server MCP open source per Google Search Console e Bing Webmaster Tools, per Claude e ChatGPT. Le credenziali restano sul tuo computer.",
   "keywords": [
     "mcp",
@@ -49,6 +49,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
     "dev": "tsx src/cli.ts",
     "doctor": "tsx src/cli.ts doctor",
     "typecheck": "tsc --noEmit",
