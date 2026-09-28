@@ -1,6 +1,6 @@
 {
   "name": "@contentisking/seomcp",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Server MCP open source per Google Search Console e Bing Webmaster Tools, per Claude e ChatGPT. Le credenziali restano sul tuo computer.",
   "keywords": [
     "mcp",

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.7 — 2026-09-28
+
+- Landing: footer "Piattaforma MCP sviluppata in Italia", con licenza e GitHub sulla stessa riga.
+
 ## 0.1.6 — 2026-09-28
 
 - Landing e README: installazione da GitHub (`github:davide-cik/seomcp`) in attesa della pubblicazione su npm.
