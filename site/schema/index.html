@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Validatore schema.org nel tuo assistente AI · seomcp</title>
+  <meta name="description" content="Valida i dati strutturati JSON-LD con il vocabolario ufficiale schema.org e i requisiti di Google per i risultati avanzati, e fatti proporre la correzione.">
+  <link rel="canonical" href="https://seomcp.contentisking.guru/schema/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Validatore schema.org nel tuo assistente AI · seomcp">
+  <meta property="og:description" content="Valida i dati strutturati JSON-LD con il vocabolario ufficiale schema.org e i requisiti di Google per i risultati avanzati, e fatti proporre la correzione.">
+  <meta property="og:url" content="https://seomcp.contentisking.guru/schema/">
+  <meta property="og:locale" content="it_IT">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Vai al contenuto</a>
+  <!--#include virtual="/_partials/header.html" -->
+
+  <main id="main" class="doc">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Validatore schema.org</nav>
+      <p class="eyebrow">Novità</p>
+      <h1>Validatore schema.org nel tuo assistente</h1>
+      <p class="lead">Controlla i dati strutturati di una pagina, o il JSON-LD che stai per pubblicare, e fatti proporre la versione corretta pronta da incollare. Tutto in locale, senza credenziali.</p>
+
+      <section class="doc-block">
+        <h2>Quattro livelli di controllo</h2>
+        <dl class="tools">
+          <dt>Sintassi</dt><dd>JSON valido, <code>@context</code> di schema.org, <code>@type</code>, <code>@graph</code> e riferimenti <code>@id</code>.</dd>
+          <dt>Vocabolario schema.org</dt><dd>Tipi e proprietà esistenti e ammessi per il tipo, ereditarietà compresa; date ISO 8601, URL assoluti, valori delle enumerazioni; termini superati. Per i refusi suggerisce la correzione: <code>priceCurency</code> → <code>priceCurrency</code>.</dd>
+          <dt>Risultati avanzati di Google</dt><dd>Proprietà obbligatorie e consigliate per articoli, breadcrumb, prodotti, recensioni, organizzazioni, attività locali, eventi, ricette, video, FAQ, app e offerte di lavoro, con il link alla documentazione di Google.</dd>
+          <dt>Coerenza con la pagina</dt><dd>Date plausibili, domande FAQ davvero visibili nella pagina, headline in linea con l'H1.</dd>
+        </dl>
+        <p class="small">Il vocabolario ufficiale di schema.org è incluso in seomcp: la validazione funziona offline e indica sempre la versione usata.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Cosa puoi chiedere</h2>
+        <ul class="prompts">
+          <li>Valida i dati strutturati della home e dimmi se sono idonei ai risultati avanzati.</li>
+          <li>Questo JSON-LD prodotto è corretto prima che lo pubblichi?</li>
+          <li>Correggi i dati strutturati della pagina e dammi il codice da incollare.</li>
+          <li>Quali pagine del blog non hanno autore e data nei dati strutturati?</li>
+        </ul>
+        <p>Il prompt <strong>Correggi i miei dati strutturati</strong> fa tutto il percorso: valida, spiega i problemi, scrive il JSON-LD corretto e lo ricontrolla finché non ci sono errori.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Funziona subito</h2>
+        <p>Il tool <code>schema_validate</code> non richiede credenziali: basta avere seomcp installato. Per le pagine già indicizzate si affianca a <code>gsc_inspect_url</code>, che restituisce il verdetto di Google.</p>
+        <p><a href="https://github.com/davide-cik/seomcp/blob/main/docs/schema-validator.md" target="_blank" rel="noopener">Tutti i controlli nel dettaglio →</a></p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        <!--#include virtual="/_partials/clients.html" -->
+      </section>
+    </div>
+  </main>
+
+  <!--#include virtual="/_partials/footer.html" -->
+  <script src="/app.js" defer></script>
+</body>
+</html>

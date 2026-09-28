@@ -212,3 +212,4 @@ a.plain:hover { color: var(--accent); }
 .top nav a { white-space: nowrap; }
 /* Elenco descrittivo con lo stile dei prompt, ma senza virgolette. */
 .prompts.plain li::before, .prompts.plain li::after { content: none; }
+.prompts + p { margin-top: 16px; }

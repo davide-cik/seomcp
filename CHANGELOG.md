@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.20 — 2026-09-28
+
+- **Validatore schema.org** (`schema_validate`), su URL o JSON-LD incollato, in locale:
+  - sintassi (JSON, `@context`, `@type`, `@graph`, riferimenti `@id`);
+  - vocabolario ufficiale schema.org 30.1 incluso nel pacchetto: tipi e proprietà esistenti e ammessi (con ereditarietà), formati di date, URL ed enumerazioni, termini superati, refusi con correzione suggerita;
+  - requisiti di Google per 14 tipi di risultati avanzati, applicando la regola più specifica;
+  - coerenza con la pagina: date, FAQ visibili, headline e H1.
+- Prompt `correggi-dati-strutturati`: valida, spiega e propone il JSON-LD corretto, ricontrollandolo.
+- Script `npm run schema:update` per aggiornare il vocabolario.
+- Sito: pagina `/schema/` con etichetta "Novità"; guida `docs/schema-validator.md`.
+
 ## 0.1.19 — 2026-09-28
 
 - **GEO e AEO**: 3 tool di misura oggettiva, senza credenziali:

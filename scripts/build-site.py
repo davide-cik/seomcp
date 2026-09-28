@@ -448,6 +448,11 @@ GEO_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomc
       </section>
 
       <section class="doc-block">
+        <h2>Dati strutturati</h2>
+        <p>Per controllare a fondo i dati strutturati c'è il <a href="/schema/">validatore schema.org</a>, con il prompt che propone il codice corretto.</p>
+      </section>
+
+      <section class="doc-block">
         <h2>Da sapere</h2>
         <ul class="tips">
           <li>I riferimenti usati nei prompt, come una risposta in apertura di 40-60 parole, sono pratiche diffuse: i motori AI non pubblicano i loro criteri.</li>
@@ -456,6 +461,45 @@ GEO_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomc
           <li>Per sicurezza seomcp analizza solo siti pubblici e non raggiunge mai indirizzi della rete locale.</li>
         </ul>
         <p><a href="{REPO}/blob/main/docs/geo.md" target="_blank" rel="noopener">Tutte le misure nel dettaglio →</a></p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        {INCLUDE.format(name="clients")}
+      </section>"""
+
+
+SCHEMA_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Validatore schema.org</nav>
+      <p class="eyebrow">Novità</p>
+      <h1>Validatore schema.org nel tuo assistente</h1>
+      <p class="lead">Controlla i dati strutturati di una pagina, o il JSON-LD che stai per pubblicare, e fatti proporre la versione corretta pronta da incollare. Tutto in locale, senza credenziali.</p>
+
+      <section class="doc-block">
+        <h2>Quattro livelli di controllo</h2>
+        <dl class="tools">
+          <dt>Sintassi</dt><dd>JSON valido, <code>@context</code> di schema.org, <code>@type</code>, <code>@graph</code> e riferimenti <code>@id</code>.</dd>
+          <dt>Vocabolario schema.org</dt><dd>Tipi e proprietà esistenti e ammessi per il tipo, ereditarietà compresa; date ISO 8601, URL assoluti, valori delle enumerazioni; termini superati. Per i refusi suggerisce la correzione: <code>priceCurency</code> → <code>priceCurrency</code>.</dd>
+          <dt>Risultati avanzati di Google</dt><dd>Proprietà obbligatorie e consigliate per articoli, breadcrumb, prodotti, recensioni, organizzazioni, attività locali, eventi, ricette, video, FAQ, app e offerte di lavoro, con il link alla documentazione di Google.</dd>
+          <dt>Coerenza con la pagina</dt><dd>Date plausibili, domande FAQ davvero visibili nella pagina, headline in linea con l'H1.</dd>
+        </dl>
+        <p class="small">Il vocabolario ufficiale di schema.org è incluso in seomcp: la validazione funziona offline e indica sempre la versione usata.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Cosa puoi chiedere</h2>
+        <ul class="prompts">
+          <li>Valida i dati strutturati della home e dimmi se sono idonei ai risultati avanzati.</li>
+          <li>Questo JSON-LD prodotto è corretto prima che lo pubblichi?</li>
+          <li>Correggi i dati strutturati della pagina e dammi il codice da incollare.</li>
+          <li>Quali pagine del blog non hanno autore e data nei dati strutturati?</li>
+        </ul>
+        <p>Il prompt <strong>Correggi i miei dati strutturati</strong> fa tutto il percorso: valida, spiega i problemi, scrive il JSON-LD corretto e lo ricontrolla finché non ci sono errori.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Funziona subito</h2>
+        <p>Il tool <code>schema_validate</code> non richiede credenziali: basta avere seomcp installato. Per le pagine già indicizzate si affianca a <code>gsc_inspect_url</code>, che restituisce il verdetto di Google.</p>
+        <p><a href="{REPO}/blob/main/docs/schema-validator.md" target="_blank" rel="noopener">Tutti i controlli nel dettaglio →</a></p>
       </section>
 
       <section class="doc-block">
@@ -540,8 +584,15 @@ def main():
              "Misure oggettive e prompt per la GEO e l'AEO: cosa leggono i crawler AI, quanto è citabile una pagina, se risponde alle domande degli utenti.",
              "geo", GEO_PAGE))
 
+    schema_dir = SITE / "schema"
+    schema_dir.mkdir(exist_ok=True)
+    (schema_dir / "index.html").write_text(
+        page("Validatore schema.org nel tuo assistente AI · seomcp",
+             "Valida i dati strutturati JSON-LD con il vocabolario ufficiale schema.org e i requisiti di Google per i risultati avanzati, e fatti proporre la correzione.",
+             "schema", SCHEMA_PAGE))
+
     today = date.today().isoformat()
-    urls = ["/", "/geo/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
+    urls = ["/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls)

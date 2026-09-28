@@ -45,6 +45,7 @@ describe('server MCP', () => {
       'gsc_performance',
       'gsc_striking_distance',
       'psi_analyze',
+      'schema_validate',
       'seomcp_status',
     ]);
     expect(tools.every((t) => t.annotations?.readOnlyHint)).toBe(true);
@@ -127,6 +128,7 @@ describe('server MCP', () => {
     expect(prompts.map((p) => p.name).sort()).toEqual([
       'audit-geo-pagina',
       'confronto-concorrenti',
+      'correggi-dati-strutturati',
       'domande-utenti',
       'passaggio-citabile',
       'piano-editoriale-ai',

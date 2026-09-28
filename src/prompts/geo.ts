@@ -24,6 +24,24 @@ const text = (t: string) => ({ messages: [{ role: 'user' as const, content: { ty
 
 export function registerGeoPrompts(server: McpServer): void {
   server.registerPrompt(
+    'correggi-dati-strutturati',
+    {
+      title: 'Correggi i miei dati strutturati',
+      description: 'Valida i dati strutturati della pagina e propone il JSON-LD corretto, pronto da incollare.',
+      argsSchema: { url: z.string().describe('URL della pagina') },
+    },
+    ({ url }) =>
+      text(`Controlla e correggi i dati strutturati della pagina ${url}.
+
+1. Usa schema_validate sulla pagina.
+2. Spiega in linguaggio semplice cosa non va, partendo dagli errori, poi gli avvisi. Per i risultati avanzati di Google indica quali sono idonei e cosa manca, con il link alla documentazione restituito dal tool.
+3. Scrivi il JSON-LD corretto e completo in un unico blocco <script type="application/ld+json">, pronto da incollare. Mantieni i dati esistenti; per le proprietà consigliate che mancano usa segnaposto chiari tra parentesi quadre, es. "[URL del logo]": non inventare valori.
+4. Verifica la tua proposta passandola a schema_validate con il parametro jsonld, e correggi finché non ci sono errori.
+
+${REGOLE}`),
+  );
+
+  server.registerPrompt(
     'audit-geo-pagina',
     {
       title: 'Audit GEO della pagina',

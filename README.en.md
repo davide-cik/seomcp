@@ -17,7 +17,7 @@
 - **Read-only.** It only requests the `webmasters.readonly` and `analytics.readonly` Google scopes and cannot change anything in your properties.
 - **Your credentials stay on your machine.** No intermediate server, no third-party gateway, no telemetry.
 - **Official libraries only:** the MCP SDK, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin`, `@googleapis/pagespeedonline`, `@googleapis/chromeuxreport` and `google-auth-library`. Bing is a plain REST call. HTML parsing: `htmlparser2` (the engine behind cheerio).
-- **Small, readable codebase.** About 3,700 lines of TypeScript in [`src/`](src), easy to audit before you install it.
+- **Small, readable codebase.** About 4,400 lines of TypeScript in [`src/`](src), easy to audit before you install it.
 - **No misuse of the Google Indexing API**, which Google reserves for job postings and livestreams.
 
 ## Tools
@@ -42,12 +42,13 @@
 | `geo_ai_access` | GEO: which AI crawlers can read the site (robots.txt, llms.txt, Content Signals, TDMRep) |
 | `geo_page_metrics` | GEO/AEO: page metrics as an AI crawler sees it, plus HTTPS and domain age |
 | `geo_page_sections` | GEO/AEO: page text split into sections, with per-section metrics |
+| `schema_validate` | schema.org validator: official vocabulary, Google rich result requirements, consistency with the page. Also on pasted JSON-LD |
 | `bing_list_sites` | Sites in your Bing Webmaster account |
 | `bing_query_stats` | Bing performance by query |
 | `bing_page_stats` | Bing performance by page |
 | `bing_keyword_stats` | Keyword search volume (defaults to Italy / Italian; set `country` and `language` for other markets) |
 
-Plus six **prompts** (conversation starters) for narrative GEO analysis: page audit, answers to real user questions, competitor comparison, AI access policy, rewriting a passage to be citable, editorial plan. See [docs/geo.md](docs/geo.md) (Italian).
+Plus seven **prompts** (conversation starters): GEO page audit, answers to real user questions, competitor comparison, AI access policy, rewriting a passage to be citable, editorial plan, fixing structured data. See [docs/geo.md](docs/geo.md) and [docs/schema-validator.md](docs/schema-validator.md) (Italian).
 
 ## Install
 

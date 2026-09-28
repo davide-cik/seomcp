@@ -8,6 +8,9 @@
 export { GscClient, GSC_SCOPES, GSC_MAX_ROWS, type GscAuth } from './core/gsc.js';
 export { GaClient, GA_SCOPES, GA_MAX_ROWS, normalizeProperty } from './core/ga.js';
 export { PageSpeedClient, THRESHOLDS, rate, type PsiResult, type CruxRecord, type CruxHistory, type CruxMetric, type FormFactor, type Strategy, type PsiCategory } from './core/pagespeed.js';
+export { validateJsonLd, parseJsonLdInput, ancestors, isSubtypeOf, VOCABULARY_VERSION, type ValidationReport, type GroupedIssue, type RichResultGroup, type PageContext } from './core/schema-validate.js';
+export { RICH_RESULT_RULES, type RichResultRule } from './core/google-rich-results.js';
+export { pageMetrics, pageSections, aiAccess, type PageMetrics, type AiAccessReport } from './core/geo.js';
 export { BingClient, BING_API_BASE, parseBingDate, type BingClientOptions } from './core/bing.js';
 export {
   comparePeriods,

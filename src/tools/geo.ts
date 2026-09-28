@@ -23,7 +23,7 @@ export function registerGeoTools(server: McpServer, ctx: ToolContext): void {
     {
       title: 'GEO: metriche della pagina',
       description:
-        "Misure oggettive di una pagina così come la legge un crawler AI (HTML iniziale, senza JavaScript): testo leggibile, struttura (titoli, titoli a domanda, liste, tabelle, paragrafi), risposta in apertura (parole del primo paragrafo dopo i titoli), sezioni, dati numerici, freschezza, autore, fonti citate, dati strutturati con proprietà mancanti, entità con sameAs. Include i segnali del sito: HTTPS (redirect da http, HSTS, contenuti misti) e anzianità del dominio (RDAP, o WHOIS per i .it). Numeri confrontabili tra pagine e con i concorrenti.",
+        "Misure oggettive di una pagina così come la legge un crawler AI (HTML iniziale, senza JavaScript): testo leggibile, struttura (titoli, titoli a domanda, liste, tabelle, paragrafi), risposta in apertura (parole del primo paragrafo dopo i titoli), sezioni, dati numerici, freschezza, autore, fonti citate, dati strutturati con proprietà mancanti (per la validazione completa usa schema_validate), entità con sameAs. Include i segnali del sito: HTTPS (redirect da http, HSTS, contenuti misti) e anzianità del dominio (RDAP, o WHOIS per i .it). Numeri confrontabili tra pagine e con i concorrenti.",
       inputSchema: { url },
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
