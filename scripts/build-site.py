@@ -418,6 +418,52 @@ CWV_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomc
       </section>"""
 
 
+GEO_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › GEO e AEO</nav>
+      <p class="eyebrow">Novità</p>
+      <h1>GEO e AEO: farsi citare dai motori AI</h1>
+      <p class="lead">ChatGPT, Claude, Perplexity e AI Overviews rispondono citando pagine web. seomcp misura cosa leggono i loro crawler e quanto le tue pagine sono pronte a essere citate, poi aiuta l'assistente a ragionarci sopra.</p>
+
+      <section class="doc-block">
+        <h2>Numeri, non opinioni</h2>
+        <p>I tool restituiscono <strong>solo misure oggettive</strong>, uguali per chiunque le lanci e confrontabili tra pagine e con i concorrenti. La pagina viene letta come fanno i crawler AI: l'HTML che arriva dal server, <strong>senza eseguire JavaScript</strong>.</p>
+        <dl class="tools">
+          <dt><code>geo_ai_access</code></dt><dd>Per ogni bot AI (GPTBot, ClaudeBot, PerplexityBot, Google-Extended…) consentito o bloccato e da quale regola, diviso tra addestramento, risposte e letture su richiesta. Più llms.txt, Content Signals di Cloudflare e riserva TDM europea.</dd>
+          <dt><code>geo_page_metrics</code></dt><dd>Struttura, titoli a domanda, risposta in apertura, sezioni, dati numerici, freschezza, autore, fonti citate, dati strutturati con le proprietà mancanti, entità con sameAs. E per il sito: HTTPS ed età del dominio.</dd>
+          <dt><code>geo_page_sections</code></dt><dd>Il testo della pagina diviso per titoli, con le misure di ogni sezione: la materia prima per valutare le risposte passaggio per passaggio.</dd>
+        </dl>
+        <p class="small">Funzionano subito, senza credenziali: le pagine analizzate sono pubbliche.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Spunti di conversazione</h2>
+        <p>Sei prompt pronti guidano l'assistente dall'analisi dei numeri al racconto e alle azioni. Si richiamano dal menu del tuo assistente (in Claude Code con <code>/</code>).</p>
+        <ul class="prompts plain">
+          <li><strong>Audit GEO della pagina</strong>: le misure interpretate, con le correzioni in ordine di impatto.</li>
+          <li><strong>Rispondo alle domande dei miei utenti?</strong> Le query a domanda di Search Console confrontate con le sezioni della pagina.</li>
+          <li><strong>Perché citano loro e non me?</strong> Le tue misure accanto a quelle dei concorrenti.</li>
+          <li><strong>Il mio sito è aperto alle AI?</strong> I permessi spiegati in chiaro, anche per la normativa europea.</li>
+          <li><strong>Rendi citabile questo passaggio</strong>: una sezione riscritta perché regga da sola.</li>
+          <li><strong>Piano editoriale per le risposte AI</strong>: dalle domande senza risposta ai contenuti da scrivere.</li>
+        </ul>
+      </section>
+
+      <section class="doc-block">
+        <h2>Da sapere</h2>
+        <ul class="tips">
+          <li>I riferimenti usati nei prompt, come una risposta in apertura di 40-60 parole, sono pratiche diffuse: i motori AI non pubblicano i loro criteri.</li>
+          <li>robots.txt dichiara le tue intenzioni ai bot, ma non li blocca fisicamente.</li>
+          <li>Nessun motore AI offre un'API pubblica per sapere quando vieni citato: seomcp misura quanto sei citabile, non le citazioni.</li>
+          <li>Per sicurezza seomcp analizza solo siti pubblici e non raggiunge mai indirizzi della rete locale.</li>
+        </ul>
+        <p><a href="{REPO}/blob/main/docs/geo.md" target="_blank" rel="noopener">Tutte le misure nel dettaglio →</a></p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        {INCLUDE.format(name="clients")}
+      </section>"""
+
+
 WEB_NOTE = ("<strong>Versioni web non supportate.</strong> claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot e Mistral Vibe sul web "
             "accettano solo server MCP remoti. seomcp gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.")
 
@@ -487,8 +533,15 @@ def main():
              "Core Web Vitals reali degli utenti Chrome (CrUX) e test PageSpeed Insights dentro Claude, ChatGPT e gli altri assistenti AI, con seomcp.",
              "core-web-vitals", CWV_PAGE))
 
+    geo_dir = SITE / "geo"
+    geo_dir.mkdir(exist_ok=True)
+    (geo_dir / "index.html").write_text(
+        page("GEO e AEO: farsi citare dai motori AI · seomcp",
+             "Misure oggettive e prompt per la GEO e l'AEO: cosa leggono i crawler AI, quanto è citabile una pagina, se risponde alle domande degli utenti.",
+             "geo", GEO_PAGE))
+
     today = date.today().isoformat()
-    urls = ["/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
+    urls = ["/", "/geo/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls)

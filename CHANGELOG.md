@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.19 — 2026-09-28
+
+- **GEO e AEO**: 3 tool di misura oggettiva, senza credenziali:
+  - `geo_ai_access`: permessi dei crawler AI da robots.txt (RFC 9309), divisi per scopo; llms.txt, Content Signals, TDMRep, meta robots e X-Robots-Tag;
+  - `geo_page_metrics`: struttura, risposta in apertura, sezioni, dati, freschezza, autore, fonti, dati strutturati, entità; per il sito HTTPS ed età del dominio (RDAP, WHOIS per i .it);
+  - `geo_page_sections`: il testo diviso per sezioni, con le misure di ciascuna.
+- **6 prompt** narrativi: audit GEO, domande degli utenti, confronto concorrenti, permessi AI, passaggio citabile, piano editoriale.
+- Scaricamento sicuro delle pagine: blocco di indirizzi locali e privati anche dopo i redirect (controllo al momento della connessione), limiti di dimensione, tempo e redirect.
+- Nuova dipendenza `htmlparser2` per leggere l'HTML.
+- Sito: pagina `/geo/` con etichetta "Novità"; menu adattivo su schermi medi; guida `docs/geo.md`.
+
 ## 0.1.18 — 2026-09-28
 
 - **Core Web Vitals e PageSpeed**: 3 nuovi tool (`crux_query`, `crux_history`, `psi_analyze`) basati su Chrome UX Report e PageSpeed Insights, con `PageSpeedClient` esportato come libreria.

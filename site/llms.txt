@@ -4,6 +4,7 @@
 
 - [Repository e README](https://github.com/davide-cik/seomcp): installazione, configurazione, elenco dei tool
 - [Google Analytics 4](https://seomcp.contentisking.guru/google-analytics/): report GA4 in sola lettura, traffico organico e conversioni
+- [GEO e AEO](https://seomcp.contentisking.guru/geo/): accesso dei crawler AI, misure di citabilità, prompt di analisi
 - [Core Web Vitals](https://seomcp.contentisking.guru/core-web-vitals/): dati reali CrUX e test PageSpeed Insights
 - [Guide di installazione per ogni assistente](https://seomcp.contentisking.guru/installa/): Claude Code, Claude Desktop, ChatGPT e Codex, GitHub Copilot, Gemini CLI, Mistral Vibe
 - [Guida Google Search Console](https://github.com/davide-cik/seomcp/blob/main/docs/google-setup.md): service account oppure OAuth con client proprio

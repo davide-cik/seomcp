@@ -1,6 +1,6 @@
 # seomcp
 
-**Google Search Console, Google Analytics 4, Bing Webmaster Tools and Core Web Vitals inside your AI assistant.** Open source, free, made in Italy.
+**Search Console, Analytics 4, Bing Webmaster, Core Web Vitals and GEO/AEO analysis inside your AI assistant.** Open source, free, made in Italy.
 
 [🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [MIT](LICENSE) license
 
@@ -16,8 +16,8 @@
 
 - **Read-only.** It only requests the `webmasters.readonly` and `analytics.readonly` Google scopes and cannot change anything in your properties.
 - **Your credentials stay on your machine.** No intermediate server, no third-party gateway, no telemetry.
-- **Official libraries only:** the MCP SDK, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin`, `@googleapis/pagespeedonline`, `@googleapis/chromeuxreport` and `google-auth-library`. Bing is a plain REST call.
-- **Small, readable codebase.** About 2,000 lines of TypeScript in [`src/`](src), easy to audit before you install it.
+- **Official libraries only:** the MCP SDK, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin`, `@googleapis/pagespeedonline`, `@googleapis/chromeuxreport` and `google-auth-library`. Bing is a plain REST call. HTML parsing: `htmlparser2` (the engine behind cheerio).
+- **Small, readable codebase.** About 3,700 lines of TypeScript in [`src/`](src), easy to audit before you install it.
 - **No misuse of the Google Indexing API**, which Google reserves for job postings and livestreams.
 
 ## Tools
@@ -39,10 +39,15 @@
 | `crux_query` | Real-user Core Web Vitals from Chrome (LCP, INP, CLS): rating and distribution |
 | `crux_history` | Weekly trend of real-user Core Web Vitals, up to 40 weeks |
 | `psi_analyze` | PageSpeed Insights test: scores, metrics, opportunities and SEO audits |
+| `geo_ai_access` | GEO: which AI crawlers can read the site (robots.txt, llms.txt, Content Signals, TDMRep) |
+| `geo_page_metrics` | GEO/AEO: page metrics as an AI crawler sees it, plus HTTPS and domain age |
+| `geo_page_sections` | GEO/AEO: page text split into sections, with per-section metrics |
 | `bing_list_sites` | Sites in your Bing Webmaster account |
 | `bing_query_stats` | Bing performance by query |
 | `bing_page_stats` | Bing performance by page |
 | `bing_keyword_stats` | Keyword search volume (defaults to Italy / Italian; set `country` and `language` for other markets) |
+
+Plus six **prompts** (conversation starters) for narrative GEO analysis: page audit, answers to real user questions, competitor comparison, AI access policy, rewriting a passage to be citable, editorial plan. See [docs/geo.md](docs/geo.md) (Italian).
 
 ## Install
 

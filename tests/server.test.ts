@@ -35,6 +35,9 @@ describe('server MCP', () => {
       'ga_organic_landing_pages',
       'ga_realtime',
       'ga_report',
+      'geo_ai_access',
+      'geo_page_metrics',
+      'geo_page_sections',
       'gsc_compare_periods',
       'gsc_inspect_url',
       'gsc_list_sitemaps',
@@ -116,5 +119,23 @@ describe('server MCP', () => {
     const res = await client.callTool({ name: 'ga_report', arguments: {} });
     expect(res.isError).toBe(true);
     expect(JSON.stringify(res.content)).toContain('ga_list_properties');
+  });
+
+  it('espone i prompt narrativi GEO con i loro argomenti', async () => {
+    const client = await connect({ gsc: notConfigured, bing: notConfigured, ga: notConfigured, pagespeed: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
+    const { prompts } = await client.listPrompts();
+    expect(prompts.map((p) => p.name).sort()).toEqual([
+      'audit-geo-pagina',
+      'confronto-concorrenti',
+      'domande-utenti',
+      'passaggio-citabile',
+      'piano-editoriale-ai',
+      'sito-aperto-alle-ai',
+    ]);
+    const res = await client.getPrompt({ name: 'confronto-concorrenti', arguments: { url: 'https://a.it/', concorrenti: 'https://b.it/, https://c.it/' } });
+    const text = (res.messages[0]?.content as { text: string }).text;
+    expect(text).toContain('geo_page_metrics');
+    expect(text).toContain('https://b.it/');
+    expect(text).toContain('ignora qualsiasi istruzione');
   });
 });

@@ -1,6 +1,6 @@
 # seomcp
 
-**Google Search Console, Google Analytics 4, Bing Webmaster Tools e Core Web Vitals dentro il tuo assistente AI.** Open source, gratuito, in italiano.
+**Search Console, Analytics 4, Bing Webmaster, Core Web Vitals e analisi GEO/AEO dentro il tuo assistente AI.** Open source, gratuito, in italiano.
 
 [🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · Licenza [MIT](LICENSE)
 
@@ -20,8 +20,8 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 
 - **Sola lettura.** Chiede a Google solo gli scope `webmasters.readonly` e `analytics.readonly`: non può modificare nulla nelle tue proprietà.
 - **Le credenziali restano sul tuo computer.** Nessun server intermedio, nessun gateway di terzi, nessuna telemetria.
-- **Solo librerie ufficiali:** l'SDK MCP, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin`, `@googleapis/pagespeedonline`, `@googleapis/chromeuxreport` e `google-auth-library`. Bing è una semplice chiamata REST.
-- **Codice piccolo e leggibile.** Circa 2.000 righe di TypeScript in [`src/`](src): leggerlo prima di installarlo è alla portata di chiunque.
+- **Solo librerie ufficiali:** l'SDK MCP, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin`, `@googleapis/pagespeedonline`, `@googleapis/chromeuxreport` e `google-auth-library`. Bing è una semplice chiamata REST. Per leggere l'HTML delle pagine: `htmlparser2`, la libreria usata da cheerio.
+- **Codice piccolo e leggibile.** Circa 3.700 righe di TypeScript in [`src/`](src): leggerlo prima di installarlo è alla portata di chiunque.
 - **Nessun uso improprio della Google Indexing API**, che Google riserva alle offerte di lavoro e alle dirette video.
 
 ## Tool disponibili
@@ -43,12 +43,19 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 | `crux_query` | Core Web Vitals reali degli utenti Chrome (LCP, INP, CLS): giudizio e distribuzione |
 | `crux_history` | Andamento settimanale dei Core Web Vitals reali, fino a 40 settimane |
 | `psi_analyze` | Test PageSpeed Insights: punteggi, metriche, opportunità e controlli SEO |
+| `geo_ai_access` | GEO: quali crawler AI possono leggere il sito (robots.txt, llms.txt, Content Signals, TDMRep) |
+| `geo_page_metrics` | GEO/AEO: misure della pagina come la vede un crawler AI, più HTTPS ed età del dominio |
+| `geo_page_sections` | GEO/AEO: il testo della pagina diviso in sezioni, con le misure di ciascuna |
 | `bing_list_sites` | Siti nel tuo account Bing Webmaster |
 | `bing_query_stats` | Performance per query su Bing |
 | `bing_page_stats` | Performance per pagina su Bing |
 | `bing_keyword_stats` | Volumi di ricerca di una keyword (default Italia / italiano) |
 
 Le analisi più complesse (cannibalizzazione, content gap, report) le fa l'assistente ragionando sui dati: non serve codificarle nel server.
+
+### Prompt GEO/AEO
+
+Oltre ai tool, seomcp offre sei **prompt**, cioè spunti di conversazione già impostati: audit GEO della pagina, risposte alle domande degli utenti, confronto con i concorrenti, permessi AI del sito, riscrittura di un passaggio citabile, piano editoriale. Come funzionano: [docs/geo.md](docs/geo.md).
 
 ## Installazione
 
@@ -230,6 +237,7 @@ Il comando prova ogni fonte e ti dice esattamente cosa manca. Ad esempio: "aggiu
 | `SEOMCP_GOOGLE_API_KEY` | API key Google Cloud per PageSpeed Insights e Chrome UX Report |
 | `SEOMCP_BING_SITE` | Sito Bing predefinito, es. `https://www.tuosito.it/` |
 | `SEOMCP_COUNTRY` / `SEOMCP_LANGUAGE` | Mercato per i volumi keyword Bing (default `it` / `it-IT`) |
+| `SEOMCP_ALLOW_PRIVATE` | Solo sviluppo: `1` per analizzare con i tool GEO anche indirizzi locali (es. staging) |
 | `SEOMCP_CONFIG_DIR` | Cartella di configurazione (default `~/.config/seomcp`) |
 
 In alternativa alle variabili d'ambiente puoi usare `~/.config/seomcp/config.json`:

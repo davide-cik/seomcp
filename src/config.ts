@@ -45,6 +45,8 @@ export interface SeoMcpConfig {
   bingApiKey?: string;
   /** API key Google Cloud per PageSpeed Insights e Chrome UX Report. */
   googleApiKey?: string;
+  /** Solo sviluppo: consente di analizzare indirizzi locali o privati (SEOMCP_ALLOW_PRIVATE=1). */
+  allowPrivateFetch: boolean;
   defaults: {
     gscSite?: string;
     bingSite?: string;
@@ -83,6 +85,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): SeoMcpConfig {
     google,
     bingApiKey: env.BING_WEBMASTER_API_KEY || file.bing?.apiKey || undefined,
     googleApiKey: env.SEOMCP_GOOGLE_API_KEY || file.google?.apiKey || undefined,
+    allowPrivateFetch: env.SEOMCP_ALLOW_PRIVATE === '1',
     defaults: {
       gscSite: env.SEOMCP_GSC_SITE || file.defaults?.gscSite,
       bingSite: env.SEOMCP_BING_SITE || file.defaults?.bingSite,

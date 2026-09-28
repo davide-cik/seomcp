@@ -205,3 +205,10 @@ a.plain:hover { color: var(--accent); }
 .nav-short { display: none; }
 @media (max-width: 640px) { .nav-long { display: none; } .nav-short { display: inline; } }
 @media (max-width: 640px) { .top nav a.nav-desktop { display: none; } }
+
+/* Menu: meno voci man mano che lo schermo si stringe, senza mai sbordare. */
+@media (max-width: 1300px) { .top nav a[href="/#fiducia"], .top nav a[href="/#tool"] { display: none; } }
+@media (max-width: 980px) { .top nav a.nav-desktop { display: none; } }
+.top nav a { white-space: nowrap; }
+/* Elenco descrittivo con lo stile dei prompt, ma senza virgolette. */
+.prompts.plain li::before, .prompts.plain li::after { content: none; }

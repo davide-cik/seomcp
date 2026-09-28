@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GEO e AEO: farsi citare dai motori AI · seomcp</title>
+  <meta name="description" content="Misure oggettive e prompt per la GEO e l&#x27;AEO: cosa leggono i crawler AI, quanto è citabile una pagina, se risponde alle domande degli utenti.">
+  <link rel="canonical" href="https://seomcp.contentisking.guru/geo/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GEO e AEO: farsi citare dai motori AI · seomcp">
+  <meta property="og:description" content="Misure oggettive e prompt per la GEO e l&#x27;AEO: cosa leggono i crawler AI, quanto è citabile una pagina, se risponde alle domande degli utenti.">
+  <meta property="og:url" content="https://seomcp.contentisking.guru/geo/">
+  <meta property="og:locale" content="it_IT">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Vai al contenuto</a>
+  <!--#include virtual="/_partials/header.html" -->
+
+  <main id="main" class="doc">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › GEO e AEO</nav>
+      <p class="eyebrow">Novità</p>
+      <h1>GEO e AEO: farsi citare dai motori AI</h1>
+      <p class="lead">ChatGPT, Claude, Perplexity e AI Overviews rispondono citando pagine web. seomcp misura cosa leggono i loro crawler e quanto le tue pagine sono pronte a essere citate, poi aiuta l'assistente a ragionarci sopra.</p>
+
+      <section class="doc-block">
+        <h2>Numeri, non opinioni</h2>
+        <p>I tool restituiscono <strong>solo misure oggettive</strong>, uguali per chiunque le lanci e confrontabili tra pagine e con i concorrenti. La pagina viene letta come fanno i crawler AI: l'HTML che arriva dal server, <strong>senza eseguire JavaScript</strong>.</p>
+        <dl class="tools">
+          <dt><code>geo_ai_access</code></dt><dd>Per ogni bot AI (GPTBot, ClaudeBot, PerplexityBot, Google-Extended…) consentito o bloccato e da quale regola, diviso tra addestramento, risposte e letture su richiesta. Più llms.txt, Content Signals di Cloudflare e riserva TDM europea.</dd>
+          <dt><code>geo_page_metrics</code></dt><dd>Struttura, titoli a domanda, risposta in apertura, sezioni, dati numerici, freschezza, autore, fonti citate, dati strutturati con le proprietà mancanti, entità con sameAs. E per il sito: HTTPS ed età del dominio.</dd>
+          <dt><code>geo_page_sections</code></dt><dd>Il testo della pagina diviso per titoli, con le misure di ogni sezione: la materia prima per valutare le risposte passaggio per passaggio.</dd>
+        </dl>
+        <p class="small">Funzionano subito, senza credenziali: le pagine analizzate sono pubbliche.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Spunti di conversazione</h2>
+        <p>Sei prompt pronti guidano l'assistente dall'analisi dei numeri al racconto e alle azioni. Si richiamano dal menu del tuo assistente (in Claude Code con <code>/</code>).</p>
+        <ul class="prompts plain">
+          <li><strong>Audit GEO della pagina</strong>: le misure interpretate, con le correzioni in ordine di impatto.</li>
+          <li><strong>Rispondo alle domande dei miei utenti?</strong> Le query a domanda di Search Console confrontate con le sezioni della pagina.</li>
+          <li><strong>Perché citano loro e non me?</strong> Le tue misure accanto a quelle dei concorrenti.</li>
+          <li><strong>Il mio sito è aperto alle AI?</strong> I permessi spiegati in chiaro, anche per la normativa europea.</li>
+          <li><strong>Rendi citabile questo passaggio</strong>: una sezione riscritta perché regga da sola.</li>
+          <li><strong>Piano editoriale per le risposte AI</strong>: dalle domande senza risposta ai contenuti da scrivere.</li>
+        </ul>
+      </section>
+
+      <section class="doc-block">
+        <h2>Da sapere</h2>
+        <ul class="tips">
+          <li>I riferimenti usati nei prompt, come una risposta in apertura di 40-60 parole, sono pratiche diffuse: i motori AI non pubblicano i loro criteri.</li>
+          <li>robots.txt dichiara le tue intenzioni ai bot, ma non li blocca fisicamente.</li>
+          <li>Nessun motore AI offre un'API pubblica per sapere quando vieni citato: seomcp misura quanto sei citabile, non le citazioni.</li>
+          <li>Per sicurezza seomcp analizza solo siti pubblici e non raggiunge mai indirizzi della rete locale.</li>
+        </ul>
+        <p><a href="https://github.com/davide-cik/seomcp/blob/main/docs/geo.md" target="_blank" rel="noopener">Tutte le misure nel dettaglio →</a></p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        <!--#include virtual="/_partials/clients.html" -->
+      </section>
+    </div>
+  </main>
+
+  <!--#include virtual="/_partials/footer.html" -->
+  <script src="/app.js" defer></script>
+</body>
+</html>

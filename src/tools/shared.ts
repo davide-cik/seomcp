@@ -7,6 +7,7 @@ import type { GaClient } from '../core/ga.js';
 import type { GscClient } from '../core/gsc.js';
 import type { PageSpeedClient } from '../core/pagespeed.js';
 import type { DiagnosticItem } from '../doctor.js';
+import type { FetchOptions } from '../core/fetch-page.js';
 
 /** Ciò di cui hanno bisogno i tool. I client vengono creati solo al primo uso. */
 export interface ToolContext {
@@ -14,6 +15,8 @@ export interface ToolContext {
   bing: () => BingClient;
   ga: () => GaClient;
   pagespeed: () => PageSpeedClient;
+  /** Opzioni per lo scaricamento delle pagine (analisi GEO). */
+  fetchOptions?: FetchOptions;
   defaults: { gscSite?: string; bingSite?: string; gaProperty?: string; country: string; language: string };
   diagnose: () => Promise<DiagnosticItem[]>;
 }
