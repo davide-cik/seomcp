@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.11 — 2026-09-28
+
+- Landing: il link a Zuzai torna alla home.
+
 ## 0.1.10 — 2026-09-28
 
 - Landing: il link a Zuzai porta alla registrazione con codice referral SEOMCP.
