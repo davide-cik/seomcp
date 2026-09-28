@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.14 — 2026-09-28
+
+- llms.txt: rimosso il link al pacchetto npm non ancora pubblicato.
+
 ## 0.1.13 — 2026-09-28
 
 - Landing convertita agli include SSI; il passo 2 porta alle guide dei singoli assistenti.

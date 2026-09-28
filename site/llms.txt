@@ -6,4 +6,4 @@
 - [Guide di installazione per ogni assistente](https://seomcp.contentisking.guru/installa/): Claude Code, Claude Desktop, ChatGPT e Codex, GitHub Copilot, Gemini CLI, Mistral Vibe
 - [Guida Google Search Console](https://github.com/davide-cik/seomcp/blob/main/docs/google-setup.md): service account oppure OAuth con client proprio
 - [Guida Bing Webmaster Tools](https://github.com/davide-cik/seomcp/blob/main/docs/bing-setup.md): generazione della API key
-- [Pacchetto npm](https://www.npmjs.com/package/@contentisking/seomcp): `npx -y @contentisking/seomcp`
+- Installazione: `npx -y github:davide-cik/seomcp` (il pacchetto npm `@contentisking/seomcp` è in arrivo)
