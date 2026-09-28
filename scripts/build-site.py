@@ -20,6 +20,7 @@ ENV = [
     ("BING_WEBMASTER_API_KEY", "la-tua-chiave"),
     ("SEOMCP_GSC_SITE", "sc-domain:tuosito.it"),
     ("SEOMCP_GA_PROPERTY", "123456789"),
+    ("SEOMCP_GOOGLE_API_KEY", "la-tua-api-key"),
 ]
 
 
@@ -218,7 +219,7 @@ PREREQ = f"""      <section class="doc-block">
         <h2>Prima di iniziare</h2>
         <ul class="checklist">
           <li><strong>Node.js 22 o superiore</strong> (<a href="https://nodejs.org/it/download" target="_blank" rel="noopener">scarica</a>) e <strong>git</strong> (<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">scarica</a>).</li>
-          <li><strong>Le credenziali</strong> delle fonti che vuoi usare: <a href="{REPO}/blob/main/docs/google-setup.md" target="_blank" rel="noopener">Google Search Console</a>, <a href="/google-analytics/">Google Analytics 4</a> e <a href="{REPO}/blob/main/docs/bing-setup.md" target="_blank" rel="noopener">Bing Webmaster Tools</a>. Sono tutte facoltative.</li>
+          <li><strong>Le credenziali</strong> delle fonti che vuoi usare: <a href="{REPO}/blob/main/docs/google-setup.md" target="_blank" rel="noopener">Google Search Console</a>, <a href="/google-analytics/">Google Analytics 4</a>, <a href="{REPO}/blob/main/docs/bing-setup.md" target="_blank" rel="noopener">Bing Webmaster Tools</a> e la API key per i <a href="/core-web-vitals/">Core Web Vitals</a>. Sono tutte facoltative.</li>
         </ul>
         <p class="small">Il pacchetto npm è in arrivo: per ora seomcp si installa direttamente da GitHub. Il primo avvio richiede qualche secondo in più, perché il codice viene compilato sul tuo computer.</p>
       </section>"""
@@ -361,6 +362,62 @@ GA_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp
       </section>"""
 
 
+CWV_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Core Web Vitals</nav>
+      <p class="eyebrow">Novità</p>
+      <h1>Core Web Vitals e PageSpeed nel tuo assistente</h1>
+      <p class="lead">Due punti di vista sulle prestazioni. Il <strong>Chrome UX Report</strong> dà i dati reali degli utenti Chrome, quelli che Google usa per il ranking. <strong>PageSpeed Insights</strong> fa un test di laboratorio e dice cosa correggere.</p>
+
+      <section class="doc-block">
+        <h2>Cosa puoi chiedere</h2>
+        <ul class="prompts">
+          <li>Il sito supera i Core Web Vitals su mobile?</li>
+          <li>L'LCP è migliorato dopo il cambio di tema del mese scorso?</li>
+          <li>Testa la home con PageSpeed e dimmi le tre correzioni che valgono di più.</li>
+          <li>Le pagine con Core Web Vitals scarsi hanno perso posizioni su Google?</li>
+        </ul>
+      </section>
+
+      <section class="doc-block">
+        <h2>I 3 tool</h2>
+        <dl class="tools">
+          <dt><code>crux_query</code></dt><dd>Core Web Vitals reali degli ultimi 28 giorni (LCP, INP, CLS, più FCP e TTFB) per una pagina o per tutto il sito: 75° percentile, giudizio, distribuzione ed esito complessivo.</dd>
+          <dt><code>crux_history</code></dt><dd>Andamento settimanale fino a 40 settimane, per vedere l'effetto di un intervento o scoprire un peggioramento.</dd>
+          <dt><code>psi_analyze</code></dt><dd>Test PageSpeed Insights su mobile o desktop: punteggi, metriche, opportunità ordinate per risparmio e controlli SEO non superati.</dd>
+        </dl>
+        <p class="small">Uniti a Search Console, permettono di collegare prestazioni e posizioni.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Attivalo in 3 passi</h2>
+        <p>Serve solo una <strong>API key gratuita</strong> di Google Cloud. I dati sono pubblici: la chiave non dà accesso al tuo account.</p>
+        <ol class="steps">
+          <li>
+            <h3>Abilita le API</h3>
+            <p>In Google Cloud Console apri <em>API e servizi → Libreria</em> e abilita <strong>Chrome UX Report API</strong> e <strong>PageSpeed Insights API</strong>.</p>
+          </li>
+          <li>
+            <h3>Crea la chiave</h3>
+            <p>In <em>API e servizi → Credenziali → Crea credenziali → Chiave API</em>. Poi, nelle <em>Restrizioni API</em>, limitala alle due API qui sopra.</p>
+          </li>
+          <li>
+            <h3>Aggiungila alla configurazione</h3>
+<pre class="code"><code>SEOMCP_GOOGLE_API_KEY=la-tua-api-key</code></pre>
+          </li>
+        </ol>
+      </section>
+
+      <section class="doc-block">
+        <h2>Verifica</h2>
+<pre class="code"><code>npx -y {PKG} doctor</code></pre>
+        <p>Deve comparire la riga <strong>Chrome UX Report OK</strong>. Da sapere: CrUX pubblica dati solo per pagine e siti con abbastanza visite da Chrome. Se una pagina non ne ha, chiedi i dati di tutto il sito.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        {INCLUDE.format(name="clients")}
+      </section>"""
+
+
 WEB_NOTE = ("<strong>Versioni web non supportate.</strong> claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot e Mistral Vibe sul web "
             "accettano solo server MCP remoti. seomcp gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.")
 
@@ -423,8 +480,15 @@ def main():
              "Collega Google Analytics 4 a Claude, ChatGPT e agli altri assistenti AI con seomcp: traffico organico, conversioni e confronti, in sola lettura.",
              "google-analytics", GA_PAGE))
 
+    cwv_dir = SITE / "core-web-vitals"
+    cwv_dir.mkdir(exist_ok=True)
+    (cwv_dir / "index.html").write_text(
+        page("Core Web Vitals e PageSpeed nel tuo assistente AI · seomcp",
+             "Core Web Vitals reali degli utenti Chrome (CrUX) e test PageSpeed Insights dentro Claude, ChatGPT e gli altri assistenti AI, con seomcp.",
+             "core-web-vitals", CWV_PAGE))
+
     today = date.today().isoformat()
-    urls = ["/", "/google-analytics/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
+    urls = ["/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls)

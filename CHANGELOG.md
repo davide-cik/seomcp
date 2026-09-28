@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.18 — 2026-09-28
+
+- **Core Web Vitals e PageSpeed**: 3 nuovi tool (`crux_query`, `crux_history`, `psi_analyze`) basati su Chrome UX Report e PageSpeed Insights, con `PageSpeedClient` esportato come libreria.
+- Nuova variabile `SEOMCP_GOOGLE_API_KEY` (API key gratuita, dati pubblici); `doctor` la verifica.
+- Messaggio dedicato per API key Google non valida.
+- Sito: pagina `/core-web-vitals/` con etichetta "Novità"; guida `docs/pagespeed-setup.md`.
+
 ## 0.1.17 — 2026-09-28
 
 - Sito: tutti i link esterni si aprono in una nuova scheda.

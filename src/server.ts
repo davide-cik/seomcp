@@ -5,17 +5,19 @@ import { BingClient } from './core/bing.js';
 import { SeoMcpError } from './core/errors.js';
 import { GaClient } from './core/ga.js';
 import { GscClient, type GscAuth } from './core/gsc.js';
+import { PageSpeedClient } from './core/pagespeed.js';
 import { formatDiagnostics, runDiagnostics } from './doctor.js';
 import { registerBingTools } from './tools/bing.js';
 import { registerGaTools } from './tools/ga.js';
 import { registerGscTools } from './tools/gsc.js';
+import { registerPageSpeedTools } from './tools/pagespeed.js';
 import { run, type ToolContext } from './tools/shared.js';
 import { VERSION } from './version.js';
 import { DOCS } from './links.js';
 
 export type { ToolContext } from './tools/shared.js';
 
-const INSTRUCTIONS = `seomcp fornisce dati grezzi da Google Search Console, Google Analytics 4 e Bing Webmaster Tools, in sola lettura.
+const INSTRUCTIONS = `seomcp fornisce dati grezzi da Google Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights e Chrome UX Report, in sola lettura.\nPer le prestazioni: crux_* dà i dati reali degli utenti (quelli usati per il ranking), psi_analyze un test di laboratorio con i suggerimenti.
 Per collegare ricerca e comportamento: le query e i clic vengono da Search Console, sessioni e conversioni delle pagine di destinazione da Analytics.
 Se un tool restituisce un errore di configurazione, chiama seomcp_status e riporta all'utente i passaggi indicati.
 Le analisi (cannibalizzazione, content gap, report) si fanno ragionando sui dati restituiti.`;
@@ -26,6 +28,7 @@ export function createServer(config: SeoMcpConfig): McpServer {
   let gsc: GscClient | undefined;
   let ga: GaClient | undefined;
   let bing: BingClient | undefined;
+  let pagespeed: PageSpeedClient | undefined;
   // Un'unica autenticazione Google, condivisa da Search Console e Analytics.
   const auth = () => (googleAuth ??= createGoogleAuth(config.google));
 
@@ -33,6 +36,7 @@ export function createServer(config: SeoMcpConfig): McpServer {
     // Creazione pigra: il server parte anche se una fonte non è configurata.
     gsc: () => (gsc ??= new GscClient(auth())),
     ga: () => (ga ??= new GaClient(auth())),
+    pagespeed: () => (pagespeed ??= new PageSpeedClient(config.googleApiKey)),
     bing: () => {
       if (!config.bingApiKey) {
         throw new SeoMcpError(
@@ -59,7 +63,7 @@ export function createServerWithContext(ctx: ToolContext): McpServer {
     {
       title: 'Stato della configurazione',
       description:
-        'Verifica quali fonti (Search Console, Analytics, Bing) sono configurate e funzionanti, e spiega cosa fare per quelle che non lo sono.',
+        'Verifica quali fonti (Search Console, Analytics, Bing, PageSpeed/CrUX) sono configurate e funzionanti, e spiega cosa fare per quelle che non lo sono.',
       inputSchema: {},
       annotations: { readOnlyHint: true },
     },
@@ -69,5 +73,6 @@ export function createServerWithContext(ctx: ToolContext): McpServer {
   registerGscTools(server, ctx);
   registerGaTools(server, ctx);
   registerBingTools(server, ctx);
+  registerPageSpeedTools(server, ctx);
   return server;
 }

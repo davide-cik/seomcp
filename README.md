@@ -1,10 +1,10 @@
 # seomcp
 
-**Google Search Console, Google Analytics 4 e Bing Webmaster Tools dentro il tuo assistente AI.** Open source, gratuito, in italiano.
+**Google Search Console, Google Analytics 4, Bing Webmaster Tools e Core Web Vitals dentro il tuo assistente AI.** Open source, gratuito, in italiano.
 
 [🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · Licenza [MIT](LICENSE)
 
-`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4 e Bing Webmaster Tools. Così puoi chiedere, in italiano:
+`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights e Chrome UX Report. Così puoi chiedere, in italiano:
 
 > Quali query sono in posizione 4-20 negli ultimi 90 giorni, e quali pagine dovrei ottimizzare per prime?
 >
@@ -20,7 +20,7 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 
 - **Sola lettura.** Chiede a Google solo gli scope `webmasters.readonly` e `analytics.readonly`: non può modificare nulla nelle tue proprietà.
 - **Le credenziali restano sul tuo computer.** Nessun server intermedio, nessun gateway di terzi, nessuna telemetria.
-- **Solo librerie ufficiali:** l'SDK MCP, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin` e `google-auth-library`. Bing è una semplice chiamata REST.
+- **Solo librerie ufficiali:** l'SDK MCP, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin`, `@googleapis/pagespeedonline`, `@googleapis/chromeuxreport` e `google-auth-library`. Bing è una semplice chiamata REST.
 - **Codice piccolo e leggibile.** Circa 2.000 righe di TypeScript in [`src/`](src): leggerlo prima di installarlo è alla portata di chiunque.
 - **Nessun uso improprio della Google Indexing API**, che Google riserva alle offerte di lavoro e alle dirette video.
 
@@ -40,6 +40,9 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 | `ga_organic_landing_pages` | Pagine di destinazione della ricerca organica: sessioni, coinvolgimento, conversioni, ricavi |
 | `ga_compare_periods` | Confronto tra periodi su qualsiasi metrica: cali e crescite |
 | `ga_realtime` | Utenti attivi negli ultimi 30 minuti |
+| `crux_query` | Core Web Vitals reali degli utenti Chrome (LCP, INP, CLS): giudizio e distribuzione |
+| `crux_history` | Andamento settimanale dei Core Web Vitals reali, fino a 40 settimane |
+| `psi_analyze` | Test PageSpeed Insights: punteggi, metriche, opportunità e controlli SEO |
 | `bing_list_sites` | Siti nel tuo account Bing Webmaster |
 | `bing_query_stats` | Performance per query su Bing |
 | `bing_page_stats` | Performance per pagina su Bing |
@@ -57,6 +60,7 @@ Serve **Node.js 22 o superiore**. Configura solo le fonti che usi: Google e Bing
 
 - **Google Search Console:** segui la [guida passo passo](docs/google-setup.md). Puoi scegliere tra un service account (comodo per i team) e OAuth con un client tuo (comodo per il singolo professionista).
 - **Google Analytics 4** (facoltativo): stesse credenziali di Search Console, più tre passaggi nella [guida Analytics](docs/google-analytics-setup.md).
+- **PageSpeed e Core Web Vitals** (facoltativo): una API key gratuita, come spiegato nella [guida PageSpeed](docs/pagespeed-setup.md).
 - **Bing Webmaster Tools:** genera una API key in due minuti, come spiegato nella [guida](docs/bing-setup.md).
 
 ### 2. Collegalo al tuo assistente
@@ -73,6 +77,7 @@ claude mcp add seomcp -s user \
   -e BING_WEBMASTER_API_KEY=la-tua-chiave \
   -e SEOMCP_GSC_SITE=sc-domain:tuosito.it \
   -e SEOMCP_GA_PROPERTY=123456789 \
+  -e SEOMCP_GOOGLE_API_KEY=la-tua-api-key \
   -- npx -y @contentisking/seomcp
 ```
 
@@ -92,7 +97,8 @@ In `claude_desktop_config.json` (Impostazioni → Sviluppatore → Modifica conf
         "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
         "BING_WEBMASTER_API_KEY": "la-tua-chiave",
         "SEOMCP_GSC_SITE": "sc-domain:tuosito.it",
-        "SEOMCP_GA_PROPERTY": "123456789"
+        "SEOMCP_GA_PROPERTY": "123456789",
+        "SEOMCP_GOOGLE_API_KEY": "la-tua-api-key"
       }
     }
   }
@@ -113,6 +119,7 @@ GOOGLE_APPLICATION_CREDENTIALS = "/percorso/service-account.json"
 BING_WEBMASTER_API_KEY = "la-tua-chiave"
 SEOMCP_GSC_SITE = "sc-domain:tuosito.it"
 SEOMCP_GA_PROPERTY = "123456789"
+SEOMCP_GOOGLE_API_KEY = "la-tua-api-key"
 ```
 
 #### GitHub Copilot in VS Code
@@ -130,7 +137,8 @@ Comando *MCP: Open User Configuration*, poi nel file `mcp.json`:
         "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
         "BING_WEBMASTER_API_KEY": "la-tua-chiave",
         "SEOMCP_GSC_SITE": "sc-domain:tuosito.it",
-        "SEOMCP_GA_PROPERTY": "123456789"
+        "SEOMCP_GA_PROPERTY": "123456789",
+        "SEOMCP_GOOGLE_API_KEY": "la-tua-api-key"
       }
     }
   }
@@ -154,7 +162,8 @@ In `~/.copilot/mcp-config.json`:
         "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
         "BING_WEBMASTER_API_KEY": "la-tua-chiave",
         "SEOMCP_GSC_SITE": "sc-domain:tuosito.it",
-        "SEOMCP_GA_PROPERTY": "123456789"
+        "SEOMCP_GA_PROPERTY": "123456789",
+        "SEOMCP_GOOGLE_API_KEY": "la-tua-api-key"
       },
       "tools": ["*"]
     }
@@ -176,7 +185,8 @@ In `~/.gemini/settings.json`:
         "GOOGLE_APPLICATION_CREDENTIALS": "/percorso/service-account.json",
         "BING_WEBMASTER_API_KEY": "la-tua-chiave",
         "SEOMCP_GSC_SITE": "sc-domain:tuosito.it",
-        "SEOMCP_GA_PROPERTY": "123456789"
+        "SEOMCP_GA_PROPERTY": "123456789",
+        "SEOMCP_GOOGLE_API_KEY": "la-tua-api-key"
       }
     }
   }
@@ -195,7 +205,7 @@ name = "seomcp"
 transport = "stdio"
 command = "npx"
 args = ["-y", "@contentisking/seomcp"]
-env = { "GOOGLE_APPLICATION_CREDENTIALS" = "/percorso/service-account.json", "BING_WEBMASTER_API_KEY" = "la-tua-chiave", "SEOMCP_GSC_SITE" = "sc-domain:tuosito.it", "SEOMCP_GA_PROPERTY" = "123456789" }
+env = { "GOOGLE_APPLICATION_CREDENTIALS" = "/percorso/service-account.json", "BING_WEBMASTER_API_KEY" = "la-tua-chiave", "SEOMCP_GSC_SITE" = "sc-domain:tuosito.it", "SEOMCP_GA_PROPERTY" = "123456789", "SEOMCP_GOOGLE_API_KEY" = "la-tua-api-key" }
 ```
 
 > **Versioni web non supportate.** Le versioni web (claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot, Mistral Vibe sul web) accettano solo server MCP remoti, raggiungibili su internet. `seomcp` gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.
@@ -217,6 +227,7 @@ Il comando prova ogni fonte e ti dice esattamente cosa manca. Ad esempio: "aggiu
 | `BING_WEBMASTER_API_KEY` | API key di Bing Webmaster Tools |
 | `SEOMCP_GSC_SITE` | Proprietà predefinita: `sc-domain:tuosito.it` oppure `https://www.tuosito.it/` |
 | `SEOMCP_GA_PROPERTY` | ID numerico della proprietà GA4 predefinita, es. `123456789` |
+| `SEOMCP_GOOGLE_API_KEY` | API key Google Cloud per PageSpeed Insights e Chrome UX Report |
 | `SEOMCP_BING_SITE` | Sito Bing predefinito, es. `https://www.tuosito.it/` |
 | `SEOMCP_COUNTRY` / `SEOMCP_LANGUAGE` | Mercato per i volumi keyword Bing (default `it` / `it-IT`) |
 | `SEOMCP_CONFIG_DIR` | Cartella di configurazione (default `~/.config/seomcp`) |
@@ -225,7 +236,7 @@ In alternativa alle variabili d'ambiente puoi usare `~/.config/seomcp/config.jso
 
 ```json
 {
-  "google": { "serviceAccountFile": "/percorso/service-account.json" },
+  "google": { "serviceAccountFile": "/percorso/service-account.json", "apiKey": "la-tua-api-key" },
   "bing": { "apiKey": "la-tua-chiave" },
   "defaults": { "gscSite": "sc-domain:tuosito.it", "gaProperty": "123456789", "bingSite": "https://www.tuosito.it/" }
 }

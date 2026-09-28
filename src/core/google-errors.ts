@@ -24,6 +24,14 @@ export function googleError(err: unknown, ctx: GoogleErrorContext): SeoMcpError 
   const message = apiError?.message ?? e.message ?? 'errore sconosciuto';
   const reasons = (apiError?.details ?? []).map((d) => d.reason ?? '');
 
+  if (reasons.includes('API_KEY_INVALID') || /API key not valid/i.test(message)) {
+    return new SeoMcpError(
+      'AUTH_FAILED',
+      'API key Google non valida.',
+      'Controlla il valore di SEOMCP_GOOGLE_API_KEY: copiala di nuovo da Google Cloud Console → API e servizi → Credenziali.',
+    );
+  }
+
   if (status === 401) {
     return new SeoMcpError(
       'AUTH_FAILED',

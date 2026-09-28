@@ -20,13 +20,16 @@ const notConfigured = () => {
 
 describe('server MCP', () => {
   it('espone tutti i tool, tutti in sola lettura', async () => {
-    const client = await connect({ gsc: notConfigured, bing: notConfigured, ga: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
+    const client = await connect({ gsc: notConfigured, bing: notConfigured, ga: notConfigured,
+      pagespeed: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
     const { tools } = await client.listTools();
     expect(tools.map((t) => t.name).sort()).toEqual([
       'bing_keyword_stats',
       'bing_list_sites',
       'bing_page_stats',
       'bing_query_stats',
+      'crux_history',
+      'crux_query',
       'ga_compare_periods',
       'ga_list_properties',
       'ga_organic_landing_pages',
@@ -38,13 +41,15 @@ describe('server MCP', () => {
       'gsc_list_sites',
       'gsc_performance',
       'gsc_striking_distance',
+      'psi_analyze',
       'seomcp_status',
     ]);
     expect(tools.every((t) => t.annotations?.readOnlyHint)).toBe(true);
   });
 
   it('una fonte non configurata restituisce un errore con istruzioni, senza crash', async () => {
-    const client = await connect({ gsc: notConfigured, bing: notConfigured, ga: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
+    const client = await connect({ gsc: notConfigured, bing: notConfigured, ga: notConfigured,
+      pagespeed: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
     const res = await client.callTool({ name: 'bing_list_sites', arguments: {} });
     expect(res.isError).toBe(true);
     expect(JSON.stringify(res.content)).toContain('Come risolvere');
@@ -67,6 +72,7 @@ describe('server MCP', () => {
       gsc: () => fakeGsc,
       bing: notConfigured,
       ga: notConfigured,
+      pagespeed: notConfigured,
       defaults: { gscSite: 'sc-domain:esempio.it', country: 'it', language: 'it-IT' },
       diagnose: async () => [],
     });
@@ -91,6 +97,7 @@ describe('server MCP', () => {
       gsc: notConfigured,
       bing: notConfigured,
       ga: () => fakeGa,
+      pagespeed: notConfigured,
       defaults: { gaProperty: '123', country: 'it', language: 'it-IT' },
       diagnose: async () => [],
     });
@@ -104,7 +111,8 @@ describe('server MCP', () => {
   });
 
   it('senza proprietà GA indicata spiega come trovarla', async () => {
-    const client = await connect({ gsc: notConfigured, bing: notConfigured, ga: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
+    const client = await connect({ gsc: notConfigured, bing: notConfigured, ga: notConfigured,
+      pagespeed: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
     const res = await client.callTool({ name: 'ga_report', arguments: {} });
     expect(res.isError).toBe(true);
     expect(JSON.stringify(res.content)).toContain('ga_list_properties');

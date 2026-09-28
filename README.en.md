@@ -1,10 +1,10 @@
 # seomcp
 
-**Google Search Console, Google Analytics 4 and Bing Webmaster Tools inside your AI assistant.** Open source, free, made in Italy.
+**Google Search Console, Google Analytics 4, Bing Webmaster Tools and Core Web Vitals inside your AI assistant.** Open source, free, made in Italy.
 
 [🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [MIT](LICENSE) license
 
-`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4 and Bing Webmaster Tools. Ask things like:
+`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights and the Chrome UX Report. Ask things like:
 
 > Which queries rank in positions 4-20 over the last 90 days, and which pages should I optimize first?
 >
@@ -16,7 +16,7 @@
 
 - **Read-only.** It only requests the `webmasters.readonly` and `analytics.readonly` Google scopes and cannot change anything in your properties.
 - **Your credentials stay on your machine.** No intermediate server, no third-party gateway, no telemetry.
-- **Official libraries only:** the MCP SDK, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin` and `google-auth-library`. Bing is a plain REST call.
+- **Official libraries only:** the MCP SDK, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin`, `@googleapis/pagespeedonline`, `@googleapis/chromeuxreport` and `google-auth-library`. Bing is a plain REST call.
 - **Small, readable codebase.** About 2,000 lines of TypeScript in [`src/`](src), easy to audit before you install it.
 - **No misuse of the Google Indexing API**, which Google reserves for job postings and livestreams.
 
@@ -36,6 +36,9 @@
 | `ga_organic_landing_pages` | Organic search landing pages: sessions, engagement, key events, revenue |
 | `ga_compare_periods` | Period comparison on any metric: losers and gainers |
 | `ga_realtime` | Active users in the last 30 minutes |
+| `crux_query` | Real-user Core Web Vitals from Chrome (LCP, INP, CLS): rating and distribution |
+| `crux_history` | Weekly trend of real-user Core Web Vitals, up to 40 weeks |
+| `psi_analyze` | PageSpeed Insights test: scores, metrics, opportunities and SEO audits |
 | `bing_list_sites` | Sites in your Bing Webmaster account |
 | `bing_query_stats` | Bing performance by query |
 | `bing_page_stats` | Bing performance by page |
@@ -47,7 +50,7 @@
 
 Requires **Node.js 22+**. Configure only the sources you use.
 
-1. **Credentials:** see the setup guides for [Google](docs/google-setup.md), [Google Analytics](docs/google-analytics-setup.md) and [Bing](docs/bing-setup.md). They are in Italian, and the steps are the same in English UIs.
+1. **Credentials:** see the setup guides for [Google](docs/google-setup.md), [Google Analytics](docs/google-analytics-setup.md), [PageSpeed/CrUX](docs/pagespeed-setup.md) and [Bing](docs/bing-setup.md). They are in Italian, and the steps are the same in English UIs.
 2. **Claude Code:**
 
    ```bash

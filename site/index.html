@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>seomcp — Search Console, Analytics e Bing Webmaster nel tuo assistente AI</title>
-  <meta name="description" content="Server MCP open source e gratuito che collega Google Search Console, Google Analytics 4 e Bing Webmaster Tools a Claude, ChatGPT e agli altri assistenti AI. Sola lettura, credenziali sul tuo computer, nessuna telemetria.">
+  <meta name="description" content="Server MCP open source e gratuito che collega Google Search Console, Google Analytics 4, Bing Webmaster Tools e i Core Web Vitals a Claude, ChatGPT e agli altri assistenti AI. Sola lettura, credenziali sul tuo computer, nessuna telemetria.">
   <link rel="canonical" href="https://seomcp.contentisking.guru/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
@@ -88,7 +88,7 @@
           </article>
           <article class="card">
             <h3>Solo librerie ufficiali</h3>
-            <p>SDK MCP, i client ufficiali <code>@googleapis</code> per Search Console e Analytics e <code>google-auth-library</code>. Bing è una semplice chiamata REST.</p>
+            <p>SDK MCP, i client ufficiali <code>@googleapis</code> per Search Console, Analytics, PageSpeed e CrUX, e <code>google-auth-library</code>. Bing è una semplice chiamata REST.</p>
           </article>
           <article class="card">
             <h3>Codice leggibile</h3>
@@ -112,7 +112,7 @@
           <li>Ci sono query per cui competono due pagine diverse del sito?</li>
           <li>Questa pagina è indicizzata? Quale canonical ha scelto Google?</li>
           <li>Su Bing come va la query "corso SEO" rispetto a Google?</li>
-          <li>Qual è il volume di ricerca su Bing di "noleggio bici Garda"?</li>
+          <li>Il sito supera i Core Web Vitals su mobile? Com'è cambiato l'LCP nelle ultime settimane?</li>
           <li>Le sitemap hanno errori? Quando le ha scaricate Google l'ultima volta?</li>
         </ul>
       </div>
@@ -120,7 +120,7 @@
 
     <section id="tool" class="band">
       <div class="wrap">
-        <h2>16 tool, tutti in sola lettura</h2>
+        <h2>19 tool, tutti in sola lettura</h2>
         <div class="tool-grid">
           <div>
             <h3>Google Search Console</h3>
@@ -141,6 +141,12 @@
               <dt><code>ga_report</code></dt><dd>Report libero con dimensioni, metriche e filtri</dd>
               <dt><code>ga_realtime</code></dt><dd>Utenti attivi negli ultimi 30 minuti</dd>
               <dt><code>ga_list_properties</code></dt><dd>Proprietà accessibili</dd>
+            </dl>
+            <h3><a class="plain" href="/core-web-vitals/">Core Web Vitals</a> <span class="badge-new">Novità</span></h3>
+            <dl class="tools">
+              <dt><code>crux_query</code></dt><dd>Core Web Vitals reali degli utenti Chrome: LCP, INP, CLS</dd>
+              <dt><code>crux_history</code></dt><dd>Andamento settimanale, fino a 40 settimane</dd>
+              <dt><code>psi_analyze</code></dt><dd>Test PageSpeed Insights con le correzioni più utili</dd>
             </dl>
             <h3>Bing Webmaster Tools</h3>
             <dl class="tools">

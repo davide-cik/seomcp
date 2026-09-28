@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Core Web Vitals e PageSpeed nel tuo assistente AI · seomcp</title>
+  <meta name="description" content="Core Web Vitals reali degli utenti Chrome (CrUX) e test PageSpeed Insights dentro Claude, ChatGPT e gli altri assistenti AI, con seomcp.">
+  <link rel="canonical" href="https://seomcp.contentisking.guru/core-web-vitals/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Core Web Vitals e PageSpeed nel tuo assistente AI · seomcp">
+  <meta property="og:description" content="Core Web Vitals reali degli utenti Chrome (CrUX) e test PageSpeed Insights dentro Claude, ChatGPT e gli altri assistenti AI, con seomcp.">
+  <meta property="og:url" content="https://seomcp.contentisking.guru/core-web-vitals/">
+  <meta property="og:locale" content="it_IT">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Vai al contenuto</a>
+  <!--#include virtual="/_partials/header.html" -->
+
+  <main id="main" class="doc">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Core Web Vitals</nav>
+      <p class="eyebrow">Novità</p>
+      <h1>Core Web Vitals e PageSpeed nel tuo assistente</h1>
+      <p class="lead">Due punti di vista sulle prestazioni. Il <strong>Chrome UX Report</strong> dà i dati reali degli utenti Chrome, quelli che Google usa per il ranking. <strong>PageSpeed Insights</strong> fa un test di laboratorio e dice cosa correggere.</p>
+
+      <section class="doc-block">
+        <h2>Cosa puoi chiedere</h2>
+        <ul class="prompts">
+          <li>Il sito supera i Core Web Vitals su mobile?</li>
+          <li>L'LCP è migliorato dopo il cambio di tema del mese scorso?</li>
+          <li>Testa la home con PageSpeed e dimmi le tre correzioni che valgono di più.</li>
+          <li>Le pagine con Core Web Vitals scarsi hanno perso posizioni su Google?</li>
+        </ul>
+      </section>
+
+      <section class="doc-block">
+        <h2>I 3 tool</h2>
+        <dl class="tools">
+          <dt><code>crux_query</code></dt><dd>Core Web Vitals reali degli ultimi 28 giorni (LCP, INP, CLS, più FCP e TTFB) per una pagina o per tutto il sito: 75° percentile, giudizio, distribuzione ed esito complessivo.</dd>
+          <dt><code>crux_history</code></dt><dd>Andamento settimanale fino a 40 settimane, per vedere l'effetto di un intervento o scoprire un peggioramento.</dd>
+          <dt><code>psi_analyze</code></dt><dd>Test PageSpeed Insights su mobile o desktop: punteggi, metriche, opportunità ordinate per risparmio e controlli SEO non superati.</dd>
+        </dl>
+        <p class="small">Uniti a Search Console, permettono di collegare prestazioni e posizioni.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Attivalo in 3 passi</h2>
+        <p>Serve solo una <strong>API key gratuita</strong> di Google Cloud. I dati sono pubblici: la chiave non dà accesso al tuo account.</p>
+        <ol class="steps">
+          <li>
+            <h3>Abilita le API</h3>
+            <p>In Google Cloud Console apri <em>API e servizi → Libreria</em> e abilita <strong>Chrome UX Report API</strong> e <strong>PageSpeed Insights API</strong>.</p>
+          </li>
+          <li>
+            <h3>Crea la chiave</h3>
+            <p>In <em>API e servizi → Credenziali → Crea credenziali → Chiave API</em>. Poi, nelle <em>Restrizioni API</em>, limitala alle due API qui sopra.</p>
+          </li>
+          <li>
+            <h3>Aggiungila alla configurazione</h3>
+<pre class="code"><code>SEOMCP_GOOGLE_API_KEY=la-tua-api-key</code></pre>
+          </li>
+        </ol>
+      </section>
+
+      <section class="doc-block">
+        <h2>Verifica</h2>
+<pre class="code"><code>npx -y github:davide-cik/seomcp doctor</code></pre>
+        <p>Deve comparire la riga <strong>Chrome UX Report OK</strong>. Da sapere: CrUX pubblica dati solo per pagine e siti con abbastanza visite da Chrome. Se una pagina non ne ha, chiedi i dati di tutto il sito.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        <!--#include virtual="/_partials/clients.html" -->
+      </section>
+    </div>
+  </main>
+
+  <!--#include virtual="/_partials/footer.html" -->
+  <script src="/app.js" defer></script>
+</body>
+</html>

@@ -3,12 +3,13 @@ import { BingClient } from './core/bing.js';
 import { SeoMcpError } from './core/errors.js';
 import { GaClient } from './core/ga.js';
 import { GscClient } from './core/gsc.js';
+import { PageSpeedClient } from './core/pagespeed.js';
 import { createGoogleAuth, serviceAccountEmail } from './auth/google.js';
 import type { SeoMcpConfig } from './config.js';
 import { DOCS } from './links.js';
 
 export interface DiagnosticItem {
-  source: 'google' | 'analytics' | 'bing' | 'config';
+  source: 'google' | 'analytics' | 'bing' | 'pagespeed' | 'config';
   status: 'ok' | 'warn' | 'error' | 'off';
   message: string;
   hint?: string;
@@ -36,6 +37,7 @@ export async function runDiagnostics(config: SeoMcpConfig): Promise<DiagnosticIt
   items.push(await checkGoogle(config));
   if (config.google.mode !== 'none') items.push(await checkAnalytics(config));
   items.push(await checkBing(config));
+  items.push(await checkPageSpeed(config));
   return items;
 }
 
@@ -140,6 +142,24 @@ async function checkBing(config: SeoMcpConfig): Promise<DiagnosticItem> {
     return { source: 'bing', status: 'ok', message: `Bing Webmaster OK: ${list.length} siti — ${list.join(', ')}` };
   } catch (err) {
     return toItem('bing', err);
+  }
+}
+
+/** Verifica la API key con una richiesta leggera al Chrome UX Report. */
+async function checkPageSpeed(config: SeoMcpConfig): Promise<DiagnosticItem> {
+  if (!config.googleApiKey) {
+    return {
+      source: 'pagespeed',
+      status: 'off',
+      message: 'PageSpeed Insights e Chrome UX Report non configurati (facoltativi).',
+      hint: `Per attivarli imposta SEOMCP_GOOGLE_API_KEY. Guida: ${DOCS.pagespeed}`,
+    };
+  }
+  try {
+    await new PageSpeedClient(config.googleApiKey).query({ origin: 'https://www.google.com' });
+    return { source: 'pagespeed', status: 'ok', message: 'Chrome UX Report OK. Per PageSpeed Insights assicurati che anche la "PageSpeed Insights API" sia abilitata.' };
+  } catch (err) {
+    return toItem('pagespeed', err);
   }
 }
 

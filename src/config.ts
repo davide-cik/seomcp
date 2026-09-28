@@ -15,6 +15,7 @@ const fileSchema = z
         serviceAccountFile: z.string().optional(),
         oauthClientId: z.string().optional(),
         oauthClientSecret: z.string().optional(),
+        apiKey: z.string().optional(),
       })
       .optional(),
     bing: z.object({ apiKey: z.string().optional() }).optional(),
@@ -42,6 +43,8 @@ export interface SeoMcpConfig {
   configFileFound: boolean;
   google: GoogleConfig;
   bingApiKey?: string;
+  /** API key Google Cloud per PageSpeed Insights e Chrome UX Report. */
+  googleApiKey?: string;
   defaults: {
     gscSite?: string;
     bingSite?: string;
@@ -79,6 +82,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): SeoMcpConfig {
     configFileFound,
     google,
     bingApiKey: env.BING_WEBMASTER_API_KEY || file.bing?.apiKey || undefined,
+    googleApiKey: env.SEOMCP_GOOGLE_API_KEY || file.google?.apiKey || undefined,
     defaults: {
       gscSite: env.SEOMCP_GSC_SITE || file.defaults?.gscSite,
       bingSite: env.SEOMCP_BING_SITE || file.defaults?.bingSite,

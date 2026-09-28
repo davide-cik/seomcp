@@ -5,4 +5,5 @@ export const DOCS = {
   home: 'https://seomcp.contentisking.guru',
   google: `${REPO}/docs/google-setup.md`,
   bing: `${REPO}/docs/bing-setup.md`,
+  pagespeed: `${REPO}/docs/pagespeed-setup.md`,
 };

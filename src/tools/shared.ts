@@ -5,6 +5,7 @@ import { lastNDays, isIsoDate } from '../core/dates.js';
 import { SeoMcpError } from '../core/errors.js';
 import type { GaClient } from '../core/ga.js';
 import type { GscClient } from '../core/gsc.js';
+import type { PageSpeedClient } from '../core/pagespeed.js';
 import type { DiagnosticItem } from '../doctor.js';
 
 /** Ciò di cui hanno bisogno i tool. I client vengono creati solo al primo uso. */
@@ -12,6 +13,7 @@ export interface ToolContext {
   gsc: () => GscClient;
   bing: () => BingClient;
   ga: () => GaClient;
+  pagespeed: () => PageSpeedClient;
   defaults: { gscSite?: string; bingSite?: string; gaProperty?: string; country: string; language: string };
   diagnose: () => Promise<DiagnosticItem[]>;
 }

@@ -7,6 +7,7 @@
  */
 export { GscClient, GSC_SCOPES, GSC_MAX_ROWS, type GscAuth } from './core/gsc.js';
 export { GaClient, GA_SCOPES, GA_MAX_ROWS, normalizeProperty } from './core/ga.js';
+export { PageSpeedClient, THRESHOLDS, rate, type PsiResult, type CruxRecord, type CruxHistory, type CruxMetric, type FormFactor, type Strategy, type PsiCategory } from './core/pagespeed.js';
 export { BingClient, BING_API_BASE, parseBingDate, type BingClientOptions } from './core/bing.js';
 export {
   comparePeriods,

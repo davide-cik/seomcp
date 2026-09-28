@@ -110,6 +110,12 @@ describe('googleError', () => {
     expect(err.hint).toContain('auth google');
   });
 
+  it('API key non valida: indica la variabile da controllare', () => {
+    const err = googleError({ response: { status: 400, data: { error: { message: 'API key not valid. Please pass a valid API key.', details: [{ reason: 'API_KEY_INVALID' }] } } } }, ctx);
+    expect(err.code).toBe('AUTH_FAILED');
+    expect(err.hint).toContain('SEOMCP_GOOGLE_API_KEY');
+  });
+
   it('401, 403 generico, 429 e 400', () => {
     expect(googleError({ response: { status: 401 } }, ctx).code).toBe('AUTH_FAILED');
     expect(googleError({ response: { status: 403 } }, ctx).hint).toBe('aggiungi utente');
