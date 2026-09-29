@@ -201,7 +201,7 @@ a.plain { color: inherit; text-decoration: none; }
 a.plain:hover { color: var(--accent); }
 
 /* Menu: meno voci man mano che lo schermo si stringe, senza mai sbordare. */
-@media (max-width: 1000px) { .top nav a[href="/#fiducia"], .top nav a[href="/#tool"] { display: none; } }
+@media (max-width: 1000px) { .top nav a[href="/#fiducia"], .top nav a[href="/tool/"] { display: none; } }
 .top nav a { white-space: nowrap; }
 /* Elenco descrittivo con lo stile dei prompt, ma senza virgolette. */
 .prompts.plain li::before, .prompts.plain li::after { content: none; }
@@ -221,3 +221,14 @@ a.plain:hover { color: var(--accent); }
 @media (max-width: 640px) {
   .nav-menu-list { position: fixed; top: 64px; left: 16px; right: 16px; width: auto; }
 }
+
+/* Aree dei tool nella landing: schede compatte con link al dettaglio. */
+.area-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); margin: 8px 0 24px; }
+.area-card { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); text-decoration: none; color: var(--text); transition: border-color 0.15s; }
+.area-card:hover { border-color: var(--accent); }
+.area-card strong { color: var(--heading); font-size: 1.05rem; }
+.area-card strong::after { content: " →"; color: var(--accent); }
+.area-card span { color: var(--muted); font-size: 0.93rem; }
+.area-count { display: inline-block; font-family: var(--mono); font-size: 0.78rem !important; color: var(--accent) !important; font-weight: 600; }
+h2 .area-count { margin-left: 6px; vertical-align: middle; }
+.area-grid > * { min-width: 0; }

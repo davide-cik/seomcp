@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.23 — 2026-09-29
+
+- Sito: nella landing i tool sono riassunti in sei aree; il dettaglio di tutti i 23 tool e 7 prompt è nella nuova pagina `/tool/`.
+
 ## 0.1.22 — 2026-09-29
 
 - Libreria: esportate anche `fetchPage`, `isPrivateIp`, `parseRobots`, `botAccess`, `AI_BOTS`, `analyzeLlmsTxt`, `jsonLdNodes`, `domainInfo`, `httpsInfo`, `registeredDomain`, `siteTrust`, `extractPage`.

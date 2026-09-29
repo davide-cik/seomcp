@@ -508,6 +508,91 @@ SCHEMA_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">se
       </section>"""
 
 
+TOOL_GROUPS = [
+    ("search-console", "Google Search Console", "Credenziali Google (service account o OAuth).", None, [
+        ("gsc_performance", "Clic, impressioni, CTR e posizione media, raggruppati per query, pagina, paese, dispositivo, data o aspetto nei risultati. Con filtri e fino a 25.000 righe."),
+        ("gsc_compare_periods", "Confronto con il periodo precedente o con lo stesso periodo dell'anno prima: i cali e le crescite di clic più forti, con i totali."),
+        ("gsc_striking_distance", "Query per cui il sito è già visibile ma non in cima (posizione 4-20), ordinate per impressioni: le ottimizzazioni più rapide."),
+        ("gsc_inspect_url", "Stato di indicizzazione di un URL secondo Google: copertura, ultima scansione, canonical scelto da Google, robots.txt, risultati avanzati."),
+        ("gsc_list_sitemaps", "Sitemap inviate, con data di ultimo download, URL inviati, errori e avvisi."),
+        ("gsc_list_sites", "Le proprietà Search Console a cui hai accesso."),
+    ]),
+    ("google-analytics", "Google Analytics 4", "Stesse credenziali Google di Search Console.", "/google-analytics/", [
+        ("ga_organic_landing_pages", "Pagine di destinazione della ricerca organica, anche per singolo motore: sessioni, coinvolgimento, eventi chiave e ricavi."),
+        ("ga_compare_periods", "Confronto tra periodi su qualsiasi metrica, con i cali e le crescite più forti."),
+        ("ga_report", "Report libero con dimensioni, metriche e filtri a scelta."),
+        ("ga_realtime", "Utenti attivi negli ultimi 30 minuti, per pagina, paese o dispositivo."),
+        ("ga_list_properties", "Le proprietà GA4 accessibili, con il loro ID."),
+    ]),
+    ("bing", "Bing Webmaster Tools", "API key di Bing Webmaster Tools.", None, [
+        ("bing_query_stats", "Impressioni, clic e posizione media per query su Bing, per periodo o aggregate."),
+        ("bing_page_stats", "Impressioni, clic e posizione media per pagina su Bing."),
+        ("bing_keyword_stats", "Volumi di ricerca storici di una keyword su Bing, di default per Italia e italiano."),
+        ("bing_list_sites", "I siti del tuo account Bing Webmaster Tools."),
+    ]),
+    ("core-web-vitals", "Core Web Vitals", "API key gratuita di Google Cloud.", "/core-web-vitals/", [
+        ("crux_query", "Core Web Vitals reali degli utenti Chrome negli ultimi 28 giorni (LCP, INP, CLS, FCP, TTFB): 75° percentile, giudizio e distribuzione."),
+        ("crux_history", "Andamento settimanale dei Core Web Vitals reali, fino a 40 settimane."),
+        ("psi_analyze", "Test PageSpeed Insights su mobile o desktop: punteggi, metriche, correzioni ordinate per risparmio e controlli SEO non superati."),
+    ]),
+    ("geo", "GEO e AEO", "Nessuna credenziale: le pagine sono pubbliche.", "/geo/", [
+        ("geo_ai_access", "Per ogni crawler AI, diviso per scopo, se può leggere il sito e per quale regola di robots.txt. Più llms.txt, Content Signals, riserva TDM europea e direttive della pagina."),
+        ("geo_page_metrics", "Misure della pagina come la legge un crawler AI: struttura, risposta in apertura, sezioni, dati, freschezza, autore, fonti, dati strutturati, entità. Più HTTPS ed età del dominio."),
+        ("geo_page_sections", "Il testo della pagina diviso per titoli, con le misure di ogni sezione."),
+    ]),
+    ("schema", "Validatore schema.org", "Nessuna credenziale.", "/schema/", [
+        ("schema_validate", "Valida il JSON-LD di una pagina o incollato: sintassi, vocabolario ufficiale schema.org, requisiti di Google per i risultati avanzati, coerenza con la pagina."),
+    ]),
+    ("diagnostica", "Diagnostica", "", None, [
+        ("seomcp_status", "Verifica quali fonti sono configurate e funzionanti, e spiega cosa fare per quelle che non lo sono."),
+    ]),
+]
+
+PROMPTS = [
+    ("audit-geo-pagina", "Audit GEO della pagina", "Interpreta le misure GEO/AEO di una pagina e propone le correzioni in ordine di impatto."),
+    ("domande-utenti", "Rispondo alle domande dei miei utenti?", "Prende da Search Console le query a domanda della pagina e verifica, sezione per sezione, se trovano risposta."),
+    ("confronto-concorrenti", "Perché citano loro e non me?", "Confronta le misure della tua pagina con quelle dei concorrenti e racconta le differenze che contano."),
+    ("sito-aperto-alle-ai", "Il mio sito è aperto alle AI?", "Spiega in chiaro i permessi per i crawler AI, bot per bot, anche per la normativa europea."),
+    ("passaggio-citabile", "Rendi citabile questo passaggio", "Riscrive una sezione perché un motore AI possa estrarla e citarla da sola."),
+    ("piano-editoriale-ai", "Piano editoriale per le risposte AI", "Dalle domande degli utenti senza risposta ricava nuove sezioni, FAQ e pagine da scrivere."),
+    ("correggi-dati-strutturati", "Correggi i miei dati strutturati", "Valida i dati strutturati, spiega i problemi e propone il JSON-LD corretto, pronto da incollare."),
+]
+
+
+def tools_page() -> str:
+    groups = []
+    for anchor, name, needs, page_url, tools in TOOL_GROUPS:
+        title = f'<a class="plain" href="{page_url}">{html.escape(name)}</a>' if page_url else html.escape(name)
+        items = "\n".join(f"          <dt><code>{t}</code></dt><dd>{html.escape(d)}</dd>" for t, d in tools)
+        needs_html = f'\n        <p class="small">Richiede: {html.escape(needs[0].lower() + needs[1:])}</p>' if needs else ""
+        groups.append(f"""      <section class="doc-block" id="{anchor}">
+        <h2>{title} <span class="area-count">{len(tools)} tool</span></h2>{needs_html}
+        <dl class="tools">
+{items}
+        </dl>
+      </section>""")
+    prompts = "\n".join(f"          <dt>{html.escape(title)}</dt><dd>{html.escape(desc)} <code>{name}</code></dd>" for name, title, desc in PROMPTS)
+    total = sum(len(t) for *_, t in TOOL_GROUPS)
+    return f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Tool e prompt</nav>
+      <h1>{total} tool e {len(PROMPTS)} prompt</h1>
+      <p class="lead">Tutti in sola lettura: seomcp legge i dati, non modifica nulla. Collega solo le fonti che usi: ogni gruppo indica cosa serve.</p>
+
+{chr(10).join(groups)}
+
+      <section class="doc-block" id="prompt">
+        <h2>I prompt <span class="area-count">{len(PROMPTS)}</span></h2>
+        <p>Spunti di conversazione già impostati: guidano l'assistente dai dati all'analisi. Si richiamano dal menu del tuo assistente (in Claude Code con <code>/</code>).</p>
+        <dl class="tools">
+{prompts}
+        </dl>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        {INCLUDE.format(name="clients")}
+      </section>"""
+
+
 WEB_NOTE = ("<strong>Versioni web non supportate.</strong> claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot e Mistral Vibe sul web "
             "accettano solo server MCP remoti. seomcp gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.")
 
@@ -591,8 +676,15 @@ def main():
              "Valida i dati strutturati JSON-LD con il vocabolario ufficiale schema.org e i requisiti di Google per i risultati avanzati, e fatti proporre la correzione.",
              "schema", SCHEMA_PAGE))
 
+    tool_dir = SITE / "tool"
+    tool_dir.mkdir(exist_ok=True)
+    (tool_dir / "index.html").write_text(
+        page("Tutti i tool e i prompt · seomcp",
+             "I 23 tool e i 7 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO e validatore schema.org.",
+             "tool", tools_page()))
+
     today = date.today().isoformat()
-    urls = ["/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
+    urls = ["/", "/tool/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls)
