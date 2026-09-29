@@ -4,7 +4,9 @@
 Intestazione e footer vengono presi da site/index.html, così restano allineati.
 Uso: python3 scripts/build-site.py
 """
+import hashlib
 import html
+import re
 import shutil
 from datetime import date
 from pathlib import Path
@@ -743,5 +745,21 @@ def main():
     print(f"Generate {len(VENDORS) + 1} pagine, partial clients.html e sitemap ({len(urls)} URL)")
 
 
+ASSETS = ("style.css", "app.js", "demo.js")
+
+
+def bust_cache() -> None:
+    """Aggiunge ?v=<hash> a CSS e JS in tutte le pagine: i file restano in cache 7 giorni,
+    così a ogni modifica il browser scarica la versione nuova invece di mescolare vecchio e nuovo."""
+    ver = {a: hashlib.sha256((SITE / a).read_bytes()).hexdigest()[:10] for a in ASSETS}
+    pattern = re.compile(r'((?:href|src)=")/?(' + "|".join(re.escape(a) for a in ASSETS) + r')(?:\?v=[0-9a-f]*)?"')
+    for f in list(SITE.rglob("*.html")):
+        text = f.read_text()
+        new = pattern.sub(lambda m: f'{m.group(1)}/{m.group(2)}?v={ver[m.group(2)]}"', text)
+        if new != text:
+            f.write_text(new)
+
+
 if __name__ == "__main__":
     main()
+    bust_cache()
