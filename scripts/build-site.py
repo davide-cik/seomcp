@@ -543,7 +543,7 @@ TOOL_GROUPS = [
     ("schema", "Validatore schema.org", "nessuna credenziale.", "/schema/", [
         ("schema_validate", "Valida il JSON-LD di una pagina o incollato: sintassi, vocabolario ufficiale schema.org, requisiti di Google per i risultati avanzati, coerenza con la pagina."),
     ]),
-    ("tecnico", "Controlli tecnici", "nessuna credenziale, le pagine sono pubbliche.", None, [
+    ("tecnico", "Controlli tecnici", "nessuna credenziale, le pagine sono pubbliche.", "/tecnico/", [
         ("tech_page_audit", "Controlli tecnici della pagina: catena di redirect, TTFB, peso e compressione, indicizzabilità, canonical, title e description, viewport, hreflang con link di ritorno, Open Graph e Twitter Card, immagini, gerarchia dei titoli, link, header di sicurezza."),
         ("tech_site_check", "Controlli tecnici del sito: sitemap (URL, lastmod, duplicati), un campione di URL della sitemap, la pagina 404 e un campione di link interni rotti o reindirizzati."),
     ]),
@@ -590,6 +590,45 @@ def tools_page() -> str:
         <dl class="tools">
 {prompts}
         </dl>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        {INCLUDE.format(name="clients")}
+      </section>"""
+
+
+TECH_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Controlli tecnici</nav>
+      <p class="eyebrow">Novità</p>
+      <h1>Controlli tecnici SEO nel tuo assistente</h1>
+      <p class="lead">Redirect, indicizzabilità, sitemap, pagina 404, link rotti: i controlli che un SEO fa a ogni nuovo sito, misurati in pochi secondi e spiegati dall'assistente. Senza credenziali, perché le pagine sono pubbliche.</p>
+
+      <section class="doc-block">
+        <h2>Cosa puoi chiedere</h2>
+        <ul class="prompts">
+          <li>Fai un audit tecnico del sito e dimmi le cinque correzioni più urgenti.</li>
+          <li>La versione http reindirizza bene a https, con un solo passaggio?</li>
+          <li>La sitemap contiene pagine reindirizzate o in errore?</li>
+          <li>Gli hreflang delle versioni in altre lingue sono reciproci?</li>
+        </ul>
+      </section>
+
+      <section class="doc-block">
+        <h2>I 2 tool</h2>
+        <dl class="tools">
+          <dt><code>tech_page_audit</code></dt><dd>La pagina: catena di redirect, TTFB, peso e compressione, indicizzabilità (meta robots, X-Robots-Tag), canonical, title e description, viewport, hreflang con verifica dei link di ritorno, Open Graph e Twitter Card, immagini (alt, dimensioni, formati), gerarchia dei titoli, link, header di sicurezza.</dd>
+          <dt><code>tech_site_check</code></dt><dd>Il sito: sitemap (URL, lastmod, duplicati, URL di altri domini), un campione di URL della sitemap, la pagina 404 (soft 404 compresi) e un campione di link interni rotti o reindirizzati.</dd>
+        </dl>
+        <p>Il prompt <strong>Audit tecnico del sito</strong> li combina con PageSpeed e il validatore schema.org, e chiude con una tabella di interventi in ordine di priorità.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Rispettosi dei siti analizzati</h2>
+        <ul class="tips">
+          <li>Le richieste sono distanziate: il controllo del sito richiede circa 15-30 secondi, per non pesare sul server.</li>
+          <li>Nessuna richiesta verso indirizzi della rete locale, nemmeno seguendo un redirect.</li>
+          <li>I servizi di Cloudflare che funzionano solo con JavaScript (come la protezione delle email) non vengono contati come link rotti.</li>
+        </ul>
       </section>
 
       <section class="doc-block">
@@ -681,6 +720,13 @@ def main():
              "Valida i dati strutturati JSON-LD con il vocabolario ufficiale schema.org e i requisiti di Google per i risultati avanzati, e fatti proporre la correzione.",
              "schema", SCHEMA_PAGE))
 
+    tech_dir = SITE / "tecnico"
+    tech_dir.mkdir(exist_ok=True)
+    (tech_dir / "index.html").write_text(
+        page("Controlli tecnici SEO nel tuo assistente AI · seomcp",
+             "Redirect, indicizzabilità, canonical, hreflang, sitemap, pagina 404 e link rotti: i controlli tecnici SEO di seomcp, senza credenziali.",
+             "tecnico", TECH_PAGE))
+
     tool_dir = SITE / "tool"
     tool_dir.mkdir(exist_ok=True)
     (tool_dir / "index.html").write_text(
@@ -689,7 +735,7 @@ def main():
              "tool", tools_page()))
 
     today = date.today().isoformat()
-    urls = ["/", "/tool/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
+    urls = ["/", "/tool/", "/tecnico/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls)

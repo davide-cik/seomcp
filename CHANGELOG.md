@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.27 — 2026-09-29
+
+- Sito: pagina `/tecnico/` per i controlli tecnici, nel menu "Novità" (ora 5 voci).
+
 ## 0.1.26 — 2026-09-29
 
 - Libreria: `checkUrlStatus` (stato di un URL senza seguire i redirect) e `analyzeHreflang` esportate come funzioni autonome.
