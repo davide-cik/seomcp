@@ -222,13 +222,16 @@ a.plain:hover { color: var(--accent); }
   .nav-menu-list { position: fixed; top: 64px; left: 16px; right: 16px; width: auto; }
 }
 
-/* Aree dei tool nella landing: schede compatte con link al dettaglio. */
-.area-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); margin: 8px 0 24px; }
-.area-card { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); text-decoration: none; color: var(--text); transition: border-color 0.15s; }
-.area-card:hover { border-color: var(--accent); }
-.area-card strong { color: var(--heading); font-size: 1.05rem; }
-.area-card strong::after { content: " →"; color: var(--accent); }
-.area-card span { color: var(--muted); font-size: 0.93rem; }
-.area-count { display: inline-block; font-family: var(--mono); font-size: 0.78rem !important; color: var(--accent) !important; font-weight: 600; }
+/* Aree dei tool nella landing: elenco a righe con linee divisorie (nome, conteggio, descrizione). */
+.area-list { list-style: none; padding: 0; margin: 0 0 20px; max-width: 760px; border-top: 1px solid var(--border); }
+.area-list li { padding: 14px 4px; border-bottom: 1px solid var(--border); }
+.area-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.area-head a { color: var(--heading); font-weight: 600; font-size: 1.05rem; text-decoration: none; }
+.area-head a::after { content: " →"; color: var(--accent); font-weight: 400; }
+.area-head a:hover { color: var(--accent); }
+.area-list p { margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; }
+.area-list .area-count { color: var(--muted); font-weight: 500; }
+.area-more a { font-weight: 600; text-decoration: none; }
+.area-more a:hover { text-decoration: underline; }
+.area-count { display: inline-block; font-family: var(--mono); font-size: 0.78rem; color: var(--accent); font-weight: 600; }
 h2 .area-count { margin-left: 6px; vertical-align: middle; }
-.area-grid > * { min-width: 0; }

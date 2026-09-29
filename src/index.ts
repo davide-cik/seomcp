@@ -26,6 +26,7 @@ export {
   type BotPurpose,
   type LlmsTxtInfo,
 } from './core/geo.js';
+export { techPageAudit, techSiteCheck, redirectChain, type TechPageAudit, type TechSiteCheck, type SitemapReport, type RedirectHop } from './core/technical.js';
 export { fetchPage, isPrivateIp, type FetchedPage, type FetchOptions } from './core/fetch-page.js';
 export { domainInfo, httpsInfo, registeredDomain, siteTrust, type DomainInfo, type HttpsInfo } from './core/site-trust.js';
 export { extractPage, type ExtractedPage } from './core/html.js';

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.25 — 2026-09-29
+
+- **Controlli tecnici**: 2 nuovi tool senza credenziali.
+  - `tech_page_audit`: catena di redirect, TTFB, peso e compressione, indicizzabilità, canonical, meta, viewport, hreflang (codici, x-default, autoreferenza, link di ritorno a campione), Open Graph e Twitter, immagini, gerarchia dei titoli, link, header di sicurezza.
+  - `tech_site_check`: sitemap (indice, URL, lastmod, duplicati, altri domini), campione di URL, pagina 404 (soft 404), link interni rotti o reindirizzati.
+- Prompt `audit-tecnico`.
+- `fetchPage` misura il TTFB; l'estrattore HTML raccoglie hreflang, immagini e tutti i titoli.
+- Sito: la sezione dei tool della landing è un elenco semplice; aggiunta l'area "Controlli tecnici".
+
 ## 0.1.24 — 2026-09-29
 
 - Sito: corretti i testi "Richiede" della pagina `/tool/`.

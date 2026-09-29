@@ -24,6 +24,26 @@ const text = (t: string) => ({ messages: [{ role: 'user' as const, content: { ty
 
 export function registerGeoPrompts(server: McpServer): void {
   server.registerPrompt(
+    'audit-tecnico',
+    {
+      title: 'Audit tecnico del sito',
+      description: 'Controlla pagina e sito dal punto di vista tecnico (redirect, indicizzabilità, sitemap, 404, link, prestazioni) e propone le correzioni in ordine di priorità.',
+      argsSchema: { url: z.string().describe('URL della pagina, di solito la home') },
+    },
+    ({ url }) =>
+      text(`Fai un audit tecnico SEO a partire da ${url}.
+
+1. Usa tech_page_audit sulla pagina (partendo dalla versione http:// per vedere tutta la catena di redirect) e tech_site_check sul sito.
+2. Se sono configurati, aggiungi psi_analyze (o crux_query) per le prestazioni e schema_validate per i dati strutturati.
+3. Raggruppa i risultati in: indicizzabilità (robots, canonical, noindex, 404), architettura (redirect, sitemap, link rotti), contenuto tecnico (title, description, titoli, immagini, hreflang), prestazioni, sicurezza.
+4. Chiudi con una tabella di massimo 10 interventi: problema, dato che lo dimostra, impatto (alto/medio/basso), sforzo, come correggerlo.
+
+Riferimenti orientativi: un solo redirect permanente (301/308) verso la versione definitiva; title 30-60 caratteri e description 70-160; un solo H1 e nessun salto di livello nei titoli; TTFB sotto 800 ms; sitemap senza URL reindirizzati o in errore; un indirizzo inesistente deve rispondere 404.
+
+${REGOLE}`),
+  );
+
+  server.registerPrompt(
     'correggi-dati-strutturati',
     {
       title: 'Correggi i miei dati strutturati',

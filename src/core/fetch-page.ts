@@ -38,6 +38,8 @@ export interface FetchedPage {
   truncated: boolean;
   redirects: string[];
   responseMs: number;
+  /** Tempo alla prima risposta (header) dell'ultima richiesta, in ms. */
+  ttfbMs?: number;
 }
 
 export const DEFAULT_MAX_BYTES = 2 * 1024 * 1024;
@@ -80,6 +82,7 @@ function checkUrl(value: string): URL {
 }
 
 interface RawResponse {
+  ttfbMs: number;
   status: number;
   headers: Record<string, string>;
   body: string;
@@ -96,6 +99,7 @@ function requestOnce(u: URL, opts: FetchOptions): Promise<RawResponse> {
   const literal = u.hostname.replace(/^\[|\]$/g, '');
   if (!opts.allowPrivate && isIP(literal) && isPrivateIp(literal)) return Promise.reject(blockedError(u.hostname));
 
+  const started = Date.now();
   return new Promise((resolve, reject) => {
     const req = request(
       u,
@@ -110,7 +114,10 @@ function requestOnce(u: URL, opts: FetchOptions): Promise<RawResponse> {
         },
         timeout: timeoutMs,
       },
-      (res) => readBody(res, maxBytes).then(resolve, reject),
+      (res) => {
+        const ttfbMs = Date.now() - started;
+        readBody(res, maxBytes).then((r) => resolve({ ...r, ttfbMs }), reject);
+      },
     );
     req.on('timeout', () => req.destroy(new SeoMcpError('UPSTREAM_ERROR', `Nessuna risposta da ${u.host} entro ${timeoutMs / 1000} secondi.`)));
     req.on('error', (err) =>
@@ -120,7 +127,7 @@ function requestOnce(u: URL, opts: FetchOptions): Promise<RawResponse> {
   });
 }
 
-function readBody(res: IncomingMessage, maxBytes: number): Promise<RawResponse> {
+function readBody(res: IncomingMessage, maxBytes: number): Promise<Omit<RawResponse, 'ttfbMs'>> {
   const headers: Record<string, string> = {};
   for (const [k, v] of Object.entries(res.headers)) if (v !== undefined) headers[k] = Array.isArray(v) ? v.join(', ') : v;
 

@@ -47,6 +47,8 @@ describe('server MCP', () => {
       'psi_analyze',
       'schema_validate',
       'seomcp_status',
+      'tech_page_audit',
+      'tech_site_check',
     ]);
     expect(tools.every((t) => t.annotations?.readOnlyHint)).toBe(true);
   });
@@ -127,6 +129,7 @@ describe('server MCP', () => {
     const { prompts } = await client.listPrompts();
     expect(prompts.map((p) => p.name).sort()).toEqual([
       'audit-geo-pagina',
+      'audit-tecnico',
       'confronto-concorrenti',
       'correggi-dati-strutturati',
       'domande-utenti',

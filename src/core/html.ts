@@ -31,6 +31,12 @@ export interface ExtractedPage {
   meta: Record<string, string>;
   canonical?: string;
   authorLinks: string[];
+  /** Link rel=alternate con hreflang. */
+  alternates: { hreflang: string; href: string }[];
+  /** Immagini di tutta la pagina: alt null = attributo assente, "" = decorativa. */
+  images: { src: string; alt: string | null; width: boolean; height: boolean; lazy: boolean }[];
+  /** Titoli di tutta la pagina, nell'ordine del documento. */
+  allHeadings: { level: number; text: string }[];
   headings: { level: number; text: string }[];
   paragraphs: number[];
   lists: { ordered: boolean; items: number }[];
@@ -307,5 +313,16 @@ export function extractPage(html: string, baseUrl: string): ExtractedPage {
     fullText: textOf(findAll(doc, (e) => e.name === 'body')[0] ?? doc),
     sections,
     bylines,
+    alternates: linkEls
+      .filter((l) => attr(l, 'rel').toLowerCase().split(/\s+/).includes('alternate') && attr(l, 'hreflang'))
+      .map((l) => ({ hreflang: attr(l, 'hreflang').trim(), href: attr(l, 'href').trim() })),
+    images: all('img').map((img) => ({
+      src: (attr(img, 'src') || attr(img, 'data-src')).slice(0, 500),
+      alt: 'alt' in (img.attribs ?? {}) ? attr(img, 'alt') : null,
+      width: 'width' in (img.attribs ?? {}),
+      height: 'height' in (img.attribs ?? {}),
+      lazy: attr(img, 'loading').toLowerCase() === 'lazy',
+    })),
+    allHeadings: findAll(doc, (e) => /^h[1-6]$/.test(e.name)).map((h) => ({ level: Number(h.name[1]), text: textOf(h).slice(0, 200) })).filter((h) => h.text),
   };
 }

@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tutti i tool e i prompt · seomcp</title>
-  <meta name="description" content="I 23 tool e i 7 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO e validatore schema.org.">
+  <meta name="description" content="I 25 tool e gli 8 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.">
   <link rel="canonical" href="https://seomcp.contentisking.guru/tool/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Tutti i tool e i prompt · seomcp">
-  <meta property="og:description" content="I 23 tool e i 7 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO e validatore schema.org.">
+  <meta property="og:description" content="I 25 tool e gli 8 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.">
   <meta property="og:url" content="https://seomcp.contentisking.guru/tool/">
   <meta property="og:locale" content="it_IT">
   <link rel="stylesheet" href="/style.css">
@@ -21,7 +21,7 @@
   <main id="main" class="doc">
     <div class="wrap">
       <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Tool e prompt</nav>
-      <h1>23 tool e 7 prompt</h1>
+      <h1>25 tool e 8 prompt</h1>
       <p class="lead">Tutti in sola lettura: seomcp legge i dati, non modifica nulla. Collega solo le fonti che usi: ogni gruppo indica cosa serve.</p>
 
       <section class="doc-block" id="search-console">
@@ -82,6 +82,14 @@
           <dt><code>schema_validate</code></dt><dd>Valida il JSON-LD di una pagina o incollato: sintassi, vocabolario ufficiale schema.org, requisiti di Google per i risultati avanzati, coerenza con la pagina.</dd>
         </dl>
       </section>
+      <section class="doc-block" id="tecnico">
+        <h2>Controlli tecnici <span class="area-count">2 tool</span></h2>
+        <p class="small">Richiede: nessuna credenziale, le pagine sono pubbliche.</p>
+        <dl class="tools">
+          <dt><code>tech_page_audit</code></dt><dd>Controlli tecnici della pagina: catena di redirect, TTFB, peso e compressione, indicizzabilità, canonical, title e description, viewport, hreflang con link di ritorno, Open Graph e Twitter Card, immagini, gerarchia dei titoli, link, header di sicurezza.</dd>
+          <dt><code>tech_site_check</code></dt><dd>Controlli tecnici del sito: sitemap (URL, lastmod, duplicati), un campione di URL della sitemap, la pagina 404 e un campione di link interni rotti o reindirizzati.</dd>
+        </dl>
+      </section>
       <section class="doc-block" id="diagnostica">
         <h2>Diagnostica <span class="area-count">1 tool</span></h2>
         <dl class="tools">
@@ -90,7 +98,7 @@
       </section>
 
       <section class="doc-block" id="prompt">
-        <h2>I prompt <span class="area-count">7</span></h2>
+        <h2>I prompt <span class="area-count">8</span></h2>
         <p>Spunti di conversazione già impostati: guidano l'assistente dai dati all'analisi. Si richiamano dal menu del tuo assistente (in Claude Code con <code>/</code>).</p>
         <dl class="tools">
           <dt>Audit GEO della pagina</dt><dd>Interpreta le misure GEO/AEO di una pagina e propone le correzioni in ordine di impatto. <code>audit-geo-pagina</code></dd>
@@ -99,6 +107,7 @@
           <dt>Il mio sito è aperto alle AI?</dt><dd>Spiega in chiaro i permessi per i crawler AI, bot per bot, anche per la normativa europea. <code>sito-aperto-alle-ai</code></dd>
           <dt>Rendi citabile questo passaggio</dt><dd>Riscrive una sezione perché un motore AI possa estrarla e citarla da sola. <code>passaggio-citabile</code></dd>
           <dt>Piano editoriale per le risposte AI</dt><dd>Dalle domande degli utenti senza risposta ricava nuove sezioni, FAQ e pagine da scrivere. <code>piano-editoriale-ai</code></dd>
+          <dt>Audit tecnico del sito</dt><dd>Controlla pagina e sito dal punto di vista tecnico e propone le correzioni in ordine di priorità. <code>audit-tecnico</code></dd>
           <dt>Correggi i miei dati strutturati</dt><dd>Valida i dati strutturati, spiega i problemi e propone il JSON-LD corretto, pronto da incollare. <code>correggi-dati-strutturati</code></dd>
         </dl>
       </section>

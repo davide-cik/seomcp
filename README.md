@@ -21,7 +21,7 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 - **Sola lettura.** Chiede a Google solo gli scope `webmasters.readonly` e `analytics.readonly`: non può modificare nulla nelle tue proprietà.
 - **Le credenziali restano sul tuo computer.** Nessun server intermedio, nessun gateway di terzi, nessuna telemetria.
 - **Solo librerie ufficiali:** l'SDK MCP, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin`, `@googleapis/pagespeedonline`, `@googleapis/chromeuxreport` e `google-auth-library`. Bing è una semplice chiamata REST. Per leggere l'HTML delle pagine: `htmlparser2`, la libreria usata da cheerio.
-- **Codice piccolo e leggibile.** Circa 4.400 righe di TypeScript in [`src/`](src): leggerlo prima di installarlo è alla portata di chiunque.
+- **Codice piccolo e leggibile.** Circa 4.800 righe di TypeScript in [`src/`](src): leggerlo prima di installarlo è alla portata di chiunque.
 - **Nessun uso improprio della Google Indexing API**, che Google riserva alle offerte di lavoro e alle dirette video.
 
 ## Tool disponibili
@@ -47,6 +47,8 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 | `geo_page_metrics` | GEO/AEO: misure della pagina come la vede un crawler AI, più HTTPS ed età del dominio |
 | `geo_page_sections` | GEO/AEO: il testo della pagina diviso in sezioni, con le misure di ciascuna |
 | `schema_validate` | Validatore schema.org: vocabolario ufficiale, requisiti Google per i risultati avanzati, coerenza con la pagina. Anche su JSON-LD incollato |
+| `tech_page_audit` | Controlli tecnici della pagina: redirect, TTFB, indicizzabilità, canonical, hreflang, Open Graph, immagini, titoli, header di sicurezza |
+| `tech_site_check` | Controlli tecnici del sito: sitemap, campione di URL, pagina 404, link interni rotti |
 | `bing_list_sites` | Siti nel tuo account Bing Webmaster |
 | `bing_query_stats` | Performance per query su Bing |
 | `bing_page_stats` | Performance per pagina su Bing |
@@ -56,7 +58,7 @@ Le analisi più complesse (cannibalizzazione, content gap, report) le fa l'assis
 
 ### Prompt GEO/AEO
 
-Oltre ai tool, seomcp offre sette **prompt**, cioè spunti di conversazione già impostati: audit GEO della pagina, risposte alle domande degli utenti, confronto con i concorrenti, permessi AI del sito, riscrittura di un passaggio citabile, piano editoriale e correzione dei dati strutturati. Come funzionano: [docs/geo.md](docs/geo.md) e [docs/schema-validator.md](docs/schema-validator.md).
+Oltre ai tool, seomcp offre otto **prompt**, cioè spunti di conversazione già impostati: audit GEO della pagina, risposte alle domande degli utenti, confronto con i concorrenti, permessi AI del sito, riscrittura di un passaggio citabile, piano editoriale, correzione dei dati strutturati e audit tecnico. Come funzionano: [docs/geo.md](docs/geo.md) e [docs/schema-validator.md](docs/schema-validator.md).
 
 ## Installazione
 

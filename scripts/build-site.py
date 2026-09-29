@@ -543,6 +543,10 @@ TOOL_GROUPS = [
     ("schema", "Validatore schema.org", "nessuna credenziale.", "/schema/", [
         ("schema_validate", "Valida il JSON-LD di una pagina o incollato: sintassi, vocabolario ufficiale schema.org, requisiti di Google per i risultati avanzati, coerenza con la pagina."),
     ]),
+    ("tecnico", "Controlli tecnici", "nessuna credenziale, le pagine sono pubbliche.", None, [
+        ("tech_page_audit", "Controlli tecnici della pagina: catena di redirect, TTFB, peso e compressione, indicizzabilità, canonical, title e description, viewport, hreflang con link di ritorno, Open Graph e Twitter Card, immagini, gerarchia dei titoli, link, header di sicurezza."),
+        ("tech_site_check", "Controlli tecnici del sito: sitemap (URL, lastmod, duplicati), un campione di URL della sitemap, la pagina 404 e un campione di link interni rotti o reindirizzati."),
+    ]),
     ("diagnostica", "Diagnostica", "", None, [
         ("seomcp_status", "Verifica quali fonti sono configurate e funzionanti, e spiega cosa fare per quelle che non lo sono."),
     ]),
@@ -555,6 +559,7 @@ PROMPTS = [
     ("sito-aperto-alle-ai", "Il mio sito è aperto alle AI?", "Spiega in chiaro i permessi per i crawler AI, bot per bot, anche per la normativa europea."),
     ("passaggio-citabile", "Rendi citabile questo passaggio", "Riscrive una sezione perché un motore AI possa estrarla e citarla da sola."),
     ("piano-editoriale-ai", "Piano editoriale per le risposte AI", "Dalle domande degli utenti senza risposta ricava nuove sezioni, FAQ e pagine da scrivere."),
+    ("audit-tecnico", "Audit tecnico del sito", "Controlla pagina e sito dal punto di vista tecnico e propone le correzioni in ordine di priorità."),
     ("correggi-dati-strutturati", "Correggi i miei dati strutturati", "Valida i dati strutturati, spiega i problemi e propone il JSON-LD corretto, pronto da incollare."),
 ]
 
@@ -680,7 +685,7 @@ def main():
     tool_dir.mkdir(exist_ok=True)
     (tool_dir / "index.html").write_text(
         page("Tutti i tool e i prompt · seomcp",
-             "I 23 tool e i 7 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO e validatore schema.org.",
+             "I 25 tool e gli 8 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.",
              "tool", tools_page()))
 
     today = date.today().isoformat()
