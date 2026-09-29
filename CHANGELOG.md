@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.28 — 2026-09-29
+
+- Sito: le domande di "Cosa puoi chiedere" aprono una chat laterale con una risposta d'esempio (dati di fantasia) e il link per richiedere l'integrazione in CMS ed e-commerce.
+
 ## 0.1.27 — 2026-09-29
 
 - Sito: pagina `/tecnico/` per i controlli tecnici, nel menu "Novità" (ora 5 voci).

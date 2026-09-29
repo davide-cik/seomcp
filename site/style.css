@@ -235,3 +235,33 @@ a.plain:hover { color: var(--accent); }
 .area-more a:hover { text-decoration: underline; }
 .area-count { display: inline-block; font-family: var(--mono); font-size: 0.78rem; color: var(--accent); font-weight: 600; }
 h2 .area-count { margin-left: 6px; vertical-align: middle; }
+
+/* Chat dimostrativa: domande cliccabili e pannello laterale (site/demo.js) */
+.demo-q { cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+.demo-q:hover, .demo-q:focus-visible { border-left-color: var(--primary); background: var(--bg-soft); }
+.demo-q::after { content: "” →" !important; }
+.demo-hint { font-size: 0.88rem; color: var(--muted); margin-top: 10px; }
+.demo-overlay { position: fixed; inset: 0; background: rgba(11, 22, 36, 0.45); z-index: 40; }
+.demo-chat { position: fixed; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); background: var(--bg); border-left: 1px solid var(--border); box-shadow: -20px 0 50px -20px rgba(11, 22, 36, 0.4); z-index: 41; display: flex; flex-direction: column; }
+.demo-chat[hidden], .demo-overlay[hidden] { display: none; }
+.demo-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--bg-soft); }
+.demo-head strong { color: var(--heading); }
+.demo-close { background: none; border: 0; font-size: 1.6rem; line-height: 1; color: var(--muted); cursor: pointer; padding: 2px 8px; border-radius: 6px; }
+.demo-close:hover { color: var(--heading); background: var(--surface); }
+.demo-body { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.demo-msg { border-radius: 12px; padding: 12px 14px; font-size: 0.95rem; }
+.demo-msg p { margin: 0 0 10px; }
+.demo-msg > :last-child { margin-bottom: 0; }
+.demo-user { background: var(--accent); color: #fff; align-self: flex-end; max-width: 88%; }
+.demo-ai { background: var(--surface); border: 1px solid var(--border); }
+.demo-ai ul { margin: 0 0 10px; padding-left: 1.2em; }
+.demo-ai li { margin-bottom: 4px; }
+.demo-tool { font-size: 0.8rem; color: var(--muted); margin-bottom: 6px !important; }
+.demo-thinking { color: var(--muted); font-style: italic; }
+.demo-table { overflow-x: auto; margin: 0 0 10px; }
+.demo-table table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.demo-table th, .demo-table td { text-align: left; padding: 6px 6px; border-bottom: 1px solid var(--border); }
+.demo-table th { color: var(--muted); font-weight: 600; }
+.demo-disclaimer { margin: 0; padding: 12px 18px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted); background: var(--bg-soft); }
+body.demo-open { overflow: hidden; }
+@media (prefers-color-scheme: dark) { .demo-user { color: #06101C; } }
