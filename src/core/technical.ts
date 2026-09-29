@@ -34,7 +34,8 @@ export async function redirectChain(url: string, opts: FetchOptions = {}): Promi
   throw new Error(`Più di 10 redirect a partire da ${url}.`);
 }
 
-async function statusOf(url: string, opts: FetchOptions): Promise<{ url: string; status: number; redirectTo?: string; error?: string }> {
+/** Stato HTTP di un URL senza seguire i redirect (dove porta il redirect è in redirectTo). */
+export async function checkUrlStatus(url: string, opts: FetchOptions = {}): Promise<{ url: string; status: number; redirectTo?: string; error?: string }> {
   try {
     const res = await fetchPage(url, { ...opts, followRedirects: false, maxBytes: 16 * 1024, timeoutMs: 10_000 });
     const location = res.headers['location'];
@@ -46,6 +47,56 @@ async function statusOf(url: string, opts: FetchOptions): Promise<{ url: string;
 
 // ─── Pagina ────────────────────────────────────────────────────────────────
 
+export interface HreflangReport {
+  count: number;
+  languages: string[];
+  hasXDefault: boolean;
+  selfReference: boolean;
+  invalid: string[];
+  relativeUrls: number;
+  returnLinks?: { href: string; status: number; linksBack: boolean | null }[];
+}
+
+/**
+ * Analizza i link hreflang di una pagina: codici validi, x-default, autoreferenza,
+ * URL relativi e, a campione (max 5), se le altre versioni rimandano a questa.
+ */
+export async function analyzeHreflang(
+  links: { hreflang: string; href: string }[],
+  pageUrl: string,
+  opts: FetchOptions = {},
+  checkReturnLinks = true,
+): Promise<HreflangReport> {
+  const norm = (u: string) => u.replace(/\/$/, '');
+  const alternates = links.map((a) => ({ ...a, abs: (() => { try { return new URL(a.href, pageUrl).toString(); } catch { return a.href; } })() }));
+  let returnLinks: HreflangReport['returnLinks'];
+  if (checkReturnLinks && alternates.length) {
+    returnLinks = [];
+    for (const a of alternates.filter((x) => norm(x.abs) !== norm(pageUrl) && x.hreflang.toLowerCase() !== 'x-default').slice(0, 5)) {
+      await sleep(300);
+      try {
+        const page = await fetchPage(a.abs, { ...opts, maxBytes: 1024 * 1024 });
+        const back = extractPage(page.body, page.finalUrl).alternates.some((b) => {
+          try { return norm(new URL(b.href, page.finalUrl).toString()) === norm(pageUrl); } catch { return false; }
+        });
+        // Se la versione alternativa non risponde 200 il link di ritorno non è verificabile: conta lo stato.
+        returnLinks.push({ href: a.abs, status: page.status, linksBack: page.status === 200 ? back : null });
+      } catch {
+        returnLinks.push({ href: a.abs, status: 0, linksBack: null });
+      }
+    }
+  }
+  return {
+    count: alternates.length,
+    languages: [...new Set(alternates.map((a) => a.hreflang))],
+    hasXDefault: alternates.some((a) => a.hreflang.toLowerCase() === 'x-default'),
+    selfReference: alternates.some((a) => norm(a.abs) === norm(pageUrl)),
+    invalid: alternates.filter((a) => !HREFLANG.test(a.hreflang)).map((a) => a.hreflang),
+    relativeUrls: alternates.filter((a) => !/^https?:\/\//i.test(a.href)).length,
+    ...(returnLinks ? { returnLinks } : {}),
+  };
+}
+
 export interface TechPageAudit {
   url: string;
   finalUrl: string;
@@ -55,7 +106,7 @@ export interface TechPageAudit {
   indexing: { metaRobots?: string; xRobotsTag?: string; noindex: boolean; nofollow: boolean };
   canonical: { url?: string; isSelf?: boolean; count: number; status?: number; redirectTo?: string };
   meta: { title?: string; titleLength: number; description?: string; descriptionLength: number; lang?: string; viewport?: string; mobileViewport: boolean; charset: boolean };
-  hreflang: { count: number; languages: string[]; hasXDefault: boolean; selfReference: boolean; invalid: string[]; relativeUrls: number; returnLinks?: { href: string; status: number; linksBack: boolean | null }[] };
+  hreflang: HreflangReport;
   social: { openGraph: Record<string, boolean>; twitter: Record<string, boolean> };
   images: { total: number; missingAlt: number; decorative: number; withoutDimensions: number; lazy: number; formats: Record<string, number> };
   headings: { h1: number; h1Texts: string[]; skippedLevels: string[]; total: number };
@@ -82,27 +133,9 @@ export async function techPageAudit(url: string, opts: FetchOptions = {}, checkR
   const canonicalTags = (final.body.match(/<link\b[^>]*rel\s*=\s*["']?canonical/gi) ?? []).length;
   const canonicalAbs = ex.canonical ? new URL(ex.canonical, final.finalUrl).toString() : undefined;
   const canonicalIsSelf = canonicalAbs ? canonicalAbs.replace(/\/$/, '') === final.finalUrl.replace(/\/$/, '') : undefined;
-  const canonicalStatus = canonicalAbs && !canonicalIsSelf ? await statusOf(canonicalAbs, opts) : undefined;
+  const canonicalStatus = canonicalAbs && !canonicalIsSelf ? await checkUrlStatus(canonicalAbs, opts) : undefined;
 
-  // hreflang: codici validi, x-default, autoreferenza e (a campione) link di ritorno.
-  const alternates = ex.alternates.map((a) => ({ ...a, abs: (() => { try { return new URL(a.href, final.finalUrl).toString(); } catch { return a.href; } })() }));
-  let returnLinks: { href: string; status: number; linksBack: boolean | null }[] | undefined;
-  if (checkReturnLinks && alternates.length) {
-    returnLinks = [];
-    for (const a of alternates.filter((x) => x.abs !== final.finalUrl && x.hreflang.toLowerCase() !== 'x-default').slice(0, 5)) {
-      await sleep(300);
-      try {
-        const page = await fetchPage(a.abs, { ...opts, maxBytes: 1024 * 1024 });
-        const back = extractPage(page.body, page.finalUrl).alternates.some((b) => {
-          try { return new URL(b.href, page.finalUrl).toString().replace(/\/$/, '') === final.finalUrl.replace(/\/$/, ''); } catch { return false; }
-        });
-        // Se la versione alternativa non risponde 200 il link di ritorno non è verificabile: conta lo stato.
-        returnLinks.push({ href: a.abs, status: page.status, linksBack: page.status === 200 ? back : null });
-      } catch {
-        returnLinks.push({ href: a.abs, status: 0, linksBack: null });
-      }
-    }
-  }
+  const hreflang = await analyzeHreflang(ex.alternates, final.finalUrl, opts, checkReturnLinks);
 
   const imgs = ex.images.filter((i) => i.src);
   const formats: Record<string, number> = {};
@@ -147,15 +180,7 @@ export async function techPageAudit(url: string, opts: FetchOptions = {}, checkR
       mobileViewport: /width\s*=\s*device-width/i.test(ex.meta['viewport'] ?? ''),
       charset: /<meta[^>]+charset/i.test(final.body.slice(0, 4096)) || /charset=/i.test(h['content-type'] ?? ''),
     },
-    hreflang: {
-      count: alternates.length,
-      languages: [...new Set(alternates.map((a) => a.hreflang))],
-      hasXDefault: alternates.some((a) => a.hreflang.toLowerCase() === 'x-default'),
-      selfReference: alternates.some((a) => a.abs.replace(/\/$/, '') === final.finalUrl.replace(/\/$/, '')),
-      invalid: alternates.filter((a) => !HREFLANG.test(a.hreflang)).map((a) => a.hreflang),
-      relativeUrls: alternates.filter((a) => !/^https?:\/\//i.test(a.href)).length,
-      ...(returnLinks ? { returnLinks } : {}),
-    },
+    hreflang,
     social: {
       openGraph: Object.fromEntries(og.map((k) => [k, !!ex.meta[k]])),
       twitter: Object.fromEntries(tw.map((k) => [k, !!ex.meta[k]])),
@@ -303,7 +328,7 @@ export async function techSiteCheck(url: string, opts: FetchOptions = {}, sample
   const sample = { checked: 0, ok: 0, redirects: [] as TechSiteCheck['sitemapSample']['redirects'], errors: [] as TechSiteCheck['sitemapSample']['errors'] };
   for (const u of spread([...new Set(urlList)], sampleSize)) {
     await sleep(250);
-    const r = await statusOf(u, opts);
+    const r = await checkUrlStatus(u, opts);
     sample.checked++;
     if (r.status === 200) sample.ok++;
     else if (r.status >= 300 && r.status < 400) sample.redirects.push({ url: u, status: r.status, redirectTo: r.redirectTo });
@@ -312,7 +337,7 @@ export async function techSiteCheck(url: string, opts: FetchOptions = {}, sample
 
   // Pagina inesistente: deve rispondere 404 (o 410), non 200 (soft 404).
   const testedUrl = `${origin}/seomcp-verifica-404-${randomBytes(4).toString('hex')}`;
-  const nf = await statusOf(testedUrl, opts);
+  const nf = await checkUrlStatus(testedUrl, opts);
 
   // Link interni della pagina indicata: quali sono rotti o reindirizzati.
   const links = { checked: 0, ok: 0, redirects: [] as TechSiteCheck['internalLinks']['redirects'], broken: [] as TechSiteCheck['internalLinks']['broken'] };
@@ -329,7 +354,7 @@ export async function techSiteCheck(url: string, opts: FetchOptions = {}, sample
     });
     for (const link of internal.slice(0, linkSample)) {
       await sleep(250);
-      const r = await statusOf(link, opts);
+      const r = await checkUrlStatus(link, opts);
       links.checked++;
       if (r.status === 200) links.ok++;
       else if (r.status >= 300 && r.status < 400) links.redirects.push({ url: link, status: r.status, redirectTo: r.redirectTo });

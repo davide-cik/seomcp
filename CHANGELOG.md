@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.26 — 2026-09-29
+
+- Libreria: `checkUrlStatus` (stato di un URL senza seguire i redirect) e `analyzeHreflang` esportate come funzioni autonome.
+
 ## 0.1.25 — 2026-09-29
 
 - **Controlli tecnici**: 2 nuovi tool senza credenziali.
