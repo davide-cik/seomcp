@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.24 — 2026-09-29
+
+- Sito: corretti i testi "Richiede" della pagina `/tool/`.
+
 ## 0.1.23 — 2026-09-29
 
 - Sito: nella landing i tool sono riassunti in sei aree; il dettaglio di tutti i 23 tool e 7 prompt è nella nuova pagina `/tool/`.
