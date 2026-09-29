@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.22 — 2026-09-29
+
+- Libreria: esportate anche `fetchPage`, `isPrivateIp`, `parseRobots`, `botAccess`, `AI_BOTS`, `analyzeLlmsTxt`, `jsonLdNodes`, `domainInfo`, `httpsInfo`, `registeredDomain`, `siteTrust`, `extractPage`.
+- Il pacchetto si può caricare anche con `require()` da progetti CommonJS (Node 22+).
+
 ## 0.1.21 — 2026-09-28
 
 - Sito: le novità sono raggruppate in un unico menu a tendina "Novità" (schema.org, GEO/AEO, Core Web Vitals, Google Analytics 4), che funziona anche senza JavaScript e si chiude con Esc o cliccando fuori.
