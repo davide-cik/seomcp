@@ -1,10 +1,10 @@
 # seomcp
 
-**Search Console, Analytics 4, Bing Webmaster, Core Web Vitals e analisi GEO/AEO dentro il tuo assistente AI.** Open source, gratuito, in italiano.
+**Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, analisi GEO/AEO, validatore schema.org e controlli tecnici dentro il tuo assistente AI.** Open source, gratuito, in italiano.
 
 [🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · Licenza [MIT](LICENSE)
 
-`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights e Chrome UX Report. Così puoi chiedere, in italiano:
+`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights e Chrome UX Report, e di analizzare le pagine pubbliche: accesso dei crawler AI, dati strutturati, redirect, canonical, sitemap e link rotti. **25 tool e 8 prompt, tutti in sola lettura.** Così puoi chiedere, in italiano:
 
 > Quali query sono in posizione 4-20 negli ultimi 90 giorni, e quali pagine dovrei ottimizzare per prime?
 >
@@ -24,7 +24,7 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 - **Codice piccolo e leggibile.** Circa 4.800 righe di TypeScript in [`src/`](src): leggerlo prima di installarlo è alla portata di chiunque.
 - **Nessun uso improprio della Google Indexing API**, che Google riserva alle offerte di lavoro e alle dirette video.
 
-## Tool disponibili
+## Tool disponibili (25)
 
 | Tool | Cosa fa |
 |---|---|
@@ -56,7 +56,7 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 
 Le analisi più complesse (cannibalizzazione, content gap, report) le fa l'assistente ragionando sui dati: non serve codificarle nel server.
 
-### Prompt GEO/AEO
+### Prompt (8)
 
 Oltre ai tool, seomcp offre otto **prompt**, cioè spunti di conversazione già impostati: audit GEO della pagina, risposte alle domande degli utenti, confronto con i concorrenti, permessi AI del sito, riscrittura di un passaggio citabile, piano editoriale, correzione dei dati strutturati e audit tecnico. Come funzionano: [docs/geo.md](docs/geo.md) e [docs/schema-validator.md](docs/schema-validator.md).
 

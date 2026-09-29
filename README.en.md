@@ -1,10 +1,10 @@
 # seomcp
 
-**Search Console, Analytics 4, Bing Webmaster, Core Web Vitals and GEO/AEO analysis inside your AI assistant.** Open source, free, made in Italy.
+**Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO analysis, a schema.org validator and technical SEO checks inside your AI assistant.** Open source, free, made in Italy.
 
 [🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [MIT](LICENSE) license
 
-`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights and the Chrome UX Report. Ask things like:
+`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **25 tools and 8 prompts, all read-only.** Ask things like:
 
 > Which queries rank in positions 4-20 over the last 90 days, and which pages should I optimize first?
 >
@@ -20,7 +20,7 @@
 - **Small, readable codebase.** About 4,800 lines of TypeScript in [`src/`](src), easy to audit before you install it.
 - **No misuse of the Google Indexing API**, which Google reserves for job postings and livestreams.
 
-## Tools
+## Tools (25)
 
 | Tool | What it does |
 |---|---|
@@ -50,7 +50,7 @@
 | `bing_page_stats` | Bing performance by page |
 | `bing_keyword_stats` | Keyword search volume (defaults to Italy / Italian; set `country` and `language` for other markets) |
 
-Plus eight **prompts** (conversation starters): GEO page audit, answers to real user questions, competitor comparison, AI access policy, rewriting a passage to be citable, editorial plan, fixing structured data, technical audit. See [docs/geo.md](docs/geo.md) and [docs/schema-validator.md](docs/schema-validator.md) (Italian).
+Plus 8 **prompts** (conversation starters): GEO page audit, answers to real user questions, competitor comparison, AI access policy, rewriting a passage to be citable, editorial plan, fixing structured data, technical audit. See [docs/geo.md](docs/geo.md) and [docs/schema-validator.md](docs/schema-validator.md) (Italian).
 
 ## Install
 
