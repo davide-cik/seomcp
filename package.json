@@ -1,6 +1,6 @@
 {
   "name": "@contentisking/seomcp",
-  "version": "0.1.36",
+  "version": "0.1.37",
   "description": "Server MCP open source per SEO, GEO e AEO: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, analisi di citabilità per i motori AI e validatore schema.org. Sola lettura, credenziali sul tuo computer.",
   "keywords": [
     "mcp",
