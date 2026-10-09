@@ -303,3 +303,5 @@ body.demo-open { overflow: hidden; }
 .prompt-ask span { display: block; color: var(--muted); font-size: 0.85rem; }
 @media (max-width: 520px) { .prompt-meta { grid-template-columns: 1fr; } .prompt-meta dd { margin-bottom: 6px; } }
 .doc .area-list li p { margin-top: 8px; }
+
+@media (max-width: 480px) { .top nav .nav-npm { display: none; } }
