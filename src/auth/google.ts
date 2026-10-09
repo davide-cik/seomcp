@@ -123,13 +123,14 @@ export async function runGoogleOAuthFlow(
 
   const { tokens } = await client.getToken({ code, codeVerifier, redirect_uri: redirectUri });
   if (!tokens.refresh_token) {
-    throw new Error('Google non ha restituito un refresh token. Revoca l\'accesso da myaccount.google.com/permissions e riprova.');
+    throw new Error('Google non ha restituito un refresh token. Revoca l\'accesso da myaccount.google.com/linkedapps e riprova.');
   }
   writeToken(config.tokenFile, tokens);
   log(`Token salvato in ${config.tokenFile} (leggibile solo dal tuo utente).`);
 }
 
-function openBrowser(url: string): void {
+/** Apre un indirizzo nel browser predefinito, se c'è. */
+export function openBrowser(url: string): void {
   const cmd = process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'explorer' : 'xdg-open';
   try {
     spawn(cmd, [url], { stdio: 'ignore', detached: true }).on('error', () => {}).unref();

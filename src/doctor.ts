@@ -48,7 +48,7 @@ async function checkGoogle(config: SeoMcpConfig): Promise<DiagnosticItem> {
       source: 'google',
       status: 'off',
       message: 'Search Console non configurata (facoltativa).',
-      hint: `Per attivarla segui ${DOCS.google}`,
+      hint: `Per attivarla esegui "seomcp setup" oppure segui ${DOCS.credentials}`,
     };
   }
 
@@ -124,7 +124,7 @@ async function checkBing(config: SeoMcpConfig): Promise<DiagnosticItem> {
       source: 'bing',
       status: 'off',
       message: 'Bing Webmaster Tools non configurato (facoltativo).',
-      hint: `Per attivarlo imposta BING_WEBMASTER_API_KEY. Guida: ${DOCS.bing}`,
+      hint: `Per attivarlo esegui "seomcp setup" oppure imposta BING_WEBMASTER_API_KEY. Guida: ${DOCS.credentials}#bing`,
     };
   }
   try {
@@ -152,7 +152,7 @@ async function checkPageSpeed(config: SeoMcpConfig): Promise<DiagnosticItem> {
       source: 'pagespeed',
       status: 'off',
       message: 'PageSpeed Insights e Chrome UX Report non configurati (facoltativi).',
-      hint: `Per attivarli imposta SEOMCP_GOOGLE_API_KEY. Guida: ${DOCS.pagespeed}`,
+      hint: `Per attivarli esegui "seomcp setup" oppure imposta SEOMCP_GOOGLE_API_KEY. Guida: ${DOCS.credentials}#api-key`,
     };
   }
   try {

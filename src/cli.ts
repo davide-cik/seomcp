@@ -6,14 +6,16 @@ import { formatDiagnostics, runDiagnostics } from './doctor.js';
 import { createServer } from './server.js';
 import { VERSION } from './version.js';
 import { DOCS } from './links.js';
+import { runSetup } from './setup/wizard.js';
 
 // Con il trasporto stdio, stdout è riservato al protocollo MCP: tutti i messaggi vanno su stderr.
 const log = (msg: string) => process.stderr.write(`${msg}\n`);
 
-const HELP = `seomcp ${VERSION} — MCP per Google Search Console e Bing Webmaster Tools
+const HELP = `seomcp ${VERSION} — MCP per SEO, GEO e AEO: Search Console, Analytics 4, Bing, Core Web Vitals
 
 Uso:
   seomcp                 avvia il server MCP (stdio), è ciò che lancia il client (Claude, ChatGPT…)
+  seomcp setup           configurazione guidata: credenziali, verifica e collegamento all'assistente
   seomcp doctor          verifica la configurazione e le credenziali
   seomcp auth google     autorizza l'accesso OAuth a Search Console (una tantum)
   seomcp --version
@@ -39,6 +41,14 @@ async function main(argv: string[]): Promise<number> {
     const items = await runDiagnostics(config);
     log(formatDiagnostics(items));
     return items.some((i) => i.status === 'error') ? 1 : 0;
+  }
+
+  if (cmd === 'setup') {
+    if (!process.stdin.isTTY) {
+      log('seomcp setup fa delle domande: lancialo da un terminale, non dalla configurazione di un assistente.');
+      return 2;
+    }
+    return runSetup();
   }
 
   if (cmd === 'auth') {

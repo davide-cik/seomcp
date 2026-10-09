@@ -58,6 +58,10 @@ Plus 8 **prompts** (conversation starters): GEO page audit, answers to real user
 
 Requires **Node.js 22+**. Configure only the sources you use.
 
+**Fastest way: guided setup.** Run `npx -y github:davide-cik/seomcp setup` in a terminal. It asks one question at a time (in Italian), opens the right Google and Bing pages, tests each credential, stores everything in `~/.config/seomcp/config.json` (readable only by you) and adds seomcp to your assistant (Claude Code, Claude Desktop, ChatGPT/Codex, GitHub Copilot, Gemini CLI, Mistral Vibe), backing up any file it changes. No keys end up in the assistant's config.
+
+Manual setup:
+
 1. **Credentials:** see the setup guides for [Google](docs/google-setup.md), [Google Analytics](docs/google-analytics-setup.md), [PageSpeed/CrUX](docs/pagespeed-setup.md) and [Bing](docs/bing-setup.md). They are in Italian, and the steps are the same in English UIs. The [credentials page](https://seomcp.contentisking.guru/credenziali/) (Italian) has direct links to every console screen, a one-click link that enables all five Google APIs, and a generator that fills in the config for your assistant.
 2. **Claude Code:**
 

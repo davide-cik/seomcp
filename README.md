@@ -66,6 +66,16 @@ Oltre ai tool, seomcp offre otto **prompt**, cioè spunti di conversazione già 
 
 Serve **Node.js 22 o superiore**. Configura solo le fonti che usi: Google e Bing sono entrambe facoltative.
 
+### Il modo più rapido: la configurazione guidata
+
+```bash
+npx -y github:davide-cik/seomcp setup
+```
+
+Ti fa le domande una alla volta e apre le pagine giuste di Google e Bing. Prova subito ogni credenziale e ti fa scegliere proprietà e siti predefiniti. Salva tutto in `~/.config/seomcp/config.json`, leggibile solo dal tuo utente. Infine aggiunge seomcp a Claude Code, Claude Desktop, ChatGPT e Codex, GitHub Copilot, Gemini CLI o Mistral Vibe, facendo prima una copia di sicurezza dei file che modifica. Nella configurazione dell'assistente non finisce nessuna chiave.
+
+Preferisci fare a mano? Segui i passaggi qui sotto.
+
 ### 1. Prepara le credenziali
 
 La pagina [Credenziali](https://seomcp.contentisking.guru/credenziali/) ha tutti i passaggi con i link diretti e compila la configurazione per il tuo assistente. Le guide qui sotto dicono le stesse cose.

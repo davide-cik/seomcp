@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.32 — 2026-10-09
+
+- **Configurazione guidata** `seomcp setup`: domande una alla volta, link diretti alle console di Google e Bing, prova immediata di ogni credenziale, scelta di proprietà e siti predefiniti. Le credenziali vanno in `config.json` (permessi 600) e seomcp viene aggiunto all'assistente scelto senza chiavi nei suoi file, con copia di sicurezza dei file modificati. Supporta Claude Code, Claude Desktop, ChatGPT e Codex, GitHub Copilot (VS Code e CLI), Gemini CLI e Mistral Vibe.
+- Link delle console verificati sulla documentazione ufficiale: service account con scelta del progetto, elenco dei client OAuth, amministrazione di Analytics, revoca degli accessi da `myaccount.google.com/linkedapps`.
+- Sito: pagine `/credenziali/` e `/prompt/`.
+
 ## 0.1.28 — 2026-09-29
 
 - Sito: le domande di "Cosa puoi chiedere" aprono una chat laterale con una risposta d'esempio (dati di fantasia) e il link per richiedere l'integrazione in CMS ed e-commerce.

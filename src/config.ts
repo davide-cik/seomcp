@@ -1,6 +1,6 @@
-import { readFileSync, existsSync } from 'node:fs';
+import { chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir, platform } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { z } from 'zod';
 
 /**
@@ -30,6 +30,9 @@ const fileSchema = z
       .optional(),
   })
   .strict();
+
+/** Contenuto di config.json. */
+export type ConfigFile = z.infer<typeof fileSchema>;
 
 export type GoogleConfig =
   | { mode: 'service-account'; keyFile: string }
@@ -96,7 +99,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): SeoMcpConfig {
   };
 }
 
-function readConfigFile(path: string): z.infer<typeof fileSchema> {
+export function readConfigFile(path: string): ConfigFile {
   let raw: unknown;
   try {
     raw = JSON.parse(readFileSync(path, 'utf8'));
@@ -109,4 +112,12 @@ function readConfigFile(path: string): z.infer<typeof fileSchema> {
     throw new Error(`Il file di configurazione ${path} contiene errori:\n${issues}`);
   }
   return parsed.data;
+}
+
+/** Scrive config.json leggibile solo dal proprio utente, nella cartella creata con gli stessi permessi. */
+export function writeConfigFile(path: string, data: ConfigFile): void {
+  const parsed = fileSchema.parse(data);
+  mkdirSync(dirname(path), { recursive: true, mode: 0o700 });
+  writeFileSync(path, `${JSON.stringify(parsed, null, 2)}\n`, { mode: 0o600 });
+  if (process.platform !== 'win32') chmodSync(path, 0o600);
 }

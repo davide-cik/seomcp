@@ -223,6 +223,8 @@ PREREQ = f"""      <section class="doc-block">
           <li><strong>Node.js 22 o superiore</strong> (<a href="https://nodejs.org/it/download" target="_blank" rel="noopener">scarica</a>) e <strong>git</strong> (<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">scarica</a>).</li>
           <li><strong>Le credenziali</strong> delle fonti che vuoi usare: <a href="/credenziali/#search-console">Search Console</a>, <a href="/credenziali/#google-analytics">Google Analytics 4</a>, <a href="/credenziali/#api-key">Core Web Vitals</a> e <a href="/credenziali/#bing">Bing Webmaster Tools</a>, con i link diretti nella pagina <a href="/credenziali/">Credenziali</a>. Sono tutte facoltative: GEO, schema.org e controlli tecnici funzionano senza.</li>
         </ul>
+        <p>La via più rapida è la configurazione guidata: fa le domande una alla volta, prova le credenziali e scrive la configurazione dell'assistente al posto tuo.</p>
+<pre class="code"><code>npx -y {PKG} setup</code></pre>
         <p class="small">Il pacchetto npm è in arrivo: per ora seomcp si installa direttamente da GitHub. Il primo avvio richiede qualche secondo in più, perché il codice viene compilato sul tuo computer.</p>
       </section>"""
 
@@ -691,6 +693,11 @@ def credentials_page() -> str:
       </div>
       <p class="small">I link a Google e Bing aprono le pagine nel tuo account: se non hai fatto l'accesso, prima ti chiedono di farlo.</p>
 
+      <div class="notice" role="note">
+        <p><strong>Preferisci il terminale?</strong> La configurazione guidata fa questi passaggi con te: apre le pagine giuste, prova ogni chiave appena la inserisci e aggiunge seomcp al tuo assistente, senza chiavi nei suoi file.</p>
+<pre class="code"><code>npx -y {PKG} setup</code></pre>
+      </div>
+
       <section class="doc-block" id="senza-credenziali">
         <h2>Senza credenziali</h2>
         <p>I tool <a href="/geo/">GEO e AEO</a>, il <a href="/schema/">validatore schema.org</a> e i <a href="/tecnico/">controlli tecnici</a> leggono pagine pubbliche: funzionano appena installi seomcp, senza configurare niente. Se vuoi solo questi, salta direttamente a <a href="#configura">Configura l'assistente</a>.</p>
@@ -707,7 +714,7 @@ def credentials_page() -> str:
           </li>
           <li>
             <h3>Abilita le API con un clic</h3>
-            <p>Il link apre la console con le cinque API già selezionate: Search Console, Analytics Data, Analytics Admin, Chrome UX Report e PageSpeed Insights. Controlla che in alto ci sia il progetto giusto e conferma. Abilitarle tutte non costa nulla e da sole non danno accesso a niente.</p>
+            <p>Il link ti chiede di scegliere il progetto e poi abilita insieme le cinque API: Search Console, Analytics Data, Analytics Admin, Chrome UX Report e PageSpeed Insights. Abilitarle tutte non costa nulla e da sole non danno accesso a niente.</p>
             <p class="links">{ext(f"{GCP}/flows/enableapi?apiid=" + ",".join(GOOGLE_APIS), "Abilita le 5 API")}</p>
           </li>
         </ol>
@@ -731,8 +738,8 @@ def credentials_page() -> str:
         <ol class="steps">
           <li>
             <h3>Crea il service account</h3>
-            <p>Dagli un nome, per esempio <code>seomcp</code>. Non servono ruoli sul progetto: premi <strong>Fine</strong>.</p>
-            <p class="links">{ext(f"{GCP}/iam-admin/serviceaccounts/create", "Crea il service account")}</p>
+            <p>Scegli il progetto, poi dagli un nome, per esempio <code>seomcp</code>. Non servono ruoli sul progetto: premi <strong>Fine</strong>.</p>
+            <p class="links">{ext(f"{GCP}/projectselector/iam-admin/serviceaccounts/create", "Crea il service account")}</p>
           </li>
           <li>
             <h3>Scarica la chiave JSON</h3>
@@ -746,7 +753,7 @@ chmod 600 ~/.config/seomcp/service-account.json</code></pre>
           </li>
           <li>
             <h3>Aggiungilo come utente in Search Console</h3>
-            <p>Scegli la proprietà, poi <strong>Aggiungi utente</strong>: incolla l'email del service account con il permesso <strong>Con restrizioni</strong>, che basta per leggere i dati. Ripeti per ogni proprietà.</p>
+            <p>Scegli la proprietà dal selettore in alto, poi <strong>Aggiungi utente</strong>: incolla l'email del service account con il permesso <strong>Con restrizioni</strong>, che basta per leggere i dati (se ricevi un errore 403, usa <strong>Completo</strong>). Ripeti per ogni proprietà.</p>
             <p class="links">{ext("https://search.google.com/search-console/users", "Utenti e autorizzazioni")}</p>
           </li>
         </ol>
@@ -766,8 +773,8 @@ chmod 600 ~/.config/seomcp/service-account.json</code></pre>
           </li>
           <li>
             <h3>Crea il client</h3>
-            <p>Tipo di applicazione <strong>App desktop</strong>. Copia <strong>ID client</strong> e <strong>Client secret</strong>.</p>
-            <p class="links">{ext(f"{GCP}/auth/clients/create", "Crea il client OAuth")}</p>
+            <p>Premi <strong>Crea client</strong> e scegli il tipo di applicazione <strong>App desktop</strong>. Copia <strong>ID client</strong> e <strong>Client secret</strong>.</p>
+            <p class="links">{ext(f"{GCP}/auth/clients", "Client OAuth")}</p>
           </li>
           <li>
             <h3>Autorizza, una volta sola</h3>
@@ -791,7 +798,7 @@ npx -y {PKG} auth google</code></pre>
             <h3>Dai accesso alla proprietà</h3>
             <p><strong>Service account:</strong> in Analytics apri <strong>Amministrazione → Gestione dell'accesso alla proprietà → + → Aggiungi utenti</strong>, incolla l'email del service account e scegli il ruolo <strong>Visualizzatore</strong>.<br>
             <strong>OAuth:</strong> se avevi autorizzato seomcp prima di attivare Analytics, ripeti <code>auth google</code> una volta.</p>
-            <p class="links">{ext("https://analytics.google.com/", "Apri Google Analytics")}</p>
+            <p class="links">{ext("https://analytics.google.com/analytics/web/#/?pagename=admin", "Amministrazione di Analytics")}</p>
           </li>
           <li>
             <h3>Copia l'ID della proprietà</h3>
@@ -869,7 +876,7 @@ npx -y {PKG} auth google</code></pre>
         <p>Il comando legge le variabili dal terminale: per usarlo, impostale anche lì, oppure chiedi all'assistente di usare il tool <code>seomcp_status</code>, che fa lo stesso controllo.</p>
         <ul class="tips">
           <li>Tratta chiavi e file JSON come password: non metterli in un repository e non incollarli nella chat con l'assistente.</li>
-          <li>Per revocare l'accesso: <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">autorizzazioni del tuo account Google</a> per OAuth, eliminazione della chiave dal service account, rigenerazione della chiave Bing.</li>
+          <li>Per revocare l'accesso: <a href="https://myaccount.google.com/linkedapps" target="_blank" rel="noopener">autorizzazioni del tuo account Google</a> per OAuth, eliminazione della chiave dal service account, rigenerazione della chiave Bing.</li>
         </ul>
       </section>
       <script src="/credenziali.js" defer></script>"""

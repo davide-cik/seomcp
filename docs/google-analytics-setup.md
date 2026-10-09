@@ -15,7 +15,7 @@ Se hai usato il [link di abilitazione](https://console.cloud.google.com/flows/en
 
 ## 2. Dai accesso alla proprietà GA4
 
-- **Con il service account:** in [Google Analytics](https://analytics.google.com) apri **Amministrazione → Gestione dell'accesso alla proprietà → + → Aggiungi utenti**. Incolla l'email del service account (`...@...iam.gserviceaccount.com`) e scegli il ruolo **Visualizzatore**.
+- **Con il service account:** in [Google Analytics → Amministrazione](https://analytics.google.com/analytics/web/#/?pagename=admin) apri **Amministrazione → Gestione dell'accesso alla proprietà → + → Aggiungi utenti**. Incolla l'email del service account (`...@...iam.gserviceaccount.com`) e scegli il ruolo **Visualizzatore**.
 - **Con OAuth:** se avevi autorizzato seomcp prima dell'arrivo di Analytics, ripeti una volta l'autorizzazione, così includi anche Analytics:
   ```bash
   npx -y github:davide-cik/seomcp auth google

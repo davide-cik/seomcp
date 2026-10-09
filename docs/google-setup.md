@@ -23,7 +23,7 @@ In entrambi i casi l'accesso è **in sola lettura**.
 
 ## Strada A: service account
 
-3. [Crea il service account](https://console.cloud.google.com/iam-admin/serviceaccounts/create). Dagli un nome, ad esempio `seomcp`. Non servono ruoli sul progetto: premi **Fine**.
+3. [Crea il service account](https://console.cloud.google.com/projectselector/iam-admin/serviceaccounts/create). Dagli un nome, ad esempio `seomcp`. Non servono ruoli sul progetto: premi **Fine**.
 4. Apri il service account appena creato dall'[elenco](https://console.cloud.google.com/iam-admin/serviceaccounts) e vai su **Chiavi → Aggiungi chiave → Crea nuova chiave → JSON**. Il browser scarica il file.
 5. Sposta il file in un posto sicuro, fuori da qualsiasi repository, e proteggilo:
    ```bash
@@ -31,7 +31,7 @@ In entrambi i casi l'accesso è **in sola lettura**.
    chmod 600 ~/.config/seomcp/service-account.json
    ```
 6. Copia l'email del service account, che ha la forma `seomcp@nome-progetto.iam.gserviceaccount.com`.
-7. In [Search Console → Utenti e autorizzazioni](https://search.google.com/search-console/users), per ogni proprietà scegli **Aggiungi utente**. Incolla l'email e scegli il permesso **Con restrizioni**, che basta per leggere i dati.
+7. In [Search Console → Utenti e autorizzazioni](https://search.google.com/search-console/users), per ogni proprietà scegli **Aggiungi utente**. Incolla l'email e scegli il permesso **Con restrizioni**, che basta per leggere i dati (se ricevi un errore 403, usa **Completo**).
 8. Imposta la variabile d'ambiente:
    ```
    GOOGLE_APPLICATION_CREDENTIALS=/home/tuonome/.config/seomcp/service-account.json
@@ -43,7 +43,7 @@ In entrambi i casi l'accesso è **in sola lettura**.
 
 3. Compila le [informazioni sull'app](https://console.cloud.google.com/auth/branding) e, nel [pubblico](https://console.cloud.google.com/auth/audience), scegli il tipo **Esterno**, oppure **Interno** se hai Google Workspace.
 4. Con il tipo **Esterno**, porta lo stato di pubblicazione a **In produzione**. In stato "Test" Google fa scadere l'autorizzazione dopo 7 giorni. Dato che l'app la usi solo tu, non serve farla verificare: al login vedrai un avviso "app non verificata", clicca **Avanzate → Vai a seomcp**.
-5. [Crea il client OAuth](https://console.cloud.google.com/auth/clients/create) e scegli **App desktop** come tipo di applicazione. Copia **ID client** e **Client secret**.
+5. Apri i [client OAuth](https://console.cloud.google.com/auth/clients), premi **Crea client** e scegli **App desktop** come tipo di applicazione. Copia **ID client** e **Client secret**.
 6. Imposta le variabili e autorizza, una volta sola:
    ```bash
    export SEOMCP_GOOGLE_CLIENT_ID="xxx.apps.googleusercontent.com"
@@ -53,7 +53,7 @@ In entrambi i casi l'accesso è **in sola lettura**.
    Si apre il browser: accedi con l'account che vede le proprietà in Search Console. Il token viene salvato in `~/.config/seomcp/google-token.json`, leggibile solo dal tuo utente.
 7. Nella configurazione di Claude passa le stesse due variabili (`SEOMCP_GOOGLE_CLIENT_ID` e `SEOMCP_GOOGLE_CLIENT_SECRET`).
 
-Per revocare l'accesso in qualsiasi momento: [myaccount.google.com/permissions](https://myaccount.google.com/permissions).
+Per revocare l'accesso in qualsiasi momento: [myaccount.google.com/linkedapps](https://myaccount.google.com/linkedapps).
 
 ## Il formato del sito
 
