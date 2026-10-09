@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Credenziali: Google e Bing con i link diretti · seomcp</title>
+  <meta name="description" content="Come ottenere le credenziali per Search Console, Google Analytics 4, Core Web Vitals e Bing Webmaster Tools, con i link diretti e la configurazione pronta per il tuo assistente.">
+  <link rel="canonical" href="https://seomcp.contentisking.guru/credenziali/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Credenziali: Google e Bing con i link diretti · seomcp">
+  <meta property="og:description" content="Come ottenere le credenziali per Search Console, Google Analytics 4, Core Web Vitals e Bing Webmaster Tools, con i link diretti e la configurazione pronta per il tuo assistente.">
+  <meta property="og:url" content="https://seomcp.contentisking.guru/credenziali/">
+  <meta property="og:locale" content="it_IT">
+  <link rel="stylesheet" href="/style.css?v=d6b3e879cc">
+</head>
+<body>
+  <a class="skip" href="#main">Vai al contenuto</a>
+  <!--#include virtual="/_partials/header.html" -->
+
+  <main id="main" class="doc">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Credenziali</nav>
+      <h1>Credenziali</h1>
+      <p class="lead">Cosa serve per collegare ogni fonte, con i link diretti alle pagine giuste di Google e Bing. Sono tutte facoltative: configura solo quelle che usi. In fondo trovi la configurazione già pronta da incollare nel tuo assistente.</p>
+
+      <div class="table-wrap">
+        <table class="cred-table">
+          <thead><tr><th>Fonte</th><th>Cosa serve</th><th>Tempo</th><th>Sblocca</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#senza-credenziali">GEO, schema.org, controlli tecnici</a></td><td>Niente</td><td>0 minuti</td><td><a href="/tool/#geo">6 tool</a> e <a href="/prompt/">6 prompt</a></td></tr>
+            <tr><td><a href="#search-console">Search Console</a></td><td>Service account o OAuth</td><td>10 minuti</td><td><a href="/tool/#search-console">6 tool</a></td></tr>
+            <tr><td><a href="#google-analytics">Analytics 4</a></td><td>Le stesse credenziali Google</td><td>3 minuti</td><td><a href="/tool/#google-analytics">5 tool</a></td></tr>
+            <tr><td><a href="#api-key">Core Web Vitals</a></td><td>API key Google Cloud</td><td>3 minuti</td><td><a href="/tool/#core-web-vitals">3 tool</a></td></tr>
+            <tr><td><a href="#bing">Bing Webmaster</a></td><td>API key Bing</td><td>2 minuti</td><td><a href="/tool/#bing">4 tool</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small">I link a Google e Bing aprono le pagine nel tuo account: se non hai fatto l'accesso, prima ti chiedono di farlo.</p>
+
+      <section class="doc-block" id="senza-credenziali">
+        <h2>Senza credenziali</h2>
+        <p>I tool <a href="/geo/">GEO e AEO</a>, il <a href="/schema/">validatore schema.org</a> e i <a href="/tecnico/">controlli tecnici</a> leggono pagine pubbliche: funzionano appena installi seomcp, senza configurare niente. Se vuoi solo questi, salta direttamente a <a href="#configura">Configura l'assistente</a>.</p>
+      </section>
+
+      <section class="doc-block" id="google-cloud">
+        <h2>1. Progetto Google Cloud</h2>
+        <p>Serve per Search Console, Analytics e Core Web Vitals. Un solo progetto basta per tutto.</p>
+        <ol class="steps">
+          <li>
+            <h3>Crea il progetto</h3>
+            <p>Chiamalo, per esempio, <code>seomcp</code>. Se ne hai già uno, puoi usarlo: selezionalo dal menu in alto nella console.</p>
+            <p class="links"><a class="go" href="https://console.cloud.google.com/projectcreate" target="_blank" rel="noopener">Crea un progetto ↗</a></p>
+          </li>
+          <li>
+            <h3>Abilita le API con un clic</h3>
+            <p>Il link apre la console con le cinque API già selezionate: Search Console, Analytics Data, Analytics Admin, Chrome UX Report e PageSpeed Insights. Controlla che in alto ci sia il progetto giusto e conferma. Abilitarle tutte non costa nulla e da sole non danno accesso a niente.</p>
+            <p class="links"><a class="go" href="https://console.cloud.google.com/flows/enableapi?apiid=searchconsole.googleapis.com,analyticsdata.googleapis.com,analyticsadmin.googleapis.com,chromeuxreport.googleapis.com,pagespeedonline.googleapis.com" target="_blank" rel="noopener">Abilita le 5 API ↗</a></p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="doc-block" id="search-console">
+        <h2>2. Search Console</h2>
+        <p>Scegli una delle due strade. L'accesso è sempre <strong>in sola lettura</strong>.</p>
+        <div class="table-wrap">
+          <table class="cred-table">
+            <thead><tr><th></th><th><a href="#service-account">Service account</a></th><th><a href="#oauth">OAuth con un client tuo</a></th></tr></thead>
+            <tbody>
+              <tr><td>Ideale per</td><td>team, server, più persone</td><td>singolo professionista</td></tr>
+              <tr><td>Vede</td><td>solo le proprietà dove lo aggiungi come utente</td><td>tutte le proprietà del tuo account Google</td></tr>
+              <tr><td>Rinnovo</td><td>nessuno</td><td>nessuno, dopo la prima autorizzazione</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="service-account">Strada A: service account</h3>
+        <ol class="steps">
+          <li>
+            <h3>Crea il service account</h3>
+            <p>Dagli un nome, per esempio <code>seomcp</code>. Non servono ruoli sul progetto: premi <strong>Fine</strong>.</p>
+            <p class="links"><a class="go" href="https://console.cloud.google.com/iam-admin/serviceaccounts/create" target="_blank" rel="noopener">Crea il service account ↗</a></p>
+          </li>
+          <li>
+            <h3>Scarica la chiave JSON</h3>
+            <p>Nell'elenco apri il service account, vai su <strong>Chiavi → Aggiungi chiave → Crea nuova chiave → JSON</strong>. Copia anche la sua email, del tipo <code>seomcp@nome-progetto.iam.gserviceaccount.com</code>.</p>
+            <p class="links"><a class="go" href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noopener">Elenco dei service account ↗</a></p>
+            <p>Sposta il file in un posto sicuro, fuori da qualsiasi repository (macOS e Linux):</p>
+<pre class="code"><code>mkdir -p ~/.config/seomcp
+mv ~/Downloads/seomcp-*.json ~/.config/seomcp/service-account.json
+chmod 600 ~/.config/seomcp/service-account.json</code></pre>
+            <p class="small">Su Windows, per esempio, <code>C:\Users\tuonome\.config\seomcp\service-account.json</code>. Se la tua organizzazione blocca la creazione di chiavi (policy <code>iam.disableServiceAccountKeyCreation</code>), usa la strada B.</p>
+          </li>
+          <li>
+            <h3>Aggiungilo come utente in Search Console</h3>
+            <p>Scegli la proprietà, poi <strong>Aggiungi utente</strong>: incolla l'email del service account con il permesso <strong>Con restrizioni</strong>, che basta per leggere i dati. Ripeti per ogni proprietà.</p>
+            <p class="links"><a class="go" href="https://search.google.com/search-console/users" target="_blank" rel="noopener">Utenti e autorizzazioni ↗</a></p>
+          </li>
+        </ol>
+        <p>Variabile da impostare: <code>GOOGLE_APPLICATION_CREDENTIALS</code> con il percorso del file.</p>
+
+        <h3 id="oauth">Strada B: OAuth con un client tuo</h3>
+        <ol class="steps">
+          <li>
+            <h3>Dai un nome all'app</h3>
+            <p>Compila nome dell'app (per esempio <code>seomcp</code>) e la tua email.</p>
+            <p class="links"><a class="go" href="https://console.cloud.google.com/auth/branding" target="_blank" rel="noopener">Informazioni sull'app ↗</a></p>
+          </li>
+          <li>
+            <h3>Pubblicala</h3>
+            <p>Scegli il pubblico <strong>Esterno</strong> (o <strong>Interno</strong> se hai Google Workspace) e, con Esterno, premi <strong>Pubblica app</strong> per portarla in produzione: in stato di test Google fa scadere l'autorizzazione dopo 7 giorni. Non serve la verifica, perché la usi solo tu: al login vedrai l'avviso "app non verificata", clicca <strong>Avanzate → Vai a seomcp</strong>.</p>
+            <p class="links"><a class="go" href="https://console.cloud.google.com/auth/audience" target="_blank" rel="noopener">Pubblico ↗</a></p>
+          </li>
+          <li>
+            <h3>Crea il client</h3>
+            <p>Tipo di applicazione <strong>App desktop</strong>. Copia <strong>ID client</strong> e <strong>Client secret</strong>.</p>
+            <p class="links"><a class="go" href="https://console.cloud.google.com/auth/clients/create" target="_blank" rel="noopener">Crea il client OAuth ↗</a></p>
+          </li>
+          <li>
+            <h3>Autorizza, una volta sola</h3>
+<pre class="code"><code>export SEOMCP_GOOGLE_CLIENT_ID="xxx.apps.googleusercontent.com"
+export SEOMCP_GOOGLE_CLIENT_SECRET="xxx"
+npx -y github:davide-cik/seomcp auth google</code></pre>
+            <p>Si apre il browser: accedi con l'account che vede le proprietà. Il token resta in <code>~/.config/seomcp/google-token.json</code>, leggibile solo dal tuo utente.</p>
+          </li>
+        </ol>
+        <p>Variabili da impostare: <code>SEOMCP_GOOGLE_CLIENT_ID</code> e <code>SEOMCP_GOOGLE_CLIENT_SECRET</code>.</p>
+
+        <h3>La proprietà predefinita</h3>
+        <p>Facoltativa: <code>SEOMCP_GSC_SITE</code> deve coincidere con la proprietà in Search Console. Per una proprietà <strong>di dominio</strong> scrivi <code>sc-domain:tuosito.it</code>, per una <strong>con prefisso URL</strong> <code>https://www.tuosito.it/</code>, con la barra finale. Il comando <code>doctor</code> mostra l'elenco esatto.</p>
+      </section>
+
+      <section class="doc-block" id="google-analytics">
+        <h2>3. Google Analytics 4</h2>
+        <p>Usa le stesse credenziali di Search Console e le API sono già abilitate dal passo 1. Restano due cose.</p>
+        <ol class="steps">
+          <li>
+            <h3>Dai accesso alla proprietà</h3>
+            <p><strong>Service account:</strong> in Analytics apri <strong>Amministrazione → Gestione dell'accesso alla proprietà → + → Aggiungi utenti</strong>, incolla l'email del service account e scegli il ruolo <strong>Visualizzatore</strong>.<br>
+            <strong>OAuth:</strong> se avevi autorizzato seomcp prima di attivare Analytics, ripeti <code>auth google</code> una volta.</p>
+            <p class="links"><a class="go" href="https://analytics.google.com/" target="_blank" rel="noopener">Apri Google Analytics ↗</a></p>
+          </li>
+          <li>
+            <h3>Copia l'ID della proprietà</h3>
+            <p>In <strong>Amministrazione → Dettagli proprietà</strong>: è un numero come <code>123456789</code>, da non confondere con l'ID di misurazione <code>G-XXXXXXX</code>. Va in <code>SEOMCP_GA_PROPERTY</code>, facoltativa: senza, l'assistente elenca le proprietà e chiede quale usare.</p>
+          </li>
+        </ol>
+        <p class="small">Cosa puoi chiedere con Analytics: <a href="/google-analytics/">pagina Google Analytics 4</a>.</p>
+      </section>
+
+      <section class="doc-block" id="api-key">
+        <h2>4. API key per i Core Web Vitals</h2>
+        <p>Una chiave gratuita per PageSpeed Insights e Chrome UX Report. I dati sono pubblici: la chiave non dà accesso al tuo account.</p>
+        <ol class="steps">
+          <li>
+            <h3>Crea la chiave</h3>
+            <p><strong>Crea credenziali → Chiave API</strong>.</p>
+            <p class="links"><a class="go" href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Credenziali del progetto ↗</a></p>
+          </li>
+          <li>
+            <h3>Limitala</h3>
+            <p>Apri la chiave appena creata e in <strong>Restrizioni API</strong> scegli <strong>Limita chiave</strong> con le sole <em>Chrome UX Report API</em> e <em>PageSpeed Insights API</em>: se finisse nelle mani sbagliate, non servirebbe ad altro.</p>
+          </li>
+        </ol>
+        <p>Variabile da impostare: <code>SEOMCP_GOOGLE_API_KEY</code>. Cosa puoi chiedere: <a href="/core-web-vitals/">pagina Core Web Vitals</a>.</p>
+      </section>
+
+      <section class="doc-block" id="bing">
+        <h2>5. Bing Webmaster Tools</h2>
+        <ol class="steps">
+          <li>
+            <h3>Accedi a Bing Webmaster</h3>
+            <p>Se il sito non c'è ancora, puoi importarlo da Search Console con un clic.</p>
+            <p class="links"><a class="go" href="https://www.bing.com/webmasters/" target="_blank" rel="noopener">Apri Bing Webmaster Tools ↗</a></p>
+          </li>
+          <li>
+            <h3>Genera la chiave</h3>
+            <p>Icona a ingranaggio in alto a destra → <strong>Accesso API → Chiave API → Genera</strong>. La chiave vale per tutti i siti del tuo account.</p>
+          </li>
+        </ol>
+        <p>Variabile da impostare: <code>BING_WEBMASTER_API_KEY</code>. Facoltativa <code>SEOMCP_BING_SITE</code>, con l'URL esatto del sito come compare in Bing, per esempio <code>https://www.tuosito.it/</code>.</p>
+      </section>
+
+      <section class="doc-block" id="configura">
+        <h2>6. Configura l'assistente</h2>
+        <p>Compila solo quello che hai e copia il risultato. <strong>I valori restano nel tuo browser:</strong> questa pagina non li salva e non li invia da nessuna parte. Se preferisci, lascia vuote le chiavi e scrivile direttamente nel file.</p>
+        <form class="cfg" id="cfg" autocomplete="off" onsubmit="return false">
+          <label class="cfg-wide">Assistente
+            <select name="client">
+              <option value="claude-code" data-guide="/installa/claude/#claude-code">Claude Code</option>
+              <option value="claude-desktop" data-guide="/installa/claude/#claude-desktop">Claude Desktop</option>
+              <option value="chatgpt" data-guide="/installa/chatgpt/#chatgpt">ChatGPT e Codex</option>
+              <option value="vscode-copilot" data-guide="/installa/copilot/#vscode-copilot">GitHub Copilot in VS Code</option>
+              <option value="copilot-cli" data-guide="/installa/copilot/#copilot-cli">GitHub Copilot CLI</option>
+              <option value="gemini-cli" data-guide="/installa/gemini/#gemini-cli">Gemini CLI</option>
+              <option value="mistral-vibe" data-guide="/installa/mistral/#mistral-vibe">Mistral Vibe CLI</option>
+            </select>
+          </label>
+          <fieldset class="cfg-wide">
+            <legend>Accesso Google</legend>
+            <label class="cfg-radio"><input type="radio" name="google" value="sa" checked> Service account</label>
+            <label class="cfg-radio"><input type="radio" name="google" value="oauth"> OAuth</label>
+            <label class="cfg-radio"><input type="radio" name="google" value="none"> Nessuno</label>
+          </fieldset>
+          <label data-when="sa">File JSON del service account <input name="GOOGLE_APPLICATION_CREDENTIALS" placeholder="/Users/tuonome/.config/seomcp/service-account.json" spellcheck="false"></label>
+          <label data-when="oauth">ID client OAuth <input name="SEOMCP_GOOGLE_CLIENT_ID" placeholder="xxx.apps.googleusercontent.com" spellcheck="false"></label>
+          <label data-when="oauth">Client secret <input name="SEOMCP_GOOGLE_CLIENT_SECRET" spellcheck="false"></label>
+          <label data-when="google">Proprietà Search Console <input name="SEOMCP_GSC_SITE" placeholder="sc-domain:tuosito.it" spellcheck="false"></label>
+          <label data-when="google">ID proprietà GA4 <input name="SEOMCP_GA_PROPERTY" placeholder="123456789" inputmode="numeric" spellcheck="false"></label>
+          <label>API key Google (Core Web Vitals) <input name="SEOMCP_GOOGLE_API_KEY" spellcheck="false"></label>
+          <label>API key Bing <input name="BING_WEBMASTER_API_KEY" spellcheck="false"></label>
+          <label>Sito Bing <input name="SEOMCP_BING_SITE" placeholder="https://www.tuosito.it/" spellcheck="false"></label>
+        </form>
+<pre class="code" id="cfg-out"><code>Attiva JavaScript per generare la configurazione, oppure copiala dalla pagina del tuo assistente.</code></pre>
+        <p class="small" id="cfg-guide">Dove incollarla: <a href="/installa/">guida del tuo assistente</a>.</p>
+      </section>
+
+      <section class="doc-block" id="verifica">
+        <h2>7. Verifica</h2>
+        <p>Prova ogni fonte configurata e ti dice esattamente cosa manca:</p>
+<pre class="code"><code>npx -y github:davide-cik/seomcp doctor</code></pre>
+        <p>Il comando legge le variabili dal terminale: per usarlo, impostale anche lì, oppure chiedi all'assistente di usare il tool <code>seomcp_status</code>, che fa lo stesso controllo.</p>
+        <ul class="tips">
+          <li>Tratta chiavi e file JSON come password: non metterli in un repository e non incollarli nella chat con l'assistente.</li>
+          <li>Per revocare l'accesso: <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">autorizzazioni del tuo account Google</a> per OAuth, eliminazione della chiave dal service account, rigenerazione della chiave Bing.</li>
+        </ul>
+      </section>
+      <script src="/credenziali.js?v=a756eab609" defer></script>
+    </div>
+  </main>
+
+  <!--#include virtual="/_partials/footer.html" -->
+  <script src="/app.js?v=89b4d93978" defer></script>
+</body>
+</html>

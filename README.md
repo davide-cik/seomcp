@@ -68,6 +68,8 @@ Serve **Node.js 22 o superiore**. Configura solo le fonti che usi: Google e Bing
 
 ### 1. Prepara le credenziali
 
+La pagina [Credenziali](https://seomcp.contentisking.guru/credenziali/) ha tutti i passaggi con i link diretti e compila la configurazione per il tuo assistente. Le guide qui sotto dicono le stesse cose.
+
 - **Google Search Console:** segui la [guida passo passo](docs/google-setup.md). Puoi scegliere tra un service account (comodo per i team) e OAuth con un client tuo (comodo per il singolo professionista).
 - **Google Analytics 4** (facoltativo): stesse credenziali di Search Console, più tre passaggi nella [guida Analytics](docs/google-analytics-setup.md).
 - **PageSpeed e Core Web Vitals** (facoltativo): una API key gratuita, come spiegato nella [guida PageSpeed](docs/pagespeed-setup.md).

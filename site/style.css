@@ -201,7 +201,8 @@ a.plain { color: inherit; text-decoration: none; }
 a.plain:hover { color: var(--accent); }
 
 /* Menu: meno voci man mano che lo schermo si stringe, senza mai sbordare. */
-@media (max-width: 1000px) { .top nav a[href="/#fiducia"], .top nav a[href="/tool/"] { display: none; } }
+@media (max-width: 1100px) { .top nav a[href="/#fiducia"] { display: none; } }
+@media (max-width: 900px) { .top nav a[href="/tool/"], .top nav a[href="/prompt/"] { display: none; } }
 .top nav a { white-space: nowrap; }
 /* Elenco descrittivo con lo stile dei prompt, ma senza virgolette. */
 .prompts.plain li::before, .prompts.plain li::after { content: none; }
@@ -269,3 +270,36 @@ h2 .area-count { margin-left: 6px; vertical-align: middle; }
 .demo-disclaimer { margin: 0; padding: 12px 18px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted); background: var(--bg-soft); }
 body.demo-open { overflow: hidden; }
 @media (prefers-color-scheme: dark) { .demo-user { color: #06101C; } }
+
+/* Pagina credenziali */
+.table-wrap { overflow-x: auto; margin: 20px 0 8px; }
+.cred-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.cred-table th, .cred-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.cred-table th { color: var(--heading); font-weight: 600; background: var(--bg-soft); }
+.cred-table td:first-child { font-weight: 600; }
+.doc-block > h3 { margin-top: 32px; }
+.go { display: inline-block; padding: 7px 14px; border: 1px solid var(--accent); border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.92rem; }
+.go:hover { background: var(--accent); color: #fff; }
+.cfg { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); margin: 20px 0; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); }
+.cfg label { display: flex; flex-direction: column; gap: 6px; font-size: 0.9rem; font-weight: 600; color: var(--heading); min-width: 0; }
+.cfg label[hidden] { display: none; }
+.cfg-wide { grid-column: 1 / -1; }
+.cfg input, .cfg select { font: 0.92rem var(--mono); padding: 9px 11px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); width: 100%; min-width: 0; }
+.cfg select { font-family: var(--sans); }
+.cfg input:focus, .cfg select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.cfg fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; }
+.cfg legend { font-size: 0.9rem; font-weight: 600; color: var(--heading); padding: 0; margin-bottom: 6px; width: 100%; }
+.cfg .cfg-radio { flex-direction: row; align-items: center; gap: 6px; font-weight: 500; color: var(--text); }
+.cfg .cfg-radio input { width: auto; }
+
+/* Pagina prompt */
+.prompt-card { margin: 18px 0; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius-card); }
+.prompt-card h3 { margin: 0 0 6px; }
+.prompt-card > p { margin: 0 0 12px; }
+.prompt-meta { display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; margin: 0 0 12px; font-size: 0.92rem; }
+.prompt-meta dt { color: var(--muted); font-weight: 600; }
+.prompt-meta dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.prompt-ask { margin: 0; font-size: 0.95rem; color: var(--heading); }
+.prompt-ask span { display: block; color: var(--muted); font-size: 0.85rem; }
+@media (max-width: 520px) { .prompt-meta { grid-template-columns: 1fr; } .prompt-meta dd { margin-bottom: 6px; } }
+.doc .area-list li p { margin-top: 8px; }

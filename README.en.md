@@ -58,7 +58,7 @@ Plus 8 **prompts** (conversation starters): GEO page audit, answers to real user
 
 Requires **Node.js 22+**. Configure only the sources you use.
 
-1. **Credentials:** see the setup guides for [Google](docs/google-setup.md), [Google Analytics](docs/google-analytics-setup.md), [PageSpeed/CrUX](docs/pagespeed-setup.md) and [Bing](docs/bing-setup.md). They are in Italian, and the steps are the same in English UIs.
+1. **Credentials:** see the setup guides for [Google](docs/google-setup.md), [Google Analytics](docs/google-analytics-setup.md), [PageSpeed/CrUX](docs/pagespeed-setup.md) and [Bing](docs/bing-setup.md). They are in Italian, and the steps are the same in English UIs. The [credentials page](https://seomcp.contentisking.guru/credenziali/) (Italian) has direct links to every console screen, a one-click link that enables all five Google APIs, and a generator that fills in the config for your assistant.
 2. **Claude Code:**
 
    ```bash

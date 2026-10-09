@@ -1,5 +1,7 @@
 # Configurare Google Search Console
 
+> Stessi passaggi con i link diretti e la configurazione già pronta per il tuo assistente: [seomcp.contentisking.guru/credenziali](https://seomcp.contentisking.guru/credenziali/).
+
 > Vuoi anche Google Analytics 4? Completa prima questa guida, poi segui la [guida Analytics](google-analytics-setup.md): usa le stesse credenziali.
 
 Hai due strade. Scegline una.
@@ -16,20 +18,20 @@ In entrambi i casi l'accesso è **in sola lettura**.
 
 ## Passaggi comuni
 
-1. Vai su [console.cloud.google.com](https://console.cloud.google.com) e crea un progetto, per esempio `seomcp`.
-2. Apri **API e servizi → Libreria**, cerca **Google Search Console API** e clicca **Abilita**.
+1. [Crea un progetto Google Cloud](https://console.cloud.google.com/projectcreate), per esempio `seomcp`.
+2. [Abilita le API](https://console.cloud.google.com/flows/enableapi?apiid=searchconsole.googleapis.com,analyticsdata.googleapis.com,analyticsadmin.googleapis.com,chromeuxreport.googleapis.com,pagespeedonline.googleapis.com) con un clic: il link seleziona già Search Console, Analytics Data, Analytics Admin, Chrome UX Report e PageSpeed Insights, così sei pronto anche per le altre fonti.
 
 ## Strada A: service account
 
-3. Vai su **IAM e amministrazione → Service account → Crea service account**. Dagli un nome, ad esempio `seomcp`. Non servono ruoli sul progetto: premi **Fine**.
-4. Apri il service account appena creato e vai su **Chiavi → Aggiungi chiave → Crea nuova chiave → JSON**. Il browser scarica il file.
+3. [Crea il service account](https://console.cloud.google.com/iam-admin/serviceaccounts/create). Dagli un nome, ad esempio `seomcp`. Non servono ruoli sul progetto: premi **Fine**.
+4. Apri il service account appena creato dall'[elenco](https://console.cloud.google.com/iam-admin/serviceaccounts) e vai su **Chiavi → Aggiungi chiave → Crea nuova chiave → JSON**. Il browser scarica il file.
 5. Sposta il file in un posto sicuro, fuori da qualsiasi repository, e proteggilo:
    ```bash
    mkdir -p ~/.config/seomcp && mv ~/Download/seomcp-*.json ~/.config/seomcp/service-account.json
    chmod 600 ~/.config/seomcp/service-account.json
    ```
 6. Copia l'email del service account, che ha la forma `seomcp@nome-progetto.iam.gserviceaccount.com`.
-7. In [Search Console](https://search.google.com/search-console), per ogni proprietà vai su **Impostazioni → Utenti e autorizzazioni → Aggiungi utente**. Incolla l'email e scegli il permesso **Con restrizioni**, che basta per leggere i dati.
+7. In [Search Console → Utenti e autorizzazioni](https://search.google.com/search-console/users), per ogni proprietà scegli **Aggiungi utente**. Incolla l'email e scegli il permesso **Con restrizioni**, che basta per leggere i dati.
 8. Imposta la variabile d'ambiente:
    ```
    GOOGLE_APPLICATION_CREDENTIALS=/home/tuonome/.config/seomcp/service-account.json
@@ -39,9 +41,9 @@ In entrambi i casi l'accesso è **in sola lettura**.
 
 ## Strada B: OAuth con un client tuo
 
-3. Vai su **API e servizi → Schermata consenso OAuth**. Scegli il tipo **Esterno**, oppure **Interno** se hai Google Workspace, e compila i campi obbligatori.
+3. Compila le [informazioni sull'app](https://console.cloud.google.com/auth/branding) e, nel [pubblico](https://console.cloud.google.com/auth/audience), scegli il tipo **Esterno**, oppure **Interno** se hai Google Workspace.
 4. Con il tipo **Esterno**, porta lo stato di pubblicazione a **In produzione**. In stato "Test" Google fa scadere l'autorizzazione dopo 7 giorni. Dato che l'app la usi solo tu, non serve farla verificare: al login vedrai un avviso "app non verificata", clicca **Avanzate → Vai a seomcp**.
-5. Vai su **Credenziali → Crea credenziali → ID client OAuth** e scegli **App desktop** come tipo di applicazione. Copia **ID client** e **Client secret**.
+5. [Crea il client OAuth](https://console.cloud.google.com/auth/clients/create) e scegli **App desktop** come tipo di applicazione. Copia **ID client** e **Client secret**.
 6. Imposta le variabili e autorizza, una volta sola:
    ```bash
    export SEOMCP_GOOGLE_CLIENT_ID="xxx.apps.googleusercontent.com"

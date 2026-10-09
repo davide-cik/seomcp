@@ -12,7 +12,7 @@
   <meta property="og:description" content="I 25 tool e gli 8 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.">
   <meta property="og:url" content="https://seomcp.contentisking.guru/tool/">
   <meta property="og:locale" content="it_IT">
-  <link rel="stylesheet" href="/style.css?v=5776476db6">
+  <link rel="stylesheet" href="/style.css?v=d6b3e879cc">
 </head>
 <body>
   <a class="skip" href="#main">Vai al contenuto</a>
@@ -20,96 +20,87 @@
 
   <main id="main" class="doc">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Tool e prompt</nav>
+      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Tool</nav>
       <h1>25 tool e 8 prompt</h1>
-      <p class="lead">Tutti in sola lettura: seomcp legge i dati, non modifica nulla. Collega solo le fonti che usi: ogni gruppo indica cosa serve.</p>
+      <p class="lead">Tutti in sola lettura: seomcp legge i dati, non modifica nulla. Collega solo le fonti che usi: ogni gruppo indica cosa serve, e la pagina <a href="/credenziali/">Credenziali</a> spiega come ottenerlo con i link diretti.</p>
 
       <section class="doc-block" id="search-console">
         <h2>Google Search Console <span class="area-count">6 tool</span></h2>
-        <p class="small">Richiede: credenziali Google (service account o OAuth).</p>
+        <p class="small">Richiede: <a href="/credenziali/#search-console">credenziali Google: service account o OAuth</a>.</p>
         <dl class="tools">
-          <dt><code>gsc_performance</code></dt><dd>Clic, impressioni, CTR e posizione media, raggruppati per query, pagina, paese, dispositivo, data o aspetto nei risultati. Con filtri e fino a 25.000 righe.</dd>
-          <dt><code>gsc_compare_periods</code></dt><dd>Confronto con il periodo precedente o con lo stesso periodo dell&#x27;anno prima: i cali e le crescite di clic più forti, con i totali.</dd>
-          <dt><code>gsc_striking_distance</code></dt><dd>Query per cui il sito è già visibile ma non in cima (posizione 4-20), ordinate per impressioni: le ottimizzazioni più rapide.</dd>
-          <dt><code>gsc_inspect_url</code></dt><dd>Stato di indicizzazione di un URL secondo Google: copertura, ultima scansione, canonical scelto da Google, robots.txt, risultati avanzati.</dd>
-          <dt><code>gsc_list_sitemaps</code></dt><dd>Sitemap inviate, con data di ultimo download, URL inviati, errori e avvisi.</dd>
-          <dt><code>gsc_list_sites</code></dt><dd>Le proprietà Search Console a cui hai accesso.</dd>
+          <dt id="gsc_performance"><code>gsc_performance</code></dt><dd>Clic, impressioni, CTR e posizione media, raggruppati per query, pagina, paese, dispositivo, data o aspetto nei risultati. Con filtri e fino a 25.000 righe.</dd>
+          <dt id="gsc_compare_periods"><code>gsc_compare_periods</code></dt><dd>Confronto con il periodo precedente o con lo stesso periodo dell&#x27;anno prima: i cali e le crescite di clic più forti, con i totali.</dd>
+          <dt id="gsc_striking_distance"><code>gsc_striking_distance</code></dt><dd>Query per cui il sito è già visibile ma non in cima (posizione 4-20), ordinate per impressioni: le ottimizzazioni più rapide.</dd>
+          <dt id="gsc_inspect_url"><code>gsc_inspect_url</code></dt><dd>Stato di indicizzazione di un URL secondo Google: copertura, ultima scansione, canonical scelto da Google, robots.txt, risultati avanzati.</dd>
+          <dt id="gsc_list_sitemaps"><code>gsc_list_sitemaps</code></dt><dd>Sitemap inviate, con data di ultimo download, URL inviati, errori e avvisi.</dd>
+          <dt id="gsc_list_sites"><code>gsc_list_sites</code></dt><dd>Le proprietà Search Console a cui hai accesso.</dd>
         </dl>
       </section>
       <section class="doc-block" id="google-analytics">
         <h2><a class="plain" href="/google-analytics/">Google Analytics 4</a> <span class="area-count">5 tool</span></h2>
-        <p class="small">Richiede: le stesse credenziali Google di Search Console.</p>
+        <p class="small">Richiede: <a href="/credenziali/#google-analytics">le stesse credenziali Google di Search Console</a>.</p>
         <dl class="tools">
-          <dt><code>ga_organic_landing_pages</code></dt><dd>Pagine di destinazione della ricerca organica, anche per singolo motore: sessioni, coinvolgimento, eventi chiave e ricavi.</dd>
-          <dt><code>ga_compare_periods</code></dt><dd>Confronto tra periodi su qualsiasi metrica, con i cali e le crescite più forti.</dd>
-          <dt><code>ga_report</code></dt><dd>Report libero con dimensioni, metriche e filtri a scelta.</dd>
-          <dt><code>ga_realtime</code></dt><dd>Utenti attivi negli ultimi 30 minuti, per pagina, paese o dispositivo.</dd>
-          <dt><code>ga_list_properties</code></dt><dd>Le proprietà GA4 accessibili, con il loro ID.</dd>
+          <dt id="ga_organic_landing_pages"><code>ga_organic_landing_pages</code></dt><dd>Pagine di destinazione della ricerca organica, anche per singolo motore: sessioni, coinvolgimento, eventi chiave e ricavi.</dd>
+          <dt id="ga_compare_periods"><code>ga_compare_periods</code></dt><dd>Confronto tra periodi su qualsiasi metrica, con i cali e le crescite più forti.</dd>
+          <dt id="ga_report"><code>ga_report</code></dt><dd>Report libero con dimensioni, metriche e filtri a scelta.</dd>
+          <dt id="ga_realtime"><code>ga_realtime</code></dt><dd>Utenti attivi negli ultimi 30 minuti, per pagina, paese o dispositivo.</dd>
+          <dt id="ga_list_properties"><code>ga_list_properties</code></dt><dd>Le proprietà GA4 accessibili, con il loro ID.</dd>
         </dl>
       </section>
       <section class="doc-block" id="bing">
         <h2>Bing Webmaster Tools <span class="area-count">4 tool</span></h2>
-        <p class="small">Richiede: una API key di Bing Webmaster Tools.</p>
+        <p class="small">Richiede: <a href="/credenziali/#bing">una API key di Bing Webmaster Tools</a>.</p>
         <dl class="tools">
-          <dt><code>bing_query_stats</code></dt><dd>Impressioni, clic e posizione media per query su Bing, per periodo o aggregate.</dd>
-          <dt><code>bing_page_stats</code></dt><dd>Impressioni, clic e posizione media per pagina su Bing.</dd>
-          <dt><code>bing_keyword_stats</code></dt><dd>Volumi di ricerca storici di una keyword su Bing, di default per Italia e italiano.</dd>
-          <dt><code>bing_list_sites</code></dt><dd>I siti del tuo account Bing Webmaster Tools.</dd>
+          <dt id="bing_query_stats"><code>bing_query_stats</code></dt><dd>Impressioni, clic e posizione media per query su Bing, per periodo o aggregate.</dd>
+          <dt id="bing_page_stats"><code>bing_page_stats</code></dt><dd>Impressioni, clic e posizione media per pagina su Bing.</dd>
+          <dt id="bing_keyword_stats"><code>bing_keyword_stats</code></dt><dd>Volumi di ricerca storici di una keyword su Bing, di default per Italia e italiano.</dd>
+          <dt id="bing_list_sites"><code>bing_list_sites</code></dt><dd>I siti del tuo account Bing Webmaster Tools.</dd>
         </dl>
       </section>
       <section class="doc-block" id="core-web-vitals">
         <h2><a class="plain" href="/core-web-vitals/">Core Web Vitals</a> <span class="area-count">3 tool</span></h2>
-        <p class="small">Richiede: una API key gratuita di Google Cloud.</p>
+        <p class="small">Richiede: <a href="/credenziali/#api-key">una API key gratuita di Google Cloud</a>.</p>
         <dl class="tools">
-          <dt><code>crux_query</code></dt><dd>Core Web Vitals reali degli utenti Chrome negli ultimi 28 giorni (LCP, INP, CLS, FCP, TTFB): 75° percentile, giudizio e distribuzione.</dd>
-          <dt><code>crux_history</code></dt><dd>Andamento settimanale dei Core Web Vitals reali, fino a 40 settimane.</dd>
-          <dt><code>psi_analyze</code></dt><dd>Test PageSpeed Insights su mobile o desktop: punteggi, metriche, correzioni ordinate per risparmio e controlli SEO non superati.</dd>
+          <dt id="crux_query"><code>crux_query</code></dt><dd>Core Web Vitals reali degli utenti Chrome negli ultimi 28 giorni (LCP, INP, CLS, FCP, TTFB): 75° percentile, giudizio e distribuzione.</dd>
+          <dt id="crux_history"><code>crux_history</code></dt><dd>Andamento settimanale dei Core Web Vitals reali, fino a 40 settimane.</dd>
+          <dt id="psi_analyze"><code>psi_analyze</code></dt><dd>Test PageSpeed Insights su mobile o desktop: punteggi, metriche, correzioni ordinate per risparmio e controlli SEO non superati.</dd>
         </dl>
       </section>
       <section class="doc-block" id="geo">
         <h2><a class="plain" href="/geo/">GEO e AEO</a> <span class="area-count">3 tool</span></h2>
-        <p class="small">Richiede: nessuna credenziale, le pagine sono pubbliche.</p>
+        <p class="small">Richiede: <a href="/credenziali/#senza-credenziali">nessuna credenziale, le pagine sono pubbliche</a>.</p>
         <dl class="tools">
-          <dt><code>geo_ai_access</code></dt><dd>Per ogni crawler AI, diviso per scopo, se può leggere il sito e per quale regola di robots.txt. Più llms.txt, Content Signals, riserva TDM europea e direttive della pagina.</dd>
-          <dt><code>geo_page_metrics</code></dt><dd>Misure della pagina come la legge un crawler AI: struttura, risposta in apertura, sezioni, dati, freschezza, autore, fonti, dati strutturati, entità. Più HTTPS ed età del dominio.</dd>
-          <dt><code>geo_page_sections</code></dt><dd>Il testo della pagina diviso per titoli, con le misure di ogni sezione.</dd>
+          <dt id="geo_ai_access"><code>geo_ai_access</code></dt><dd>Per ogni crawler AI, diviso per scopo, se può leggere il sito e per quale regola di robots.txt. Più llms.txt, Content Signals, riserva TDM europea e direttive della pagina.</dd>
+          <dt id="geo_page_metrics"><code>geo_page_metrics</code></dt><dd>Misure della pagina come la legge un crawler AI: struttura, risposta in apertura, sezioni, dati, freschezza, autore, fonti, dati strutturati, entità. Più HTTPS ed età del dominio.</dd>
+          <dt id="geo_page_sections"><code>geo_page_sections</code></dt><dd>Il testo della pagina diviso per titoli, con le misure di ogni sezione.</dd>
         </dl>
       </section>
       <section class="doc-block" id="schema">
         <h2><a class="plain" href="/schema/">Validatore schema.org</a> <span class="area-count">1 tool</span></h2>
-        <p class="small">Richiede: nessuna credenziale.</p>
+        <p class="small">Richiede: <a href="/credenziali/#senza-credenziali">nessuna credenziale</a>.</p>
         <dl class="tools">
-          <dt><code>schema_validate</code></dt><dd>Valida il JSON-LD di una pagina o incollato: sintassi, vocabolario ufficiale schema.org, requisiti di Google per i risultati avanzati, coerenza con la pagina.</dd>
+          <dt id="schema_validate"><code>schema_validate</code></dt><dd>Valida il JSON-LD di una pagina o incollato: sintassi, vocabolario ufficiale schema.org, requisiti di Google per i risultati avanzati, coerenza con la pagina.</dd>
         </dl>
       </section>
       <section class="doc-block" id="tecnico">
         <h2><a class="plain" href="/tecnico/">Controlli tecnici</a> <span class="area-count">2 tool</span></h2>
-        <p class="small">Richiede: nessuna credenziale, le pagine sono pubbliche.</p>
+        <p class="small">Richiede: <a href="/credenziali/#senza-credenziali">nessuna credenziale, le pagine sono pubbliche</a>.</p>
         <dl class="tools">
-          <dt><code>tech_page_audit</code></dt><dd>Controlli tecnici della pagina: catena di redirect, TTFB, peso e compressione, indicizzabilità, canonical, title e description, viewport, hreflang con link di ritorno, Open Graph e Twitter Card, immagini, gerarchia dei titoli, link, header di sicurezza.</dd>
-          <dt><code>tech_site_check</code></dt><dd>Controlli tecnici del sito: sitemap (URL, lastmod, duplicati), un campione di URL della sitemap, la pagina 404 e un campione di link interni rotti o reindirizzati.</dd>
+          <dt id="tech_page_audit"><code>tech_page_audit</code></dt><dd>Controlli tecnici della pagina: catena di redirect, TTFB, peso e compressione, indicizzabilità, canonical, title e description, viewport, hreflang con link di ritorno, Open Graph e Twitter Card, immagini, gerarchia dei titoli, link, header di sicurezza.</dd>
+          <dt id="tech_site_check"><code>tech_site_check</code></dt><dd>Controlli tecnici del sito: sitemap (URL, lastmod, duplicati), un campione di URL della sitemap, la pagina 404 e un campione di link interni rotti o reindirizzati.</dd>
         </dl>
       </section>
       <section class="doc-block" id="diagnostica">
         <h2>Diagnostica <span class="area-count">1 tool</span></h2>
         <dl class="tools">
-          <dt><code>seomcp_status</code></dt><dd>Verifica quali fonti sono configurate e funzionanti, e spiega cosa fare per quelle che non lo sono.</dd>
+          <dt id="seomcp_status"><code>seomcp_status</code></dt><dd>Verifica quali fonti sono configurate e funzionanti, e spiega cosa fare per quelle che non lo sono.</dd>
         </dl>
       </section>
 
       <section class="doc-block" id="prompt">
         <h2>I prompt <span class="area-count">8</span></h2>
-        <p>Spunti di conversazione già impostati: guidano l'assistente dai dati all'analisi. Si richiamano dal menu del tuo assistente (in Claude Code con <code>/</code>).</p>
-        <dl class="tools">
-          <dt>Audit GEO della pagina</dt><dd>Interpreta le misure GEO/AEO di una pagina e propone le correzioni in ordine di impatto. <code>audit-geo-pagina</code></dd>
-          <dt>Rispondo alle domande dei miei utenti?</dt><dd>Prende da Search Console le query a domanda della pagina e verifica, sezione per sezione, se trovano risposta. <code>domande-utenti</code></dd>
-          <dt>Perché citano loro e non me?</dt><dd>Confronta le misure della tua pagina con quelle dei concorrenti e racconta le differenze che contano. <code>confronto-concorrenti</code></dd>
-          <dt>Il mio sito è aperto alle AI?</dt><dd>Spiega in chiaro i permessi per i crawler AI, bot per bot, anche per la normativa europea. <code>sito-aperto-alle-ai</code></dd>
-          <dt>Rendi citabile questo passaggio</dt><dd>Riscrive una sezione perché un motore AI possa estrarla e citarla da sola. <code>passaggio-citabile</code></dd>
-          <dt>Piano editoriale per le risposte AI</dt><dd>Dalle domande degli utenti senza risposta ricava nuove sezioni, FAQ e pagine da scrivere. <code>piano-editoriale-ai</code></dd>
-          <dt>Audit tecnico del sito</dt><dd>Controlla pagina e sito dal punto di vista tecnico e propone le correzioni in ordine di priorità. <code>audit-tecnico</code></dd>
-          <dt>Correggi i miei dati strutturati</dt><dd>Valida i dati strutturati, spiega i problemi e propone il JSON-LD corretto, pronto da incollare. <code>correggi-dati-strutturati</code></dd>
-        </dl>
+        <p>Oltre ai tool ci sono 8 prompt: analisi già impostate che combinano più tool e guidano l'assistente dai numeri alle correzioni. Sono divisi per <a href="/prompt/#seo">SEO</a>, <a href="/prompt/#geo">GEO</a> e <a href="/prompt/#aeo">AEO</a>.</p>
+        <p class="area-more"><a href="/prompt/">Tutti i prompt in dettaglio →</a></p>
       </section>
 
       <section class="doc-block">

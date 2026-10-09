@@ -142,7 +142,7 @@ CLIENTS = [
         "lang": "json",
         "code": mcp_servers_json(),
         "code_note": "Se il file contiene già altre impostazioni, aggiungi solo il blocco <code>mcpServers</code>.",
-        "verify": "Avvia <code>gemini</code> e digita <code>/mcp</code>: <code>seomcp</code> deve comparire con i suoi 11 tool.",
+        "verify": "Avvia <code>gemini</code> e digita <code>/mcp</code>: <code>seomcp</code> deve comparire con i suoi 25 tool.",
         "tips": ["Dal giugno 2026 Gemini CLI richiede una chiave API Gemini a pagamento o una licenza enterprise."],
         "web": "L'app Gemini sul web non supporta server MCP locali: serve Gemini CLI.",
     },
@@ -221,7 +221,7 @@ PREREQ = f"""      <section class="doc-block">
         <h2>Prima di iniziare</h2>
         <ul class="checklist">
           <li><strong>Node.js 22 o superiore</strong> (<a href="https://nodejs.org/it/download" target="_blank" rel="noopener">scarica</a>) e <strong>git</strong> (<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">scarica</a>).</li>
-          <li><strong>Le credenziali</strong> delle fonti che vuoi usare: <a href="{REPO}/blob/main/docs/google-setup.md" target="_blank" rel="noopener">Google Search Console</a>, <a href="/google-analytics/">Google Analytics 4</a>, <a href="{REPO}/blob/main/docs/bing-setup.md" target="_blank" rel="noopener">Bing Webmaster Tools</a> e la API key per i <a href="/core-web-vitals/">Core Web Vitals</a>. Sono tutte facoltative.</li>
+          <li><strong>Le credenziali</strong> delle fonti che vuoi usare: <a href="/credenziali/#search-console">Search Console</a>, <a href="/credenziali/#google-analytics">Google Analytics 4</a>, <a href="/credenziali/#api-key">Core Web Vitals</a> e <a href="/credenziali/#bing">Bing Webmaster Tools</a>, con i link diretti nella pagina <a href="/credenziali/">Credenziali</a>. Sono tutte facoltative: GEO, schema.org e controlli tecnici funzionano senza.</li>
         </ul>
         <p class="small">Il pacchetto npm è in arrivo: per ora seomcp si installa direttamente da GitHub. Il primo avvio richiede qualche secondo in più, perché il codice viene compilato sul tuo computer.</p>
       </section>"""
@@ -554,48 +554,381 @@ TOOL_GROUPS = [
     ]),
 ]
 
-PROMPTS = [
-    ("audit-geo-pagina", "Audit GEO della pagina", "Interpreta le misure GEO/AEO di una pagina e propone le correzioni in ordine di impatto."),
-    ("domande-utenti", "Rispondo alle domande dei miei utenti?", "Prende da Search Console le query a domanda della pagina e verifica, sezione per sezione, se trovano risposta."),
-    ("confronto-concorrenti", "Perché citano loro e non me?", "Confronta le misure della tua pagina con quelle dei concorrenti e racconta le differenze che contano."),
-    ("sito-aperto-alle-ai", "Il mio sito è aperto alle AI?", "Spiega in chiaro i permessi per i crawler AI, bot per bot, anche per la normativa europea."),
-    ("passaggio-citabile", "Rendi citabile questo passaggio", "Riscrive una sezione perché un motore AI possa estrarla e citarla da sola."),
-    ("piano-editoriale-ai", "Piano editoriale per le risposte AI", "Dalle domande degli utenti senza risposta ricava nuove sezioni, FAQ e pagine da scrivere."),
-    ("audit-tecnico", "Audit tecnico del sito", "Controlla pagina e sito dal punto di vista tecnico e propone le correzioni in ordine di priorità."),
-    ("correggi-dati-strutturati", "Correggi i miei dati strutturati", "Valida i dati strutturati, spiega i problemi e propone il JSON-LD corretto, pronto da incollare."),
+# Ogni prompt: (nome, titolo, descrizione, argomenti, tool usati, credenziali, domanda equivalente)
+# Credenziali: (etichetta, ancora in /credenziali/) oppure None.
+GSC = ("Google Search Console", "search-console")
+PROMPT_AREAS = [
+    ("seo", "SEO", "Il sito in ordine dal punto di vista tecnico e i dati strutturati pronti per i risultati avanzati di Google.", [
+        ("audit-tecnico", "Audit tecnico del sito",
+         "Controlla pagina e sito (redirect, indicizzabilità, sitemap, 404, link rotti, prestazioni, dati strutturati) e chiude con una tabella di correzioni in ordine di priorità.",
+         [("url", "la pagina da cui partire, di solito la home")],
+         ["tech_page_audit", "tech_site_check", "psi_analyze", "crux_query", "schema_validate"],
+         None, "Fai un audit tecnico di https://www.tuosito.it e dimmi le cinque correzioni più urgenti."),
+        ("correggi-dati-strutturati", "Correggi i miei dati strutturati",
+         "Valida il JSON-LD della pagina, spiega i problemi in chiaro e scrive il codice corretto, ricontrollandolo finché non ci sono errori.",
+         [("url", "la pagina da correggere")],
+         ["schema_validate"], None,
+         "Valida i dati strutturati di https://www.tuosito.it/prodotto e dammi il JSON-LD corretto."),
+    ]),
+    ("geo", "GEO", "Farsi leggere e citare dai motori di ricerca generativi: ChatGPT, Perplexity, Gemini, AI Overviews di Google.", [
+        ("audit-geo-pagina", "Audit GEO della pagina",
+         "Interpreta le misure GEO di una pagina (risposta in apertura, sezioni, dati, fonti, autore, freschezza, accesso dei crawler AI) e propone le correzioni in ordine di impatto.",
+         [("url", "la pagina da analizzare")],
+         ["geo_page_metrics", "geo_ai_access", "geo_page_sections"], None,
+         "Analizza https://www.tuosito.it/guida dal punto di vista GEO: cosa cambio per farmi citare?"),
+        ("sito-aperto-alle-ai", "Il mio sito è aperto alle AI?",
+         "Spiega bot per bot quali crawler AI possono leggere il sito e per quale regola, distinguendo addestramento e risposte, anche alla luce della normativa europea.",
+         [("url", "una pagina qualsiasi del sito")],
+         ["geo_ai_access"], None,
+         "Quali crawler AI possono leggere il mio sito? E quali sto bloccando senza volerlo?"),
+        ("confronto-concorrenti", "Perché citano loro e non me?",
+         "Mette a confronto le misure della tua pagina con quelle dei concorrenti e racconta solo le differenze che contano.",
+         [("url", "la tua pagina"), ("concorrenti", "gli URL dei concorrenti, separati da virgola")],
+         ["geo_page_metrics"], None,
+         "Perché ChatGPT cita la pagina del mio concorrente e non la mia? Confronta le due pagine."),
+    ]),
+    ("aeo", "AEO", "Rispondere alle domande delle persone in modo che un assistente possa estrarre la risposta e citarla.", [
+        ("domande-utenti", "Rispondo alle domande dei miei utenti?",
+         "Prende da Search Console le query a domanda che portano alla pagina e verifica, sezione per sezione, se trovano risposta.",
+         [("url", "la pagina"), ("giorni", "il periodo da considerare, di default 90")],
+         ["gsc_performance", "geo_page_sections"], GSC,
+         "Quali domande fanno le persone che arrivano su questa pagina, e a quali non rispondo?"),
+        ("passaggio-citabile", "Rendi citabile questo passaggio",
+         "Riscrive una sezione della pagina perché un motore AI possa estrarla e citarla da sola, senza il contesto intorno.",
+         [("url", "la pagina"), ("sezione", "il titolo, o parte del titolo, della sezione")],
+         ["geo_page_sections"], None,
+         "Riscrivi la sezione \"Quanto costa\" di questa pagina perché un assistente AI possa citarla."),
+        ("piano-editoriale-ai", "Piano editoriale per le risposte AI",
+         "Dalle domande degli utenti che il sito non soddisfa ricava le nuove sezioni, le FAQ e le pagine da scrivere.",
+         [("sito", "la proprietà Search Console o l'URL del sito"), ("giorni", "il periodo da considerare, di default 90")],
+         ["gsc_performance", "geo_page_sections"], GSC,
+         "Fammi un piano editoriale con le domande degli utenti a cui il sito non risponde ancora."),
+    ]),
 ]
+PROMPTS = [p for *_, items in PROMPT_AREAS for p in items]
+
+# Gruppo di tool → ancora della pagina tool e sezione delle credenziali
+
+
+CRED_FOR_GROUP = {
+    "search-console": ("credenziali Google: service account o OAuth", "search-console"),
+    "google-analytics": ("le stesse credenziali Google di Search Console", "google-analytics"),
+    "bing": ("una API key di Bing Webmaster Tools", "bing"),
+    "core-web-vitals": ("una API key gratuita di Google Cloud", "api-key"),
+    "geo": ("nessuna credenziale, le pagine sono pubbliche", "senza-credenziali"),
+    "schema": ("nessuna credenziale", "senza-credenziali"),
+    "tecnico": ("nessuna credenziale, le pagine sono pubbliche", "senza-credenziali"),
+}
 
 
 def tools_page() -> str:
     groups = []
-    for anchor, name, needs, page_url, tools in TOOL_GROUPS:
+    for anchor, name, _needs, page_url, tools in TOOL_GROUPS:
         title = f'<a class="plain" href="{page_url}">{html.escape(name)}</a>' if page_url else html.escape(name)
-        items = "\n".join(f"          <dt><code>{t}</code></dt><dd>{html.escape(d)}</dd>" for t, d in tools)
-        needs_html = f'\n        <p class="small">Richiede: {html.escape(needs)}</p>' if needs else ""
+        items = "\n".join(f'          <dt id="{t}"><code>{t}</code></dt><dd>{html.escape(d)}</dd>' for t, d in tools)
+        cred = CRED_FOR_GROUP.get(anchor)
+        needs_html = (f'\n        <p class="small">Richiede: <a href="/credenziali/#{cred[1]}">{html.escape(cred[0])}</a>.</p>'
+                      if cred else "")
         groups.append(f"""      <section class="doc-block" id="{anchor}">
         <h2>{title} <span class="area-count">{len(tools)} tool</span></h2>{needs_html}
         <dl class="tools">
 {items}
         </dl>
       </section>""")
-    prompts = "\n".join(f"          <dt>{html.escape(title)}</dt><dd>{html.escape(desc)} <code>{name}</code></dd>" for name, title, desc in PROMPTS)
     total = sum(len(t) for *_, t in TOOL_GROUPS)
-    return f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Tool e prompt</nav>
+    links = [f'<a href="/prompt/#{a}">{n}</a>' for a, n, _d, _p in PROMPT_AREAS]
+    areas = ", ".join(links[:-1]) + " e " + links[-1]
+    return f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Tool</nav>
       <h1>{total} tool e {len(PROMPTS)} prompt</h1>
-      <p class="lead">Tutti in sola lettura: seomcp legge i dati, non modifica nulla. Collega solo le fonti che usi: ogni gruppo indica cosa serve.</p>
+      <p class="lead">Tutti in sola lettura: seomcp legge i dati, non modifica nulla. Collega solo le fonti che usi: ogni gruppo indica cosa serve, e la pagina <a href="/credenziali/">Credenziali</a> spiega come ottenerlo con i link diretti.</p>
 
 {chr(10).join(groups)}
 
       <section class="doc-block" id="prompt">
         <h2>I prompt <span class="area-count">{len(PROMPTS)}</span></h2>
-        <p>Spunti di conversazione già impostati: guidano l'assistente dai dati all'analisi. Si richiamano dal menu del tuo assistente (in Claude Code con <code>/</code>).</p>
-        <dl class="tools">
-{prompts}
-        </dl>
+        <p>Oltre ai tool ci sono {len(PROMPTS)} prompt: analisi già impostate che combinano più tool e guidano l'assistente dai numeri alle correzioni. Sono divisi per {areas}.</p>
+        <p class="area-more"><a href="/prompt/">Tutti i prompt in dettaglio →</a></p>
       </section>
 
       <section class="doc-block">
         <h2>Configura il tuo assistente</h2>
+        {INCLUDE.format(name="clients")}
+      </section>"""
+
+
+GCP = "https://console.cloud.google.com"
+GOOGLE_APIS = ["searchconsole.googleapis.com", "analyticsdata.googleapis.com", "analyticsadmin.googleapis.com",
+               "chromeuxreport.googleapis.com", "pagespeedonline.googleapis.com"]
+
+
+def ext(url: str, label: str) -> str:
+    return f'<a class="go" href="{html.escape(url)}" target="_blank" rel="noopener">{label} ↗</a>'
+
+
+def credentials_page() -> str:
+    count = {anchor: len(tools) for anchor, _n, _r, _u, tools in TOOL_GROUPS}
+    free_tools = count["geo"] + count["schema"] + count["tecnico"]
+    free_prompts = sum(1 for p in PROMPTS if p[5] is None)
+    vendor_of = {c: v["slug"] for v in VENDORS for c in v["products"]}
+    options = "\n".join(
+        f'              <option value="{c["slug"]}" data-guide="/installa/{vendor_of[c["slug"]]}/#{c["slug"]}">{html.escape(c["name"])}</option>'
+        for c in CLIENTS)
+    return f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Credenziali</nav>
+      <h1>Credenziali</h1>
+      <p class="lead">Cosa serve per collegare ogni fonte, con i link diretti alle pagine giuste di Google e Bing. Sono tutte facoltative: configura solo quelle che usi. In fondo trovi la configurazione già pronta da incollare nel tuo assistente.</p>
+
+      <div class="table-wrap">
+        <table class="cred-table">
+          <thead><tr><th>Fonte</th><th>Cosa serve</th><th>Tempo</th><th>Sblocca</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#senza-credenziali">GEO, schema.org, controlli tecnici</a></td><td>Niente</td><td>0 minuti</td><td><a href="/tool/#geo">{free_tools} tool</a> e <a href="/prompt/">{free_prompts} prompt</a></td></tr>
+            <tr><td><a href="#search-console">Search Console</a></td><td>Service account o OAuth</td><td>10 minuti</td><td><a href="/tool/#search-console">{count["search-console"]} tool</a></td></tr>
+            <tr><td><a href="#google-analytics">Analytics 4</a></td><td>Le stesse credenziali Google</td><td>3 minuti</td><td><a href="/tool/#google-analytics">{count["google-analytics"]} tool</a></td></tr>
+            <tr><td><a href="#api-key">Core Web Vitals</a></td><td>API key Google Cloud</td><td>3 minuti</td><td><a href="/tool/#core-web-vitals">{count["core-web-vitals"]} tool</a></td></tr>
+            <tr><td><a href="#bing">Bing Webmaster</a></td><td>API key Bing</td><td>2 minuti</td><td><a href="/tool/#bing">{count["bing"]} tool</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small">I link a Google e Bing aprono le pagine nel tuo account: se non hai fatto l'accesso, prima ti chiedono di farlo.</p>
+
+      <section class="doc-block" id="senza-credenziali">
+        <h2>Senza credenziali</h2>
+        <p>I tool <a href="/geo/">GEO e AEO</a>, il <a href="/schema/">validatore schema.org</a> e i <a href="/tecnico/">controlli tecnici</a> leggono pagine pubbliche: funzionano appena installi seomcp, senza configurare niente. Se vuoi solo questi, salta direttamente a <a href="#configura">Configura l'assistente</a>.</p>
+      </section>
+
+      <section class="doc-block" id="google-cloud">
+        <h2>1. Progetto Google Cloud</h2>
+        <p>Serve per Search Console, Analytics e Core Web Vitals. Un solo progetto basta per tutto.</p>
+        <ol class="steps">
+          <li>
+            <h3>Crea il progetto</h3>
+            <p>Chiamalo, per esempio, <code>seomcp</code>. Se ne hai già uno, puoi usarlo: selezionalo dal menu in alto nella console.</p>
+            <p class="links">{ext(f"{GCP}/projectcreate", "Crea un progetto")}</p>
+          </li>
+          <li>
+            <h3>Abilita le API con un clic</h3>
+            <p>Il link apre la console con le cinque API già selezionate: Search Console, Analytics Data, Analytics Admin, Chrome UX Report e PageSpeed Insights. Controlla che in alto ci sia il progetto giusto e conferma. Abilitarle tutte non costa nulla e da sole non danno accesso a niente.</p>
+            <p class="links">{ext(f"{GCP}/flows/enableapi?apiid=" + ",".join(GOOGLE_APIS), "Abilita le 5 API")}</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="doc-block" id="search-console">
+        <h2>2. Search Console</h2>
+        <p>Scegli una delle due strade. L'accesso è sempre <strong>in sola lettura</strong>.</p>
+        <div class="table-wrap">
+          <table class="cred-table">
+            <thead><tr><th></th><th><a href="#service-account">Service account</a></th><th><a href="#oauth">OAuth con un client tuo</a></th></tr></thead>
+            <tbody>
+              <tr><td>Ideale per</td><td>team, server, più persone</td><td>singolo professionista</td></tr>
+              <tr><td>Vede</td><td>solo le proprietà dove lo aggiungi come utente</td><td>tutte le proprietà del tuo account Google</td></tr>
+              <tr><td>Rinnovo</td><td>nessuno</td><td>nessuno, dopo la prima autorizzazione</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="service-account">Strada A: service account</h3>
+        <ol class="steps">
+          <li>
+            <h3>Crea il service account</h3>
+            <p>Dagli un nome, per esempio <code>seomcp</code>. Non servono ruoli sul progetto: premi <strong>Fine</strong>.</p>
+            <p class="links">{ext(f"{GCP}/iam-admin/serviceaccounts/create", "Crea il service account")}</p>
+          </li>
+          <li>
+            <h3>Scarica la chiave JSON</h3>
+            <p>Nell'elenco apri il service account, vai su <strong>Chiavi → Aggiungi chiave → Crea nuova chiave → JSON</strong>. Copia anche la sua email, del tipo <code>seomcp@nome-progetto.iam.gserviceaccount.com</code>.</p>
+            <p class="links">{ext(f"{GCP}/iam-admin/serviceaccounts", "Elenco dei service account")}</p>
+            <p>Sposta il file in un posto sicuro, fuori da qualsiasi repository (macOS e Linux):</p>
+<pre class="code"><code>mkdir -p ~/.config/seomcp
+mv ~/Downloads/seomcp-*.json ~/.config/seomcp/service-account.json
+chmod 600 ~/.config/seomcp/service-account.json</code></pre>
+            <p class="small">Su Windows, per esempio, <code>C:\\Users\\tuonome\\.config\\seomcp\\service-account.json</code>. Se la tua organizzazione blocca la creazione di chiavi (policy <code>iam.disableServiceAccountKeyCreation</code>), usa la strada B.</p>
+          </li>
+          <li>
+            <h3>Aggiungilo come utente in Search Console</h3>
+            <p>Scegli la proprietà, poi <strong>Aggiungi utente</strong>: incolla l'email del service account con il permesso <strong>Con restrizioni</strong>, che basta per leggere i dati. Ripeti per ogni proprietà.</p>
+            <p class="links">{ext("https://search.google.com/search-console/users", "Utenti e autorizzazioni")}</p>
+          </li>
+        </ol>
+        <p>Variabile da impostare: <code>GOOGLE_APPLICATION_CREDENTIALS</code> con il percorso del file.</p>
+
+        <h3 id="oauth">Strada B: OAuth con un client tuo</h3>
+        <ol class="steps">
+          <li>
+            <h3>Dai un nome all'app</h3>
+            <p>Compila nome dell'app (per esempio <code>seomcp</code>) e la tua email.</p>
+            <p class="links">{ext(f"{GCP}/auth/branding", "Informazioni sull'app")}</p>
+          </li>
+          <li>
+            <h3>Pubblicala</h3>
+            <p>Scegli il pubblico <strong>Esterno</strong> (o <strong>Interno</strong> se hai Google Workspace) e, con Esterno, premi <strong>Pubblica app</strong> per portarla in produzione: in stato di test Google fa scadere l'autorizzazione dopo 7 giorni. Non serve la verifica, perché la usi solo tu: al login vedrai l'avviso "app non verificata", clicca <strong>Avanzate → Vai a seomcp</strong>.</p>
+            <p class="links">{ext(f"{GCP}/auth/audience", "Pubblico")}</p>
+          </li>
+          <li>
+            <h3>Crea il client</h3>
+            <p>Tipo di applicazione <strong>App desktop</strong>. Copia <strong>ID client</strong> e <strong>Client secret</strong>.</p>
+            <p class="links">{ext(f"{GCP}/auth/clients/create", "Crea il client OAuth")}</p>
+          </li>
+          <li>
+            <h3>Autorizza, una volta sola</h3>
+<pre class="code"><code>export SEOMCP_GOOGLE_CLIENT_ID="xxx.apps.googleusercontent.com"
+export SEOMCP_GOOGLE_CLIENT_SECRET="xxx"
+npx -y {PKG} auth google</code></pre>
+            <p>Si apre il browser: accedi con l'account che vede le proprietà. Il token resta in <code>~/.config/seomcp/google-token.json</code>, leggibile solo dal tuo utente.</p>
+          </li>
+        </ol>
+        <p>Variabili da impostare: <code>SEOMCP_GOOGLE_CLIENT_ID</code> e <code>SEOMCP_GOOGLE_CLIENT_SECRET</code>.</p>
+
+        <h3>La proprietà predefinita</h3>
+        <p>Facoltativa: <code>SEOMCP_GSC_SITE</code> deve coincidere con la proprietà in Search Console. Per una proprietà <strong>di dominio</strong> scrivi <code>sc-domain:tuosito.it</code>, per una <strong>con prefisso URL</strong> <code>https://www.tuosito.it/</code>, con la barra finale. Il comando <code>doctor</code> mostra l'elenco esatto.</p>
+      </section>
+
+      <section class="doc-block" id="google-analytics">
+        <h2>3. Google Analytics 4</h2>
+        <p>Usa le stesse credenziali di Search Console e le API sono già abilitate dal passo 1. Restano due cose.</p>
+        <ol class="steps">
+          <li>
+            <h3>Dai accesso alla proprietà</h3>
+            <p><strong>Service account:</strong> in Analytics apri <strong>Amministrazione → Gestione dell'accesso alla proprietà → + → Aggiungi utenti</strong>, incolla l'email del service account e scegli il ruolo <strong>Visualizzatore</strong>.<br>
+            <strong>OAuth:</strong> se avevi autorizzato seomcp prima di attivare Analytics, ripeti <code>auth google</code> una volta.</p>
+            <p class="links">{ext("https://analytics.google.com/", "Apri Google Analytics")}</p>
+          </li>
+          <li>
+            <h3>Copia l'ID della proprietà</h3>
+            <p>In <strong>Amministrazione → Dettagli proprietà</strong>: è un numero come <code>123456789</code>, da non confondere con l'ID di misurazione <code>G-XXXXXXX</code>. Va in <code>SEOMCP_GA_PROPERTY</code>, facoltativa: senza, l'assistente elenca le proprietà e chiede quale usare.</p>
+          </li>
+        </ol>
+        <p class="small">Cosa puoi chiedere con Analytics: <a href="/google-analytics/">pagina Google Analytics 4</a>.</p>
+      </section>
+
+      <section class="doc-block" id="api-key">
+        <h2>4. API key per i Core Web Vitals</h2>
+        <p>Una chiave gratuita per PageSpeed Insights e Chrome UX Report. I dati sono pubblici: la chiave non dà accesso al tuo account.</p>
+        <ol class="steps">
+          <li>
+            <h3>Crea la chiave</h3>
+            <p><strong>Crea credenziali → Chiave API</strong>.</p>
+            <p class="links">{ext(f"{GCP}/apis/credentials", "Credenziali del progetto")}</p>
+          </li>
+          <li>
+            <h3>Limitala</h3>
+            <p>Apri la chiave appena creata e in <strong>Restrizioni API</strong> scegli <strong>Limita chiave</strong> con le sole <em>Chrome UX Report API</em> e <em>PageSpeed Insights API</em>: se finisse nelle mani sbagliate, non servirebbe ad altro.</p>
+          </li>
+        </ol>
+        <p>Variabile da impostare: <code>SEOMCP_GOOGLE_API_KEY</code>. Cosa puoi chiedere: <a href="/core-web-vitals/">pagina Core Web Vitals</a>.</p>
+      </section>
+
+      <section class="doc-block" id="bing">
+        <h2>5. Bing Webmaster Tools</h2>
+        <ol class="steps">
+          <li>
+            <h3>Accedi a Bing Webmaster</h3>
+            <p>Se il sito non c'è ancora, puoi importarlo da Search Console con un clic.</p>
+            <p class="links">{ext("https://www.bing.com/webmasters/", "Apri Bing Webmaster Tools")}</p>
+          </li>
+          <li>
+            <h3>Genera la chiave</h3>
+            <p>Icona a ingranaggio in alto a destra → <strong>Accesso API → Chiave API → Genera</strong>. La chiave vale per tutti i siti del tuo account.</p>
+          </li>
+        </ol>
+        <p>Variabile da impostare: <code>BING_WEBMASTER_API_KEY</code>. Facoltativa <code>SEOMCP_BING_SITE</code>, con l'URL esatto del sito come compare in Bing, per esempio <code>https://www.tuosito.it/</code>.</p>
+      </section>
+
+      <section class="doc-block" id="configura">
+        <h2>6. Configura l'assistente</h2>
+        <p>Compila solo quello che hai e copia il risultato. <strong>I valori restano nel tuo browser:</strong> questa pagina non li salva e non li invia da nessuna parte. Se preferisci, lascia vuote le chiavi e scrivile direttamente nel file.</p>
+        <form class="cfg" id="cfg" autocomplete="off" onsubmit="return false">
+          <label class="cfg-wide">Assistente
+            <select name="client">
+{options}
+            </select>
+          </label>
+          <fieldset class="cfg-wide">
+            <legend>Accesso Google</legend>
+            <label class="cfg-radio"><input type="radio" name="google" value="sa" checked> Service account</label>
+            <label class="cfg-radio"><input type="radio" name="google" value="oauth"> OAuth</label>
+            <label class="cfg-radio"><input type="radio" name="google" value="none"> Nessuno</label>
+          </fieldset>
+          <label data-when="sa">File JSON del service account <input name="GOOGLE_APPLICATION_CREDENTIALS" placeholder="/Users/tuonome/.config/seomcp/service-account.json" spellcheck="false"></label>
+          <label data-when="oauth">ID client OAuth <input name="SEOMCP_GOOGLE_CLIENT_ID" placeholder="xxx.apps.googleusercontent.com" spellcheck="false"></label>
+          <label data-when="oauth">Client secret <input name="SEOMCP_GOOGLE_CLIENT_SECRET" spellcheck="false"></label>
+          <label data-when="google">Proprietà Search Console <input name="SEOMCP_GSC_SITE" placeholder="sc-domain:tuosito.it" spellcheck="false"></label>
+          <label data-when="google">ID proprietà GA4 <input name="SEOMCP_GA_PROPERTY" placeholder="123456789" inputmode="numeric" spellcheck="false"></label>
+          <label>API key Google (Core Web Vitals) <input name="SEOMCP_GOOGLE_API_KEY" spellcheck="false"></label>
+          <label>API key Bing <input name="BING_WEBMASTER_API_KEY" spellcheck="false"></label>
+          <label>Sito Bing <input name="SEOMCP_BING_SITE" placeholder="https://www.tuosito.it/" spellcheck="false"></label>
+        </form>
+<pre class="code" id="cfg-out"><code>Attiva JavaScript per generare la configurazione, oppure copiala dalla pagina del tuo assistente.</code></pre>
+        <p class="small" id="cfg-guide">Dove incollarla: <a href="/installa/">guida del tuo assistente</a>.</p>
+      </section>
+
+      <section class="doc-block" id="verifica">
+        <h2>7. Verifica</h2>
+        <p>Prova ogni fonte configurata e ti dice esattamente cosa manca:</p>
+<pre class="code"><code>npx -y {PKG} doctor</code></pre>
+        <p>Il comando legge le variabili dal terminale: per usarlo, impostale anche lì, oppure chiedi all'assistente di usare il tool <code>seomcp_status</code>, che fa lo stesso controllo.</p>
+        <ul class="tips">
+          <li>Tratta chiavi e file JSON come password: non metterli in un repository e non incollarli nella chat con l'assistente.</li>
+          <li>Per revocare l'accesso: <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">autorizzazioni del tuo account Google</a> per OAuth, eliminazione della chiave dal service account, rigenerazione della chiave Bing.</li>
+        </ul>
+      </section>
+      <script src="/credenziali.js" defer></script>"""
+
+
+def prompts_page() -> str:
+    def tool_link(t: str) -> str:
+        return f'<a href="/tool/#{t}"><code>{t}</code></a>'
+
+    toc = "\n".join(
+        f'        <li><div class="area-head"><a href="#{a}">{n}</a> <span class="area-count">{len(items)} prompt</span></div><p>{html.escape(d)}</p></li>'
+        for a, n, d, items in PROMPT_AREAS)
+    sections = []
+    for anchor, name, desc, items in PROMPT_AREAS:
+        cards = []
+        for pname, title, pdesc, args, tools, cred, ask in items:
+            args_html = ", ".join(f"<code>{a}</code> ({html.escape(d)})" for a, d in args)
+            cred_html = (f'<a href="/credenziali/#{cred[1]}">{html.escape(cred[0])}</a>' if cred
+                         else '<a href="/credenziali/#senza-credenziali">nessuna</a>')
+            if pname == "audit-tecnico":
+                cred_html += ' (con la <a href="/credenziali/#api-key">API key Google</a> aggiunge anche PageSpeed e i Core Web Vitals reali)'
+            cards.append(f"""        <article class="prompt-card" id="{pname}">
+          <h3>{html.escape(title)}</h3>
+          <p>{html.escape(pdesc)}</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>{pname}</code></dd>
+            <dt>Gli dai</dt><dd>{args_html}</dd>
+            <dt>Usa</dt><dd>{", ".join(tool_link(t) for t in tools)}</dd>
+            <dt>Credenziali</dt><dd>{cred_html}</dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «{html.escape(ask)}»</p>
+        </article>""")
+        sections.append(f"""      <section class="doc-block" id="{anchor}">
+        <h2>{name} <span class="area-count">{len(items)} prompt</span></h2>
+        <p>{html.escape(desc)}</p>
+{chr(10).join(cards)}
+      </section>""")
+    return f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Prompt</nav>
+      <h1>{len(PROMPTS)} prompt per SEO, GEO e AEO</h1>
+      <p class="lead">I <a href="/tool/">tool</a> misurano, i prompt ragionano sulle misure. Ogni prompt è un'analisi già impostata: combina i tool giusti, cita i numeri che ha trovato e chiude con le correzioni in ordine di impatto.</p>
+      <ul class="area-list">
+{toc}
+      </ul>
+
+      <section class="doc-block" id="come-si-usano">
+        <h2>Come si usano</h2>
+        <ul class="tips">
+          <li><strong>Claude Code:</strong> digita <code>/</code> e cerca il nome, per esempio <code>/mcp__seomcp__audit-tecnico</code>.</li>
+          <li><strong>Claude Desktop:</strong> dal pulsante <strong>+</strong> della chat scegli seomcp e poi il prompt.</li>
+          <li><strong>GitHub Copilot in VS Code:</strong> nella chat digita <code>/mcp.seomcp.</code> e scegli il prompt.</li>
+          <li><strong>Altri assistenti:</strong> se non mostrano i prompt, fai la stessa domanda a parole. Ogni prompt qui sotto ha l'esempio pronto: i tool sono gli stessi, cambia solo che l'analisi la imposti tu.</li>
+        </ul>
+      </section>
+
+{chr(10).join(sections)}
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        <p>I prompt GEO e SEO funzionano senza credenziali. Per quelli che usano Search Console segui la pagina <a href="/credenziali/">Credenziali</a>.</p>
         {INCLUDE.format(name="clients")}
       </section>"""
 
@@ -736,8 +1069,20 @@ def main():
              "I 25 tool e gli 8 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.",
              "tool", tools_page()))
 
+    for slug, title, desc, body in [
+        ("prompt", "Prompt per SEO, GEO e AEO · seomcp",
+         f"Gli {len(PROMPTS)} prompt di seomcp per analisi SEO, GEO e AEO: audit tecnico, dati strutturati, citabilità nei motori AI, domande degli utenti.",
+         prompts_page()),
+        ("credenziali", "Credenziali: Google e Bing con i link diretti · seomcp",
+         "Come ottenere le credenziali per Search Console, Google Analytics 4, Core Web Vitals e Bing Webmaster Tools, con i link diretti e la configurazione pronta per il tuo assistente.",
+         credentials_page()),
+    ]:
+        d = SITE / slug
+        d.mkdir(exist_ok=True)
+        (d / "index.html").write_text(page(title, desc, slug, body))
+
     today = date.today().isoformat()
-    urls = ["/", "/tool/", "/tecnico/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
+    urls = ["/", "/tool/", "/prompt/", "/credenziali/", "/tecnico/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls)
@@ -745,7 +1090,7 @@ def main():
     print(f"Generate {len(VENDORS) + 1} pagine, partial clients.html e sitemap ({len(urls)} URL)")
 
 
-ASSETS = ("style.css", "app.js", "demo.js")
+ASSETS = ("style.css", "app.js", "demo.js", "credenziali.js")
 
 
 def bust_cache() -> None:

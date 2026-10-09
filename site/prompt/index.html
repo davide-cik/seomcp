@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prompt per SEO, GEO e AEO · seomcp</title>
+  <meta name="description" content="Gli 8 prompt di seomcp per analisi SEO, GEO e AEO: audit tecnico, dati strutturati, citabilità nei motori AI, domande degli utenti.">
+  <link rel="canonical" href="https://seomcp.contentisking.guru/prompt/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Prompt per SEO, GEO e AEO · seomcp">
+  <meta property="og:description" content="Gli 8 prompt di seomcp per analisi SEO, GEO e AEO: audit tecnico, dati strutturati, citabilità nei motori AI, domande degli utenti.">
+  <meta property="og:url" content="https://seomcp.contentisking.guru/prompt/">
+  <meta property="og:locale" content="it_IT">
+  <link rel="stylesheet" href="/style.css?v=d6b3e879cc">
+</head>
+<body>
+  <a class="skip" href="#main">Vai al contenuto</a>
+  <!--#include virtual="/_partials/header.html" -->
+
+  <main id="main" class="doc">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Prompt</nav>
+      <h1>8 prompt per SEO, GEO e AEO</h1>
+      <p class="lead">I <a href="/tool/">tool</a> misurano, i prompt ragionano sulle misure. Ogni prompt è un'analisi già impostata: combina i tool giusti, cita i numeri che ha trovato e chiude con le correzioni in ordine di impatto.</p>
+      <ul class="area-list">
+        <li><div class="area-head"><a href="#seo">SEO</a> <span class="area-count">2 prompt</span></div><p>Il sito in ordine dal punto di vista tecnico e i dati strutturati pronti per i risultati avanzati di Google.</p></li>
+        <li><div class="area-head"><a href="#geo">GEO</a> <span class="area-count">3 prompt</span></div><p>Farsi leggere e citare dai motori di ricerca generativi: ChatGPT, Perplexity, Gemini, AI Overviews di Google.</p></li>
+        <li><div class="area-head"><a href="#aeo">AEO</a> <span class="area-count">3 prompt</span></div><p>Rispondere alle domande delle persone in modo che un assistente possa estrarre la risposta e citarla.</p></li>
+      </ul>
+
+      <section class="doc-block" id="come-si-usano">
+        <h2>Come si usano</h2>
+        <ul class="tips">
+          <li><strong>Claude Code:</strong> digita <code>/</code> e cerca il nome, per esempio <code>/mcp__seomcp__audit-tecnico</code>.</li>
+          <li><strong>Claude Desktop:</strong> dal pulsante <strong>+</strong> della chat scegli seomcp e poi il prompt.</li>
+          <li><strong>GitHub Copilot in VS Code:</strong> nella chat digita <code>/mcp.seomcp.</code> e scegli il prompt.</li>
+          <li><strong>Altri assistenti:</strong> se non mostrano i prompt, fai la stessa domanda a parole. Ogni prompt qui sotto ha l'esempio pronto: i tool sono gli stessi, cambia solo che l'analisi la imposti tu.</li>
+        </ul>
+      </section>
+
+      <section class="doc-block" id="seo">
+        <h2>SEO <span class="area-count">2 prompt</span></h2>
+        <p>Il sito in ordine dal punto di vista tecnico e i dati strutturati pronti per i risultati avanzati di Google.</p>
+        <article class="prompt-card" id="audit-tecnico">
+          <h3>Audit tecnico del sito</h3>
+          <p>Controlla pagina e sito (redirect, indicizzabilità, sitemap, 404, link rotti, prestazioni, dati strutturati) e chiude con una tabella di correzioni in ordine di priorità.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>audit-tecnico</code></dd>
+            <dt>Gli dai</dt><dd><code>url</code> (la pagina da cui partire, di solito la home)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#tech_page_audit"><code>tech_page_audit</code></a>, <a href="/tool/#tech_site_check"><code>tech_site_check</code></a>, <a href="/tool/#psi_analyze"><code>psi_analyze</code></a>, <a href="/tool/#crux_query"><code>crux_query</code></a>, <a href="/tool/#schema_validate"><code>schema_validate</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#senza-credenziali">nessuna</a> (con la <a href="/credenziali/#api-key">API key Google</a> aggiunge anche PageSpeed e i Core Web Vitals reali)</dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Fai un audit tecnico di https://www.tuosito.it e dimmi le cinque correzioni più urgenti.»</p>
+        </article>
+        <article class="prompt-card" id="correggi-dati-strutturati">
+          <h3>Correggi i miei dati strutturati</h3>
+          <p>Valida il JSON-LD della pagina, spiega i problemi in chiaro e scrive il codice corretto, ricontrollandolo finché non ci sono errori.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>correggi-dati-strutturati</code></dd>
+            <dt>Gli dai</dt><dd><code>url</code> (la pagina da correggere)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#schema_validate"><code>schema_validate</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#senza-credenziali">nessuna</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Valida i dati strutturati di https://www.tuosito.it/prodotto e dammi il JSON-LD corretto.»</p>
+        </article>
+      </section>
+      <section class="doc-block" id="geo">
+        <h2>GEO <span class="area-count">3 prompt</span></h2>
+        <p>Farsi leggere e citare dai motori di ricerca generativi: ChatGPT, Perplexity, Gemini, AI Overviews di Google.</p>
+        <article class="prompt-card" id="audit-geo-pagina">
+          <h3>Audit GEO della pagina</h3>
+          <p>Interpreta le misure GEO di una pagina (risposta in apertura, sezioni, dati, fonti, autore, freschezza, accesso dei crawler AI) e propone le correzioni in ordine di impatto.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>audit-geo-pagina</code></dd>
+            <dt>Gli dai</dt><dd><code>url</code> (la pagina da analizzare)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#geo_page_metrics"><code>geo_page_metrics</code></a>, <a href="/tool/#geo_ai_access"><code>geo_ai_access</code></a>, <a href="/tool/#geo_page_sections"><code>geo_page_sections</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#senza-credenziali">nessuna</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Analizza https://www.tuosito.it/guida dal punto di vista GEO: cosa cambio per farmi citare?»</p>
+        </article>
+        <article class="prompt-card" id="sito-aperto-alle-ai">
+          <h3>Il mio sito è aperto alle AI?</h3>
+          <p>Spiega bot per bot quali crawler AI possono leggere il sito e per quale regola, distinguendo addestramento e risposte, anche alla luce della normativa europea.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>sito-aperto-alle-ai</code></dd>
+            <dt>Gli dai</dt><dd><code>url</code> (una pagina qualsiasi del sito)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#geo_ai_access"><code>geo_ai_access</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#senza-credenziali">nessuna</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Quali crawler AI possono leggere il mio sito? E quali sto bloccando senza volerlo?»</p>
+        </article>
+        <article class="prompt-card" id="confronto-concorrenti">
+          <h3>Perché citano loro e non me?</h3>
+          <p>Mette a confronto le misure della tua pagina con quelle dei concorrenti e racconta solo le differenze che contano.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>confronto-concorrenti</code></dd>
+            <dt>Gli dai</dt><dd><code>url</code> (la tua pagina), <code>concorrenti</code> (gli URL dei concorrenti, separati da virgola)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#geo_page_metrics"><code>geo_page_metrics</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#senza-credenziali">nessuna</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Perché ChatGPT cita la pagina del mio concorrente e non la mia? Confronta le due pagine.»</p>
+        </article>
+      </section>
+      <section class="doc-block" id="aeo">
+        <h2>AEO <span class="area-count">3 prompt</span></h2>
+        <p>Rispondere alle domande delle persone in modo che un assistente possa estrarre la risposta e citarla.</p>
+        <article class="prompt-card" id="domande-utenti">
+          <h3>Rispondo alle domande dei miei utenti?</h3>
+          <p>Prende da Search Console le query a domanda che portano alla pagina e verifica, sezione per sezione, se trovano risposta.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>domande-utenti</code></dd>
+            <dt>Gli dai</dt><dd><code>url</code> (la pagina), <code>giorni</code> (il periodo da considerare, di default 90)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#gsc_performance"><code>gsc_performance</code></a>, <a href="/tool/#geo_page_sections"><code>geo_page_sections</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Quali domande fanno le persone che arrivano su questa pagina, e a quali non rispondo?»</p>
+        </article>
+        <article class="prompt-card" id="passaggio-citabile">
+          <h3>Rendi citabile questo passaggio</h3>
+          <p>Riscrive una sezione della pagina perché un motore AI possa estrarla e citarla da sola, senza il contesto intorno.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>passaggio-citabile</code></dd>
+            <dt>Gli dai</dt><dd><code>url</code> (la pagina), <code>sezione</code> (il titolo, o parte del titolo, della sezione)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#geo_page_sections"><code>geo_page_sections</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#senza-credenziali">nessuna</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Riscrivi la sezione &quot;Quanto costa&quot; di questa pagina perché un assistente AI possa citarla.»</p>
+        </article>
+        <article class="prompt-card" id="piano-editoriale-ai">
+          <h3>Piano editoriale per le risposte AI</h3>
+          <p>Dalle domande degli utenti che il sito non soddisfa ricava le nuove sezioni, le FAQ e le pagine da scrivere.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>piano-editoriale-ai</code></dd>
+            <dt>Gli dai</dt><dd><code>sito</code> (la proprietà Search Console o l&#x27;URL del sito), <code>giorni</code> (il periodo da considerare, di default 90)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#gsc_performance"><code>gsc_performance</code></a>, <a href="/tool/#geo_page_sections"><code>geo_page_sections</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Fammi un piano editoriale con le domande degli utenti a cui il sito non risponde ancora.»</p>
+        </article>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        <p>I prompt GEO e SEO funzionano senza credenziali. Per quelli che usano Search Console segui la pagina <a href="/credenziali/">Credenziali</a>.</p>
+        <!--#include virtual="/_partials/clients.html" -->
+      </section>
+    </div>
+  </main>
+
+  <!--#include virtual="/_partials/footer.html" -->
+  <script src="/app.js?v=89b4d93978" defer></script>
+</body>
+</html>

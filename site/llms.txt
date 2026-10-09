@@ -9,6 +9,7 @@
 - [Validatore schema.org](https://seomcp.contentisking.guru/schema/): JSON-LD validato con il vocabolario ufficiale e i requisiti Google
 - [Core Web Vitals](https://seomcp.contentisking.guru/core-web-vitals/): dati reali CrUX e test PageSpeed Insights
 - [Guide di installazione per ogni assistente](https://seomcp.contentisking.guru/installa/): Claude Code, Claude Desktop, ChatGPT e Codex, GitHub Copilot, Gemini CLI, Mistral Vibe
-- [Guida Google Search Console](https://github.com/davide-cik/seomcp/blob/main/docs/google-setup.md): service account oppure OAuth con client proprio
-- [Guida Bing Webmaster Tools](https://github.com/davide-cik/seomcp/blob/main/docs/bing-setup.md): generazione della API key
+- [Tutti i tool](https://seomcp.contentisking.guru/tool/): i 25 tool in sola lettura, con le credenziali richieste da ciascun gruppo
+- [Prompt per SEO, GEO e AEO](https://seomcp.contentisking.guru/prompt/): gli 8 prompt di analisi, con argomenti, tool usati e domanda equivalente
+- [Credenziali](https://seomcp.contentisking.guru/credenziali/): link diretti a Google Cloud, Search Console, Analytics e Bing, e generatore della configurazione per ogni assistente
 - Installazione: `npx -y github:davide-cik/seomcp` (il pacchetto npm `@contentisking/seomcp` è in arrivo)

@@ -1,12 +1,14 @@
 # Configurare Google Analytics 4
 
+> Stessi passaggi con i link diretti e la configurazione già pronta per il tuo assistente: [seomcp.contentisking.guru/credenziali](https://seomcp.contentisking.guru/credenziali/).
+
 seomcp usa le **stesse credenziali Google** di Search Console: service account oppure OAuth. Se hai già configurato Search Console, ti bastano tre passaggi. Altrimenti parti dalla [guida Google](google-setup.md).
 
 L'accesso è **in sola lettura** (scope `analytics.readonly`): seomcp non può modificare nulla in Analytics.
 
 ## 1. Abilita le due API di Analytics
 
-In [Google Cloud Console](https://console.cloud.google.com), nello stesso progetto usato per Search Console, apri **API e servizi → Libreria** e abilita:
+Se hai usato il [link di abilitazione](https://console.cloud.google.com/flows/enableapi?apiid=searchconsole.googleapis.com,analyticsdata.googleapis.com,analyticsadmin.googleapis.com,chromeuxreport.googleapis.com,pagespeedonline.googleapis.com) della guida Search Console sono già attive. Altrimenti, nello stesso progetto, abilita:
 
 - **Google Analytics Data API**, per i report;
 - **Google Analytics Admin API**, per elencare le proprietà.

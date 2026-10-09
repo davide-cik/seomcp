@@ -1,5 +1,7 @@
 # Configurare Bing Webmaster Tools
 
+> Stessi passaggi con i link diretti e la configurazione già pronta per il tuo assistente: [seomcp.contentisking.guru/credenziali](https://seomcp.contentisking.guru/credenziali/).
+
 Bastano due minuti.
 
 1. Accedi a [bing.com/webmasters](https://www.bing.com/webmasters). Se il sito è già in Search Console, puoi importarlo da lì con un clic.
