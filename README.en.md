@@ -54,6 +54,8 @@
 
 Plus 8 **prompts** (conversation starters): GEO page audit, answers to real user questions, competitor comparison, AI access policy, rewriting a passage to be citable, editorial plan, fixing structured data, technical audit. See [docs/geo.md](docs/geo.md) and [docs/schema-validator.md](docs/schema-validator.md) (Italian).
 
+**Ready-made questions:** 71 conversation starters in 10 themes (25 need no credentials), in [domande/](domande/README.md) (Italian) and as MCP resources inside seomcp: `seomcp://domande` (index) and `seomcp://domande/<theme>`.
+
 ## Install
 
 Requires **Node.js 22+**. Configure only the sources you use.

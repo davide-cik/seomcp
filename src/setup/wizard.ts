@@ -24,6 +24,9 @@ import {
   type MergeResult,
 } from './clients.js';
 import { Prompter } from './prompt.js';
+import { TUTTE } from '../library/domande.js';
+
+const DOMANDE_URL = 'https://github.com/davide-cik/seomcp/tree/main/domande';
 
 /** Variabili d'ambiente che, se impostate, prevalgono su config.json. */
 const ENV_OVERRIDES = [
@@ -382,5 +385,6 @@ async function finalCheck(p: Prompter): Promise<void> {
   p.say(formatDiagnostics(items));
   p.say('\nRiavvia l\'assistente e prova a chiedere, per esempio:');
   p.say('  «Il mio sito è aperto ai crawler AI?»  oppure  «Quali query sono in posizione 4-20 negli ultimi 90 giorni?»');
+  p.say(`Altre ${TUTTE.length} domande pronte: chiedi «Cosa posso chiedere a seomcp?», apri le risorse seomcp://domande o ${DOMANDE_URL}`);
   p.say(`Per ricontrollare in qualsiasi momento: npx -y ${PACKAGE_SPEC} doctor`);
 }

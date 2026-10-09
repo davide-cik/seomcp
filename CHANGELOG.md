@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.36 — 2026-10-09
+
+- **Archivio di 71 domande pronte**, in 10 temi, come risorse MCP (`seomcp://domande` e `seomcp://domande/<tema>`) e nella cartella `domande/` del repository. Ogni domanda indica le credenziali necessarie, i tool usati e cosa aspettarsi; un test verifica che usino solo tool esistenti.
+
 ## 0.1.33 — 2026-10-09
 
 - **Pubblicato su npm** come [`@contentisking/seomcp`](https://www.npmjs.com/package/@contentisking/seomcp): l'installazione diventa `npx -y @contentisking/seomcp`, senza git e senza compilare. `seomcp setup`, sito, README e guide usano il pacchetto npm.

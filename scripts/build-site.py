@@ -958,6 +958,7 @@ def prompts_page() -> str:
           <li><strong>Claude Desktop:</strong> dal pulsante <strong>+</strong> della chat scegli seomcp e poi il prompt.</li>
           <li><strong>GitHub Copilot in VS Code:</strong> nella chat digita <code>/mcp.seomcp.</code> e scegli il prompt.</li>
           <li><strong>Altri assistenti:</strong> se non mostrano i prompt, fai la stessa domanda a parole. Ogni prompt qui sotto ha l'esempio pronto: i tool sono gli stessi, cambia solo che l'analisi la imposti tu.</li>
+          <li><strong>Altre 71 domande pronte</strong>, divise per tema, sono dentro seomcp come risorse MCP (<code>seomcp://domande</code>) e su <a href="https://github.com/davide-cik/seomcp/tree/main/domande" target="_blank" rel="noopener">GitHub</a>. Oppure chiedi all'assistente: «Cosa posso chiedere a seomcp?».</li>
         </ul>
       </section>
 

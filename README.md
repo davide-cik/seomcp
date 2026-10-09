@@ -62,6 +62,12 @@ Le analisi più complesse (cannibalizzazione, content gap, report) le fa l'assis
 
 Oltre ai tool, seomcp offre otto **prompt**, cioè spunti di conversazione già impostati: audit GEO della pagina, risposte alle domande degli utenti, confronto con i concorrenti, permessi AI del sito, riscrittura di un passaggio citabile, piano editoriale, correzione dei dati strutturati e audit tecnico. Come funzionano: [docs/geo.md](docs/geo.md) e [docs/schema-validator.md](docs/schema-validator.md).
 
+### Domande pronte (71)
+
+Non sai da dove partire? L'archivio [domande/](domande/README.md) raccoglie 71 domande da copiare nell'assistente, divise in 10 temi: primi passi, traffico, opportunità, indicizzazione, GEO e AEO, dati strutturati, prestazioni, Analytics, Bing e report. Per ognuna c'è cosa serve (25 funzionano senza credenziali), quali tool usa e cosa aspettarsi.
+
+Le stesse domande sono anche **risorse MCP** dentro seomcp: `seomcp://domande` è l'indice e `seomcp://domande/<tema>` contiene il singolo tema. Nei client che supportano le risorse si allegano alla chat; in Claude Code si richiamano con `@`. Oppure chiedi all'assistente: «Cosa posso chiedere a seomcp?».
+
 ## Installazione
 
 Serve **Node.js 22 o superiore**. Configura solo le fonti che usi: Google e Bing sono entrambe facoltative.

@@ -1,6 +1,6 @@
 {
   "name": "@contentisking/seomcp",
-  "version": "0.1.35",
+  "version": "0.1.36",
   "description": "Server MCP open source per SEO, GEO e AEO: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, analisi di citabilità per i motori AI e validatore schema.org. Sola lettura, credenziali sul tuo computer.",
   "keywords": [
     "mcp",
@@ -71,6 +71,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "schema:update": "node scripts/build-schema-vocab.mjs",
+    "domande": "tsx scripts/build-domande.ts",
     "prepublishOnly": "npm run typecheck && npm test && npm run build"
   },
   "dependencies": {
