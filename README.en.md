@@ -2,7 +2,9 @@
 
 **Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO analysis, a schema.org validator and technical SEO checks inside your AI assistant.** Open source, free, made in Italy.
 
-[🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [MIT](LICENSE) license
+[![npm](https://img.shields.io/npm/v/@contentisking/seomcp)](https://www.npmjs.com/package/@contentisking/seomcp)
+
+[🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · [MIT](LICENSE) license
 
 `seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **25 tools and 8 prompts, all read-only.** Ask things like:
 
@@ -54,11 +56,9 @@ Plus 8 **prompts** (conversation starters): GEO page audit, answers to real user
 
 ## Install
 
-> **Try it now from GitHub.** The npm package is not published yet. Meanwhile, replace `@contentisking/seomcp` with `github:davide-cik/seomcp` in the commands below (e.g. `npx -y github:davide-cik/seomcp doctor`). The first run builds the code on your machine and requires git.
-
 Requires **Node.js 22+**. Configure only the sources you use.
 
-**Fastest way: guided setup.** Run `npx -y github:davide-cik/seomcp setup` in a terminal. It asks one question at a time (in Italian), opens the right Google and Bing pages, tests each credential, stores everything in `~/.config/seomcp/config.json` (readable only by you) and adds seomcp to your assistant (Claude Code, Claude Desktop, ChatGPT/Codex, GitHub Copilot, Gemini CLI, Mistral Vibe), backing up any file it changes. No keys end up in the assistant's config.
+**Fastest way: guided setup.** Run `npx -y @contentisking/seomcp setup` in a terminal. It asks one question at a time (in Italian), opens the right Google and Bing pages, tests each credential, stores everything in `~/.config/seomcp/config.json` (readable only by you) and adds seomcp to your assistant (Claude Code, Claude Desktop, ChatGPT/Codex, GitHub Copilot, Gemini CLI, Mistral Vibe), backing up any file it changes. No keys end up in the assistant's config.
 
 Manual setup:
 

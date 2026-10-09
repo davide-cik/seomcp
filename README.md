@@ -2,7 +2,9 @@
 
 **Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, analisi GEO/AEO, validatore schema.org e controlli tecnici dentro il tuo assistente AI.** Open source, gratuito, in italiano.
 
-[🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · Licenza [MIT](LICENSE)
+[![npm](https://img.shields.io/npm/v/@contentisking/seomcp)](https://www.npmjs.com/package/@contentisking/seomcp)
+
+[🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · Licenza [MIT](LICENSE)
 
 `seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights e Chrome UX Report, e di analizzare le pagine pubbliche: accesso dei crawler AI, dati strutturati, redirect, canonical, sitemap e link rotti. **25 tool e 8 prompt, tutti in sola lettura.** Così puoi chiedere, in italiano:
 
@@ -62,14 +64,12 @@ Oltre ai tool, seomcp offre otto **prompt**, cioè spunti di conversazione già 
 
 ## Installazione
 
-> **Provalo subito da GitHub.** Il pacchetto npm non è ancora pubblicato. Nel frattempo, nei comandi qui sotto sostituisci `@contentisking/seomcp` con `github:davide-cik/seomcp`, per esempio `npx -y github:davide-cik/seomcp doctor`. Il primo avvio compila il codice sul tuo computer e richiede git installato.
-
 Serve **Node.js 22 o superiore**. Configura solo le fonti che usi: Google e Bing sono entrambe facoltative.
 
 ### Il modo più rapido: la configurazione guidata
 
 ```bash
-npx -y github:davide-cik/seomcp setup
+npx -y @contentisking/seomcp setup
 ```
 
 Ti fa le domande una alla volta e apre le pagine giuste di Google e Bing. Prova subito ogni credenziale e ti fa scegliere proprietà e siti predefiniti. Salva tutto in `~/.config/seomcp/config.json`, leggibile solo dal tuo utente. Infine aggiunge seomcp a Claude Code, Claude Desktop, ChatGPT e Codex, GitHub Copilot, Gemini CLI o Mistral Vibe, facendo prima una copia di sicurezza dei file che modifica. Nella configurazione dell'assistente non finisce nessuna chiave.

@@ -5,7 +5,7 @@
   var out = document.querySelector('#cfg-out code');
   var guide = document.querySelector('#cfg-guide a');
   if (!form || !out) return;
-  var PKG = 'github:davide-cik/seomcp';
+  var PKG = '@contentisking/seomcp';
   var FIELDS = {
     sa: ['GOOGLE_APPLICATION_CREDENTIALS'],
     oauth: ['SEOMCP_GOOGLE_CLIENT_ID', 'SEOMCP_GOOGLE_CLIENT_SECRET'],

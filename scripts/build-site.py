@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
 BASE = "https://seomcp.contentisking.guru"
-PKG = "github:davide-cik/seomcp"  # diventerà @contentisking/seomcp dopo la pubblicazione su npm
+PKG = "@contentisking/seomcp"
 REPO = "https://github.com/davide-cik/seomcp"
 
 ENV = [
@@ -220,12 +220,12 @@ def page(title, description, path, body):
 PREREQ = f"""      <section class="doc-block">
         <h2>Prima di iniziare</h2>
         <ul class="checklist">
-          <li><strong>Node.js 22 o superiore</strong> (<a href="https://nodejs.org/it/download" target="_blank" rel="noopener">scarica</a>) e <strong>git</strong> (<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">scarica</a>).</li>
+          <li><strong>Node.js 22 o superiore</strong> (<a href="https://nodejs.org/it/download" target="_blank" rel="noopener">scarica</a>).</li>
           <li><strong>Le credenziali</strong> delle fonti che vuoi usare: <a href="/credenziali/#search-console">Search Console</a>, <a href="/credenziali/#google-analytics">Google Analytics 4</a>, <a href="/credenziali/#api-key">Core Web Vitals</a> e <a href="/credenziali/#bing">Bing Webmaster Tools</a>, con i link diretti nella pagina <a href="/credenziali/">Credenziali</a>. Sono tutte facoltative: GEO, schema.org e controlli tecnici funzionano senza.</li>
         </ul>
         <p>La via più rapida è la configurazione guidata: fa le domande una alla volta, prova le credenziali e scrive la configurazione dell'assistente al posto tuo.</p>
 <pre class="code"><code>npx -y {PKG} setup</code></pre>
-        <p class="small">Il pacchetto npm è in arrivo: per ora seomcp si installa direttamente da GitHub. Il primo avvio richiede qualche secondo in più, perché il codice viene compilato sul tuo computer.</p>
+        <p class="small">seomcp è pubblicato su npm come <a href="https://www.npmjs.com/package/@contentisking/seomcp" target="_blank" rel="noopener"><code>@contentisking/seomcp</code></a>: <code>npx</code> lo scarica al primo avvio e lo tiene aggiornato.</p>
       </section>"""
 
 

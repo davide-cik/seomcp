@@ -9,8 +9,8 @@ export const DOCS = {
   pagespeed: `${REPO}/docs/pagespeed-setup.md`,
 };
 
-/** Come si avvia seomcp dalla configurazione dell'assistente. Diventerà @contentisking/seomcp con il pacchetto npm. */
-export const PACKAGE_SPEC = 'github:davide-cik/seomcp';
+/** Come si avvia seomcp dalla configurazione dell'assistente: il pacchetto pubblicato su npm. */
+export const PACKAGE_SPEC = '@contentisking/seomcp';
 
 const GCP = 'https://console.cloud.google.com';
 

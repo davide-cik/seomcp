@@ -12,4 +12,4 @@
 - [Tutti i tool](https://seomcp.contentisking.guru/tool/): i 25 tool in sola lettura, con le credenziali richieste da ciascun gruppo
 - [Prompt per SEO, GEO e AEO](https://seomcp.contentisking.guru/prompt/): gli 8 prompt di analisi, con argomenti, tool usati e domanda equivalente
 - [Credenziali](https://seomcp.contentisking.guru/credenziali/): link diretti a Google Cloud, Search Console, Analytics e Bing, e generatore della configurazione per ogni assistente
-- Installazione: `npx -y github:davide-cik/seomcp` (il pacchetto npm `@contentisking/seomcp` è in arrivo)
+- Installazione: `npx -y @contentisking/seomcp` (pacchetto npm https://www.npmjs.com/package/@contentisking/seomcp), configurazione guidata con `npx -y @contentisking/seomcp setup`

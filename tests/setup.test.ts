@@ -19,7 +19,7 @@ const linux: Env = { platform: 'linux', home: '/home/mario', vars: {} };
 const mac: Env = { platform: 'darwin', home: '/Users/mario', vars: {} };
 const win: Env = { platform: 'win32', home: 'C:\\Users\\mario', vars: { APPDATA: 'C:\\Users\\mario\\AppData\\Roaming' } };
 const target = (id: string, env = linux) => clientTargets(env).find((t) => t.id === id)!;
-const npx = { command: 'npx', args: ['-y', 'github:davide-cik/seomcp'] };
+const npx = { command: 'npx', args: ['-y', '@contentisking/seomcp'] };
 
 describe('clientTargets', () => {
   it('percorsi dei file di configurazione per sistema operativo', () => {
@@ -34,7 +34,7 @@ describe('clientTargets', () => {
 describe('launchCommand', () => {
   it('npx ovunque, cmd /c su Windows', () => {
     expect(launchCommand({ gui: false }, linux)).toEqual(npx);
-    expect(launchCommand({ gui: true }, win)).toEqual({ command: 'cmd', args: ['/c', 'npx', '-y', 'github:davide-cik/seomcp'] });
+    expect(launchCommand({ gui: true }, win)).toEqual({ command: 'cmd', args: ['/c', 'npx', '-y', '@contentisking/seomcp'] });
   });
 
   it('macOS con nvm: percorso completo e PATH per le app grafiche', () => {
@@ -84,7 +84,7 @@ describe('TOML', () => {
     const r = appendToml('model = "o3"\n', 'codex-toml', npx);
     expect(r.status).toBe('added');
     const text = (r as { text: string }).text;
-    expect(text).toBe('model = "o3"\n\n[mcp_servers.seomcp]\ncommand = "npx"\nargs = ["-y", "github:davide-cik/seomcp"]\n');
+    expect(text).toBe('model = "o3"\n\n[mcp_servers.seomcp]\ncommand = "npx"\nargs = ["-y", "@contentisking/seomcp"]\n');
     expect(tomlHasSeomcp('codex-toml', text)).toBe(true);
     expect(appendToml(text, 'codex-toml', npx).status).toBe('exists');
   });
@@ -99,7 +99,7 @@ describe('TOML', () => {
 
 describe('utilità', () => {
   it('claude mcp add senza chiavi', () => {
-    expect(claudeAddArgs(npx)).toEqual(['mcp', 'add', 'seomcp', '-s', 'user', '--', 'npx', '-y', 'github:davide-cik/seomcp']);
+    expect(claudeAddArgs(npx)).toEqual(['mcp', 'add', 'seomcp', '-s', 'user', '--', 'npx', '-y', '@contentisking/seomcp']);
   });
 
   it('percorsi incollati o trascinati nel terminale', () => {

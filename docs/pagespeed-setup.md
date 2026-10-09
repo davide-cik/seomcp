@@ -30,7 +30,7 @@ SEOMCP_GOOGLE_API_KEY=la-tua-api-key
 ## 3. Verifica
 
 ```bash
-npx -y github:davide-cik/seomcp doctor
+npx -y @contentisking/seomcp doctor
 ```
 
 Deve comparire la riga `Chrome UX Report OK`.

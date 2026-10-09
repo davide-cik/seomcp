@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.33 — 2026-10-09
+
+- **Pubblicato su npm** come [`@contentisking/seomcp`](https://www.npmjs.com/package/@contentisking/seomcp): l'installazione diventa `npx -y @contentisking/seomcp`, senza git e senza compilare. `seomcp setup`, sito, README e guide usano il pacchetto npm.
+
 ## 0.1.32 — 2026-10-09
 
 - **Configurazione guidata** `seomcp setup`: domande una alla volta, link diretti alle console di Google e Bing, prova immediata di ogni credenziale, scelta di proprietà e siti predefiniti. Le credenziali vanno in `config.json` (permessi 600) e seomcp viene aggiunto all'assistente scelto senza chiavi nei suoi file, con copia di sicurezza dei file modificati. Supporta Claude Code, Claude Desktop, ChatGPT e Codex, GitHub Copilot (VS Code e CLI), Gemini CLI e Mistral Vibe.

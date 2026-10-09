@@ -40,7 +40,7 @@
 
       <div class="notice" role="note">
         <p><strong>Preferisci il terminale?</strong> La configurazione guidata fa questi passaggi con te: apre le pagine giuste, prova ogni chiave appena la inserisci e aggiunge seomcp al tuo assistente, senza chiavi nei suoi file.</p>
-<pre class="code"><code>npx -y github:davide-cik/seomcp setup</code></pre>
+<pre class="code"><code>npx -y @contentisking/seomcp setup</code></pre>
       </div>
 
       <section class="doc-block" id="senza-credenziali">
@@ -125,7 +125,7 @@ chmod 600 ~/.config/seomcp/service-account.json</code></pre>
             <h3>Autorizza, una volta sola</h3>
 <pre class="code"><code>export SEOMCP_GOOGLE_CLIENT_ID="xxx.apps.googleusercontent.com"
 export SEOMCP_GOOGLE_CLIENT_SECRET="xxx"
-npx -y github:davide-cik/seomcp auth google</code></pre>
+npx -y @contentisking/seomcp auth google</code></pre>
             <p>Si apre il browser: accedi con l'account che vede le proprietà. Il token resta in <code>~/.config/seomcp/google-token.json</code>, leggibile solo dal tuo utente.</p>
           </li>
         </ol>
@@ -223,14 +223,14 @@ npx -y github:davide-cik/seomcp auth google</code></pre>
       <section class="doc-block" id="verifica">
         <h2>7. Verifica</h2>
         <p>Prova ogni fonte configurata e ti dice esattamente cosa manca:</p>
-<pre class="code"><code>npx -y github:davide-cik/seomcp doctor</code></pre>
+<pre class="code"><code>npx -y @contentisking/seomcp doctor</code></pre>
         <p>Il comando legge le variabili dal terminale: per usarlo, impostale anche lì, oppure chiedi all'assistente di usare il tool <code>seomcp_status</code>, che fa lo stesso controllo.</p>
         <ul class="tips">
           <li>Tratta chiavi e file JSON come password: non metterli in un repository e non incollarli nella chat con l'assistente.</li>
           <li>Per revocare l'accesso: <a href="https://myaccount.google.com/linkedapps" target="_blank" rel="noopener">autorizzazioni del tuo account Google</a> per OAuth, eliminazione della chiave dal service account, rigenerazione della chiave Bing.</li>
         </ul>
       </section>
-      <script src="/credenziali.js?v=a756eab609" defer></script>
+      <script src="/credenziali.js?v=c0c25ed050" defer></script>
     </div>
   </main>
 
