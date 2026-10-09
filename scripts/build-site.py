@@ -301,7 +301,37 @@ def vendor_body(v):
 
 def clients_partial():
     items = "\n".join(f'  <li><a href="/installa/{v["slug"]}/">{html.escape(v["name"])}</a></li>' for v in VENDORS)
-    return f'<ul class="ai-list">\n{items}\n</ul>\n'
+    m365 = f'  <li><a href="/installa/{M365_SLUG}/">Microsoft 365 Copilot <span class="ai-note">non ancora</span></a></li>'
+    return f'<ul class="ai-list">\n{items}\n{m365}\n</ul>\n'
+
+
+M365_SLUG = "microsoft-365-copilot"
+CONTACT = "https://contentisking.guru/contattaci/"
+M365_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › <a href="/installa/">Installa</a> › Microsoft 365 Copilot</nav>
+      <p class="eyebrow">Microsoft</p>
+      <h1>seomcp e Microsoft 365 Copilot</h1>
+      <p class="lead">Microsoft 365 Copilot ora si collega ai server MCP con i <strong>connettori federati</strong>. seomcp però, per ora, non si può aggiungere: ecco perché e cosa usare nel frattempo.</p>
+
+      <section class="doc-block">
+        <h2>Perché non ancora</h2>
+        <ul class="tips">
+          <li><strong>Copilot accetta solo server MCP remoti.</strong> Il connettore si crea indicando l'indirizzo web del server (<code>https://…</code>). seomcp invece gira sul tuo computer e parla con l'assistente direttamente, senza un indirizzo web: è il motivo per cui le tue credenziali Google e Bing non lasciano mai il computer.</li>
+          <li><strong>Lo configura l'amministratore, non il singolo utente.</strong> I connettori si aggiungono dal centro di amministrazione di Microsoft 365 (Copilot → Connettori), con il ruolo di Global Administrator o AI Administrator e l'accesso protetto da Microsoft Entra o OAuth.</li>
+          <li><strong>Serve una licenza Microsoft 365 Copilot</strong> che includa i connettori federati: controlla il tuo piano con l'amministratore.</li>
+        </ul>
+      </section>
+
+      <section class="doc-block">
+        <h2>Cosa usare adesso</h2>
+        <p>Se lavori nel mondo Microsoft, <a href="/installa/copilot/">GitHub Copilot in VS Code</a> supporta già seomcp: stessi tool e stessi prompt, nella chat di Copilot in modalità Agent. Funzionano anche Claude, ChatGPT, Gemini CLI e Mistral Vibe.</p>
+        {INCLUDE.format(name="clients")}
+      </section>
+
+      <section class="doc-block">
+        <h2>Per le aziende</h2>
+        <p>Una versione di seomcp da installare sul server della tua organizzazione, con accesso protetto da Microsoft Entra e pubblicata come connettore federato per tutti i colleghi, è possibile. Se ti interessa, <a href="{CONTACT}" target="_blank" rel="noopener">scrivici</a>.</p>
+        <p class="small">Fonte: <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/set-up-custom-federated-connectors" target="_blank" rel="noopener">Microsoft Learn, Set up custom federated connectors</a>.</p>
+      </section>"""
 
 
 GA_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Google Analytics</nav>
@@ -979,7 +1009,7 @@ TECH_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seom
       </section>"""
 
 
-WEB_NOTE = ("<strong>Versioni web non supportate.</strong> claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot e Mistral Vibe sul web "
+WEB_NOTE = ("<strong>Versioni web non supportate.</strong> claude.ai, chatgpt.com, l'app Gemini, <a href='/installa/microsoft-365-copilot/'>Microsoft 365 Copilot</a> e Mistral Vibe sul web "
             "accettano solo server MCP remoti. seomcp gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.")
 
 
@@ -989,7 +1019,7 @@ def main():
     (SITE / "_partials" / "clients.html").write_text(clients_partial())
 
     # Rimuove pagine di assistenti non più presenti in VENDORS.
-    keep = {v["slug"] for v in VENDORS}
+    keep = {v["slug"] for v in VENDORS} | {M365_SLUG}
     for d in out.iterdir():
         if d.is_dir() and d.name not in keep:
             shutil.rmtree(d)
@@ -1076,6 +1106,13 @@ def main():
              "I 25 tool e gli 8 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.",
              "tool", tools_page()))
 
+    m365_dir = out / M365_SLUG
+    m365_dir.mkdir(exist_ok=True)
+    (m365_dir / "index.html").write_text(
+        page("seomcp e Microsoft 365 Copilot",
+             "Microsoft 365 Copilot si collega ai server MCP remoti con i connettori federati: perché seomcp, che gira in locale, non si può ancora aggiungere e cosa usare nel frattempo.",
+             f"installa/{M365_SLUG}", M365_PAGE))
+
     for slug, title, desc, body in [
         ("prompt", "Prompt per SEO, GEO e AEO · seomcp",
          f"Gli {len(PROMPTS)} prompt di seomcp per analisi SEO, GEO e AEO: audit tecnico, dati strutturati, citabilità nei motori AI, domande degli utenti.",
@@ -1089,7 +1126,7 @@ def main():
         (d / "index.html").write_text(page(title, desc, slug, body))
 
     today = date.today().isoformat()
-    urls = ["/", "/tool/", "/prompt/", "/credenziali/", "/tecnico/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS]
+    urls = ["/", "/tool/", "/prompt/", "/credenziali/", "/tecnico/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS] + [f"/installa/{M365_SLUG}/"]
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls)

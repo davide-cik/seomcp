@@ -230,7 +230,7 @@ args = ["-y", "@contentisking/seomcp"]
 env = { "GOOGLE_APPLICATION_CREDENTIALS" = "/percorso/service-account.json", "BING_WEBMASTER_API_KEY" = "la-tua-chiave", "SEOMCP_GSC_SITE" = "sc-domain:tuosito.it", "SEOMCP_GA_PROPERTY" = "123456789", "SEOMCP_GOOGLE_API_KEY" = "la-tua-api-key" }
 ```
 
-> **Versioni web non supportate.** Le versioni web (claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot, Mistral Vibe sul web) accettano solo server MCP remoti, raggiungibili su internet. `seomcp` gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando.
+> **Versioni web non supportate.** Le versioni web (claude.ai, chatgpt.com, l'app Gemini, Microsoft 365 Copilot, Mistral Vibe sul web) accettano solo server MCP remoti, raggiungibili su internet. `seomcp` gira in locale per non far uscire le tue credenziali dal computer, quindi servono le app desktop o la riga di comando. Microsoft 365 Copilot si collega ai server MCP solo come connettore federato remoto, configurato dall'amministratore: [perché seomcp non si può ancora aggiungere](https://seomcp.contentisking.guru/installa/microsoft-365-copilot/).
 
 ### 3. Controlla che funzioni
 

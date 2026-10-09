@@ -76,7 +76,7 @@ Manual setup:
 
    **Other clients:** the same `npx -y @contentisking/seomcp` command works in Claude Desktop, the ChatGPT desktop app and Codex, GitHub Copilot (VS Code and CLI), Gemini CLI and Mistral Vibe CLI. Step-by-step guides for each one (in Italian) are at [seomcp.contentisking.guru/installa](https://seomcp.contentisking.guru/installa/), and ready-to-copy configs are in the [Italian README](README.md#2-collegalo-al-tuo-assistente).
 
-   > **Web versions are not supported.** claude.ai, chatgpt.com, the Gemini app, Microsoft 365 Copilot and Mistral Vibe on the web only accept remote MCP servers. `seomcp` runs locally so your credentials never leave your machine: use the desktop apps or the CLI.
+   > **Web versions are not supported.** claude.ai, chatgpt.com, the Gemini app, Microsoft 365 Copilot and Mistral Vibe on the web only accept remote MCP servers. `seomcp` runs locally so your credentials never leave your machine: use the desktop apps or the CLI. Microsoft 365 Copilot only connects to remote MCP servers as admin-configured federated connectors, so seomcp can't be added yet ([details, in Italian](https://seomcp.contentisking.guru/installa/microsoft-365-copilot/)).
 
 3. **Check:** `npx @contentisking/seomcp doctor`
 
