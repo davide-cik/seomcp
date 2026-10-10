@@ -289,6 +289,7 @@ def vendor_body(v):
 <pre class="code"><code>npx -y {PKG} doctor</code></pre>
         <ul class="tips">{tips_html}
           <li>Le variabili d'ambiente vanno impostate nella configurazione dell'assistente, non nel terminale: è l'assistente ad avviare seomcp.</li>
+          <li>L'avviso <code>npm warn deprecated node-domexception</code> al primo avvio si può ignorare: arriva dalla libreria ufficiale di Google per l'autenticazione e non serve con Node 22. Sparirà quando Google aggiornerà le sue dipendenze.</li>
           <li>Ancora bloccato? <a href="{REPO}/issues/new/choose" target="_blank" rel="noopener">Apri una segnalazione</a>, allegando l'output di <code>doctor</code> senza chiavi.</li>
         </ul>
       </section>

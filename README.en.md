@@ -82,6 +82,8 @@ Manual setup:
 
 3. **Check:** `npx @contentisking/seomcp doctor`
 
+   > **Seeing `npm warn deprecated node-domexception`?** You can ignore it. It comes from Google's official auth library (`google-auth-library` → `gaxios` → `node-fetch`) and is only needed on old Node versions; on Node 22 it is unused. It will go away when Google updates its dependencies.
+
 All environment variables are listed in the [Italian README](README.md#configurazione).
 
 ## Use as a library

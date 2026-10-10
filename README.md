@@ -246,6 +246,8 @@ npx @contentisking/seomcp doctor
 
 Il comando prova ogni fonte e ti dice esattamente cosa manca. Ad esempio: "aggiungi `seomcp@progetto.iam.gserviceaccount.com` come utente della proprietà".
 
+> **Avviso `npm warn deprecated node-domexception`?** Si può ignorare. Arriva dalla libreria ufficiale di Google per l'autenticazione (`google-auth-library` → `gaxios` → `node-fetch`) e serviva solo alle vecchie versioni di Node: con Node 22 non viene usato. Sparirà quando Google aggiornerà le sue dipendenze.
+
 ## Configurazione
 
 | Variabile | Descrizione |
