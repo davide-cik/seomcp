@@ -1,0 +1,42 @@
+name: Publish
+
+# Pubblica su npm a ogni tag di versione (es. v0.1.40), senza token:
+# npm Trusted Publishing con OIDC. La provenienza del pacchetto è generata in automatico.
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - name: Il tag corrisponde alla versione in package.json
+        run: |
+          VERSION="v$(node -p "require('./package.json').version")"
+          if [ "$VERSION" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME diverso dalla versione $VERSION in package.json"; exit 1
+          fi
+      - name: Versione già pubblicata?
+        id: check
+        run: |
+          if npm view "@contentisking/seomcp@$(node -p "require('./package.json').version")" version >/dev/null 2>&1; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"; echo "Versione già su npm: niente da pubblicare."
+          fi
+      - run: npm ci
+        if: steps.check.outputs.skip != 'true'
+      - run: npm install -g npm@latest
+        if: steps.check.outputs.skip != 'true'
+      # prepublishOnly esegue typecheck, test e build
+      - run: npm publish --access public
+        if: steps.check.outputs.skip != 'true'

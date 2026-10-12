@@ -46,6 +46,7 @@ describe('server MCP', () => {
       'gsc_striking_distance',
       'psi_analyze',
       'schema_validate',
+      'seomcp_guida',
       'seomcp_status',
       'tech_page_audit',
       'tech_site_check',

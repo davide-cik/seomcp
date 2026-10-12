@@ -6,7 +6,7 @@
 
 [🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · Licenza [MIT](LICENSE)
 
-`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights e Chrome UX Report, e di analizzare le pagine pubbliche: accesso dei crawler AI, dati strutturati, redirect, canonical, sitemap e link rotti. **25 tool e 17 prompt, tutti in sola lettura.** Così puoi chiedere, in italiano:
+`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights e Chrome UX Report, e di analizzare le pagine pubbliche: accesso dei crawler AI, dati strutturati, redirect, canonical, sitemap e link rotti. **26 tool e 17 prompt, tutti in sola lettura.** Così puoi chiedere, in italiano:
 
 > Quali query sono in posizione 4-20 negli ultimi 90 giorni, e quali pagine dovrei ottimizzare per prime?
 >
@@ -26,11 +26,12 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 - **Codice piccolo e leggibile.** Circa 4.800 righe di TypeScript in [`src/`](src): leggerlo prima di installarlo è alla portata di chiunque.
 - **Nessun uso improprio della Google Indexing API**, che Google riserva alle offerte di lavoro e alle dirette video.
 
-## Tool disponibili (25)
+## Tool disponibili (26)
 
 | Tool | Cosa fa |
 |---|---|
 | `seomcp_status` | Verifica cosa è configurato e spiega cosa manca |
+| `seomcp_guida` | Cosa posso chiedere: i prompt divisi per obiettivo, con cosa serve e la domanda equivalente |
 | `gsc_list_sites` | Proprietà Search Console accessibili |
 | `gsc_performance` | Clic, impressioni, CTR e posizione per query, pagina, paese, dispositivo, data, con filtri |
 | `gsc_compare_periods` | Confronto con il periodo precedente o con l'anno prima: cali e crescite |

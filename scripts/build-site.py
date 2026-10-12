@@ -142,7 +142,7 @@ CLIENTS = [
         "lang": "json",
         "code": mcp_servers_json(),
         "code_note": "Se il file contiene già altre impostazioni, aggiungi solo il blocco <code>mcpServers</code>.",
-        "verify": "Avvia <code>gemini</code> e digita <code>/mcp</code>: <code>seomcp</code> deve comparire con i suoi 25 tool.",
+        "verify": "Avvia <code>gemini</code> e digita <code>/mcp</code>: <code>seomcp</code> deve comparire con i suoi 26 tool.",
         "tips": ["Dal giugno 2026 Gemini CLI richiede una chiave API Gemini a pagamento o una licenza enterprise."],
         "web": "L'app Gemini sul web non supporta server MCP locali: serve Gemini CLI.",
     },
@@ -584,6 +584,7 @@ TOOL_GROUPS = [
     ]),
     ("diagnostica", "Diagnostica", "", None, [
         ("seomcp_status", "Verifica quali fonti sono configurate e funzionanti, e spiega cosa fare per quelle che non lo sono."),
+        ("seomcp_guida", "Cosa posso chiedere: restituisce i prompt divisi per obiettivo (capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni), con cosa serve e la domanda equivalente."),
     ]),
 ]
 
@@ -1159,7 +1160,7 @@ def main():
     tool_dir.mkdir(exist_ok=True)
     (tool_dir / "index.html").write_text(
         page("Tutti i tool e i prompt · seomcp",
-             f"I 25 tool e i {len(PROMPTS)} prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.",
+             f"I {sum(len(t) for *_, t in TOOL_GROUPS)} tool e i {len(PROMPTS)} prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.",
              "tool", tools_page()))
 
     m365_dir = out / M365_SLUG

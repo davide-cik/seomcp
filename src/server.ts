@@ -14,6 +14,7 @@ import { registerPageSpeedTools } from './tools/pagespeed.js';
 import { registerGeoTools } from './tools/geo.js';
 import { registerSchemaTools } from './tools/schema.js';
 import { registerTechnicalTools } from './tools/technical.js';
+import { registerGuideTools } from './tools/guide.js';
 import { registerGeoPrompts } from './prompts/geo.js';
 import { registerDatiPrompts } from './prompts/dati.js';
 import { registerDomandeResources } from './library/resources.js';
@@ -28,7 +29,7 @@ Per i dati di ricerca: i prompt calo-traffico, opportunita-distanza-di-tiro, tit
 Per collegare ricerca e comportamento: le query e i clic vengono da Search Console, sessioni e conversioni delle pagine di destinazione da Analytics.
 Se un tool restituisce un errore di configurazione, chiama seomcp_status e riporta all'utente i passaggi indicati.
 Le analisi (cannibalizzazione, content gap, report) si fanno ragionando sui dati restituiti.
-Se l'utente chiede cosa può chiedere a seomcp, parti dalla guida seomcp://prompt (prompt divisi per obiettivo) e dalle domande dell'archivio seomcp://domande (risorse MCP, una per tema), scegliendo quelle adatte alle fonti configurate.`;
+Se l'utente chiede cosa può chiedere a seomcp o da dove partire, chiama seomcp_guida e mostra i prompt divisi per obiettivo (la stessa guida è la risorsa seomcp://prompt); per domande brevi c'è l'archivio seomcp://domande (risorse MCP, una per tema), scegliendo quelle adatte alle fonti configurate.`;
 
 /** Crea il server MCP a partire dalla configurazione locale. */
 export function createServer(config: SeoMcpConfig): McpServer {
@@ -86,6 +87,7 @@ export function createServerWithContext(ctx: ToolContext): McpServer {
   registerGeoTools(server, ctx);
   registerSchemaTools(server, ctx);
   registerTechnicalTools(server, ctx);
+  registerGuideTools(server);
   registerGeoPrompts(server);
   registerDatiPrompts(server);
   registerDomandeResources(server);

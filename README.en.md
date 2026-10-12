@@ -6,7 +6,7 @@
 
 [🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · [MIT](LICENSE) license
 
-`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **25 tools and 17 prompts, all read-only.** Ask things like:
+`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **26 tools and 17 prompts, all read-only.** Ask things like:
 
 > Which queries rank in positions 4-20 over the last 90 days, and which pages should I optimize first?
 >
@@ -22,11 +22,12 @@
 - **Small, readable codebase.** About 4,800 lines of TypeScript in [`src/`](src), easy to audit before you install it.
 - **No misuse of the Google Indexing API**, which Google reserves for job postings and livestreams.
 
-## Tools (25)
+## Tools (26)
 
 | Tool | What it does |
 |---|---|
 | `seomcp_status` | Checks what is configured and explains what is missing |
+| `seomcp_guida` | What can I ask: prompts grouped by goal, with requirements and the equivalent plain question |
 | `gsc_list_sites` | Accessible Search Console properties |
 | `gsc_performance` | Clicks, impressions, CTR and position by query, page, country, device and date, with filters |
 | `gsc_compare_periods` | Compare against the previous period or the year before: losers and gainers |

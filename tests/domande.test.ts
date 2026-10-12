@@ -61,4 +61,14 @@ describe('archivio di domande', () => {
     expect(guida.map((p) => p.nome).sort()).toEqual(prompts.map((p) => p.name).sort());
     for (const p of guida) expect(p.titolo, p.nome).toBe(prompts.find((x) => x.name === p.nome)?.title);
   });
+
+  it('seomcp_guida restituisce i prompt per categoria, anche filtrati', async () => {
+    const client = await connect();
+    const all = JSON.parse(((await client.callTool({ name: 'seomcp_guida', arguments: {} })).content as Array<{ text: string }>)[0]!.text);
+    expect(all.categorie.map((c: { slug: string }) => c.slug)).toEqual(PROMPT_GUIDE.map((c) => c.slug));
+    expect(all.categorie.flatMap((c: { prompt: unknown[] }) => c.prompt).length).toBe(17);
+    const one = JSON.parse(((await client.callTool({ name: 'seomcp_guida', arguments: { categoria: 'capire-i-dati' } })).content as Array<{ text: string }>)[0]!.text);
+    expect(one.categorie).toHaveLength(1);
+    expect(one.categorie[0].prompt[0].chiedi_cosi).toMatch(/\?/);
+  });
 });
