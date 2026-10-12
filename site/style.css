@@ -197,6 +197,7 @@ kbd { font-family: var(--mono); font-size: 0.85em; border: 1px solid var(--borde
 
 /* Etichetta "Novità" */
 .badge-new { display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; padding: 4px 7px; border-radius: 999px; background: var(--success); color: #05230F; vertical-align: middle; margin-left: 4px; }
+.badge-soon { display: inline-block; font-family: var(--sans); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; padding: 3px 7px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); background: transparent; vertical-align: middle; margin-left: 6px; white-space: nowrap; }
 a.plain { color: inherit; text-decoration: none; }
 a.plain:hover { color: var(--accent); }
 

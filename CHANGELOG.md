@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.43 — 2026-10-12
+
+- Sito: badge «in arrivo» su tool e prompt non ancora pubblicati su npm (Cloudflare, `bing_inbound_links`, `seomcp_guida` e 10 prompt), con una nota nella home. L'elenco è `IN_ARRIVO` in `scripts/build-site.py`.
+
 ## 0.1.42 — 2026-10-12
 
 - README (italiano e inglese): Cloudflare aggiunto all'elenco delle fonti nell'introduzione.

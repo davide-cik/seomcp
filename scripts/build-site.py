@@ -707,6 +707,23 @@ PROMPT_AREAS = [
 ]
 PROMPTS = [p for *_, items in PROMPT_AREAS for p in items]
 
+# Tool e prompt già nel repository ma non ancora nel pacchetto npm (ultima versione pubblicata: 0.1.36).
+# Il sito li segna "in arrivo": dopo il rilascio svuota l'insieme e rigenera il sito.
+IN_ARRIVO = {
+    "cf_traffic", "cf_ai_crawlers", "cf_errors", "bing_inbound_links", "seomcp_guida",
+    "calo-traffico", "opportunita-distanza-di-tiro", "title-description-ctr", "cannibalizzazione",
+    "traffico-che-non-converte", "report-mensile", "piano-core-web-vitals", "controllo-migrazione",
+    "google-vs-bing", "ai-che-leggono-il-sito",
+}
+SOON = '<span class="badge-soon" title="Disponibile con la prossima versione del pacchetto npm">in arrivo</span>'
+SOON_NOTE = ('<p class="small">Le voci segnate ' + SOON + ' sono pronte e arrivano con la prossima versione del pacchetto npm: '
+             'chi installa oggi con <code>npx</code> non le vede ancora.</p>')
+
+
+def soon(name: str) -> str:
+    return f" {SOON}" if name in IN_ARRIVO else ""
+
+
 # Gruppo di tool → ancora della pagina tool e sezione delle credenziali
 
 
@@ -726,12 +743,13 @@ def tools_page() -> str:
     groups = []
     for anchor, name, _needs, page_url, tools in TOOL_GROUPS:
         title = f'<a class="plain" href="{page_url}">{html.escape(name)}</a>' if page_url else html.escape(name)
-        items = "\n".join(f'          <dt id="{t}"><code>{t}</code></dt><dd>{html.escape(d)}</dd>' for t, d in tools)
+        items = "\n".join(f'          <dt id="{t}"><code>{t}</code>{soon(t)}</dt><dd>{html.escape(d)}</dd>' for t, d in tools)
+        group_soon = f" {SOON}" if all(t in IN_ARRIVO for t, _d in tools) else ""
         cred = CRED_FOR_GROUP.get(anchor)
         needs_html = (f'\n        <p class="small">Richiede: <a href="/credenziali/#{cred[1]}">{html.escape(cred[0])}</a>.</p>'
                       if cred else "")
         groups.append(f"""      <section class="doc-block" id="{anchor}">
-        <h2>{title} <span class="area-count">{len(tools)} tool</span></h2>{needs_html}
+        <h2>{title} <span class="area-count">{len(tools)} tool</span>{group_soon}</h2>{needs_html}
         <dl class="tools">
 {items}
         </dl>
@@ -742,6 +760,7 @@ def tools_page() -> str:
     return f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Tool</nav>
       <h1>{total} tool e {len(PROMPTS)} prompt</h1>
       <p class="lead">Tutti in sola lettura: seomcp legge i dati, non modifica nulla. Collega solo le fonti che usi: ogni gruppo indica cosa serve, e la pagina <a href="/credenziali/">Credenziali</a> spiega come ottenerlo con i link diretti.</p>
+      {SOON_NOTE if IN_ARRIVO else ""}
 
 {chr(10).join(groups)}
 
@@ -942,7 +961,7 @@ npx -y {PKG} auth google</code></pre>
       </section>
 
       <section class="doc-block" id="cloudflare">
-        <h2>6. Cloudflare</h2>
+        <h2>6. Cloudflare{soon("cf_traffic")}</h2>
         <p>Solo se il sito passa da Cloudflare, anche con il piano gratuito. Cloudflare vede ogni richiesta: visite reali (anche di chi rifiuta i cookie), crawler AI che passano davvero ed errori 404 e 5xx. Il token è in sola lettura e non tocca il sito.</p>
         <ol class="steps">
           <li>
@@ -1018,7 +1037,7 @@ def prompts_page() -> str:
             if pname == "audit-tecnico":
                 cred_html += ' (con la <a href="/credenziali/#api-key">API key Google</a> aggiunge anche PageSpeed e i Core Web Vitals reali)'
             cards.append(f"""        <article class="prompt-card" id="{pname}">
-          <h3>{html.escape(title)}</h3>
+          <h3>{html.escape(title)}{soon(pname)}</h3>
           <p>{html.escape(pdesc)}</p>
           <dl class="prompt-meta">
             <dt>Comando</dt><dd><code>{pname}</code></dd>
@@ -1036,6 +1055,7 @@ def prompts_page() -> str:
     return f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Prompt</nav>
       <h1>{len(PROMPTS)} prompt per SEO, GEO e AEO</h1>
       <p class="lead">I <a href="/tool/">tool</a> misurano, i prompt ragionano sulle misure. Ogni prompt è un'analisi già impostata: combina i tool giusti, cita i numeri che ha trovato e chiude con le correzioni in ordine di impatto. Sono divisi per obiettivo; dentro l'assistente la stessa guida è la risorsa <code>seomcp://prompt</code>.</p>
+      {SOON_NOTE if IN_ARRIVO else ""}
       <ul class="area-list">
 {toc}
       </ul>

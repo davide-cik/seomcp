@@ -77,6 +77,8 @@ La pubblicazione su npm è **automatica da GitHub** (`.github/workflows/publish.
 
 **Stato al 2026-10-12:** il Trusted Publisher su npmjs.com non è ancora configurato (GitHub Actions, `davide-cik` / `seomcp` / `publish.yml`, azione "npm publish" abilitata). Finché non lo è, **non spingere tag**: il workflow fallirebbe. Ultima versione su npm: 0.1.36 (in coda: 0.1.41); in attesa di rilascio Cloudflare, `bing_inbound_links`, `seomcp_guida` e i 18 prompt. Dettagli e procedura manuale di riserva in `RELEASING.md`.
 
+Dopo ogni rilascio: svuotare `IN_ARRIVO` in `scripts/build-site.py` (badge "in arrivo" del sito) e togliere la riga "In arrivo nella prossima versione" da `site/index.html`, poi `python3 scripts/build-site.py`. Finché non si rilascia, ogni tool o prompt nuovo va aggiunto a `IN_ARRIVO`.
+
 Dopo ogni rilascio: aggiornare SEO Audit (`/home/datareport/seoaudit`, usa seomcp come libreria) con `npm i @contentisking/seomcp@^X.Y.Z`, ricompilare e riavviare (`pm2 restart seoaudit-api seoaudit-worker`).
 
 ## Regole di lavoro (preferenze dell'utente)
