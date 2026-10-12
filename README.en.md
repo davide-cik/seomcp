@@ -6,7 +6,7 @@
 
 [🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · [MIT](LICENSE) license
 
-`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **30 tools and 18 prompts, all read-only.** Ask things like:
+`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, Cloudflare, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **30 tools and 18 prompts, all read-only.** Ask things like:
 
 > Which queries rank in positions 4-20 over the last 90 days, and which pages should I optimize first?
 >

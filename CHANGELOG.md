@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.42 — 2026-10-12
+
+- README (italiano e inglese): Cloudflare aggiunto all'elenco delle fonti nell'introduzione.
+
 ## 0.1.41 — 2026-10-12
 
 - **Cloudflare** (token in sola lettura, anche piano gratuito): `cf_traffic` (visite reali, anche di chi rifiuta i cookie), `cf_ai_crawlers` (crawler AI che passano davvero e su quali pagine), `cf_errors` (404 e 5xx visti dai visitatori). Nuovo passaggio in `seomcp setup`, in `doctor` e nella pagina Credenziali.
