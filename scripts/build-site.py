@@ -8,6 +8,7 @@ import hashlib
 import html
 import re
 import shutil
+import subprocess
 from datetime import date
 from pathlib import Path
 
@@ -707,7 +708,7 @@ PROMPT_AREAS = [
 ]
 PROMPTS = [p for *_, items in PROMPT_AREAS for p in items]
 
-# Tool e prompt già nel repository ma non ancora nel pacchetto npm (ultima versione pubblicata: 0.1.46).
+# Tool e prompt già nel repository ma non ancora nel pacchetto npm (la versione pubblicata la legge published_version()).
 # Il sito li segna "in arrivo": dopo il rilascio svuota l'insieme e rigenera il sito.
 IN_ARRIVO: set[str] = set()
 SOON = '<span class="badge-soon" title="Disponibile con la prossima versione del pacchetto npm">in arrivo</span>'
@@ -1239,6 +1240,30 @@ def main():
     print(f"Generate {len(VENDORS) + 1} pagine, partial clients.html e sitemap ({len(urls)} URL)")
 
 
+def published_version() -> str | None:
+    """Ultima versione su npm (None se il registro non risponde: resta quella già scritta nelle pagine)."""
+    try:
+        out = subprocess.run(["npm", "view", PKG, "version"], capture_output=True, text=True, timeout=30)
+        v = out.stdout.strip()
+        return v if re.fullmatch(r"\d+\.\d+\.\d+", v) else None
+    except (OSError, subprocess.SubprocessError):
+        return None
+
+
+def set_version() -> None:
+    """Scrive la versione pubblicata negli elementi <span class="npm-ver"> di home e footer."""
+    v = published_version()
+    if not v:
+        print("Versione npm non disponibile: lasciata quella attuale")
+        return
+    for f in (SITE / "index.html", SITE / "_partials" / "footer.html"):
+        old = f.read_text()
+        new = re.sub(r'(<span class="npm-ver">)[^<]*(</span>)', rf"\g<1>{v}\g<2>", old)
+        if new != old:
+            f.write_text(new)
+    print(f"Versione npm: {v}")
+
+
 ASSETS = ("style.css", "app.js", "demo.js", "credenziali.js")
 
 
@@ -1256,4 +1281,5 @@ def bust_cache() -> None:
 
 if __name__ == "__main__":
     main()
+    set_version()
     bust_cache()

@@ -32,7 +32,7 @@ npm run doctor           # verifica configurazione e credenziali
 npx tsx src/cli.ts setup # configurazione guidata (interattiva, serve un terminale)
 npm run domande          # rigenera domande/ dall'archivio in src/library/domande.ts
 npm run schema:update    # aggiorna il vocabolario schema.org incluso (src/data/schema-vocab.json)
-python3 scripts/build-site.py   # rigenera le pagine del sito (le modifiche sono subito online)
+python3 scripts/build-site.py   # rigenera le pagine del sito (subito online); scrive anche la versione npm in home e footer
 ```
 
 ## Struttura
@@ -77,7 +77,7 @@ La pubblicazione su npm è **automatica da GitHub** (`.github/workflows/publish.
 
 **Stato al 2026-10-12:** Trusted Publisher funzionante (GitHub Actions, `davide-cik` / `seomcp` / `publish.yml`, environment vuoto, azione "npm publish" abilitata): la 0.1.48 è la prima versione pubblicata dal workflow, con provenienza. Per un tentativo fallito che non richiede modifiche al codice basta `gh run rerun <id>` (stesso tag). Procedura manuale di riserva in `RELEASING.md`.
 
-Dopo ogni rilascio: svuotare `IN_ARRIVO` in `scripts/build-site.py` (badge "in arrivo" del sito) e togliere la riga "In arrivo nella prossima versione" da `site/index.html`, poi `python3 scripts/build-site.py`. Finché non si rilascia, ogni tool o prompt nuovo va aggiunto a `IN_ARRIVO`.
+Dopo ogni rilascio: `python3 scripts/build-site.py` (aggiorna la versione mostrata sul sito); svuotare `IN_ARRIVO` in `scripts/build-site.py` (badge "in arrivo" del sito) e togliere la riga "In arrivo nella prossima versione" da `site/index.html`, poi `python3 scripts/build-site.py`. Finché non si rilascia, ogni tool o prompt nuovo va aggiunto a `IN_ARRIVO`.
 
 Dopo ogni rilascio: aggiornare SEO Audit (`/home/datareport/seoaudit`, usa seomcp come libreria) con `npm i @contentisking/seomcp@^X.Y.Z`, ricompilare e riavviare (`pm2 restart seoaudit-api seoaudit-worker`).
 

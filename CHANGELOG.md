@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.50 — 2026-10-12
+
+- Sito: versione pubblicata su npm nella home (con link alle novità e alla provenienza) e nel footer di tutte le pagine. `build-site.py` la legge da npm a ogni rigenerazione.
+
 ## 0.1.49 — 2026-10-12
 
 - CLAUDE.md e RELEASING.md: Trusted Publisher funzionante, errori del primo rilascio e come risolverli.
