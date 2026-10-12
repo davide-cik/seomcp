@@ -55,6 +55,10 @@ Cerca il brand su **Wikidata** (pubblica, senza credenziali) e nel **Knowledge G
 
 Interroga l'indice pubblico di **Common Crawl**, l'archivio del web usato per addestrare molti modelli linguistici: per gli ultimi crawl (circa uno al mese) quante pagine del sito ci sono, se c'è la home e con quali risposte. Completa `geo_ai_access`, che dice solo se CCBot è ammesso. L'indice è spesso lento o sovraccarico: ogni crawl riporta il suo esito e un errore non blocca gli altri.
 
+### AEO: farsi scegliere come risposta
+
+`gsc_question_queries` prende da Search Console le query a domanda (come, cosa, perché, quanto, quale, differenza, dove, quando, chi, si può…, anche in inglese) con un filtro regex, e le raggruppa per tipo e per pagina. `aeo_answer_check` prende una pagina e una domanda, trova la sezione che risponde e misura posizione, titolo, prima frase, lunghezza del paragrafo iniziale (gli snippet stanno di solito tra 40 e 60 parole), elenchi, tabelle, numeri, leggibilità e FAQPage nei dati strutturati. `geo_page_sections` riporta l'indice Gulpease, la leggibilità pensata per l'italiano. Il prompt `ottimizza-risposte` combina tutto e scrive i blocchi risposta.
+
 ### Le visite dagli assistenti AI
 
 L'ultimo anello della catena è in Google Analytics: `ga_ai_referrals` conta le visite da ChatGPT, Perplexity, Gemini, Copilot, Claude e dagli altri assistenti, con le pagine di destinazione e le conversioni. È una sottostima: le app spesso non passano il referrer e i clic dalle AI Overviews di Google risultano come ricerca organica.
@@ -69,6 +73,7 @@ L'ultimo anello della catena è in Google Analytics: `ga_ai_referrals` conta le 
 | `sito-aperto-alle-ai` | Spiega i permessi AI in chiaro, anche per la normativa europea |
 | `passaggio-citabile` | Riscrive una sezione perché sia citabile da sola |
 | `piano-editoriale-ai` | Dalle domande senza risposta ricava un piano di contenuti |
+| `ottimizza-risposte` | AEO: dalle domande di Search Console ai blocchi risposta pronti da incollare |
 | `le-ai-sanno-chi-sono` | Entità su Wikidata e Google, sameAs del sito e presenza in Common Crawl |
 | `traffico-dalle-ai` | Visite dagli assistenti AI, accanto ai crawler che leggono il sito |
 | `ai-che-leggono-il-sito` | Crawler AI reali (Cloudflare) a confronto con i permessi di robots.txt |

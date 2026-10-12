@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Prompt per SEO, GEO e AEO · seomcp</title>
-  <meta name="description" content="I 20 prompt di seomcp per SEO, GEO e AEO, divisi per obiettivo: capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni.">
+  <meta name="description" content="I 21 prompt di seomcp per SEO, GEO e AEO, divisi per obiettivo: capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni.">
   <link rel="canonical" href="https://seomcp.contentisking.guru/prompt/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Prompt per SEO, GEO e AEO · seomcp">
-  <meta property="og:description" content="I 20 prompt di seomcp per SEO, GEO e AEO, divisi per obiettivo: capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni.">
+  <meta property="og:description" content="I 21 prompt di seomcp per SEO, GEO e AEO, divisi per obiettivo: capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni.">
   <meta property="og:url" content="https://seomcp.contentisking.guru/prompt/">
   <meta property="og:locale" content="it_IT">
   <link rel="stylesheet" href="/style.css?v=6ec1ed893b">
@@ -21,13 +21,13 @@
   <main id="main" class="doc">
     <div class="wrap">
       <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Prompt</nav>
-      <h1>20 prompt per SEO, GEO e AEO</h1>
+      <h1>21 prompt per SEO, GEO e AEO</h1>
       <p class="lead">I <a href="/tool/">tool</a> misurano, i prompt ragionano sulle misure. Ogni prompt è un'analisi già impostata: combina i tool giusti, cita i numeri che ha trovato e chiude con le correzioni in ordine di impatto. Sono divisi per obiettivo; dentro l'assistente la stessa guida è la risorsa <code>seomcp://prompt</code>.</p>
-      
+      <p class="small">Le voci segnate <span class="badge-soon" title="Disponibile con la prossima versione del pacchetto npm">in arrivo</span> sono pronte e arrivano con la prossima versione del pacchetto npm: chi installa oggi con <code>npx</code> non le vede ancora.</p>
       <ul class="area-list">
         <li><div class="area-head"><a href="#capire-i-dati">Capire i dati</a> <span class="area-count">5 prompt</span></div><p>Cosa sta succedendo al sito: andamento, cali, conversioni, confronto tra motori e domande degli utenti.</p></li>
         <li><div class="area-head"><a href="#migliorare">Migliorare i risultati</a> <span class="area-count">5 prompt</span></div><p>Dove si guadagna di più con meno lavoro: posizioni, CTR, contenuti in concorrenza, velocità e nuovi contenuti.</p></li>
-        <li><div class="area-head"><a href="#farsi-citare">Farsi citare dalle AI</a> <span class="area-count">7 prompt</span></div><p>GEO e AEO: farsi leggere, capire e citare da ChatGPT, Perplexity, Gemini e dalle AI Overviews di Google.</p></li>
+        <li><div class="area-head"><a href="#farsi-citare">Farsi citare dalle AI</a> <span class="area-count">8 prompt</span></div><p>GEO e AEO: farsi leggere, capire e citare da ChatGPT, Perplexity, Gemini e dalle AI Overviews di Google.</p></li>
         <li><div class="area-head"><a href="#controlli">Controlli e correzioni</a> <span class="area-count">3 prompt</span></div><p>Verifiche tecniche con la lista delle correzioni pronta: prima di pubblicare, dopo una migrazione, quando qualcosa non torna.</p></li>
       </ul>
 
@@ -161,8 +161,19 @@
         </article>
       </section>
       <section class="doc-block" id="farsi-citare">
-        <h2>Farsi citare dalle AI <span class="area-count">7 prompt</span></h2>
+        <h2>Farsi citare dalle AI <span class="area-count">8 prompt</span></h2>
         <p>GEO e AEO: farsi leggere, capire e citare da ChatGPT, Perplexity, Gemini e dalle AI Overviews di Google.</p>
+        <article class="prompt-card" id="ottimizza-risposte">
+          <h3>Ottimizza le risposte (AEO) <span class="badge-soon" title="Disponibile con la prossima versione del pacchetto npm">in arrivo</span></h3>
+          <p>Parte dalle domande vere degli utenti in Search Console, verifica se le pagine rispondono in modo estraibile da snippet, assistenti vocali e risposte AI, e riscrive i blocchi risposta nella forma giusta per ogni tipo di domanda.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>ottimizza-risposte</code></dd>
+            <dt>Gli dai</dt><dd><code>sito</code> (la proprietà Search Console, facoltativa), <code>pagina</code> (una sezione del sito, es. /blog/, facoltativa), <code>giorni</code> (il periodo, di default 90)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#gsc_question_queries"><code>gsc_question_queries</code></a>, <a href="/tool/#aeo_answer_check"><code>aeo_answer_check</code></a>, <a href="/tool/#schema_validate"><code>schema_validate</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a> (senza, controlla con <code>aeo_answer_check</code> le domande che indichi tu)</dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Quali domande fanno gli utenti su Google, e le mie pagine rispondono in modo che le scelgano snippet e assistenti AI?»</p>
+        </article>
         <article class="prompt-card" id="traffico-dalle-ai">
           <h3>Quanto traffico mi portano le AI?</h3>
           <p>Visite da ChatGPT, Perplexity, Gemini, Copilot e dagli altri assistenti: quante sono, se crescono, su quali pagine arrivano e se convertono, accanto ai crawler AI che leggono il sito.</p>

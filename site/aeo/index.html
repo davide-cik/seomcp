@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AEO: farsi scegliere come risposta · seomcp</title>
+  <meta name="description" content="Le domande vere degli utenti da Search Console e il controllo delle risposte: snippet in evidenza, assistenti vocali e risposte AI, con la leggibilità Gulpease. Dentro Claude, ChatGPT e gli altri assistenti, con seomcp.">
+  <link rel="canonical" href="https://seomcp.contentisking.guru/aeo/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AEO: farsi scegliere come risposta · seomcp">
+  <meta property="og:description" content="Le domande vere degli utenti da Search Console e il controllo delle risposte: snippet in evidenza, assistenti vocali e risposte AI, con la leggibilità Gulpease. Dentro Claude, ChatGPT e gli altri assistenti, con seomcp.">
+  <meta property="og:url" content="https://seomcp.contentisking.guru/aeo/">
+  <meta property="og:locale" content="it_IT">
+  <link rel="stylesheet" href="/style.css?v=6ec1ed893b">
+</head>
+<body>
+  <a class="skip" href="#main">Vai al contenuto</a>
+  <!--#include virtual="/_partials/header.html" -->
+
+  <main id="main" class="doc">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › AEO</nav>
+      <p class="eyebrow">Novità</p>
+      <h1>AEO: farsi scegliere come risposta</h1>
+      <p class="lead">Snippet in evidenza, «Le persone chiedono anche», assistenti vocali, risposte AI: tutti cercano nella pagina una risposta breve, chiara e facile da estrarre. seomcp parte dalle domande che gli utenti fanno davvero su Google e misura se le tue pagine rispondono nel modo giusto.</p>
+
+      <section class="doc-block">
+        <h2>Cosa puoi chiedere</h2>
+        <ul class="prompts">
+          <li>Quali domande fanno gli utenti che arrivano sul mio sito da Google, e su quali pagine?</li>
+          <li>La guida risponde a «come scegliere le scarpe da trekking»? In quale sezione, e con quale prima frase?</li>
+          <li>Quali domande hanno molte impressioni ma un CTR basso? Riscrivimi le risposte.</li>
+          <li>Le mie pagine sono troppo difficili da leggere? Dammi l'indice Gulpease sezione per sezione.</li>
+        </ul>
+      </section>
+
+      <section class="doc-block">
+        <h2>I tool</h2>
+        <dl class="tools">
+          <dt><code>gsc_question_queries</code></dt><dd>Le query a domanda che portano impressioni al sito (come, cosa, perché, quanto, quale, differenza, dove, quando, chi, si può…), prese da Search Console con un filtro regex: tipo di domanda, pagina, impressioni, clic, CTR, posizione e pagine in concorrenza. Raggruppate per tipo, con la forma di risposta che di solito viene estratta meglio.</dd>
+          <dt><code>aeo_answer_check</code></dt><dd>Data una pagina e una domanda, trova la sezione che risponde e la misura: posizione, titolo che riprende la domanda, prima frase, lunghezza del primo paragrafo (gli snippet stanno di solito tra 40 e 60 parole), elenchi, tabelle, numeri, leggibilità, e se FAQPage o QAPage contengono la domanda. Senza credenziali.</dd>
+          <dt><code>geo_page_sections</code></dt><dd>Ora con l'indice Gulpease di ogni sezione e della pagina: la leggibilità pensata per l'italiano. Sotto 60 il testo è difficile per molti lettori.</dd>
+        </dl>
+      </section>
+
+      <section class="doc-block">
+        <h2>La forma giusta per ogni domanda</h2>
+        <ul class="tips">
+          <li><strong>Come:</strong> passaggi numerati, con una frase di sintesi prima.</li>
+          <li><strong>Cosa:</strong> la definizione in una frase all'inizio.</li>
+          <li><strong>Quanto:</strong> il numero (prezzo, durata, quantità) già nella prima frase.</li>
+          <li><strong>Differenza e quale:</strong> la risposta diretta, poi una tabella di confronto.</li>
+          <li><strong>Si può, conviene:</strong> «Sì» o «No» come prima parola, poi il perché.</li>
+        </ul>
+        <p class="small">Sono indicazioni di buona pratica, non regole di Google: aeo_answer_check misura, il giudizio lo dà l'assistente.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Il prompt</h2>
+        <p><a href="/prompt/#ottimizza-risposte"><strong>Ottimizza le risposte (AEO)</strong></a>: prende le domande da Search Console, controlla le pagine, classifica le risposte (assente, nascosta, nella forma sbagliata, buona) e scrive i blocchi pronti da incollare, con il JSON-LD FAQPage validato dove ha senso. Con <a href="/prompt/#domande-utenti">Rispondo alle domande dei miei utenti?</a> lavori su una pagina sola.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Da sapere</h2>
+        <ul class="tips">
+          <li><strong>Search Console nasconde le query rare</strong> per privacy: le domande reali sono di più di quelle che vedi.</li>
+          <li><strong>Chi occupa oggi lo snippet</strong> e le domande di «Le persone chiedono anche» non sono disponibili con dati ufficiali: servirebbero API di SERP a pagamento. seomcp resta sui dati del proprietario del sito.</li>
+          <li><strong>FAQ nei risultati di Google:</strong> oggi compaiono come risultato avanzato solo per pochi siti, ma domande e risposte esplicite restano utili agli assistenti AI.</li>
+        </ul>
+        <p class="links"><a href="/geo/">GEO: farsi citare dai motori AI →</a></p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        <p><code>aeo_answer_check</code> funziona subito, senza credenziali. Per le domande di Search Console segui la pagina <a href="/credenziali/#search-console">Credenziali</a>.</p>
+        <!--#include virtual="/_partials/clients.html" -->
+      </section>
+    </div>
+  </main>
+
+  <!--#include virtual="/_partials/footer.html" -->
+  <script src="/app.js?v=89b4d93978" defer></script>
+</body>
+</html>

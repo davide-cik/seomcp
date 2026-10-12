@@ -6,7 +6,7 @@
 
 [🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · [MIT](LICENSE) license
 
-`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, Cloudflare, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **34 tools and 20 prompts, all read-only.** Ask things like:
+`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, Cloudflare, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **36 tools and 21 prompts, all read-only.** Ask things like:
 
 > Which queries rank in positions 4-20 over the last 90 days, and which pages should I optimize first?
 >
@@ -22,7 +22,7 @@
 - **Small, readable codebase.** About 7,700 lines of TypeScript in [`src/`](src), easy to audit before you install it.
 - **No misuse of the Google Indexing API**, which Google reserves for job postings and livestreams.
 
-## Tools (34)
+## Tools (36)
 
 | Tool | What it does |
 |---|---|
@@ -32,6 +32,7 @@
 | `gsc_performance` | Clicks, impressions, CTR and position by query, page, country, device and date, with filters |
 | `gsc_compare_periods` | Compare against the previous period or the year before: losers and gainers |
 | `gsc_striking_distance` | "Striking distance" queries (positions 4-20), sorted by potential |
+| `gsc_question_queries` | AEO: real user questions (how, what, why, how much, which…) with type, page, impressions, CTR and position |
 | `gsc_inspect_url` | Index status, canonical, last crawl, rich results |
 | `gsc_list_sitemaps` | Submitted sitemaps, errors and warnings |
 | `ga_list_properties` | Accessible Google Analytics 4 properties and their IDs |
@@ -45,7 +46,8 @@
 | `psi_analyze` | PageSpeed Insights test: scores, metrics, opportunities and SEO audits |
 | `geo_ai_access` | GEO: which AI crawlers can read the site (robots.txt, llms.txt, Content Signals, TDMRep) |
 | `geo_page_metrics` | GEO/AEO: page metrics as an AI crawler sees it, plus HTTPS and domain age |
-| `geo_page_sections` | GEO/AEO: page text split into sections, with per-section metrics |
+| `geo_page_sections` | GEO/AEO: page text split into sections, with per-section metrics and Gulpease readability (Italian) |
+| `aeo_answer_check` | AEO: does the page answer this question? Section, first sentence, length, format, readability, FAQPage |
 | `geo_entity` | GEO: is the brand an entity on Wikidata and in Google's Knowledge Graph, linked to the site via sameAs? |
 | `geo_common_crawl` | GEO: are the site's pages in Common Crawl, the archive many models are trained on? |
 | `schema_validate` | schema.org validator: official vocabulary, Google rich result requirements, consistency with the page. Also on pasted JSON-LD |
@@ -61,7 +63,7 @@
 | `cf_ai_crawlers` | Cloudflare: AI crawlers that actually visit, which pages and which responses |
 | `cf_errors` | Cloudflare: pages returning 404 or 5xx to visitors |
 
-Plus 20 **prompts**, grouped by goal like Bing Webmaster Tools' prompt guide: understanding the data (traffic drops, monthly client report, traffic that doesn't convert, Google vs Bing, user questions), improving results (striking-distance queries, low-CTR titles and descriptions, keyword cannibalization, Core Web Vitals plan, editorial plan), getting cited by AI (traffic from AI assistants, does AI know who you are (entity and Common Crawl), which AI crawlers really read the site, GEO page audit, AI crawler access, competitor comparison, citable passage) and checks and fixes (technical audit, structured data, post-migration check). Inside the assistant the guide is the MCP resource `seomcp://prompt`. Details (Italian): [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/).
+Plus 21 **prompts**, grouped by goal like Bing Webmaster Tools' prompt guide: understanding the data (traffic drops, monthly client report, traffic that doesn't convert, Google vs Bing, user questions), improving results (striking-distance queries, low-CTR titles and descriptions, keyword cannibalization, Core Web Vitals plan, editorial plan), getting cited by AI (answer optimization for snippets and AI answers, traffic from AI assistants, does AI know who you are (entity and Common Crawl), which AI crawlers really read the site, GEO page audit, AI crawler access, competitor comparison, citable passage) and checks and fixes (technical audit, structured data, post-migration check). Inside the assistant the guide is the MCP resource `seomcp://prompt`. Details (Italian): [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/).
 
 **Ready-made questions:** 108 conversation starters in 10 themes (36 need no credentials), in [domande/](domande/README.md) (Italian) and as MCP resources inside seomcp: `seomcp://domande` (index) and `seomcp://domande/<theme>`.
 

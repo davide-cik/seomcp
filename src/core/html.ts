@@ -68,6 +68,20 @@ export function countWords(text: string): number {
   return m ? m.length : 0;
 }
 
+/**
+ * Indice Gulpease (0-100), pensato per l'italiano: 89 + (300 × frasi − 10 × lettere) / parole.
+ * Indicativamente sotto 80 è difficile per chi ha la licenza elementare, sotto 60 per la media, sotto 40 per il diploma.
+ * Restituisce null sotto le 20 parole, dove il numero non è affidabile.
+ */
+export function gulpease(text: string): number | null {
+  const words = countWords(text);
+  if (words < 20) return null;
+  const letters = (text.match(/\p{L}/gu) ?? []).length;
+  const sentences = Math.max(1, (text.match(/[.!?…]+(\s|$)/g) ?? []).length);
+  const index = 89 + (300 * sentences - 10 * letters) / words;
+  return Math.max(0, Math.min(100, Math.round(index)));
+}
+
 function norm(text: string): string {
   return text.replace(/\s+/g, ' ').trim();
 }

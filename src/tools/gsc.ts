@@ -1,5 +1,6 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
+import { aggregateQuestions, questionRegex } from '../core/aeo.js';
 import { comparePeriods, strikingDistance } from '../core/analysis.js';
 import { addDays, previousPeriod } from '../core/dates.js';
 import { SeoMcpError } from '../core/errors.js';
@@ -158,6 +159,51 @@ export function registerGscTools(server: McpServer, ctx: ToolContext): void {
         });
         const hits = strikingDistance(rows, args);
         return { siteUrl: site, ...range, total: hits.length, rows: hits.slice(0, args.limit) };
+      }),
+  );
+
+  server.registerTool(
+    'gsc_question_queries',
+    {
+      title: 'Search Console: le domande degli utenti',
+      description:
+        "Le query a domanda che portano impressioni al sito (come, cosa, perché, quanto, quale, differenza, dove, quando, chi, si può…, anche in inglese), selezionate con un filtro regex di Search Console: per ognuna tipo di domanda, pagina principale, impressioni, clic, CTR, posizione e quante altre pagine competono; raggruppate per tipo (con la forma di risposta che di solito viene estratta meglio) e per pagina. È il punto di partenza dell'AEO: poi aeo_answer_check verifica se la pagina risponde bene.",
+      inputSchema: {
+        siteUrl,
+        ...dateRangeShape,
+        days: z.number().int().min(1).max(480).default(90).describe('Giorni da analizzare se startDate/endDate non sono indicati.'),
+        pageContains: z.string().optional().describe('Limita alle pagine il cui URL contiene questo testo, es. "/blog/".'),
+        minImpressions: z.number().int().min(0).default(10),
+        limit: z.number().int().min(1).max(2000).default(200).describe('Domande restituite, ordinate per impressioni.'),
+      },
+      annotations: { readOnlyHint: true },
+    },
+    (args) =>
+      run(async () => {
+        const site = resolveSite(args.siteUrl, ctx.defaults.gscSite, 'gsc');
+        const range = resolveRange(args);
+        const rows = await ctx.gsc().query({
+          siteUrl: site,
+          ...range,
+          dimensions: ['query', 'page'],
+          filters: [
+            { dimension: 'query', operator: 'includingRegex', expression: questionRegex() },
+            ...(args.pageContains ? [{ dimension: 'page', operator: 'contains', expression: args.pageContains } as GscFilter] : []),
+          ] as GscFilter[],
+          rowLimit: GSC_MAX_ROWS,
+        });
+        const { questions, byType, pages } = aggregateQuestions(rows, args.minImpressions);
+        return {
+          siteUrl: site,
+          ...range,
+          totalQuestions: questions.length,
+          impressions: questions.reduce((n, q) => n + q.impressions, 0),
+          clicks: questions.reduce((n, q) => n + q.clicks, 0),
+          byType,
+          pages: pages.slice(0, 30),
+          questions: questions.slice(0, args.limit),
+          note: 'Search Console nasconde le query molto rare per privacy: le domande reali sono di più. Le domande con altre pagine in concorrenza (otherPages > 0) possono indicare cannibalizzazione.',
+        };
       }),
   );
 

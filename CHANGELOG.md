@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.61 — 2026-10-12
+
+- **AEO**: `gsc_question_queries` (le domande vere degli utenti da Search Console, con filtro regex, raggruppate per tipo e per pagina, con la forma di risposta adatta) e `aeo_answer_check` (la pagina risponde a una domanda? sezione, posizione, prima frase, lunghezza, elenchi, tabelle, leggibilità, FAQPage/QAPage).
+- `geo_page_sections`: indice di leggibilità Gulpease per sezione e per pagina.
+- Prompt `ottimizza-risposte`. 36 tool, 21 prompt. Sito: pagina `/aeo/`, voce in Novità, card AEO nella home.
+
 ## 0.1.60 — 2026-10-12
 
 - 0.1.59 pubblicata su npm (108 domande come risorse MCP): versione aggiornata su sito e SEO Audit.

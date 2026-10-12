@@ -24,6 +24,7 @@ describe('server MCP', () => {
       pagespeed: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
     const { tools } = await client.listTools();
     expect(tools.map((t) => t.name).sort()).toEqual([
+      'aeo_answer_check',
       'bing_crawl',
       'bing_inbound_links',
       'bing_keyword_stats',
@@ -51,6 +52,7 @@ describe('server MCP', () => {
       'gsc_list_sitemaps',
       'gsc_list_sites',
       'gsc_performance',
+      'gsc_question_queries',
       'gsc_striking_distance',
       'psi_analyze',
       'schema_validate',
@@ -149,6 +151,7 @@ describe('server MCP', () => {
       'google-vs-bing',
       'le-ai-sanno-chi-sono',
       'opportunita-distanza-di-tiro',
+      'ottimizza-risposte',
       'passaggio-citabile',
       'piano-core-web-vitals',
       'piano-editoriale-ai',

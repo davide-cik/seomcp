@@ -195,4 +195,30 @@ Se il Knowledge Graph non è disponibile (manca la API key Google o la Knowledge
 
 ${REGOLE}`),
   );
+
+  server.registerPrompt(
+    'ottimizza-risposte',
+    {
+      title: 'Ottimizza le risposte (AEO)',
+      description: "Parte dalle domande vere degli utenti in Search Console, verifica se le pagine rispondono in modo estraibile da snippet in evidenza, assistenti vocali e risposte AI, e riscrive i blocchi risposta nella forma giusta per ogni tipo di domanda.",
+      argsSchema: {
+        sito: z.string().optional().describe('Proprietà Search Console (es. sc-domain:esempio.it). Se omessa usa quella predefinita.'),
+        pagina: z.string().optional().describe('Limita a una sezione del sito, es. /blog/'),
+        giorni: z.string().optional().describe('Periodo in giorni, default 90'),
+      },
+    },
+    ({ sito, pagina, giorni }) =>
+      text(`Ottimizza le risposte${sito ? ` della proprietà ${sito}` : ' del sito'}${pagina ? ` nelle pagine che contengono "${pagina}"` : ''} per farle scegliere da snippet in evidenza, "Le persone chiedono anche", assistenti vocali e risposte AI.
+
+1. Con gsc_question_queries (ultimi ${giorni ?? '90'} giorni${pagina ? `, pageContains "${pagina}"` : ''}) prendi le domande degli utenti: tipi più frequenti, pagine che ricevono più domande, domande con CTR basso o posizione oltre la 5.
+2. Scegli le 8-10 domande con più impressioni e margine di miglioramento. Per ognuna usa aeo_answer_check sulla sua pagina: la pagina risponde? In quale sezione, a che punto, con quale prima frase e quale lunghezza?
+3. Classifica ogni domanda: risposta assente (serve una sezione nuova), risposta nascosta (in fondo alla pagina o dopo un'introduzione lunga), risposta presente ma nella forma sbagliata per il tipo di domanda (vedi bestFormat), risposta buona.
+4. Per ogni risposta da migliorare scrivi il blocco pronto da incollare: un titolo H2 o H3 che riprende la domanda, una prima frase che risponde da sola, un paragrafo di 40-60 parole, e quando serve passaggi numerati (come), una tabella (differenza, quale) o il numero già nella prima frase (quanto). Se la leggibilità Gulpease della sezione è sotto 60, semplifica frasi e parole.
+5. Se più domande sono sulla stessa pagina, proponi una sezione di domande frequenti con il JSON-LD FAQPage corrispondente, validato con schema_validate. Spiega che oggi Google mostra le FAQ come risultato avanzato solo per pochi siti, ma che domande e risposte esplicite aiutano comunque gli assistenti AI.
+6. Chiudi con una tabella: domanda, impressioni, pagina, stato della risposta, intervento, priorità.
+
+Se Search Console non è configurato, chiama seomcp_status, dillo in una riga e chiedi all'utente le domande e le pagine da controllare: aeo_answer_check funziona anche senza credenziali.
+
+${REGOLE}`),
+  );
 }

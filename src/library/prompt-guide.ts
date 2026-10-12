@@ -42,6 +42,7 @@ export const PROMPT_GUIDE: PromptCategory[] = [
     titolo: 'Farsi citare dalle AI',
     intro: 'GEO e AEO: farsi leggere, capire e citare da ChatGPT, Perplexity, Gemini e dalle AI Overviews di Google.',
     prompt: [
+      { nome: 'ottimizza-risposte', titolo: 'Ottimizza le risposte (AEO)', serve: 'Search Console (anche senza, sulle domande che indichi)', chiedi: 'Quali domande fanno gli utenti su Google, e le mie pagine rispondono in modo che le scelgano snippet e assistenti AI?' },
       { nome: 'traffico-dalle-ai', titolo: 'Quanto traffico mi portano le AI?', serve: 'Analytics (più Cloudflare, facoltativo)', chiedi: 'Quante visite mi portano ChatGPT, Perplexity e gli altri assistenti AI, su quali pagine, e convertono?' },
       { nome: 'le-ai-sanno-chi-sono', titolo: 'Le AI sanno chi sono?', serve: 'nessuna credenziale (API key Google per il Knowledge Graph)', chiedi: 'Il mio brand è riconosciuto come entità da Wikidata e Google? E il sito è in Common Crawl?' },
       { nome: 'ai-che-leggono-il-sito', titolo: 'Quali AI leggono davvero il mio sito?', serve: 'Cloudflare', chiedi: 'Quali crawler AI passano davvero sul mio sito, su quali pagine, e quali sto bloccando?' },

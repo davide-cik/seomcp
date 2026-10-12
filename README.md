@@ -6,7 +6,7 @@
 
 [🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · Licenza [MIT](LICENSE)
 
-`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, Cloudflare, PageSpeed Insights e Chrome UX Report, e di analizzare le pagine pubbliche: accesso dei crawler AI, dati strutturati, redirect, canonical, sitemap e link rotti. **34 tool e 20 prompt, tutti in sola lettura.** Così puoi chiedere, in italiano:
+`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, Cloudflare, PageSpeed Insights e Chrome UX Report, e di analizzare le pagine pubbliche: accesso dei crawler AI, dati strutturati, redirect, canonical, sitemap e link rotti. **36 tool e 21 prompt, tutti in sola lettura.** Così puoi chiedere, in italiano:
 
 > Quali query sono in posizione 4-20 negli ultimi 90 giorni, e quali pagine dovrei ottimizzare per prime?
 >
@@ -26,7 +26,7 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 - **Codice piccolo e leggibile.** Circa 7.700 righe di TypeScript in [`src/`](src): leggerlo prima di installarlo è alla portata di chiunque.
 - **Nessun uso improprio della Google Indexing API**, che Google riserva alle offerte di lavoro e alle dirette video.
 
-## Tool disponibili (34)
+## Tool disponibili (36)
 
 | Tool | Cosa fa |
 |---|---|
@@ -36,6 +36,7 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 | `gsc_performance` | Clic, impressioni, CTR e posizione per query, pagina, paese, dispositivo, data, con filtri |
 | `gsc_compare_periods` | Confronto con il periodo precedente o con l'anno prima: cali e crescite |
 | `gsc_striking_distance` | Query "a distanza di tiro" (posizione 4-20) ordinate per potenziale |
+| `gsc_question_queries` | AEO: le domande vere degli utenti (come, cosa, perché, quanto, quale…) con tipo, pagina, impressioni, CTR e posizione |
 | `gsc_inspect_url` | Stato di indicizzazione, canonical, ultima scansione, rich result |
 | `gsc_list_sitemaps` | Sitemap inviate, errori e avvisi |
 | `ga_list_properties` | Proprietà Google Analytics 4 accessibili, con il loro ID |
@@ -49,7 +50,8 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 | `psi_analyze` | Test PageSpeed Insights: punteggi, metriche, opportunità e controlli SEO |
 | `geo_ai_access` | GEO: quali crawler AI possono leggere il sito (robots.txt, llms.txt, Content Signals, TDMRep) |
 | `geo_page_metrics` | GEO/AEO: misure della pagina come la vede un crawler AI, più HTTPS ed età del dominio |
-| `geo_page_sections` | GEO/AEO: il testo della pagina diviso in sezioni, con le misure di ciascuna |
+| `geo_page_sections` | GEO/AEO: il testo della pagina diviso in sezioni, con le misure e la leggibilità Gulpease di ciascuna |
+| `aeo_answer_check` | AEO: la pagina risponde a questa domanda? Sezione, prima frase, lunghezza, formato, leggibilità, FAQPage |
 | `geo_entity` | GEO: il brand è un'entità su Wikidata e nel Knowledge Graph di Google, collegata al sito con sameAs? |
 | `geo_common_crawl` | GEO: le pagine sono in Common Crawl, l'archivio con cui si addestrano molti modelli? |
 | `schema_validate` | Validatore schema.org: vocabolario ufficiale, requisiti Google per i risultati avanzati, coerenza con la pagina. Anche su JSON-LD incollato |
@@ -67,15 +69,15 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 
 Le analisi più complesse (cannibalizzazione, content gap, report) le fa l'assistente ragionando sui dati: non serve codificarle nel server.
 
-### Prompt (20)
+### Prompt (21)
 
-Oltre ai tool, seomcp offre 20 **prompt**: analisi già impostate che combinano più tool e chiudono con le correzioni in ordine di impatto. Sono divisi per obiettivo, come la guida dei prompt di Bing Webmaster Tools:
+Oltre ai tool, seomcp offre 21 **prompt**: analisi già impostate che combinano più tool e chiudono con le correzioni in ordine di impatto. Sono divisi per obiettivo, come la guida dei prompt di Bing Webmaster Tools:
 
 | Obiettivo | Prompt |
 |---|---|
 | **Capire i dati** | Perché sto perdendo traffico? · Report mensile per il cliente · Traffico che non converte · Google e Bing a confronto · Rispondo alle domande dei miei utenti? |
 | **Migliorare i risultati** | Opportunità a distanza di tiro · Title e description che non convincono · Pagine in concorrenza tra loro · Piano per i Core Web Vitals · Piano editoriale per le risposte AI |
-| **Farsi citare dalle AI** | Quanto traffico mi portano le AI? · Le AI sanno chi sono? · Quali AI leggono davvero il mio sito? · Audit GEO della pagina · Il mio sito è aperto alle AI? · Perché citano loro e non me? · Rendi citabile questo passaggio |
+| **Farsi citare dalle AI** | Ottimizza le risposte (AEO) · Quanto traffico mi portano le AI? · Le AI sanno chi sono? · Quali AI leggono davvero il mio sito? · Audit GEO della pagina · Il mio sito è aperto alle AI? · Perché citano loro e non me? · Rendi citabile questo passaggio |
 | **Controlli e correzioni** | Audit tecnico del sito · Correggi i miei dati strutturati · Controllo dopo una migrazione |
 
 Dentro l'assistente la stessa guida è la risorsa MCP `seomcp://prompt`. Dettagli, argomenti e credenziali di ogni prompt: [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/). Approfondimenti: [docs/geo.md](docs/geo.md) e [docs/schema-validator.md](docs/schema-validator.md).

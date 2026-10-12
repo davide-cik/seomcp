@@ -490,7 +490,7 @@ GEO_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomc
 
       <section class="doc-block">
         <h2>Dati strutturati</h2>
-        <p>Per controllare a fondo i dati strutturati c'è il <a href="/schema/">validatore schema.org</a>, con il prompt che propone il codice corretto.</p>
+        <p>Per controllare a fondo i dati strutturati c'è il <a href="/schema/">validatore schema.org</a>, con il prompt che propone il codice corretto. Per farsi scegliere come risposta, partendo dalle domande vere degli utenti, c'è la pagina <a href="/aeo/">AEO</a>.</p>
       </section>
 
       <section class="doc-block">
@@ -554,6 +554,7 @@ TOOL_GROUPS = [
         ("gsc_performance", "Clic, impressioni, CTR e posizione media, raggruppati per query, pagina, paese, dispositivo, data o aspetto nei risultati. Con filtri e fino a 25.000 righe."),
         ("gsc_compare_periods", "Confronto con il periodo precedente o con lo stesso periodo dell'anno prima: i cali e le crescite di clic più forti, con i totali."),
         ("gsc_striking_distance", "Query per cui il sito è già visibile ma non in cima (posizione 4-20), ordinate per impressioni: le ottimizzazioni più rapide."),
+        ("gsc_question_queries", "Le domande vere degli utenti: query a domanda (come, cosa, perché, quanto, quale, differenza…) con tipo, pagina, impressioni, clic, CTR e posizione, raggruppate per tipo e per pagina. Il punto di partenza dell'AEO."),
         ("gsc_inspect_url", "Stato di indicizzazione di un URL secondo Google: copertura, ultima scansione, canonical scelto da Google, robots.txt, risultati avanzati."),
         ("gsc_list_sitemaps", "Sitemap inviate, con data di ultimo download, URL inviati, errori e avvisi."),
         ("gsc_list_sites", "Le proprietà Search Console a cui hai accesso."),
@@ -582,9 +583,12 @@ TOOL_GROUPS = [
     ("geo", "GEO e AEO", "nessuna credenziale, le pagine sono pubbliche.", "/geo/", [
         ("geo_ai_access", "Per ogni crawler AI, diviso per scopo, se può leggere il sito e per quale regola di robots.txt. Più llms.txt, Content Signals, riserva TDM europea e direttive della pagina."),
         ("geo_page_metrics", "Misure della pagina come la legge un crawler AI: struttura, risposta in apertura, sezioni, dati, freschezza, autore, fonti, dati strutturati, entità. Più HTTPS ed età del dominio."),
-        ("geo_page_sections", "Il testo della pagina diviso per titoli, con le misure di ogni sezione."),
+        ("geo_page_sections", "Il testo della pagina diviso per titoli, con le misure di ogni sezione e la leggibilità Gulpease."),
         ("geo_entity", "Il brand è un'entità riconosciuta? Wikidata e Knowledge Graph di Google: descrizione, tipo, sito ufficiale, pagine Wikipedia, profili; più i sameAs dell'Organization nei dati strutturati del sito."),
         ("geo_common_crawl", "Le pagine del sito sono in Common Crawl, l'archivio con cui si addestrano molti modelli? Pagine, home e risposte negli ultimi crawl."),
+    ]),
+    ("aeo", "AEO", "nessuna credenziale, le pagine sono pubbliche.", "/aeo/", [
+        ("aeo_answer_check", "La pagina risponde a questa domanda? Sezione che risponde, posizione, prima frase, lunghezza del paragrafo iniziale, elenchi, tabelle, leggibilità Gulpease, forma adatta al tipo di domanda e FAQPage nei dati strutturati."),
     ]),
     ("schema", "Validatore schema.org", "nessuna credenziale.", "/schema/", [
         ("schema_validate", "Valida il JSON-LD di una pagina o incollato: sintassi, vocabolario ufficiale schema.org, requisiti di Google per i risultati avanzati, coerenza con la pagina."),
@@ -671,6 +675,11 @@ PROMPT_AREAS = [
          "Fammi un piano editoriale con le domande degli utenti a cui il sito non risponde ancora."),
     ]),
     ("farsi-citare", "Farsi citare dalle AI", "GEO e AEO: farsi leggere, capire e citare da ChatGPT, Perplexity, Gemini e dalle AI Overviews di Google.", [
+        ("ottimizza-risposte", "Ottimizza le risposte (AEO)",
+         "Parte dalle domande vere degli utenti in Search Console, verifica se le pagine rispondono in modo estraibile da snippet, assistenti vocali e risposte AI, e riscrive i blocchi risposta nella forma giusta per ogni tipo di domanda.",
+         [("sito", "la proprietà Search Console, facoltativa"), ("pagina", "una sezione del sito, es. /blog/, facoltativa"), ("giorni", "il periodo, di default 90")],
+         ["gsc_question_queries", "aeo_answer_check", "schema_validate"], [GSC],
+         "Quali domande fanno gli utenti su Google, e le mie pagine rispondono in modo che le scelgano snippet e assistenti AI?"),
         ("traffico-dalle-ai", "Quanto traffico mi portano le AI?",
          "Visite da ChatGPT, Perplexity, Gemini, Copilot e dagli altri assistenti: quante sono, se crescono, su quali pagine arrivano e se convertono, accanto ai crawler AI che leggono il sito.",
          [("url", "il sito, facoltativo"), ("giorni", "il periodo, di default 28")],
@@ -731,7 +740,7 @@ DOMANDE = len(re.findall(r"^\s*q\('", (ROOT / "src" / "library" / "domande.ts").
 
 # Tool e prompt già nel repository ma non ancora nel pacchetto npm (la versione pubblicata la legge published_version()).
 # Il sito li segna "in arrivo": dopo il rilascio svuota l'insieme e rigenera il sito.
-IN_ARRIVO: set[str] = set()
+IN_ARRIVO: set[str] = {"gsc_question_queries", "aeo_answer_check", "ottimizza-risposte"}
 SOON = '<span class="badge-soon" title="Disponibile con la prossima versione del pacchetto npm">in arrivo</span>'
 SOON_NOTE = ('<p class="small">Le voci segnate ' + SOON + ' sono pronte e arrivano con la prossima versione del pacchetto npm: '
              'chi installa oggi con <code>npx</code> non le vede ancora.</p>')
@@ -752,6 +761,7 @@ CRED_FOR_GROUP = {
     "geo": ("nessuna credenziale, le pagine sono pubbliche", "senza-credenziali"),
     "schema": ("nessuna credenziale", "senza-credenziali"),
     "tecnico": ("nessuna credenziale, le pagine sono pubbliche", "senza-credenziali"),
+    "aeo": ("nessuna credenziale, le pagine sono pubbliche", "senza-credenziali"),
     "cloudflare": ("un token Cloudflare in sola lettura", "cloudflare"),
 }
 
@@ -795,6 +805,10 @@ def tools_page() -> str:
 # Novità per la pagina /novita/, dalla più recente. Ogni voce: (data, titolo, testo, link, nomi di tool o prompt).
 # Se uno dei nomi è in IN_ARRIVO la voce mostra il badge "in arrivo". Va aggiornata a ogni funzionalità nuova.
 NOVITA = [
+    ("2026-10-12", "AEO: farsi scegliere come risposta",
+     "Le domande che gli utenti fanno davvero su Google, prese da Search Console e divise per tipo. Per ogni domanda, se la pagina risponde: in quale sezione, con quale prima frase, con quale lunghezza e nella forma giusta (passaggi, tabella, numero, sì o no). "
+     "La leggibilità Gulpease, pensata per l'italiano, per ogni sezione. E il prompt «Ottimizza le risposte», che scrive i blocchi risposta pronti da incollare.",
+     [("/aeo/", "AEO"), ("/prompt/#ottimizza-risposte", "Il prompt")], ["gsc_question_queries", "aeo_answer_check"]),
     ("2026-10-12", "108 domande pronte",
      "L'archivio di domande da copiare nell'assistente passa a 108, in 10 temi: e-commerce e attività locali, incroci tra Search Console, Analytics, Bing e Cloudflare, visibilità nelle AI, report per il cliente. Più di un terzo funziona senza credenziali.",
      [("https://github.com/davide-cik/seomcp/tree/main/domande", "Le domande su GitHub"), ("/prompt/", "I prompt")], []),
@@ -1134,6 +1148,8 @@ def prompts_page() -> str:
             args_html = ", ".join(f"<code>{a}</code> ({html.escape(d)})" for a, d in args)
             cred_html = (" + ".join(f'<a href="/credenziali/#{c[1]}">{html.escape(c[0])}</a>' for c in cred) if cred
                          else '<a href="/credenziali/#senza-credenziali">nessuna</a>')
+            if pname == "ottimizza-risposte":
+                cred_html += ' (senza, controlla con <code>aeo_answer_check</code> le domande che indichi tu)'
             if pname == "traffico-dalle-ai":
                 cred_html += ' (con <a href="/credenziali/#cloudflare">Cloudflare</a> aggiunge i crawler AI reali)'
             if pname == "le-ai-sanno-chi-sono":
@@ -1257,6 +1273,64 @@ CF_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp
 
       <section class="doc-block">
         <h2>Configura il tuo assistente</h2>
+        {INCLUDE.format(name="clients")}
+      </section>"""
+
+
+AEO_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › AEO</nav>
+      <p class="eyebrow">Novità</p>
+      <h1>AEO: farsi scegliere come risposta</h1>
+      <p class="lead">Snippet in evidenza, «Le persone chiedono anche», assistenti vocali, risposte AI: tutti cercano nella pagina una risposta breve, chiara e facile da estrarre. seomcp parte dalle domande che gli utenti fanno davvero su Google e misura se le tue pagine rispondono nel modo giusto.</p>
+
+      <section class="doc-block">
+        <h2>Cosa puoi chiedere</h2>
+        <ul class="prompts">
+          <li>Quali domande fanno gli utenti che arrivano sul mio sito da Google, e su quali pagine?</li>
+          <li>La guida risponde a «come scegliere le scarpe da trekking»? In quale sezione, e con quale prima frase?</li>
+          <li>Quali domande hanno molte impressioni ma un CTR basso? Riscrivimi le risposte.</li>
+          <li>Le mie pagine sono troppo difficili da leggere? Dammi l'indice Gulpease sezione per sezione.</li>
+        </ul>
+      </section>
+
+      <section class="doc-block">
+        <h2>I tool</h2>
+        <dl class="tools">
+          <dt><code>gsc_question_queries</code></dt><dd>Le query a domanda che portano impressioni al sito (come, cosa, perché, quanto, quale, differenza, dove, quando, chi, si può…), prese da Search Console con un filtro regex: tipo di domanda, pagina, impressioni, clic, CTR, posizione e pagine in concorrenza. Raggruppate per tipo, con la forma di risposta che di solito viene estratta meglio.</dd>
+          <dt><code>aeo_answer_check</code></dt><dd>Data una pagina e una domanda, trova la sezione che risponde e la misura: posizione, titolo che riprende la domanda, prima frase, lunghezza del primo paragrafo (gli snippet stanno di solito tra 40 e 60 parole), elenchi, tabelle, numeri, leggibilità, e se FAQPage o QAPage contengono la domanda. Senza credenziali.</dd>
+          <dt><code>geo_page_sections</code></dt><dd>Ora con l'indice Gulpease di ogni sezione e della pagina: la leggibilità pensata per l'italiano. Sotto 60 il testo è difficile per molti lettori.</dd>
+        </dl>
+      </section>
+
+      <section class="doc-block">
+        <h2>La forma giusta per ogni domanda</h2>
+        <ul class="tips">
+          <li><strong>Come:</strong> passaggi numerati, con una frase di sintesi prima.</li>
+          <li><strong>Cosa:</strong> la definizione in una frase all'inizio.</li>
+          <li><strong>Quanto:</strong> il numero (prezzo, durata, quantità) già nella prima frase.</li>
+          <li><strong>Differenza e quale:</strong> la risposta diretta, poi una tabella di confronto.</li>
+          <li><strong>Si può, conviene:</strong> «Sì» o «No» come prima parola, poi il perché.</li>
+        </ul>
+        <p class="small">Sono indicazioni di buona pratica, non regole di Google: aeo_answer_check misura, il giudizio lo dà l'assistente.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Il prompt</h2>
+        <p><a href="/prompt/#ottimizza-risposte"><strong>Ottimizza le risposte (AEO)</strong></a>: prende le domande da Search Console, controlla le pagine, classifica le risposte (assente, nascosta, nella forma sbagliata, buona) e scrive i blocchi pronti da incollare, con il JSON-LD FAQPage validato dove ha senso. Con <a href="/prompt/#domande-utenti">Rispondo alle domande dei miei utenti?</a> lavori su una pagina sola.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Da sapere</h2>
+        <ul class="tips">
+          <li><strong>Search Console nasconde le query rare</strong> per privacy: le domande reali sono di più di quelle che vedi.</li>
+          <li><strong>Chi occupa oggi lo snippet</strong> e le domande di «Le persone chiedono anche» non sono disponibili con dati ufficiali: servirebbero API di SERP a pagamento. seomcp resta sui dati del proprietario del sito.</li>
+          <li><strong>FAQ nei risultati di Google:</strong> oggi compaiono come risultato avanzato solo per pochi siti, ma domande e risposte esplicite restano utili agli assistenti AI.</li>
+        </ul>
+        <p class="links"><a href="/geo/">GEO: farsi citare dai motori AI →</a></p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        <p><code>aeo_answer_check</code> funziona subito, senza credenziali. Per le domande di Search Console segui la pagina <a href="/credenziali/#search-console">Credenziali</a>.</p>
         {INCLUDE.format(name="clients")}
       </section>"""
 
@@ -1397,6 +1471,13 @@ def main():
              "Visite reali, crawler AI che passano davvero sul sito ed errori 404 e 5xx visti da Cloudflare, dentro Claude, ChatGPT e gli altri assistenti AI con seomcp. Token in sola lettura, anche con il piano gratuito.",
              "cloudflare", CF_PAGE))
 
+    aeo_dir = SITE / "aeo"
+    aeo_dir.mkdir(exist_ok=True)
+    (aeo_dir / "index.html").write_text(
+        page("AEO: farsi scegliere come risposta · seomcp",
+             "Le domande vere degli utenti da Search Console e il controllo delle risposte: snippet in evidenza, assistenti vocali e risposte AI, con la leggibilità Gulpease. Dentro Claude, ChatGPT e gli altri assistenti, con seomcp.",
+             "aeo", AEO_PAGE))
+
     nov_dir = SITE / "novita"
     nov_dir.mkdir(exist_ok=True)
     (nov_dir / "index.html").write_text(
@@ -1431,7 +1512,7 @@ def main():
         (d / "index.html").write_text(page(title, desc, slug, body))
 
     today = date.today().isoformat()
-    urls = ["/", "/tool/", "/prompt/", "/credenziali/", "/tecnico/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/cloudflare/", "/novita/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS] + [f"/installa/{M365_SLUG}/"]
+    urls = ["/", "/tool/", "/prompt/", "/credenziali/", "/tecnico/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/cloudflare/", "/aeo/", "/novita/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS] + [f"/installa/{M365_SLUG}/"]
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls)
