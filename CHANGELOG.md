@@ -1,7 +1,8 @@
 # Changelog
 
-## 0.1.45 — 2026-10-12
+## 0.1.46 — 2026-10-12
 
+- Workflow di pubblicazione con log dettagliato di npm (la 0.1.45 non è stata pubblicata: scambio OIDC fallito).
 - **Rilascio su npm** (primo con la pubblicazione automatica da GitHub) di tutte le novità dalla 0.1.36: Cloudflare (`cf_traffic`, `cf_ai_crawlers`, `cf_errors`), `bing_inbound_links`, `seomcp_guida`, 10 prompt nuovi (18 in tutto) e la guida ai prompt `seomcp://prompt`.
 
 ## 0.1.44 — 2026-10-12

@@ -38,5 +38,6 @@ jobs:
       - run: npm install -g npm@latest
         if: steps.check.outputs.skip != 'true'
       # prepublishOnly esegue typecheck, test e build
-      - run: npm publish --access public
+      # --loglevel verbose: mostra l'esito dello scambio OIDC con npm (utile se la pubblicazione fallisce)
+      - run: npm publish --access public --loglevel verbose
         if: steps.check.outputs.skip != 'true'
