@@ -31,6 +31,8 @@ export interface CrawlPresence {
   pages: number;
   /** true se il limite è stato raggiunto: le pagine sono almeno `pages`. */
   truncated: boolean;
+  /** Letture di robots.txt nel campione: CCBot è passato dal dominio, ma non sono pagine. */
+  robotsTxtCaptures: number;
   homepage: boolean;
   statuses: Record<string, number>;
   samplePages: string[];
@@ -57,18 +59,22 @@ export async function listCrawls(opts: CommonCrawlOptions = {}): Promise<CrawlIn
 /** Presenza del dominio (sottodomini compresi) in un crawl. */
 export async function crawlPresence(crawl: CrawlInfo, site: string, limit: number, opts: CommonCrawlOptions = {}): Promise<CrawlPresence> {
   const host = siteHost(site);
-  const base: CrawlPresence = { crawl: crawl.id, name: crawl.name, pages: 0, truncated: false, homepage: false, statuses: {}, samplePages: [] };
+  const base: CrawlPresence = { crawl: crawl.id, name: crawl.name, pages: 0, truncated: false, robotsTxtCaptures: 0, homepage: false, statuses: {}, samplePages: [] };
   const url = new URL(crawl.cdxApi);
   url.searchParams.set('url', host);
   url.searchParams.set('matchType', 'domain');
   url.searchParams.set('output', 'json');
   url.searchParams.set('fl', 'url,status,timestamp,mime');
   url.searchParams.set('limit', String(limit));
+  // Le letture di robots.txt sono nell'indice insieme alle pagine e per i domini grandi riempiono il campione:
+  // al primo tentativo si chiede all'indice di escluderle, al secondo (se l'indice è lento) si fa senza filtro.
+  const filtered = new URL(url);
+  filtered.searchParams.set('filter', '!~url:robots.txt');
 
   let res: Response | undefined;
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      res = await ccFetch(url.toString(), opts);
+      res = await ccFetch((attempt === 0 ? filtered : url).toString(), opts);
     } catch (err) {
       if (attempt === 1) return { ...base, error: `indice non raggiungibile (${(err as Error).name})` };
       continue;
@@ -100,6 +106,9 @@ export function parseCdx(text: string): CdxRow[] {
 }
 
 export function summarize(rows: CdxRow[], host: string, limit: number): Omit<CrawlPresence, 'crawl' | 'name' | 'error'> {
+  const truncated = rows.length >= limit;
+  const robotsTxtCaptures = rows.filter((r) => /\/robots\.txt$/i.test(r.url ?? '')).length;
+  rows = rows.filter((r) => !/\/robots\.txt$/i.test(r.url ?? ''));
   const urls = new Set<string>();
   const statuses: Record<string, number> = {};
   let homepage = false;
@@ -124,7 +133,8 @@ export function summarize(rows: CdxRow[], host: string, limit: number): Omit<Cra
   const ok = rows.filter((r) => r.url && (r.status ?? '').startsWith('2') && (r.mime ?? '').includes('html')).map((r) => r.url!);
   return {
     pages: urls.size,
-    truncated: rows.length >= limit,
+    truncated,
+    robotsTxtCaptures,
     homepage,
     statuses,
     samplePages: [...new Set(ok)].slice(0, 20),
@@ -150,6 +160,9 @@ export async function commonCrawlPresence(site: string, crawls: number, limit: n
     site: host,
     crawls: results,
     presentInLatest: results[0] && !results[0].error ? results[0].pages > 0 : null,
+    ...(results.some((r) => !r.pages && r.robotsTxtCaptures)
+      ? { robotsOnlyNote: 'In alcuni crawl il campione contiene solo letture di robots.txt: CCBot è passato dal dominio, ma le pagine sono oltre il limite letto. Aumenta limit per vederle.' }
+      : {}),
     note:
       'Common Crawl è l\'archivio pubblico del web usato per addestrare molti modelli linguistici. Ogni crawl è un campione: è normale che non contenga tutte le pagine. Il suo crawler è CCBot: per sapere se robots.txt lo blocca usa geo_ai_access. Bloccarlo oggi non toglie le pagine dai crawl passati.',
   };

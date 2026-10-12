@@ -133,6 +133,9 @@ describe('Common Crawl', () => {
     expect(s).toMatchObject({ pages: 2, truncated: false, homepage: true, statuses: { '200': 1, '301': 1 }, firstCapture: '2026-09-05', lastCapture: '2026-09-10' });
     expect(s.samplePages).toEqual(['https://www.esempio.it/']);
     expect(cdxDate('20260904131603')).toBe('2026-09-04');
+    // Le letture di robots.txt non sono pagine.
+    const robots = summarize(parseCdx('{"url":"https://www.esempio.it/robots.txt","status":"200"}\n{"url":"http://www.esempio.it/robots.txt","status":"200"}\n'), 'esempio.it', 2);
+    expect(robots).toMatchObject({ pages: 0, robotsTxtCaptures: 2, truncated: true, homepage: false });
   });
 
   it('distingue "non presente" (404) da indice sovraccarico (504)', async () => {
@@ -144,5 +147,9 @@ describe('Common Crawl', () => {
     const overloaded = await crawlPresence(crawl, 'esempio.it', 10, { fetch: busy as unknown as typeof fetch });
     expect(overloaded.error).toContain('504');
     expect(busy).toHaveBeenCalledTimes(2);
+    // Primo tentativo con il filtro su robots.txt, secondo senza.
+    const urls = busy.mock.calls.map((c) => new URL(String((c as unknown[])[0])));
+    expect(urls[0]?.searchParams.get('filter')).toBe('!~url:robots.txt');
+    expect(urls[1]?.searchParams.get('filter')).toBeNull();
   });
 });

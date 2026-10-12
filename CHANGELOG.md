@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.63 — 2026-10-12
+
+- `geo_common_crawl`: le letture di robots.txt, che Common Crawl indicizza insieme alle pagine e che per i domini grandi riempivano il campione, non contano più come pagine. Primo tentativo con il filtro dell'indice che le esclude, secondo senza; nuovo campo `robotsTxtCaptures`.
+
 ## 0.1.62 — 2026-10-12
 
 - 0.1.61 pubblicata su npm (AEO): tolti i badge «in arrivo», versione aggiornata su sito e SEO Audit. CLAUDE.md: si pubblica sempre su npm a fine lavoro.
