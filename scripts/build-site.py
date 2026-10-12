@@ -740,7 +740,7 @@ DOMANDE = len(re.findall(r"^\s*q\('", (ROOT / "src" / "library" / "domande.ts").
 
 # Tool e prompt già nel repository ma non ancora nel pacchetto npm (la versione pubblicata la legge published_version()).
 # Il sito li segna "in arrivo": dopo il rilascio svuota l'insieme e rigenera il sito.
-IN_ARRIVO: set[str] = {"gsc_question_queries", "aeo_answer_check", "ottimizza-risposte"}
+IN_ARRIVO: set[str] = set()
 SOON = '<span class="badge-soon" title="Disponibile con la prossima versione del pacchetto npm">in arrivo</span>'
 SOON_NOTE = ('<p class="small">Le voci segnate ' + SOON + ' sono pronte e arrivano con la prossima versione del pacchetto npm: '
              'chi installa oggi con <code>npx</code> non le vede ancora.</p>')

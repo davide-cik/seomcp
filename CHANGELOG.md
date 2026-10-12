@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.62 — 2026-10-12
+
+- 0.1.61 pubblicata su npm (AEO): tolti i badge «in arrivo», versione aggiornata su sito e SEO Audit. CLAUDE.md: si pubblica sempre su npm a fine lavoro.
+
 ## 0.1.61 — 2026-10-12
 
 - **AEO**: `gsc_question_queries` (le domande vere degli utenti da Search Console, con filtro regex, raggruppate per tipo e per pagina, con la forma di risposta adatta) e `aeo_answer_check` (la pagina risponde a una domanda? sezione, posizione, prima frase, lunghezza, elenchi, tabelle, leggibilità, FAQPage/QAPage).

@@ -75,7 +75,7 @@ Un tool o un prompt nuovo non è finito finché non sono allineati **tutti** que
 La pubblicazione su npm è **automatica da GitHub** (`.github/workflows/publish.yml`, npm Trusted Publishing, nessun token):
 `npm version patch --no-git-tag-version` → commit → `git tag vX.Y.Z` → `git push --follow-tags`. Il workflow controlla che il tag coincida con `package.json`, esegue test e build, pubblica con provenienza. La versione compare sul registro dopo qualche minuto (nessuna approvazione).
 
-**Stato al 2026-10-12:** Trusted Publisher funzionante (GitHub Actions, `davide-cik` / `seomcp` / `publish.yml`, environment vuoto, azione "npm publish" abilitata): la 0.1.48 è stata la prima versione pubblicata dal workflow, con provenienza; ultima: 0.1.59. Per un tentativo fallito che non richiede modifiche al codice basta `gh run rerun <id>` (stesso tag). Procedura manuale di riserva in `RELEASING.md`.
+**Stato al 2026-10-12:** Trusted Publisher funzionante (GitHub Actions, `davide-cik` / `seomcp` / `publish.yml`, environment vuoto, azione "npm publish" abilitata): la 0.1.48 è stata la prima versione pubblicata dal workflow, con provenienza; ultima: 0.1.61. Per un tentativo fallito che non richiede modifiche al codice basta `gh run rerun <id>` (stesso tag). Procedura manuale di riserva in `RELEASING.md`.
 
 Dopo ogni rilascio: `python3 scripts/build-site.py` (aggiorna la versione mostrata sul sito); svuotare `IN_ARRIVO` in `scripts/build-site.py` (badge "in arrivo" del sito) e togliere la riga "In arrivo nella prossima versione" da `site/index.html`, poi `python3 scripts/build-site.py`. Finché non si rilascia, ogni tool o prompt nuovo va aggiunto a `IN_ARRIVO`.
 
@@ -85,6 +85,7 @@ Dopo ogni rilascio: aggiornare SEO Audit (`/home/datareport/seoaudit`, usa seomc
 
 - **Commit e push sempre** a fine lavoro, senza chiedere. Messaggio: `vX.Y.Z — descrizione in italiano`, con la riga `Co-Authored-By` di Claude.
 - **+1 alla patch di versione a ogni commit** (`npm version patch --no-git-tag-version`).
+- **Pubblicare sempre su npm** a fine lavoro, senza chiedere: tag `vX.Y.Z` sul commit e push (workflow automatico), poi i passi dopo il rilascio (versione sul sito, `IN_ARRIVO` vuoto, SEO Audit aggiornato e riavviato). Non serve rilasciare i commit successivi che toccano solo sito o documentazione interna (es. la versione mostrata sul sito): non cambiano il pacchetto.
 - **Ogni funzionalità aggiorna anche il sito** (e, se tocca SEO Audit, anche seoaudit.contentisking.guru).
 - **Link esterni del sito sempre in nuova scheda**: `target="_blank" rel="noopener"`.
 - **Comandi da far lanciare all'utente sempre come ultime righe** della risposta.
