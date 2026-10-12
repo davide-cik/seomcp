@@ -584,7 +584,7 @@ TOOL_GROUPS = [
         ("tech_page_audit", "Controlli tecnici della pagina: catena di redirect, TTFB, peso e compressione, indicizzabilità, canonical, title e description, viewport, hreflang con link di ritorno, Open Graph e Twitter Card, immagini, gerarchia dei titoli, link, header di sicurezza."),
         ("tech_site_check", "Controlli tecnici del sito: sitemap (URL, lastmod, duplicati), un campione di URL della sitemap, la pagina 404 e un campione di link interni rotti o reindirizzati."),
     ]),
-    ("cloudflare", "Cloudflare", "un token Cloudflare in sola lettura.", None, [
+    ("cloudflare", "Cloudflare", "un token Cloudflare in sola lettura.", "/cloudflare/", [
         ("cf_traffic", "Visite, richieste e pagine viste giorno per giorno secondo Cloudflare, che vede ogni richiesta: anche chi rifiuta i cookie o blocca gli script, che Analytics non conta."),
         ("cf_ai_crawlers", "Quali crawler AI (GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, ChatGPT-User…) passano davvero sul sito, quante volte, su quali pagine e con quali risposte."),
         ("cf_errors", "Le pagine che rispondono 404 o 5xx ai visitatori veri, con quante volte e in quanti giorni."),
@@ -1076,6 +1076,82 @@ def prompts_page() -> str:
       </section>"""
 
 
+CF_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Cloudflare</nav>
+      <p class="eyebrow">Novità</p>
+      <h1>Cloudflare nel tuo assistente</h1>
+      <p class="lead">Se il sito passa da Cloudflare, Cloudflare vede ogni richiesta: anche chi rifiuta i cookie, chi blocca gli script e i crawler dei motori AI, che Google Analytics non conta. Con seomcp l'assistente legge questi dati e li mette accanto a Search Console, Analytics e robots.txt.</p>
+
+      <section class="doc-block">
+        <h2>Cosa puoi chiedere</h2>
+        <ul class="prompts">
+          <li>Quali crawler AI hanno visitato davvero il sito questo mese, e quali pagine hanno letto?</li>
+          <li>Quali crawler AI passano sul sito e quali sto bloccando con robots.txt senza volerlo?</li>
+          <li>Quante visite reali ha avuto il sito negli ultimi 7 giorni, comprese quelle di chi rifiuta i cookie? Confrontale con Google Analytics.</li>
+          <li>Quali pagine rispondono 404 o 5xx ai visitatori veri? Separa le pagine reali dai tentativi dei bot.</li>
+        </ul>
+      </section>
+
+      <section class="doc-block">
+        <h2>I 3 tool</h2>
+        <dl class="tools">
+          <dt><code>cf_traffic</code></dt><dd>Richieste, visite e pagine viste giorno per giorno, fino a 28 giorni. Comprende chi rifiuta i cookie o blocca gli script: confrontato con Analytics, mostra quanta parte del traffico Analytics non vede.</dd>
+          <dt><code>cf_ai_crawlers</code></dt><dd>Bot per bot (GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, ChatGPT-User…): quante richieste, in quanti giorni, su quali pagine e con quali risposte. Diviso per scopo: addestramento, ricerca, letture su richiesta degli utenti.</dd>
+          <dt><code>cf_errors</code></dt><dd>Le pagine che rispondono 404 o 5xx a chi visita davvero il sito, con quante volte e in quanti giorni. Comprende anche bot e scanner, che spesso cercano indirizzi inesistenti: l'assistente li separa dalle pagine da correggere.</dd>
+        </dl>
+        <p class="small">Tutti in sola lettura: il token che crei può solo leggere le statistiche, non tocca il sito né le impostazioni di Cloudflare.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Permesso e realtà: i crawler AI</h2>
+        <p>robots.txt dice quali crawler AI <em>possono</em> leggere il sito; Cloudflare dice quali passano <em>davvero</em>, e su quali pagine. Il prompt <a href="/prompt/#ai-che-leggono-il-sito">Quali AI leggono davvero il mio sito?</a> mette insieme le due cose: <a href="/tool/#cf_ai_crawlers"><code>cf_ai_crawlers</code></a> per le visite reali, <a href="/tool/#geo_ai_access"><code>geo_ai_access</code></a> per le regole. Così scopri i bot che bloccavi senza volerlo, quelli che passano nonostante il divieto e le pagine che interessano di più ai motori AI.</p>
+        <p class="links"><a href="/geo/">GEO e AEO: farsi citare dai motori AI →</a></p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Attivalo in 3 passi</h2>
+        <p>Serve solo che il sito passi da Cloudflare, anche con il piano gratuito.</p>
+        <ol class="steps">
+          <li>
+            <h3>Crea un token in sola lettura</h3>
+            <p>Nella pagina dei token di Cloudflare scegli <strong>Crea token → Token personalizzato</strong>, con due permessi: <strong>Zona → Zona → Lettura</strong> e <strong>Zona → Analisi → Lettura</strong>. In <strong>Risorse della zona</strong> scegli i siti che ti interessano.</p>
+            <p class="links">{ext("https://dash.cloudflare.com/profile/api-tokens", "Token API di Cloudflare")}</p>
+          </li>
+          <li>
+            <h3>Copia il token</h3>
+            <p>Cloudflare lo mostra una sola volta. Aggiungilo alla configurazione del tuo assistente, oppure lascia fare a <code>npx -y {PKG} setup</code>:</p>
+<pre class="code"><code>SEOMCP_CLOUDFLARE_TOKEN=il-tuo-token</code></pre>
+          </li>
+          <li>
+            <h3>Indica il sito</h3>
+            <p>Facoltativo: il dominio da usare quando non ne indichi uno. Senza, l'assistente te lo chiede.</p>
+<pre class="code"><code>SEOMCP_CLOUDFLARE_ZONE=tuosito.it</code></pre>
+          </li>
+        </ol>
+        <p class="small">Dettagli nella pagina <a href="/credenziali/#cloudflare">Credenziali</a>, con il generatore della configurazione.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Da sapere</h2>
+        <ul class="tips">
+          <li><strong>Sono stime.</strong> Cloudflare campiona le richieste: i numeri sono affidabili per tendenze e confronti, non al singolo accesso.</li>
+          <li><strong>I bot si riconoscono dallo user-agent</strong>, che si può falsificare. La verifica dei bot di Cloudflare richiede Bot Management, un servizio a pagamento.</li>
+          <li><strong>Google-Extended non compare:</strong> è solo una regola di robots.txt, Google legge il sito come Googlebot.</li>
+          <li><strong>Al massimo 28 giorni:</strong> Cloudflare conserva circa un mese di dati.</li>
+        </ul>
+      </section>
+
+      <section class="doc-block">
+        <h2>Verifica</h2>
+<pre class="code"><code>npx -y {PKG} doctor</code></pre>
+        <p>Deve comparire la riga di Cloudflare con l'elenco dei siti che il token può leggere. Se un permesso manca, <code>doctor</code> ti dice cosa fare.</p>
+      </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        {INCLUDE.format(name="clients")}
+      </section>"""
+
+
 TECH_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Controlli tecnici</nav>
       <p class="eyebrow">Novità</p>
       <h1>Controlli tecnici SEO nel tuo assistente</h1>
@@ -1205,11 +1281,18 @@ def main():
              "Redirect, indicizzabilità, canonical, hreflang, sitemap, pagina 404 e link rotti: i controlli tecnici SEO di seomcp, senza credenziali.",
              "tecnico", TECH_PAGE))
 
+    cf_dir = SITE / "cloudflare"
+    cf_dir.mkdir(exist_ok=True)
+    (cf_dir / "index.html").write_text(
+        page("Cloudflare nel tuo assistente AI · seomcp",
+             "Visite reali, crawler AI che passano davvero sul sito ed errori 404 e 5xx visti da Cloudflare, dentro Claude, ChatGPT e gli altri assistenti AI con seomcp. Token in sola lettura, anche con il piano gratuito.",
+             "cloudflare", CF_PAGE))
+
     tool_dir = SITE / "tool"
     tool_dir.mkdir(exist_ok=True)
     (tool_dir / "index.html").write_text(
         page("Tutti i tool e i prompt · seomcp",
-             f"I {sum(len(t) for *_, t in TOOL_GROUPS)} tool e i {len(PROMPTS)} prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.",
+             f"I {sum(len(t) for *_, t in TOOL_GROUPS)} tool e i {len(PROMPTS)} prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Cloudflare, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.",
              "tool", tools_page()))
 
     m365_dir = out / M365_SLUG
@@ -1232,7 +1315,7 @@ def main():
         (d / "index.html").write_text(page(title, desc, slug, body))
 
     today = date.today().isoformat()
-    urls = ["/", "/tool/", "/prompt/", "/credenziali/", "/tecnico/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS] + [f"/installa/{M365_SLUG}/"]
+    urls = ["/", "/tool/", "/prompt/", "/credenziali/", "/tecnico/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/cloudflare/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS] + [f"/installa/{M365_SLUG}/"]
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls)
