@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.47 — 2026-10-12
+
+- La 0.1.46 è su npm (pubblicata a mano con token): tolti dal sito i badge «in arrivo». CLAUDE.md e RELEASING.md aggiornati (il token npm resta in `~/.npmrc`).
+
 ## 0.1.46 — 2026-10-12
 
 - Workflow di pubblicazione con log dettagliato di npm (la 0.1.45 non è stata pubblicata: scambio OIDC fallito).

@@ -707,14 +707,9 @@ PROMPT_AREAS = [
 ]
 PROMPTS = [p for *_, items in PROMPT_AREAS for p in items]
 
-# Tool e prompt già nel repository ma non ancora nel pacchetto npm (ultima versione pubblicata: 0.1.36).
+# Tool e prompt già nel repository ma non ancora nel pacchetto npm (ultima versione pubblicata: 0.1.46).
 # Il sito li segna "in arrivo": dopo il rilascio svuota l'insieme e rigenera il sito.
-IN_ARRIVO = {
-    "cf_traffic", "cf_ai_crawlers", "cf_errors", "bing_inbound_links", "seomcp_guida",
-    "calo-traffico", "opportunita-distanza-di-tiro", "title-description-ctr", "cannibalizzazione",
-    "traffico-che-non-converte", "report-mensile", "piano-core-web-vitals", "controllo-migrazione",
-    "google-vs-bing", "ai-che-leggono-il-sito",
-}
+IN_ARRIVO: set[str] = set()
 SOON = '<span class="badge-soon" title="Disponibile con la prossima versione del pacchetto npm">in arrivo</span>'
 SOON_NOTE = ('<p class="small">Le voci segnate ' + SOON + ' sono pronte e arrivano con la prossima versione del pacchetto npm: '
              'chi installa oggi con <code>npx</code> non le vede ancora.</p>')
