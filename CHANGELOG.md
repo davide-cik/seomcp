@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.45 — 2026-10-12
+
+- **Rilascio su npm** (primo con la pubblicazione automatica da GitHub) di tutte le novità dalla 0.1.36: Cloudflare (`cf_traffic`, `cf_ai_crawlers`, `cf_errors`), `bing_inbound_links`, `seomcp_guida`, 10 prompt nuovi (18 in tutto) e la guida ai prompt `seomcp://prompt`.
+
 ## 0.1.44 — 2026-10-12
 
 - CLAUDE.md: stato del rilascio aggiornato.
