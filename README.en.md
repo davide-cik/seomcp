@@ -69,7 +69,7 @@ Requires **Node.js 22+**. Configure only the sources you use.
 
 Manual setup:
 
-1. **Credentials:** see the setup guides for [Google](docs/google-setup.md), [Google Analytics](docs/google-analytics-setup.md), [PageSpeed/CrUX](docs/pagespeed-setup.md) and [Bing](docs/bing-setup.md). They are in Italian, and the steps are the same in English UIs. The [credentials page](https://seomcp.contentisking.guru/credenziali/) (Italian) has direct links to every console screen, a one-click link that enables all five Google APIs, and a generator that fills in the config for your assistant.
+1. **Credentials:** see the setup guides for [Google](docs/google-setup.md), [Google Analytics](docs/google-analytics-setup.md), [PageSpeed/CrUX](docs/pagespeed-setup.md) and [Bing](docs/bing-setup.md). They are in Italian, and the steps are the same in English UIs. **Cloudflare** (optional, free plan included) needs a read-only token with *Zone → Zone → Read* and *Zone → Analytics → Read*; leave the token's IP filter empty if your connection has a dynamic IP, as most home connections do. What you get and how to enable it: [Cloudflare page](https://seomcp.contentisking.guru/cloudflare/) (Italian). The [credentials page](https://seomcp.contentisking.guru/credenziali/) (Italian) has direct links to every console screen, a one-click link that enables all five Google APIs, and a generator that fills in the config for your assistant.
 2. **Claude Code:**
 
    ```bash

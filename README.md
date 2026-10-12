@@ -104,6 +104,7 @@ La pagina [Credenziali](https://seomcp.contentisking.guru/credenziali/) ha tutti
 - **Google Analytics 4** (facoltativo): stesse credenziali di Search Console, più tre passaggi nella [guida Analytics](docs/google-analytics-setup.md).
 - **PageSpeed e Core Web Vitals** (facoltativo): una API key gratuita, come spiegato nella [guida PageSpeed](docs/pagespeed-setup.md).
 - **Bing Webmaster Tools:** genera una API key in due minuti, come spiegato nella [guida](docs/bing-setup.md).
+- **Cloudflare** (facoltativo, se il sito passa da Cloudflare, anche con il piano gratuito): un token in sola lettura con i permessi *Zona → Zona → Lettura* e *Zona → Analisi → Lettura*. Il filtro IP del token è facoltativo: con una connessione domestica, che ha l'IP dinamico, lascialo vuoto. Cosa ottieni e come attivarlo nella [pagina Cloudflare](https://seomcp.contentisking.guru/cloudflare/).
 
 ### 2. Collegalo al tuo assistente
 

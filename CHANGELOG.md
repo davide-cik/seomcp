@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.54 — 2026-10-12
+
+- README (italiano e inglese): Cloudflare tra le credenziali, con il link alla pagina `/cloudflare/` e la nota sul filtro IP facoltativo.
+
 ## 0.1.53 — 2026-10-12
 
 - 0.1.52 pubblicata su npm (stesso codice della 0.1.48): versione aggiornata su sito e SEO Audit.
