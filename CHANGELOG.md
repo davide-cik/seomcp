@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.44 — 2026-10-12
+
+- CLAUDE.md: stato del rilascio aggiornato.
+
 ## 0.1.43 — 2026-10-12
 
 - Sito: badge «in arrivo» su tool e prompt non ancora pubblicati su npm (Cloudflare, `bing_inbound_links`, `seomcp_guida` e 10 prompt), con una nota nella home. L'elenco è `IN_ARRIVO` in `scripts/build-site.py`.

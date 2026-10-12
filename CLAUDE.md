@@ -75,7 +75,7 @@ Un tool o un prompt nuovo non è finito finché non sono allineati **tutti** que
 La pubblicazione su npm è **automatica da GitHub** (`.github/workflows/publish.yml`, npm Trusted Publishing, nessun token):
 `npm version patch --no-git-tag-version` → commit → `git tag vX.Y.Z` → `git push --follow-tags`. Il workflow controlla che il tag coincida con `package.json`, esegue test e build, pubblica con provenienza. La versione compare sul registro dopo qualche minuto (nessuna approvazione).
 
-**Stato al 2026-10-12:** il Trusted Publisher su npmjs.com non è ancora configurato (GitHub Actions, `davide-cik` / `seomcp` / `publish.yml`, azione "npm publish" abilitata). Finché non lo è, **non spingere tag**: il workflow fallirebbe. Ultima versione su npm: 0.1.36 (in coda: 0.1.41); in attesa di rilascio Cloudflare, `bing_inbound_links`, `seomcp_guida` e i 18 prompt. Dettagli e procedura manuale di riserva in `RELEASING.md`.
+**Stato al 2026-10-12:** il Trusted Publisher su npmjs.com non è ancora configurato (GitHub Actions, `davide-cik` / `seomcp` / `publish.yml`, azione "npm publish" abilitata). Finché non lo è, **non spingere tag**: il workflow fallirebbe. Ultima versione su npm: 0.1.36 (in coda: 0.1.44, l'ultima del repository); in attesa di rilascio Cloudflare (`cf_traffic`, `cf_ai_crawlers`, `cf_errors`), `bing_inbound_links`, `seomcp_guida` e 10 prompt nuovi (18 in tutto), segnati "in arrivo" sul sito. Dettagli e procedura manuale di riserva in `RELEASING.md`.
 
 Dopo ogni rilascio: svuotare `IN_ARRIVO` in `scripts/build-site.py` (badge "in arrivo" del sito) e togliere la riga "In arrivo nella prossima versione" da `site/index.html`, poi `python3 scripts/build-site.py`. Finché non si rilascia, ogni tool o prompt nuovo va aggiunto a `IN_ARRIVO`.
 
