@@ -590,20 +590,69 @@ TOOL_GROUPS = [
 # Ogni prompt: (nome, titolo, descrizione, argomenti, tool usati, credenziali, domanda equivalente)
 # Credenziali: (etichetta, ancora in /credenziali/) oppure None.
 GSC = ("Google Search Console", "search-console")
+GA = ("Google Analytics 4", "google-analytics")
+BING = ("Bing Webmaster Tools", "bing")
+KEY = ("API key Google", "api-key")
+U = "https://www.tuosito.it"
+# Categorie per intento, come la Prompt Guide di Bing Webmaster Tools.
+# Ogni prompt: (nome, titolo, descrizione, argomenti, tool, credenziali, domanda equivalente);
+# credenziali = None oppure una lista di (etichetta, ancora in /credenziali/).
 PROMPT_AREAS = [
-    ("seo", "SEO", "Il sito in ordine dal punto di vista tecnico e i dati strutturati pronti per i risultati avanzati di Google.", [
-        ("audit-tecnico", "Audit tecnico del sito",
-         "Controlla pagina e sito (redirect, indicizzabilità, sitemap, 404, link rotti, prestazioni, dati strutturati) e chiude con una tabella di correzioni in ordine di priorità.",
-         [("url", "la pagina da cui partire, di solito la home")],
-         ["tech_page_audit", "tech_site_check", "psi_analyze", "crux_query", "schema_validate"],
-         None, "Fai un audit tecnico di https://www.tuosito.it e dimmi le cinque correzioni più urgenti."),
-        ("correggi-dati-strutturati", "Correggi i miei dati strutturati",
-         "Valida il JSON-LD della pagina, spiega i problemi in chiaro e scrive il codice corretto, ricontrollandolo finché non ci sono errori.",
-         [("url", "la pagina da correggere")],
-         ["schema_validate"], None,
-         "Valida i dati strutturati di https://www.tuosito.it/prodotto e dammi il JSON-LD corretto."),
+    ("capire-i-dati", "Capire i dati", "Cosa sta succedendo al sito: andamento, cali, conversioni, confronto tra motori e domande degli utenti.", [
+        ("calo-traffico", "Perché sto perdendo traffico?",
+         "Trova pagine e query in calo, distingue tra meno impressioni, CTR più basso o posizioni peggiori, e controlla indicizzazione e Core Web Vitals delle pagine colpite.",
+         [("sito", "la proprietà Search Console, facoltativa"), ("giorni", "il periodo, di default 28")],
+         ["gsc_compare_periods", "gsc_performance", "gsc_inspect_url", "crux_query"], [GSC],
+         "Perché il sito ha perso clic nelle ultime 4 settimane? Dimmi quali pagine e la causa più probabile."),
+        ("report-mensile", "Report mensile per il cliente",
+         "Andamento su Google, pagine e query migliori e peggiori, conversioni organiche e tre azioni per il mese successivo, scritto per chi non fa SEO.",
+         [("sito", "la proprietà Search Console, facoltativa"), ("mese", "il mese da raccontare, di default gli ultimi 28 giorni")],
+         ["gsc_compare_periods", "gsc_performance", "ga_compare_periods", "ga_organic_landing_pages"], [GSC, GA],
+         "Preparami il report di settembre per il cliente, comprensibile per chi non fa SEO."),
+        ("traffico-che-non-converte", "Traffico che non converte",
+         "Incrocia Search Console e Analytics: pagine con molti clic da Google ma poche conversioni, con ipotesi concrete leggendo la pagina.",
+         [("sito", "la proprietà Search Console, facoltativa"), ("giorni", "il periodo, di default 28")],
+         ["ga_organic_landing_pages", "gsc_performance", "geo_page_sections"], [GSC, GA],
+         "Quali pagine ricevono molti clic da Google ma convertono poco, e perché?"),
+        ("google-vs-bing", "Google e Bing a confronto",
+         "Query e pagine dove i due motori divergono, con i volumi di ricerca di Bing: dove recuperare traffico e perché Bing conta anche per le AI.",
+         [("sito", "la proprietà Search Console, facoltativa"), ("giorni", "il periodo, di default 28")],
+         ["gsc_performance", "bing_query_stats", "bing_page_stats", "bing_keyword_stats"], [GSC, BING],
+         "Dove vado bene su Google e male su Bing, e il contrario?"),
+        ("domande-utenti", "Rispondo alle domande dei miei utenti?",
+         "Prende da Search Console le query a domanda che portano alla pagina e verifica, sezione per sezione, se trovano risposta.",
+         [("url", "la pagina"), ("giorni", "il periodo da considerare, di default 90")],
+         ["gsc_performance", "geo_page_sections"], [GSC],
+         "Quali domande fanno le persone che arrivano su questa pagina, e a quali non rispondo?"),
     ]),
-    ("geo", "GEO", "Farsi leggere e citare dai motori di ricerca generativi: ChatGPT, Perplexity, Gemini, AI Overviews di Google.", [
+    ("migliorare", "Migliorare i risultati", "Dove si guadagna di più con meno lavoro: posizioni, CTR, contenuti in concorrenza, velocità e nuovi contenuti.", [
+        ("opportunita-distanza-di-tiro", "Opportunità a distanza di tiro",
+         "Prende le query in posizione 4-20, legge le pagine che si posizionano e propone cosa aggiungere a ciascuna per salire.",
+         [("sito", "la proprietà Search Console, facoltativa"), ("giorni", "il periodo, di default 90")],
+         ["gsc_striking_distance", "geo_page_sections"], [GSC],
+         "Quali pagine sono quasi in prima pagina e cosa aggiungo a ciascuna per salire?"),
+        ("title-description-ctr", "Title e description che non convincono",
+         "Trova le pagine con un CTR più basso del normale per la loro posizione e propone title e description riscritti.",
+         [("sito", "la proprietà Search Console, facoltativa"), ("giorni", "il periodo, di default 28")],
+         ["gsc_performance", "tech_page_audit"], [GSC],
+         "Quali pagine hanno un CTR troppo basso per la loro posizione? Riscrivimi title e description."),
+        ("cannibalizzazione", "Pagine in concorrenza tra loro",
+         "Trova le query per cui si posizionano più pagine del sito e indica quale tenere come principale e cosa fare delle altre.",
+         [("sito", "la proprietà Search Console, facoltativa"), ("giorni", "il periodo, di default 90")],
+         ["gsc_performance"], [GSC],
+         "Ci sono query per cui più pagine del sito si fanno concorrenza?"),
+        ("piano-core-web-vitals", "Piano per i Core Web Vitals",
+         "Dati reali degli utenti e andamento, poi il test di laboratorio sulle pagine peggiori, con le correzioni ordinate per risparmio.",
+         [("url", "il sito o una pagina")],
+         ["crux_query", "crux_history", "psi_analyze"], [KEY],
+         f"Il sito supera i Core Web Vitals? Fammi un piano per migliorarli, partendo da {U}."),
+        ("piano-editoriale-ai", "Piano editoriale per le risposte AI",
+         "Dalle domande degli utenti che il sito non soddisfa ricava le nuove sezioni, le FAQ e le pagine da scrivere.",
+         [("sito", "la proprietà Search Console o l'URL del sito"), ("giorni", "il periodo da considerare, di default 90")],
+         ["gsc_performance", "geo_page_sections"], [GSC],
+         "Fammi un piano editoriale con le domande degli utenti a cui il sito non risponde ancora."),
+    ]),
+    ("farsi-citare", "Farsi citare dalle AI", "GEO e AEO: farsi leggere, capire e citare da ChatGPT, Perplexity, Gemini e dalle AI Overviews di Google.", [
         ("audit-geo-pagina", "Audit GEO della pagina",
          "Interpreta le misure GEO di una pagina (risposta in apertura, sezioni, dati, fonti, autore, freschezza, accesso dei crawler AI) e propone le correzioni in ordine di impatto.",
          [("url", "la pagina da analizzare")],
@@ -619,23 +668,28 @@ PROMPT_AREAS = [
          [("url", "la tua pagina"), ("concorrenti", "gli URL dei concorrenti, separati da virgola")],
          ["geo_page_metrics"], None,
          "Perché ChatGPT cita la pagina del mio concorrente e non la mia? Confronta le due pagine."),
-    ]),
-    ("aeo", "AEO", "Rispondere alle domande delle persone in modo che un assistente possa estrarre la risposta e citarla.", [
-        ("domande-utenti", "Rispondo alle domande dei miei utenti?",
-         "Prende da Search Console le query a domanda che portano alla pagina e verifica, sezione per sezione, se trovano risposta.",
-         [("url", "la pagina"), ("giorni", "il periodo da considerare, di default 90")],
-         ["gsc_performance", "geo_page_sections"], GSC,
-         "Quali domande fanno le persone che arrivano su questa pagina, e a quali non rispondo?"),
         ("passaggio-citabile", "Rendi citabile questo passaggio",
          "Riscrive una sezione della pagina perché un motore AI possa estrarla e citarla da sola, senza il contesto intorno.",
          [("url", "la pagina"), ("sezione", "il titolo, o parte del titolo, della sezione")],
          ["geo_page_sections"], None,
          "Riscrivi la sezione \"Quanto costa\" di questa pagina perché un assistente AI possa citarla."),
-        ("piano-editoriale-ai", "Piano editoriale per le risposte AI",
-         "Dalle domande degli utenti che il sito non soddisfa ricava le nuove sezioni, le FAQ e le pagine da scrivere.",
-         [("sito", "la proprietà Search Console o l'URL del sito"), ("giorni", "il periodo da considerare, di default 90")],
-         ["gsc_performance", "geo_page_sections"], GSC,
-         "Fammi un piano editoriale con le domande degli utenti a cui il sito non risponde ancora."),
+    ]),
+    ("controlli", "Controlli e correzioni", "Verifiche tecniche con la lista delle correzioni pronta: prima di pubblicare, dopo una migrazione, quando qualcosa non torna.", [
+        ("audit-tecnico", "Audit tecnico del sito",
+         "Controlla pagina e sito (redirect, indicizzabilità, sitemap, 404, link rotti, prestazioni, dati strutturati) e chiude con una tabella di correzioni in ordine di priorità.",
+         [("url", "la pagina da cui partire, di solito la home")],
+         ["tech_page_audit", "tech_site_check", "psi_analyze", "crux_query", "schema_validate"], None,
+         "Fai un audit tecnico di https://www.tuosito.it e dimmi le cinque correzioni più urgenti."),
+        ("correggi-dati-strutturati", "Correggi i miei dati strutturati",
+         "Valida il JSON-LD della pagina, spiega i problemi in chiaro e scrive il codice corretto, ricontrollandolo finché non ci sono errori.",
+         [("url", "la pagina da correggere")],
+         ["schema_validate"], None,
+         "Valida i dati strutturati di https://www.tuosito.it/prodotto e dammi il JSON-LD corretto."),
+        ("controllo-migrazione", "Controllo dopo una migrazione",
+         "Dopo un cambio di dominio, di piattaforma o di URL: redirect, canonical, sitemap e indicizzazione delle pagine chiave, più il traffico prima e dopo.",
+         [("url", "la home del sito nuovo"), ("data", "la data della migrazione, facoltativa")],
+         ["tech_site_check", "tech_page_audit", "gsc_inspect_url", "gsc_compare_periods", "gsc_performance"], [GSC],
+         "Ho appena migrato il sito: controlla redirect, canonical, sitemap e indicizzazione delle pagine più importanti."),
     ]),
 ]
 PROMPTS = [p for *_, items in PROMPT_AREAS for p in items]
@@ -925,7 +979,7 @@ def prompts_page() -> str:
         cards = []
         for pname, title, pdesc, args, tools, cred, ask in items:
             args_html = ", ".join(f"<code>{a}</code> ({html.escape(d)})" for a, d in args)
-            cred_html = (f'<a href="/credenziali/#{cred[1]}">{html.escape(cred[0])}</a>' if cred
+            cred_html = (" + ".join(f'<a href="/credenziali/#{c[1]}">{html.escape(c[0])}</a>' for c in cred) if cred
                          else '<a href="/credenziali/#senza-credenziali">nessuna</a>')
             if pname == "audit-tecnico":
                 cred_html += ' (con la <a href="/credenziali/#api-key">API key Google</a> aggiunge anche PageSpeed e i Core Web Vitals reali)'
@@ -947,7 +1001,7 @@ def prompts_page() -> str:
       </section>""")
     return f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Prompt</nav>
       <h1>{len(PROMPTS)} prompt per SEO, GEO e AEO</h1>
-      <p class="lead">I <a href="/tool/">tool</a> misurano, i prompt ragionano sulle misure. Ogni prompt è un'analisi già impostata: combina i tool giusti, cita i numeri che ha trovato e chiude con le correzioni in ordine di impatto.</p>
+      <p class="lead">I <a href="/tool/">tool</a> misurano, i prompt ragionano sulle misure. Ogni prompt è un'analisi già impostata: combina i tool giusti, cita i numeri che ha trovato e chiude con le correzioni in ordine di impatto. Sono divisi per obiettivo; dentro l'assistente la stessa guida è la risorsa <code>seomcp://prompt</code>.</p>
       <ul class="area-list">
 {toc}
       </ul>
@@ -967,7 +1021,7 @@ def prompts_page() -> str:
 
       <section class="doc-block">
         <h2>Configura il tuo assistente</h2>
-        <p>I prompt GEO e SEO funzionano senza credenziali. Per quelli che usano Search Console segui la pagina <a href="/credenziali/">Credenziali</a>.</p>
+        <p>I prompt senza credenziali funzionano subito. Per quelli che usano Search Console, Analytics, Bing o la API key segui la pagina <a href="/credenziali/">Credenziali</a>.</p>
         {INCLUDE.format(name="clients")}
       </section>"""
 
@@ -1105,7 +1159,7 @@ def main():
     tool_dir.mkdir(exist_ok=True)
     (tool_dir / "index.html").write_text(
         page("Tutti i tool e i prompt · seomcp",
-             "I 25 tool e gli 8 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.",
+             f"I 25 tool e i {len(PROMPTS)} prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.",
              "tool", tools_page()))
 
     m365_dir = out / M365_SLUG
@@ -1117,7 +1171,7 @@ def main():
 
     for slug, title, desc, body in [
         ("prompt", "Prompt per SEO, GEO e AEO · seomcp",
-         f"Gli {len(PROMPTS)} prompt di seomcp per analisi SEO, GEO e AEO: audit tecnico, dati strutturati, citabilità nei motori AI, domande degli utenti.",
+         f"I {len(PROMPTS)} prompt di seomcp per SEO, GEO e AEO, divisi per obiettivo: capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni.",
          prompts_page()),
         ("credenziali", "Credenziali: Google e Bing con i link diretti · seomcp",
          "Come ottenere le credenziali per Search Console, Google Analytics 4, Core Web Vitals e Bing Webmaster Tools, con i link diretti e la configurazione pronta per il tuo assistente.",

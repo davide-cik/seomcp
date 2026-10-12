@@ -1,5 +1,6 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { TEMI, indiceMarkdown, temaMarkdown } from './domande.js';
+import { promptGuideMarkdown } from './prompt-guide.js';
 
 const BASE = 'seomcp://domande';
 
@@ -8,6 +9,17 @@ const BASE = 'seomcp://domande';
  * in Markdown. Nei client che le supportano si allegano alla chat (in Claude Code con @).
  */
 export function registerDomandeResources(server: McpServer): void {
+  server.registerResource(
+    'prompt',
+    'seomcp://prompt',
+    {
+      title: 'Guida ai prompt',
+      description: 'I prompt di seomcp divisi per obiettivo: capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni.',
+      mimeType: 'text/markdown',
+    },
+    (uri) => ({ contents: [{ uri: uri.href, mimeType: 'text/markdown', text: promptGuideMarkdown() }] }),
+  );
+
   server.registerResource(
     'domande',
     BASE,

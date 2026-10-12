@@ -6,7 +6,7 @@
 
 [🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · [MIT](LICENSE) license
 
-`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **25 tools and 8 prompts, all read-only.** Ask things like:
+`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **25 tools and 17 prompts, all read-only.** Ask things like:
 
 > Which queries rank in positions 4-20 over the last 90 days, and which pages should I optimize first?
 >
@@ -52,7 +52,7 @@
 | `bing_page_stats` | Bing performance by page |
 | `bing_keyword_stats` | Keyword search volume (defaults to Italy / Italian; set `country` and `language` for other markets) |
 
-Plus 8 **prompts** (conversation starters): GEO page audit, answers to real user questions, competitor comparison, AI access policy, rewriting a passage to be citable, editorial plan, fixing structured data, technical audit. See [docs/geo.md](docs/geo.md) and [docs/schema-validator.md](docs/schema-validator.md) (Italian).
+Plus 17 **prompts**, grouped by goal like Bing Webmaster Tools' prompt guide: understanding the data (traffic drops, monthly client report, traffic that doesn't convert, Google vs Bing, user questions), improving results (striking-distance queries, low-CTR titles and descriptions, keyword cannibalization, Core Web Vitals plan, editorial plan), getting cited by AI (GEO page audit, AI crawler access, competitor comparison, citable passage) and checks and fixes (technical audit, structured data, post-migration check). Inside the assistant the guide is the MCP resource `seomcp://prompt`. Details (Italian): [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/).
 
 **Ready-made questions:** 71 conversation starters in 10 themes (25 need no credentials), in [domande/](domande/README.md) (Italian) and as MCP resources inside seomcp: `seomcp://domande` (index) and `seomcp://domande/<theme>`.
 

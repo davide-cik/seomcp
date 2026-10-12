@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Prompt per SEO, GEO e AEO · seomcp</title>
-  <meta name="description" content="Gli 8 prompt di seomcp per analisi SEO, GEO e AEO: audit tecnico, dati strutturati, citabilità nei motori AI, domande degli utenti.">
+  <meta name="description" content="I 17 prompt di seomcp per SEO, GEO e AEO, divisi per obiettivo: capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni.">
   <link rel="canonical" href="https://seomcp.contentisking.guru/prompt/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Prompt per SEO, GEO e AEO · seomcp">
-  <meta property="og:description" content="Gli 8 prompt di seomcp per analisi SEO, GEO e AEO: audit tecnico, dati strutturati, citabilità nei motori AI, domande degli utenti.">
+  <meta property="og:description" content="I 17 prompt di seomcp per SEO, GEO e AEO, divisi per obiettivo: capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni.">
   <meta property="og:url" content="https://seomcp.contentisking.guru/prompt/">
   <meta property="og:locale" content="it_IT">
   <link rel="stylesheet" href="/style.css?v=384644d0d1">
@@ -21,12 +21,13 @@
   <main id="main" class="doc">
     <div class="wrap">
       <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Prompt</nav>
-      <h1>8 prompt per SEO, GEO e AEO</h1>
-      <p class="lead">I <a href="/tool/">tool</a> misurano, i prompt ragionano sulle misure. Ogni prompt è un'analisi già impostata: combina i tool giusti, cita i numeri che ha trovato e chiude con le correzioni in ordine di impatto.</p>
+      <h1>17 prompt per SEO, GEO e AEO</h1>
+      <p class="lead">I <a href="/tool/">tool</a> misurano, i prompt ragionano sulle misure. Ogni prompt è un'analisi già impostata: combina i tool giusti, cita i numeri che ha trovato e chiude con le correzioni in ordine di impatto. Sono divisi per obiettivo; dentro l'assistente la stessa guida è la risorsa <code>seomcp://prompt</code>.</p>
       <ul class="area-list">
-        <li><div class="area-head"><a href="#seo">SEO</a> <span class="area-count">2 prompt</span></div><p>Il sito in ordine dal punto di vista tecnico e i dati strutturati pronti per i risultati avanzati di Google.</p></li>
-        <li><div class="area-head"><a href="#geo">GEO</a> <span class="area-count">3 prompt</span></div><p>Farsi leggere e citare dai motori di ricerca generativi: ChatGPT, Perplexity, Gemini, AI Overviews di Google.</p></li>
-        <li><div class="area-head"><a href="#aeo">AEO</a> <span class="area-count">3 prompt</span></div><p>Rispondere alle domande delle persone in modo che un assistente possa estrarre la risposta e citarla.</p></li>
+        <li><div class="area-head"><a href="#capire-i-dati">Capire i dati</a> <span class="area-count">5 prompt</span></div><p>Cosa sta succedendo al sito: andamento, cali, conversioni, confronto tra motori e domande degli utenti.</p></li>
+        <li><div class="area-head"><a href="#migliorare">Migliorare i risultati</a> <span class="area-count">5 prompt</span></div><p>Dove si guadagna di più con meno lavoro: posizioni, CTR, contenuti in concorrenza, velocità e nuovi contenuti.</p></li>
+        <li><div class="area-head"><a href="#farsi-citare">Farsi citare dalle AI</a> <span class="area-count">4 prompt</span></div><p>GEO e AEO: farsi leggere, capire e citare da ChatGPT, Perplexity, Gemini e dalle AI Overviews di Google.</p></li>
+        <li><div class="area-head"><a href="#controlli">Controlli e correzioni</a> <span class="area-count">3 prompt</span></div><p>Verifiche tecniche con la lista delle correzioni pronta: prima di pubblicare, dopo una migrazione, quando qualcosa non torna.</p></li>
       </ul>
 
       <section class="doc-block" id="come-si-usano">
@@ -40,35 +41,127 @@
         </ul>
       </section>
 
-      <section class="doc-block" id="seo">
-        <h2>SEO <span class="area-count">2 prompt</span></h2>
-        <p>Il sito in ordine dal punto di vista tecnico e i dati strutturati pronti per i risultati avanzati di Google.</p>
-        <article class="prompt-card" id="audit-tecnico">
-          <h3>Audit tecnico del sito</h3>
-          <p>Controlla pagina e sito (redirect, indicizzabilità, sitemap, 404, link rotti, prestazioni, dati strutturati) e chiude con una tabella di correzioni in ordine di priorità.</p>
+      <section class="doc-block" id="capire-i-dati">
+        <h2>Capire i dati <span class="area-count">5 prompt</span></h2>
+        <p>Cosa sta succedendo al sito: andamento, cali, conversioni, confronto tra motori e domande degli utenti.</p>
+        <article class="prompt-card" id="calo-traffico">
+          <h3>Perché sto perdendo traffico?</h3>
+          <p>Trova pagine e query in calo, distingue tra meno impressioni, CTR più basso o posizioni peggiori, e controlla indicizzazione e Core Web Vitals delle pagine colpite.</p>
           <dl class="prompt-meta">
-            <dt>Comando</dt><dd><code>audit-tecnico</code></dd>
-            <dt>Gli dai</dt><dd><code>url</code> (la pagina da cui partire, di solito la home)</dd>
-            <dt>Usa</dt><dd><a href="/tool/#tech_page_audit"><code>tech_page_audit</code></a>, <a href="/tool/#tech_site_check"><code>tech_site_check</code></a>, <a href="/tool/#psi_analyze"><code>psi_analyze</code></a>, <a href="/tool/#crux_query"><code>crux_query</code></a>, <a href="/tool/#schema_validate"><code>schema_validate</code></a></dd>
-            <dt>Credenziali</dt><dd><a href="/credenziali/#senza-credenziali">nessuna</a> (con la <a href="/credenziali/#api-key">API key Google</a> aggiunge anche PageSpeed e i Core Web Vitals reali)</dd>
+            <dt>Comando</dt><dd><code>calo-traffico</code></dd>
+            <dt>Gli dai</dt><dd><code>sito</code> (la proprietà Search Console, facoltativa), <code>giorni</code> (il periodo, di default 28)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#gsc_compare_periods"><code>gsc_compare_periods</code></a>, <a href="/tool/#gsc_performance"><code>gsc_performance</code></a>, <a href="/tool/#gsc_inspect_url"><code>gsc_inspect_url</code></a>, <a href="/tool/#crux_query"><code>crux_query</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a></dd>
           </dl>
-          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Fai un audit tecnico di https://www.tuosito.it e dimmi le cinque correzioni più urgenti.»</p>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Perché il sito ha perso clic nelle ultime 4 settimane? Dimmi quali pagine e la causa più probabile.»</p>
         </article>
-        <article class="prompt-card" id="correggi-dati-strutturati">
-          <h3>Correggi i miei dati strutturati</h3>
-          <p>Valida il JSON-LD della pagina, spiega i problemi in chiaro e scrive il codice corretto, ricontrollandolo finché non ci sono errori.</p>
+        <article class="prompt-card" id="report-mensile">
+          <h3>Report mensile per il cliente</h3>
+          <p>Andamento su Google, pagine e query migliori e peggiori, conversioni organiche e tre azioni per il mese successivo, scritto per chi non fa SEO.</p>
           <dl class="prompt-meta">
-            <dt>Comando</dt><dd><code>correggi-dati-strutturati</code></dd>
-            <dt>Gli dai</dt><dd><code>url</code> (la pagina da correggere)</dd>
-            <dt>Usa</dt><dd><a href="/tool/#schema_validate"><code>schema_validate</code></a></dd>
-            <dt>Credenziali</dt><dd><a href="/credenziali/#senza-credenziali">nessuna</a></dd>
+            <dt>Comando</dt><dd><code>report-mensile</code></dd>
+            <dt>Gli dai</dt><dd><code>sito</code> (la proprietà Search Console, facoltativa), <code>mese</code> (il mese da raccontare, di default gli ultimi 28 giorni)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#gsc_compare_periods"><code>gsc_compare_periods</code></a>, <a href="/tool/#gsc_performance"><code>gsc_performance</code></a>, <a href="/tool/#ga_compare_periods"><code>ga_compare_periods</code></a>, <a href="/tool/#ga_organic_landing_pages"><code>ga_organic_landing_pages</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a> + <a href="/credenziali/#google-analytics">Google Analytics 4</a></dd>
           </dl>
-          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Valida i dati strutturati di https://www.tuosito.it/prodotto e dammi il JSON-LD corretto.»</p>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Preparami il report di settembre per il cliente, comprensibile per chi non fa SEO.»</p>
+        </article>
+        <article class="prompt-card" id="traffico-che-non-converte">
+          <h3>Traffico che non converte</h3>
+          <p>Incrocia Search Console e Analytics: pagine con molti clic da Google ma poche conversioni, con ipotesi concrete leggendo la pagina.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>traffico-che-non-converte</code></dd>
+            <dt>Gli dai</dt><dd><code>sito</code> (la proprietà Search Console, facoltativa), <code>giorni</code> (il periodo, di default 28)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#ga_organic_landing_pages"><code>ga_organic_landing_pages</code></a>, <a href="/tool/#gsc_performance"><code>gsc_performance</code></a>, <a href="/tool/#geo_page_sections"><code>geo_page_sections</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a> + <a href="/credenziali/#google-analytics">Google Analytics 4</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Quali pagine ricevono molti clic da Google ma convertono poco, e perché?»</p>
+        </article>
+        <article class="prompt-card" id="google-vs-bing">
+          <h3>Google e Bing a confronto</h3>
+          <p>Query e pagine dove i due motori divergono, con i volumi di ricerca di Bing: dove recuperare traffico e perché Bing conta anche per le AI.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>google-vs-bing</code></dd>
+            <dt>Gli dai</dt><dd><code>sito</code> (la proprietà Search Console, facoltativa), <code>giorni</code> (il periodo, di default 28)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#gsc_performance"><code>gsc_performance</code></a>, <a href="/tool/#bing_query_stats"><code>bing_query_stats</code></a>, <a href="/tool/#bing_page_stats"><code>bing_page_stats</code></a>, <a href="/tool/#bing_keyword_stats"><code>bing_keyword_stats</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a> + <a href="/credenziali/#bing">Bing Webmaster Tools</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Dove vado bene su Google e male su Bing, e il contrario?»</p>
+        </article>
+        <article class="prompt-card" id="domande-utenti">
+          <h3>Rispondo alle domande dei miei utenti?</h3>
+          <p>Prende da Search Console le query a domanda che portano alla pagina e verifica, sezione per sezione, se trovano risposta.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>domande-utenti</code></dd>
+            <dt>Gli dai</dt><dd><code>url</code> (la pagina), <code>giorni</code> (il periodo da considerare, di default 90)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#gsc_performance"><code>gsc_performance</code></a>, <a href="/tool/#geo_page_sections"><code>geo_page_sections</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Quali domande fanno le persone che arrivano su questa pagina, e a quali non rispondo?»</p>
         </article>
       </section>
-      <section class="doc-block" id="geo">
-        <h2>GEO <span class="area-count">3 prompt</span></h2>
-        <p>Farsi leggere e citare dai motori di ricerca generativi: ChatGPT, Perplexity, Gemini, AI Overviews di Google.</p>
+      <section class="doc-block" id="migliorare">
+        <h2>Migliorare i risultati <span class="area-count">5 prompt</span></h2>
+        <p>Dove si guadagna di più con meno lavoro: posizioni, CTR, contenuti in concorrenza, velocità e nuovi contenuti.</p>
+        <article class="prompt-card" id="opportunita-distanza-di-tiro">
+          <h3>Opportunità a distanza di tiro</h3>
+          <p>Prende le query in posizione 4-20, legge le pagine che si posizionano e propone cosa aggiungere a ciascuna per salire.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>opportunita-distanza-di-tiro</code></dd>
+            <dt>Gli dai</dt><dd><code>sito</code> (la proprietà Search Console, facoltativa), <code>giorni</code> (il periodo, di default 90)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#gsc_striking_distance"><code>gsc_striking_distance</code></a>, <a href="/tool/#geo_page_sections"><code>geo_page_sections</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Quali pagine sono quasi in prima pagina e cosa aggiungo a ciascuna per salire?»</p>
+        </article>
+        <article class="prompt-card" id="title-description-ctr">
+          <h3>Title e description che non convincono</h3>
+          <p>Trova le pagine con un CTR più basso del normale per la loro posizione e propone title e description riscritti.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>title-description-ctr</code></dd>
+            <dt>Gli dai</dt><dd><code>sito</code> (la proprietà Search Console, facoltativa), <code>giorni</code> (il periodo, di default 28)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#gsc_performance"><code>gsc_performance</code></a>, <a href="/tool/#tech_page_audit"><code>tech_page_audit</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Quali pagine hanno un CTR troppo basso per la loro posizione? Riscrivimi title e description.»</p>
+        </article>
+        <article class="prompt-card" id="cannibalizzazione">
+          <h3>Pagine in concorrenza tra loro</h3>
+          <p>Trova le query per cui si posizionano più pagine del sito e indica quale tenere come principale e cosa fare delle altre.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>cannibalizzazione</code></dd>
+            <dt>Gli dai</dt><dd><code>sito</code> (la proprietà Search Console, facoltativa), <code>giorni</code> (il periodo, di default 90)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#gsc_performance"><code>gsc_performance</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Ci sono query per cui più pagine del sito si fanno concorrenza?»</p>
+        </article>
+        <article class="prompt-card" id="piano-core-web-vitals">
+          <h3>Piano per i Core Web Vitals</h3>
+          <p>Dati reali degli utenti e andamento, poi il test di laboratorio sulle pagine peggiori, con le correzioni ordinate per risparmio.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>piano-core-web-vitals</code></dd>
+            <dt>Gli dai</dt><dd><code>url</code> (il sito o una pagina)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#crux_query"><code>crux_query</code></a>, <a href="/tool/#crux_history"><code>crux_history</code></a>, <a href="/tool/#psi_analyze"><code>psi_analyze</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#api-key">API key Google</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Il sito supera i Core Web Vitals? Fammi un piano per migliorarli, partendo da https://www.tuosito.it.»</p>
+        </article>
+        <article class="prompt-card" id="piano-editoriale-ai">
+          <h3>Piano editoriale per le risposte AI</h3>
+          <p>Dalle domande degli utenti che il sito non soddisfa ricava le nuove sezioni, le FAQ e le pagine da scrivere.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>piano-editoriale-ai</code></dd>
+            <dt>Gli dai</dt><dd><code>sito</code> (la proprietà Search Console o l&#x27;URL del sito), <code>giorni</code> (il periodo da considerare, di default 90)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#gsc_performance"><code>gsc_performance</code></a>, <a href="/tool/#geo_page_sections"><code>geo_page_sections</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Fammi un piano editoriale con le domande degli utenti a cui il sito non risponde ancora.»</p>
+        </article>
+      </section>
+      <section class="doc-block" id="farsi-citare">
+        <h2>Farsi citare dalle AI <span class="area-count">4 prompt</span></h2>
+        <p>GEO e AEO: farsi leggere, capire e citare da ChatGPT, Perplexity, Gemini e dalle AI Overviews di Google.</p>
         <article class="prompt-card" id="audit-geo-pagina">
           <h3>Audit GEO della pagina</h3>
           <p>Interpreta le misure GEO di una pagina (risposta in apertura, sezioni, dati, fonti, autore, freschezza, accesso dei crawler AI) e propone le correzioni in ordine di impatto.</p>
@@ -102,21 +195,6 @@
           </dl>
           <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Perché ChatGPT cita la pagina del mio concorrente e non la mia? Confronta le due pagine.»</p>
         </article>
-      </section>
-      <section class="doc-block" id="aeo">
-        <h2>AEO <span class="area-count">3 prompt</span></h2>
-        <p>Rispondere alle domande delle persone in modo che un assistente possa estrarre la risposta e citarla.</p>
-        <article class="prompt-card" id="domande-utenti">
-          <h3>Rispondo alle domande dei miei utenti?</h3>
-          <p>Prende da Search Console le query a domanda che portano alla pagina e verifica, sezione per sezione, se trovano risposta.</p>
-          <dl class="prompt-meta">
-            <dt>Comando</dt><dd><code>domande-utenti</code></dd>
-            <dt>Gli dai</dt><dd><code>url</code> (la pagina), <code>giorni</code> (il periodo da considerare, di default 90)</dd>
-            <dt>Usa</dt><dd><a href="/tool/#gsc_performance"><code>gsc_performance</code></a>, <a href="/tool/#geo_page_sections"><code>geo_page_sections</code></a></dd>
-            <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a></dd>
-          </dl>
-          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Quali domande fanno le persone che arrivano su questa pagina, e a quali non rispondo?»</p>
-        </article>
         <article class="prompt-card" id="passaggio-citabile">
           <h3>Rendi citabile questo passaggio</h3>
           <p>Riscrive una sezione della pagina perché un motore AI possa estrarla e citarla da sola, senza il contesto intorno.</p>
@@ -128,22 +206,48 @@
           </dl>
           <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Riscrivi la sezione &quot;Quanto costa&quot; di questa pagina perché un assistente AI possa citarla.»</p>
         </article>
-        <article class="prompt-card" id="piano-editoriale-ai">
-          <h3>Piano editoriale per le risposte AI</h3>
-          <p>Dalle domande degli utenti che il sito non soddisfa ricava le nuove sezioni, le FAQ e le pagine da scrivere.</p>
+      </section>
+      <section class="doc-block" id="controlli">
+        <h2>Controlli e correzioni <span class="area-count">3 prompt</span></h2>
+        <p>Verifiche tecniche con la lista delle correzioni pronta: prima di pubblicare, dopo una migrazione, quando qualcosa non torna.</p>
+        <article class="prompt-card" id="audit-tecnico">
+          <h3>Audit tecnico del sito</h3>
+          <p>Controlla pagina e sito (redirect, indicizzabilità, sitemap, 404, link rotti, prestazioni, dati strutturati) e chiude con una tabella di correzioni in ordine di priorità.</p>
           <dl class="prompt-meta">
-            <dt>Comando</dt><dd><code>piano-editoriale-ai</code></dd>
-            <dt>Gli dai</dt><dd><code>sito</code> (la proprietà Search Console o l&#x27;URL del sito), <code>giorni</code> (il periodo da considerare, di default 90)</dd>
-            <dt>Usa</dt><dd><a href="/tool/#gsc_performance"><code>gsc_performance</code></a>, <a href="/tool/#geo_page_sections"><code>geo_page_sections</code></a></dd>
+            <dt>Comando</dt><dd><code>audit-tecnico</code></dd>
+            <dt>Gli dai</dt><dd><code>url</code> (la pagina da cui partire, di solito la home)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#tech_page_audit"><code>tech_page_audit</code></a>, <a href="/tool/#tech_site_check"><code>tech_site_check</code></a>, <a href="/tool/#psi_analyze"><code>psi_analyze</code></a>, <a href="/tool/#crux_query"><code>crux_query</code></a>, <a href="/tool/#schema_validate"><code>schema_validate</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#senza-credenziali">nessuna</a> (con la <a href="/credenziali/#api-key">API key Google</a> aggiunge anche PageSpeed e i Core Web Vitals reali)</dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Fai un audit tecnico di https://www.tuosito.it e dimmi le cinque correzioni più urgenti.»</p>
+        </article>
+        <article class="prompt-card" id="correggi-dati-strutturati">
+          <h3>Correggi i miei dati strutturati</h3>
+          <p>Valida il JSON-LD della pagina, spiega i problemi in chiaro e scrive il codice corretto, ricontrollandolo finché non ci sono errori.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>correggi-dati-strutturati</code></dd>
+            <dt>Gli dai</dt><dd><code>url</code> (la pagina da correggere)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#schema_validate"><code>schema_validate</code></a></dd>
+            <dt>Credenziali</dt><dd><a href="/credenziali/#senza-credenziali">nessuna</a></dd>
+          </dl>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Valida i dati strutturati di https://www.tuosito.it/prodotto e dammi il JSON-LD corretto.»</p>
+        </article>
+        <article class="prompt-card" id="controllo-migrazione">
+          <h3>Controllo dopo una migrazione</h3>
+          <p>Dopo un cambio di dominio, di piattaforma o di URL: redirect, canonical, sitemap e indicizzazione delle pagine chiave, più il traffico prima e dopo.</p>
+          <dl class="prompt-meta">
+            <dt>Comando</dt><dd><code>controllo-migrazione</code></dd>
+            <dt>Gli dai</dt><dd><code>url</code> (la home del sito nuovo), <code>data</code> (la data della migrazione, facoltativa)</dd>
+            <dt>Usa</dt><dd><a href="/tool/#tech_site_check"><code>tech_site_check</code></a>, <a href="/tool/#tech_page_audit"><code>tech_page_audit</code></a>, <a href="/tool/#gsc_inspect_url"><code>gsc_inspect_url</code></a>, <a href="/tool/#gsc_compare_periods"><code>gsc_compare_periods</code></a>, <a href="/tool/#gsc_performance"><code>gsc_performance</code></a></dd>
             <dt>Credenziali</dt><dd><a href="/credenziali/#search-console">Google Search Console</a></dd>
           </dl>
-          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Fammi un piano editoriale con le domande degli utenti a cui il sito non risponde ancora.»</p>
+          <p class="prompt-ask"><span>Oppure chiedilo così:</span> «Ho appena migrato il sito: controlla redirect, canonical, sitemap e indicizzazione delle pagine più importanti.»</p>
         </article>
       </section>
 
       <section class="doc-block">
         <h2>Configura il tuo assistente</h2>
-        <p>I prompt GEO e SEO funzionano senza credenziali. Per quelli che usano Search Console segui la pagina <a href="/credenziali/">Credenziali</a>.</p>
+        <p>I prompt senza credenziali funzionano subito. Per quelli che usano Search Console, Analytics, Bing o la API key segui la pagina <a href="/credenziali/">Credenziali</a>.</p>
         <!--#include virtual="/_partials/clients.html" -->
       </section>
     </div>

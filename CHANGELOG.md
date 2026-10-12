@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.39 — 2026-10-12
+
+- **9 nuovi prompt sui dati** (Search Console, Analytics, Bing, Core Web Vitals): `calo-traffico`, `opportunita-distanza-di-tiro`, `title-description-ctr`, `cannibalizzazione`, `traffico-che-non-converte`, `report-mensile`, `piano-core-web-vitals`, `controllo-migrazione`, `google-vs-bing`. In tutto 17 prompt.
+- **Guida ai prompt** divisa per obiettivo (capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni) come risorsa MCP `seomcp://prompt` e nella pagina `/prompt/` del sito.
+- Test: ogni prompt cita solo tool esistenti; la guida copre tutti i prompt registrati.
+
 ## 0.1.36 — 2026-10-09
 
 - **Archivio di 71 domande pronte**, in 10 temi, come risorse MCP (`seomcp://domande` e `seomcp://domande/<tema>`) e nella cartella `domande/` del repository. Ogni domanda indica le credenziali necessarie, i tool usati e cosa aspettarsi; un test verifica che usino solo tool esistenti.

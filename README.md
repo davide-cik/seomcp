@@ -6,7 +6,7 @@
 
 [🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · Licenza [MIT](LICENSE)
 
-`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights e Chrome UX Report, e di analizzare le pagine pubbliche: accesso dei crawler AI, dati strutturati, redirect, canonical, sitemap e link rotti. **25 tool e 8 prompt, tutti in sola lettura.** Così puoi chiedere, in italiano:
+`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights e Chrome UX Report, e di analizzare le pagine pubbliche: accesso dei crawler AI, dati strutturati, redirect, canonical, sitemap e link rotti. **25 tool e 17 prompt, tutti in sola lettura.** Così puoi chiedere, in italiano:
 
 > Quali query sono in posizione 4-20 negli ultimi 90 giorni, e quali pagine dovrei ottimizzare per prime?
 >
@@ -58,9 +58,18 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 
 Le analisi più complesse (cannibalizzazione, content gap, report) le fa l'assistente ragionando sui dati: non serve codificarle nel server.
 
-### Prompt (8)
+### Prompt (17)
 
-Oltre ai tool, seomcp offre otto **prompt**, cioè spunti di conversazione già impostati: audit GEO della pagina, risposte alle domande degli utenti, confronto con i concorrenti, permessi AI del sito, riscrittura di un passaggio citabile, piano editoriale, correzione dei dati strutturati e audit tecnico. Come funzionano: [docs/geo.md](docs/geo.md) e [docs/schema-validator.md](docs/schema-validator.md).
+Oltre ai tool, seomcp offre 17 **prompt**: analisi già impostate che combinano più tool e chiudono con le correzioni in ordine di impatto. Sono divisi per obiettivo, come la guida dei prompt di Bing Webmaster Tools:
+
+| Obiettivo | Prompt |
+|---|---|
+| **Capire i dati** | Perché sto perdendo traffico? · Report mensile per il cliente · Traffico che non converte · Google e Bing a confronto · Rispondo alle domande dei miei utenti? |
+| **Migliorare i risultati** | Opportunità a distanza di tiro · Title e description che non convincono · Pagine in concorrenza tra loro · Piano per i Core Web Vitals · Piano editoriale per le risposte AI |
+| **Farsi citare dalle AI** | Audit GEO della pagina · Il mio sito è aperto alle AI? · Perché citano loro e non me? · Rendi citabile questo passaggio |
+| **Controlli e correzioni** | Audit tecnico del sito · Correggi i miei dati strutturati · Controllo dopo una migrazione |
+
+Dentro l'assistente la stessa guida è la risorsa MCP `seomcp://prompt`. Dettagli, argomenti e credenziali di ogni prompt: [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/). Approfondimenti: [docs/geo.md](docs/geo.md) e [docs/schema-validator.md](docs/schema-validator.md).
 
 ### Domande pronte (71)
 

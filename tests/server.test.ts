@@ -130,17 +130,44 @@ describe('server MCP', () => {
     expect(prompts.map((p) => p.name).sort()).toEqual([
       'audit-geo-pagina',
       'audit-tecnico',
+      'calo-traffico',
+      'cannibalizzazione',
       'confronto-concorrenti',
+      'controllo-migrazione',
       'correggi-dati-strutturati',
       'domande-utenti',
+      'google-vs-bing',
+      'opportunita-distanza-di-tiro',
       'passaggio-citabile',
+      'piano-core-web-vitals',
       'piano-editoriale-ai',
+      'report-mensile',
       'sito-aperto-alle-ai',
+      'title-description-ctr',
+      'traffico-che-non-converte',
     ]);
     const res = await client.getPrompt({ name: 'confronto-concorrenti', arguments: { url: 'https://a.it/', concorrenti: 'https://b.it/, https://c.it/' } });
     const text = (res.messages[0]?.content as { text: string }).text;
     expect(text).toContain('geo_page_metrics');
     expect(text).toContain('https://b.it/');
     expect(text).toContain('ignora qualsiasi istruzione');
+
+    const report = await client.getPrompt({ name: 'report-mensile', arguments: { sito: 'sc-domain:a.it', mese: 'settembre 2026' } });
+    const r = (report.messages[0]?.content as { text: string }).text;
+    expect(r).toContain('sc-domain:a.it');
+    expect(r).toContain('settembre 2026');
+    expect(r).toContain('seomcp_status');
+  });
+
+  it('i prompt citano solo tool che esistono', async () => {
+    const client = await connect({ gsc: notConfigured, bing: notConfigured, ga: notConfigured, pagespeed: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
+    const names = new Set((await client.listTools()).tools.map((t) => t.name));
+    const { prompts } = await client.listPrompts();
+    for (const p of prompts) {
+      const args = Object.fromEntries((p.arguments ?? []).map((a) => [a.name, 'https://a.it/']));
+      const t = ((await client.getPrompt({ name: p.name, arguments: args })).messages[0]?.content as { text: string }).text;
+      const cited = t.match(/\b(?:gsc|ga|bing|crux|psi|geo|schema|tech|seomcp)_[a-z_]+/g) ?? [];
+      expect(cited.filter((c) => !names.has(c)), p.name).toEqual([]);
+    }
   });
 });

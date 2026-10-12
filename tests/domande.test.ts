@@ -5,6 +5,7 @@ import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { describe, expect, it } from 'vitest';
 import { SeoMcpError } from '../src/core/errors.js';
 import { TEMI, TUTTE, temaMarkdown } from '../src/library/domande.js';
+import { PROMPT_GUIDE } from '../src/library/prompt-guide.js';
 import { createServerWithContext } from '../src/server.js';
 
 const off = () => {
@@ -38,7 +39,7 @@ describe('archivio di domande', () => {
   it('esposto come risorse MCP: un indice e una risorsa per tema, in Markdown', async () => {
     const client = await connect();
     const { resources } = await client.listResources();
-    expect(resources.map((r) => r.uri).sort()).toEqual(['seomcp://domande', ...TEMI.map((t) => `seomcp://domande/${t.slug}`)].sort());
+    expect(resources.map((r) => r.uri).sort()).toEqual(['seomcp://domande', 'seomcp://prompt', ...TEMI.map((t) => `seomcp://domande/${t.slug}`)].sort());
     const indice = await client.readResource({ uri: 'seomcp://domande' });
     const text = (indice.contents[0] as { text: string }).text;
     expect(text).toContain(`${TUTTE.length} spunti`);
@@ -52,5 +53,12 @@ describe('archivio di domande', () => {
       const file = readFileSync(join(import.meta.dirname, '..', 'domande', `${t.slug}.md`), 'utf8');
       expect(file.startsWith(temaMarkdown(t))).toBe(true);
     }
+  });
+
+  it('la guida ai prompt copre tutti i prompt registrati, una volta sola e con lo stesso titolo', async () => {
+    const { prompts } = await (await connect()).listPrompts();
+    const guida = PROMPT_GUIDE.flatMap((c) => c.prompt);
+    expect(guida.map((p) => p.nome).sort()).toEqual(prompts.map((p) => p.name).sort());
+    for (const p of guida) expect(p.titolo, p.nome).toBe(prompts.find((x) => x.name === p.nome)?.title);
   });
 });
