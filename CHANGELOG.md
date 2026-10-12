@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.58 — 2026-10-12
+
+- 0.1.57 pubblicata su npm (ga_ai_referrals, geo_entity, geo_common_crawl, bing_crawl e i due nuovi prompt): tolti i badge «in arrivo», versione aggiornata su sito e SEO Audit.
+
 ## 0.1.57 — 2026-10-12
 
 - Sito: pagina `/novita/` con le novità in ordine, dalla più recente alla prima versione, ciascuna con il link alla pagina dedicata; il menu «Novità» porta alla pagina. I nuovi tool non ancora su npm sono segnati «in arrivo».
