@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.52 — 2026-10-12
+
+- Sito (`/cloudflare/` e `/credenziali/`): il filtro IP del token Cloudflare è facoltativo; con IP dinamico (connessioni domestiche) va lasciato vuoto.
+
 ## 0.1.51 — 2026-10-12
 
 - Sito: pagina `/cloudflare/` (cosa chiedere, i 3 tool, crawler AI tra permesso e realtà, attivazione in 3 passi, limiti dei dati), prima voce del menu «Novità» (ora 6). La card Cloudflare della home e il gruppo in `/tool/` puntano alla nuova pagina; aggiunta alla sitemap.

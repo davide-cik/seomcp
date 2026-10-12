@@ -964,6 +964,7 @@ npx -y {PKG} auth google</code></pre>
             <h3>Crea un token personalizzato</h3>
             <p><strong>Crea token → Token personalizzato</strong>, con due permessi: <strong>Zona → Zona → Lettura</strong> e <strong>Zona → Analisi → Lettura</strong> (in inglese <em>Zone → Zone → Read</em> e <em>Zone → Analytics → Read</em>). In <strong>Risorse della zona</strong> scegli i siti che ti interessano.</p>
             <p class="links">{ext("https://dash.cloudflare.com/profile/api-tokens", "Token API di Cloudflare")}</p>
+            <p class="small"><strong>Filtro indirizzo IP del client: facoltativo.</strong> seomcp chiama Cloudflare dal computer su cui gira, quindi limita il token solo a un IP fisso, come quello di un server. Con le connessioni domestiche l'IP è quasi sempre dinamico e cambia nel tempo: lascia il filtro vuoto, altrimenti il token smette di funzionare al primo cambio. Il token resta comunque in sola lettura.</p>
           </li>
           <li>
             <h3>Copia il token</h3>
@@ -1115,6 +1116,7 @@ CF_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp
             <h3>Crea un token in sola lettura</h3>
             <p>Nella pagina dei token di Cloudflare scegli <strong>Crea token → Token personalizzato</strong>, con due permessi: <strong>Zona → Zona → Lettura</strong> e <strong>Zona → Analisi → Lettura</strong>. In <strong>Risorse della zona</strong> scegli i siti che ti interessano.</p>
             <p class="links">{ext("https://dash.cloudflare.com/profile/api-tokens", "Token API di Cloudflare")}</p>
+            <p class="small"><strong>Filtro indirizzo IP del client: facoltativo.</strong> seomcp chiama Cloudflare dal computer su cui gira, quindi limita il token solo a un IP fisso, come quello di un server. Con le connessioni domestiche l'IP è quasi sempre dinamico e cambia nel tempo: lascia il filtro vuoto, altrimenti il token smette di funzionare al primo cambio. Il token resta comunque in sola lettura.</p>
           </li>
           <li>
             <h3>Copia il token</h3>
