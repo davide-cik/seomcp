@@ -33,8 +33,22 @@ export function questionRegex(): string {
 
 const QUESTION_JS = new RegExp(questionRegex().replace('(?i)', ''), 'iu');
 
+/**
+ * Parole composte che contengono un interrogativo ma non sono domande ("tai chi", "chi kung", "qi gong").
+ * Si tolgono solo nel controllo in JavaScript: questionRegex() va a Search Console (RE2, senza lookaround)
+ * e le righe in più che porta vengono scartate qui. "hai chi…" resta una domanda: serve la "t" iniziale.
+ */
+const NON_INTERROGATIVI = [/\bt(h)?ai[\s-]?chi\b/giu, /\bchi[\s-]?(kung|gong)\b/giu, /\bqi[\s-]?gong\b/giu];
+
+export function normalizeQuestion(query: string): string {
+  return NON_INTERROGATIVI.reduce((s, re) => s.replace(re, ' '), query).replace(/\s+/g, ' ').trim();
+}
+
 export function isQuestionQuery(query: string): boolean {
-  return QUESTION_JS.test(query.trim());
+  // Una ricerca di una parola sola ("come", "chi") non è una domanda, a meno che non finisca con "?".
+  const original = query.trim();
+  if (!/\s/.test(original) && !original.endsWith('?')) return false;
+  return QUESTION_JS.test(normalizeQuestion(original));
 }
 
 export type QuestionType =
@@ -55,7 +69,7 @@ const TYPE_RULES: Array<[QuestionType, RegExp]> = [
 
 /** Tipo di domanda: suggerisce anche la forma migliore della risposta (passaggi, tabella, numero…). */
 export function questionType(query: string): QuestionType {
-  const q = query.trim();
+  const q = normalizeQuestion(query);
   for (const [type, re] of TYPE_RULES) if (re.test(q)) return type;
   return 'altro';
 }

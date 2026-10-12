@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.65 — 2026-10-12
+
+- AEO: "tai chi", "thai chi", "tai-chi", "chi kung", "qi gong" non sono più scambiati per domande (il "chi" interno non è un interrogativo), e nemmeno una ricerca di una parola sola ("come", "chi") senza punto interrogativo. Riguarda `gsc_question_queries` e il tipo di domanda in `aeo_answer_check`; il filtro RE2 verso Search Console resta invariato. Segnalato su un sito di Tai Chi, dove 8 delle prime 10 "domande" erano falsi positivi.
+
 ## 0.1.64 — 2026-10-12
 
 - 0.1.63 pubblicata su npm: versione aggiornata su sito e SEO Audit (nuovi check Wikidata e Common Crawl).

@@ -10,6 +10,24 @@ describe('domande da Search Console', () => {
       expect(isQuestionQuery(q), q).toBe(false);
   });
 
+  it('non scambia per domande le parole composte con un interrogativo, né una parola sola', () => {
+    for (const q of ['tai chi sulla sedia', 'thai chi sedia', 'corso tai-chi varedo', 'taichi per anziani', 'chi kung milano', 'qi gong benefici', 'chi', 'come'])
+      expect(isQuestionQuery(q), q).toBe(false);
+    const casi: Array<[string, string]> = [
+      ["tai chi cos'è", 'cosa'],
+      ['come si scrive tai chi', 'come'],
+      ['chi ha inventato il tai chi', 'chi'],
+      ['tai chi sulla sedia funziona?', 'altro'],
+      ['costellazioni familiari dove farle', 'dove'],
+      ['hai chi ti aiuta con il trasloco', 'chi'],
+    ];
+    for (const [q, tipo] of casi) {
+      expect(isQuestionQuery(q), q).toBe(true);
+      expect(questionType(q), q).toBe(tipo);
+    }
+    expect(questionType('tai chi sulla sedia')).toBe('altro');
+  });
+
   it("l'espressione per Search Console è valida per RE2 (niente \\b, flag (?i))", () => {
     const re = questionRegex();
     expect(re.startsWith('(?i)')).toBe(true);
