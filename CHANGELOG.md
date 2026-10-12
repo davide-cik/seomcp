@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.48 — 2026-10-12
+
+- Prima pubblicazione automatica da GitHub con npm Trusted Publishing (provenienza del pacchetto inclusa). Nessuna modifica al codice rispetto alla 0.1.46.
+
 ## 0.1.47 — 2026-10-12
 
 - La 0.1.46 è su npm (pubblicata a mano con token): tolti dal sito i badge «in arrivo». CLAUDE.md e RELEASING.md aggiornati (il token npm resta in `~/.npmrc`).
