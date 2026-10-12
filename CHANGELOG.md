@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.60 — 2026-10-12
+
+- 0.1.59 pubblicata su npm (108 domande come risorse MCP): versione aggiornata su sito e SEO Audit.
+
 ## 0.1.59 — 2026-10-12
 
 - **Archivio di 108 domande** (22 nuove): e-commerce e attività locali, incroci tra Search Console, Analytics, Bing e Cloudflare, visibilità nelle AI, report per il cliente; 36 senza credenziali.
