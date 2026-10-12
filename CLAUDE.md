@@ -75,7 +75,7 @@ Un tool o un prompt nuovo non è finito finché non sono allineati **tutti** que
 La pubblicazione su npm è **automatica da GitHub** (`.github/workflows/publish.yml`, npm Trusted Publishing, nessun token):
 `npm version patch --no-git-tag-version` → commit → `git tag vX.Y.Z` → `git push --follow-tags`. Il workflow controlla che il tag coincida con `package.json`, esegue test e build, pubblica con provenienza. La versione compare sul registro dopo qualche minuto (nessuna approvazione).
 
-**Stato al 2026-10-12:** Trusted Publisher funzionante (GitHub Actions, `davide-cik` / `seomcp` / `publish.yml`, environment vuoto, azione "npm publish" abilitata): la 0.1.48 è stata la prima versione pubblicata dal workflow, con provenienza; ultima: 0.1.61. Per un tentativo fallito che non richiede modifiche al codice basta `gh run rerun <id>` (stesso tag). Procedura manuale di riserva in `RELEASING.md`.
+**Stato al 2026-10-12:** Trusted Publisher funzionante (GitHub Actions, `davide-cik` / `seomcp` / `publish.yml`, environment vuoto, azione "npm publish" abilitata): la 0.1.48 è stata la prima versione pubblicata dal workflow, con provenienza; ultima: 0.1.63. Per un tentativo fallito che non richiede modifiche al codice basta `gh run rerun <id>` (stesso tag). Procedura manuale di riserva in `RELEASING.md`.
 
 Dopo ogni rilascio: `python3 scripts/build-site.py` (aggiorna la versione mostrata sul sito); svuotare `IN_ARRIVO` in `scripts/build-site.py` (badge "in arrivo" del sito) e togliere la riga "In arrivo nella prossima versione" da `site/index.html`, poi `python3 scripts/build-site.py`. Finché non si rilascia, ogni tool o prompt nuovo va aggiunto a `IN_ARRIVO`.
 
