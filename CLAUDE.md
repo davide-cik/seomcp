@@ -68,7 +68,7 @@ Un tool o un prompt nuovo non è finito finché non sono allineati **tutti** que
 4. Tool nuovo → `TOOL_GROUPS` (e `CRED_FOR_GROUP` se serve una credenziale) in `scripts/build-site.py`; istruzioni in `INSTRUCTIONS` di `src/server.ts` se cambia il modo d'uso.
 5. Fonte nuova con credenziali → `config.ts`, `doctor.ts`, `setup/wizard.ts`, sezione in `/credenziali/` (+ campo del generatore in `site/credenziali.js`), tabella variabili del README.
 6. Conteggi: `site/index.html` (titolo "N tool e N prompt" e card delle aree), `README.md`, `README.en.md`, `site/llms.txt`, eventualmente domande in `src/library/domande.ts` (poi `npm run domande`).
-7. `CHANGELOG.md`, poi `python3 scripts/build-site.py` e controllo dei link interni del sito.
+7. `CHANGELOG.md` e, per le funzionalità che contano per l'utente, una voce in `NOVITA` di `scripts/build-site.py` (pagina `/novita/`); poi `python3 scripts/build-site.py` e controllo dei link interni del sito.
 
 ## Rilascio
 

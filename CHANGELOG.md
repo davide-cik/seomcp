@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.57 — 2026-10-12
+
+- Sito: pagina `/novita/` con le novità in ordine, dalla più recente alla prima versione, ciascuna con il link alla pagina dedicata; il menu «Novità» porta alla pagina. I nuovi tool non ancora su npm sono segnati «in arrivo».
+
 ## 0.1.56 — 2026-10-12
 
 - **`ga_ai_referrals`**: visite dagli assistenti AI (ChatGPT, Perplexity, Gemini, Copilot, Claude, Le Chat, DeepSeek, Grok e altri) in Google Analytics, per assistente: sessioni, coinvolgimento, conversioni, ricavi, pagine di destinazione, confronto con il periodo prima e quota sul traffico totale.

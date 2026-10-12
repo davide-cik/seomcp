@@ -731,7 +731,10 @@ DOMANDE = len(re.findall(r"^\s*q\('", (ROOT / "src" / "library" / "domande.ts").
 
 # Tool e prompt già nel repository ma non ancora nel pacchetto npm (la versione pubblicata la legge published_version()).
 # Il sito li segna "in arrivo": dopo il rilascio svuota l'insieme e rigenera il sito.
-IN_ARRIVO: set[str] = set()
+IN_ARRIVO: set[str] = {
+    "ga_ai_referrals", "geo_entity", "geo_common_crawl", "bing_crawl",
+    "traffico-dalle-ai", "le-ai-sanno-chi-sono",
+}
 SOON = '<span class="badge-soon" title="Disponibile con la prossima versione del pacchetto npm">in arrivo</span>'
 SOON_NOTE = ('<p class="small">Le voci segnate ' + SOON + ' sono pronte e arrivano con la prossima versione del pacchetto npm: '
              'chi installa oggi con <code>npx</code> non le vede ancora.</p>')
@@ -786,6 +789,88 @@ def tools_page() -> str:
         <p>Oltre ai tool ci sono {len(PROMPTS)} prompt: analisi già impostate che combinano più tool e guidano l'assistente dai numeri alle correzioni. Sono divisi per {areas}.</p>
         <p class="area-more"><a href="/prompt/">Tutti i prompt in dettaglio →</a></p>
       </section>
+
+      <section class="doc-block">
+        <h2>Configura il tuo assistente</h2>
+        {INCLUDE.format(name="clients")}
+      </section>"""
+
+# Novità per la pagina /novita/, dalla più recente. Ogni voce: (data, titolo, testo, link, nomi di tool o prompt).
+# Se uno dei nomi è in IN_ARRIVO la voce mostra il badge "in arrivo". Va aggiornata a ogni funzionalità nuova.
+NOVITA = [
+    ("2026-10-12", "Visite dalle AI, entità e Common Crawl",
+     "Quattro tool per l'ultimo tratto della GEO. Quante visite portano davvero ChatGPT, Perplexity, Gemini, Copilot e gli altri assistenti, su quali pagine e se convertono. "
+     "Se il brand è un'entità riconosciuta da Wikidata e dal Knowledge Graph di Google, e se il sito è collegato con i sameAs. "
+     "Se le pagine sono in Common Crawl, l'archivio con cui si addestrano molti modelli. E come Bing scansiona e indicizza il sito. Con due prompt nuovi: «Quanto traffico mi portano le AI?» e «Le AI sanno chi sono?».",
+     [("/geo/", "GEO e AEO"), ("/google-analytics/", "Google Analytics 4"), ("/tool/#bing_crawl", "bing_crawl")],
+     ["ga_ai_referrals", "geo_entity", "geo_common_crawl", "bing_crawl"]),
+    ("2026-10-12", "Pubblicato direttamente da GitHub, con provenienza verificabile",
+     "Ogni versione su npm è costruita e pubblicata dal codice su GitHub, senza passaggi a mano e senza token. Chiunque può verificare da quale commit nasce il pacchetto che installa.",
+     [("https://www.npmjs.com/package/@contentisking/seomcp", "Il pacchetto su npm")], []),
+    ("2026-10-12", "Cloudflare: visite reali e crawler AI che passano davvero",
+     "Se il sito passa da Cloudflare, anche con il piano gratuito: le visite di chi rifiuta i cookie, i crawler AI che leggono davvero il sito e su quali pagine, gli errori 404 e 5xx visti dai visitatori. "
+     "Insieme, i link in entrata secondo Bing.",
+     [("/cloudflare/", "Cloudflare"), ("/tool/#bing_inbound_links", "bing_inbound_links")], ["cf_traffic", "bing_inbound_links"]),
+    ("2026-10-12", "Guida ai prompt e 10 nuovi prompt sui dati",
+     "I prompt divisi per obiettivo: capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni. Nuove analisi pronte: calo di traffico, opportunità a distanza di tiro, CTR, cannibalizzazione, traffico che non converte, report mensile, piano per i Core Web Vitals, controllo dopo una migrazione, Google e Bing a confronto, quali AI leggono il sito. "
+     "Alla domanda «cosa posso chiedere?» l'assistente risponde con la guida.",
+     [("/prompt/", "I prompt")], ["calo-traffico", "seomcp_guida"]),
+    ("2026-10-09", "Archivio di domande pronte",
+     "Domande da copiare nell'assistente, divise in 10 temi, ciascuna con le credenziali che servono, i tool che usa e cosa aspettarsi. Dentro seomcp sono anche risorse MCP.",
+     [("https://github.com/davide-cik/seomcp/tree/main/domande", "Le domande su GitHub")], []),
+    ("2026-10-09", "Su npm: si installa con un comando",
+     "seomcp è pubblicato come @contentisking/seomcp: serve solo Node.js, npx fa il resto. Niente git, niente compilazione.",
+     [("/installa/", "Installa")], []),
+    ("2026-10-09", "Configurazione guidata",
+     "Il comando seomcp setup fa le domande una alla volta, apre le pagine giuste delle console, prova subito ogni credenziale e aggiunge seomcp all'assistente scelto, senza chiavi nei suoi file.",
+     [("/credenziali/", "Credenziali")], []),
+    ("2026-09-29", "Controlli tecnici",
+     "Redirect, TTFB, indicizzabilità, canonical, hreflang, Open Graph, immagini, titoli e header di sicurezza della pagina; sitemap, pagina 404 e link interni rotti del sito. Senza credenziali.",
+     [("/tecnico/", "Controlli tecnici")], []),
+    ("2026-09-28", "Validatore schema.org",
+     "Valida il JSON-LD di una pagina o incollato con il vocabolario ufficiale di schema.org e i requisiti di Google per i risultati avanzati, e propone il codice corretto.",
+     [("/schema/", "Validatore schema.org")], []),
+    ("2026-09-28", "GEO e AEO",
+     "Misure oggettive di come i crawler AI vedono sito e pagine: chi può leggere cosa, risposta in apertura, sezioni, dati, fonti, autore, freschezza. Con i prompt per farsi citare.",
+     [("/geo/", "GEO e AEO")], []),
+    ("2026-09-28", "Core Web Vitals e PageSpeed",
+     "I dati reali degli utenti Chrome, con l'andamento fino a 40 settimane, e il test di PageSpeed Insights con le correzioni ordinate per risparmio.",
+     [("/core-web-vitals/", "Core Web Vitals")], []),
+    ("2026-09-28", "Google Analytics 4",
+     "Pagine di destinazione organiche, conversioni, confronti tra periodi, report liberi e utenti in tempo reale, accanto ai dati di Search Console.",
+     [("/google-analytics/", "Google Analytics 4")], []),
+    ("2026-09-28", "La prima versione",
+     "Search Console e Bing Webmaster Tools nell'assistente AI, in sola lettura e con le credenziali sul tuo computer.",
+     [("/tool/", "Tutti i tool")], []),
+]
+
+MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"]
+
+
+def data_it(iso: str) -> str:
+    y, m, d = iso.split("-")
+    return f"{int(d)} {MESI[int(m) - 1]} {y}"
+
+
+def novita_page() -> str:
+    items = []
+    for iso, title, text, links, names in NOVITA:
+        badge = f" {SOON}" if any(n in IN_ARRIVO for n in names) else ""
+        link_html = " ".join(
+            ext(u, label) if u.startswith("http") else f'<a href="{u}">{html.escape(label)} →</a>' for u, label in links)
+        items.append(f"""        <li class="news-item">
+          <time datetime="{iso}">{data_it(iso)}</time>
+          <h2>{html.escape(title)}{badge}</h2>
+          <p>{html.escape(text)}</p>
+          <p class="links">{link_html}</p>
+        </li>""")
+    return f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Novità</nav>
+      <h1>Novità</h1>
+      <p class="lead">Cosa è cambiato in seomcp, dalla novità più recente alla prima versione. Ogni voce porta alla pagina che spiega cosa puoi chiedere. Il dettaglio tecnico di ogni versione è nel <a href="{REPO}/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG</a>.</p>
+      {SOON_NOTE if IN_ARRIVO else ""}
+      <ol class="news">
+{chr(10).join(items)}
+      </ol>
 
       <section class="doc-block">
         <h2>Configura il tuo assistente</h2>
@@ -1315,6 +1400,13 @@ def main():
              "Visite reali, crawler AI che passano davvero sul sito ed errori 404 e 5xx visti da Cloudflare, dentro Claude, ChatGPT e gli altri assistenti AI con seomcp. Token in sola lettura, anche con il piano gratuito.",
              "cloudflare", CF_PAGE))
 
+    nov_dir = SITE / "novita"
+    nov_dir.mkdir(exist_ok=True)
+    (nov_dir / "index.html").write_text(
+        page("Novità · seomcp",
+             "Le novità di seomcp in ordine, dalla più recente: visite dagli assistenti AI, entità e Common Crawl, Cloudflare, prompt, controlli tecnici, validatore schema.org, GEO, Core Web Vitals, Google Analytics.",
+             "novita", novita_page()))
+
     tool_dir = SITE / "tool"
     tool_dir.mkdir(exist_ok=True)
     (tool_dir / "index.html").write_text(
@@ -1342,7 +1434,7 @@ def main():
         (d / "index.html").write_text(page(title, desc, slug, body))
 
     today = date.today().isoformat()
-    urls = ["/", "/tool/", "/prompt/", "/credenziali/", "/tecnico/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/cloudflare/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS] + [f"/installa/{M365_SLUG}/"]
+    urls = ["/", "/tool/", "/prompt/", "/credenziali/", "/tecnico/", "/geo/", "/schema/", "/google-analytics/", "/core-web-vitals/", "/cloudflare/", "/novita/", "/installa/"] + [f"/installa/{v['slug']}/" for v in VENDORS] + [f"/installa/{M365_SLUG}/"]
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls)
