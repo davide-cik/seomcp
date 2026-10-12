@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.49 — 2026-10-12
+
+- CLAUDE.md e RELEASING.md: Trusted Publisher funzionante, errori del primo rilascio e come risolverli.
+
 ## 0.1.48 — 2026-10-12
 
 - Prima pubblicazione automatica da GitHub con npm Trusted Publishing (provenienza del pacchetto inclusa). Nessuna modifica al codice rispetto alla 0.1.46.

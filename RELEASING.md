@@ -8,6 +8,8 @@
 
 Configurazione una tantum su npmjs.com → pacchetto → Settings → **Trusted Publisher**: GitHub Actions, organizzazione `davide-cik`, repository `seomcp`, workflow `publish.yml`, azione **npm publish** abilitata. npm concede 2 giorni per il primo rilascio dopo la configurazione.
 
+Errori visti al primo rilascio: `OIDC token exchange error - package not found` = Trusted Publisher non salvato o con dati diversi; `403 OIDC permission denied for this action` = azione "npm publish" non abilitata nella voce. Dopo la correzione basta `gh run rerun <id>`.
+
 ## Di riserva: manuale con token
 
 
