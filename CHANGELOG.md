@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.55 — 2026-10-12
+
+- 0.1.54 pubblicata su npm (README con Cloudflare): versione aggiornata su sito e SEO Audit.
+
 ## 0.1.54 — 2026-10-12
 
 - README (italiano e inglese): Cloudflare tra le credenziali, con il link alla pagina `/cloudflare/` e la nota sul filtro IP facoltativo.
