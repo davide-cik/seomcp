@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.53 — 2026-10-12
+
+- 0.1.52 pubblicata su npm (stesso codice della 0.1.48): versione aggiornata su sito e SEO Audit.
+
 ## 0.1.52 — 2026-10-12
 
 - Sito (`/cloudflare/` e `/credenziali/`): il filtro IP del token Cloudflare è facoltativo; con IP dinamico (connessioni domestiche) va lasciato vuoto.
