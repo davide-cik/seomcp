@@ -37,6 +37,21 @@ JSON-LD validato con il vocabolario ufficiale di schema.org e i requisiti di Goo
     - Tool: `geo_entity`, `schema_validate`
     - Risposta: I sameAs mancanti o sbagliati e il JSON-LD corretto, pronto da incollare.
 
+8. **Scrivimi il JSON-LD FAQPage per https://www.esempio.it/servizio/ usando solo domande e risposte già presenti nella pagina, e validalo.**
+    - Serve: nessuna credenziale
+    - Tool: `geo_page_sections`, `schema_validate`
+    - Risposta: Il codice pronto e validato, con la nota che Google mostra le FAQ come risultato avanzato solo per pochi siti.
+
+9. **La pagina dell'evento https://www.esempio.it/evento/ ha tutti i campi richiesti da Google: data, luogo, stato e biglietti?**
+    - Serve: nessuna credenziale
+    - Tool: `schema_validate`
+    - Risposta: I campi obbligatori e consigliati per l'evento, con quelli mancanti.
+
+10. **Per un'attività locale: il JSON-LD LocalBusiness della home ha indirizzo, telefono, orari e coordinate coerenti con la pagina?**
+    - Serve: nessuna credenziale
+    - Tool: `schema_validate`
+    - Risposta: I dati dell'attività controllati e il JSON-LD corretto.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).

@@ -77,6 +77,21 @@ Come leggono il sito ChatGPT, Perplexity, Gemini e le AI Overviews, e come rende
     - Tool: `geo_entity`
     - Risposta: Le entità omonime, quale è collegata al sito e come evitare la confusione.
 
+16. **Quali pagine danno la risposta subito e quali la nascondono in fondo? Analizza la home di https://www.esempio.it e le 3 guide principali.**
+    - Serve: nessuna credenziale
+    - Tool: `geo_page_metrics`
+    - Risposta: La risposta in apertura pagina per pagina, con le riscritture più urgenti.
+
+17. **Le pagine più visitate dagli assistenti AI hanno autore, data di aggiornamento e dati strutturati?**
+    - Serve: Google Analytics 4
+    - Tool: `ga_ai_referrals`, `geo_page_metrics`
+    - Risposta: Le pagine che le AI già citano, con i segnali di autorevolezza che mancano.
+
+18. **Se blocco GPTBot ma lascio OAI-SearchBot e ChatGPT-User, cosa cambia per il mio sito? Verifica cosa dice oggi il mio robots.txt.**
+    - Serve: nessuna credenziale
+    - Tool: `geo_ai_access`
+    - Risposta: La differenza tra addestramento e risposte, con le righe di robots.txt da usare.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.59 — 2026-10-12
+
+- **Archivio di 108 domande** (22 nuove): e-commerce e attività locali, incroci tra Search Console, Analytics, Bing e Cloudflare, visibilità nelle AI, report per il cliente; 36 senza credenziali.
+- Sito: la home racconta tutte le fonti (titolo, testo d'apertura, meta e dati strutturati), con tre nuove domande d'esempio e le risposte dimostrative (visite dagli assistenti AI, crawler AI reali, entità). Pagina Novità: voce sulle 108 domande, tolta quella sulla pubblicazione da GitHub.
+
 ## 0.1.58 — 2026-10-12
 
 - 0.1.57 pubblicata su npm (ga_ai_referrals, geo_entity, geo_common_crawl, bing_crawl e i due nuovi prompt): tolti i badge «in arrivo», versione aggiornata su sito e SEO Audit.

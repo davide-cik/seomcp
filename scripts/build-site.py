@@ -795,15 +795,15 @@ def tools_page() -> str:
 # Novità per la pagina /novita/, dalla più recente. Ogni voce: (data, titolo, testo, link, nomi di tool o prompt).
 # Se uno dei nomi è in IN_ARRIVO la voce mostra il badge "in arrivo". Va aggiornata a ogni funzionalità nuova.
 NOVITA = [
+    ("2026-10-12", "108 domande pronte",
+     "L'archivio di domande da copiare nell'assistente passa a 108, in 10 temi: e-commerce e attività locali, incroci tra Search Console, Analytics, Bing e Cloudflare, visibilità nelle AI, report per il cliente. Più di un terzo funziona senza credenziali.",
+     [("https://github.com/davide-cik/seomcp/tree/main/domande", "Le domande su GitHub"), ("/prompt/", "I prompt")], []),
     ("2026-10-12", "Visite dalle AI, entità e Common Crawl",
      "Quattro tool per l'ultimo tratto della GEO. Quante visite portano davvero ChatGPT, Perplexity, Gemini, Copilot e gli altri assistenti, su quali pagine e se convertono. "
      "Se il brand è un'entità riconosciuta da Wikidata e dal Knowledge Graph di Google, e se il sito è collegato con i sameAs. "
      "Se le pagine sono in Common Crawl, l'archivio con cui si addestrano molti modelli. E come Bing scansiona e indicizza il sito. Con due prompt nuovi: «Quanto traffico mi portano le AI?» e «Le AI sanno chi sono?».",
      [("/geo/", "GEO e AEO"), ("/google-analytics/", "Google Analytics 4"), ("/tool/#bing_crawl", "bing_crawl")],
      ["ga_ai_referrals", "geo_entity", "geo_common_crawl", "bing_crawl"]),
-    ("2026-10-12", "Pubblicato direttamente da GitHub, con provenienza verificabile",
-     "Ogni versione su npm è costruita e pubblicata dal codice su GitHub, senza passaggi a mano e senza token. Chiunque può verificare da quale commit nasce il pacchetto che installa.",
-     [("https://www.npmjs.com/package/@contentisking/seomcp", "Il pacchetto su npm")], []),
     ("2026-10-12", "Cloudflare: visite reali e crawler AI che passano davvero",
      "Se il sito passa da Cloudflare, anche con il piano gratuito: le visite di chi rifiuta i cookie, i crawler AI che leggono davvero il sito e su quali pagine, gli errori 404 e 5xx visti dai visitatori. "
      "Insieme, i link in entrata secondo Bing.",

@@ -47,6 +47,8 @@ export const TEMI: Tema[] = [
       q('Leggi https://www.esempio.it/guida/ come la vede un crawler AI: c\'è una risposta chiara in apertura? Quanto è citabile?', ['nessuna'], ['geo_page_metrics'], 'Le misure della pagina con un giudizio su risposta in apertura, sezioni, fonti e autore.'),
       q('La sitemap di https://www.esempio.it contiene pagine reindirizzate o in errore? La pagina 404 è configurata bene?', ['nessuna'], ['tech_site_check'], 'Un campione di URL della sitemap con il loro stato, più la verifica della pagina 404.'),
       q('Da quanto tempo esiste il dominio esempio.it e il passaggio da http a https è fatto bene?', ['nessuna'], ['geo_page_metrics'], 'Età del dominio, scadenza e catena di redirect da http.'),
+      q('Quali fonti posso collegare a seomcp e cosa serve per ciascuna? Dimmi da quale partire per avere più valore con meno fatica.', ['nessuna'], ['seomcp_status', 'seomcp_guida'], 'Le fonti già configurate e quelle mancanti, con il primo passo consigliato.'),
+      q('Cosa posso chiedere a seomcp con le fonti che ho già collegato? Dammi 5 domande per cominciare.', ['nessuna'], ['seomcp_guida', 'seomcp_status'], 'Prompt e domande scelti tra quelli che funzionano con la tua configurazione.'),
     ],
   },
   {
@@ -63,6 +65,8 @@ export const TEMI: Tema[] = [
       q('Quante visite reali ha avuto il sito negli ultimi 7 giorni secondo Cloudflare, comprese quelle di chi rifiuta i cookie? Confrontale con Google Analytics.', ['cloudflare', 'analytics'], ['cf_traffic', 'ga_report'], 'Visite e pagine viste giorno per giorno, con la differenza rispetto ad Analytics.'),
       q('Quanta parte dei clic viene dal brand? Separa le query che contengono il nome del sito da tutte le altre.', ['search-console'], ['gsc_performance'], 'Clic e impressioni di brand e non brand, con le quote.'),
       q('Il calo di clic delle ultime settimane dipende da meno impressioni, da un CTR più basso o da posizioni peggiori?', ['search-console'], ['gsc_compare_periods', 'gsc_performance'], 'Una diagnosi del calo scomposta tra impressioni, CTR e posizione.'),
+      q('Quali pagine hanno guadagnato più clic nelle ultime 4 settimane, e cosa hanno in comune?', ['search-console'], ['gsc_compare_periods'], 'Le pagine in crescita con le query che le spingono e un\'ipotesi sul perché.'),
+      q('Il traffico cala nel fine settimana o in certi giorni? Mostrami i clic giorno per giorno delle ultime 8 settimane.', ['search-console'], ['gsc_performance'], 'L\'andamento giornaliero con gli schemi che si ripetono di settimana in settimana.'),
     ],
   },
   {
@@ -78,6 +82,9 @@ export const TEMI: Tema[] = [
       q('Quali query nuove sono comparse negli ultimi 28 giorni rispetto al periodo precedente?', ['search-console'], ['gsc_compare_periods'], 'Le query in crescita o nuove, segnali di temi emergenti.'),
       q('Prendi le 5 pagine che hanno perso più clic quest\'anno: leggile e dimmi cosa è invecchiato nei contenuti.', ['search-console'], ['gsc_compare_periods', 'geo_page_sections'], 'Per ogni pagina in calo, cosa aggiornare nel testo.'),
       q('Su Bing quanto viene cercata la keyword "scarpe da trekking" in Italia, e il mio sito per quali query simili compare già su Google?', ['bing', 'search-console'], ['bing_keyword_stats', 'gsc_performance'], 'Volume della keyword su Bing e le query correlate già presenti su Google.'),
+      q('Ci sono query che portano impressioni a una pagina che non è la più adatta a rispondere? Indicami quale pagina dovrebbe posizionarsi.', ['search-console'], ['gsc_performance', 'geo_page_sections'], 'Le coppie query-pagina sbagliate, con la pagina giusta e cosa cambiare.'),
+      q('Quali pagine hanno perso posizioni ma non impressioni negli ultimi 3 mesi? Sono le prime da aggiornare.', ['search-console'], ['gsc_compare_periods'], 'Pagine ancora richieste ma in discesa, ordinate per clic a rischio.'),
+      q('Per le query in posizione 4-10 su Google, come va lo stesso sito su Bing? Dove conviene lavorare prima?', ['search-console', 'bing'], ['gsc_striking_distance', 'bing_query_stats'], 'Le query vicine alla vetta sui due motori, con le priorità.'),
     ],
   },
   {
@@ -96,6 +103,7 @@ export const TEMI: Tema[] = [
       q('Quali header di sicurezza mancano sul sito e quanto pesano le pagine principali?', ['nessuna'], ['tech_page_audit'], 'Header di sicurezza presenti e mancanti, peso e compressione delle pagine.'),
       q('Quante pagine del sito ha nell\'indice Bing, e il numero cresce o cala negli ultimi mesi?', ['bing'], ['bing_crawl'], 'Pagine nell\'indice di Bing all\'inizio e alla fine del periodo, con l\'andamento della scansione.'),
       q('Bing segnala pagine importanti bloccate da robots.txt o che rispondono con errori?', ['bing'], ['bing_crawl'], 'Gli URL con problemi secondo Bing, a partire da quelli con più link interni.'),
+      q('Le 10 pagine con più clic sono tutte indicizzate, con il canonical giusto e presenti nella sitemap?', ['search-console', 'nessuna'], ['gsc_performance', 'gsc_inspect_url', 'tech_site_check'], 'Per ogni pagina: indicizzazione, canonical scelto da Google e presenza nella sitemap.'),
     ],
   },
   {
@@ -118,6 +126,9 @@ export const TEMI: Tema[] = [
       q('Il sito usa Content Signals o la riserva TDM europea? Cosa comporta per l\'uso dei contenuti da parte delle AI?', ['nessuna'], ['geo_ai_access'], 'Le preferenze dichiarate sul sito e cosa significano.'),
       q('Quali pagine leggono i crawler di OpenAI e Perplexity, e quali ricevono davvero visite da ChatGPT e Perplexity? Ci sono pagine lette ma mai cliccate?', ['cloudflare', 'analytics'], ['cf_ai_crawlers', 'ga_ai_referrals'], 'Le pagine lette dai crawler messe accanto a quelle che portano visite, con quelle da migliorare.'),
       q('Su Wikidata ci sono più entità con il nome del mio brand? Rischio di essere confuso con qualcos\'altro?', ['nessuna'], ['geo_entity'], 'Le entità omonime, quale è collegata al sito e come evitare la confusione.'),
+      q('Quali pagine danno la risposta subito e quali la nascondono in fondo? Analizza la home di https://www.esempio.it e le 3 guide principali.', ['nessuna'], ['geo_page_metrics'], 'La risposta in apertura pagina per pagina, con le riscritture più urgenti.'),
+      q('Le pagine più visitate dagli assistenti AI hanno autore, data di aggiornamento e dati strutturati?', ['analytics', 'nessuna'], ['ga_ai_referrals', 'geo_page_metrics'], 'Le pagine che le AI già citano, con i segnali di autorevolezza che mancano.'),
+      q('Se blocco GPTBot ma lascio OAI-SearchBot e ChatGPT-User, cosa cambia per il mio sito? Verifica cosa dice oggi il mio robots.txt.', ['nessuna'], ['geo_ai_access'], 'La differenza tra addestramento e risposte, con le righe di robots.txt da usare.'),
     ],
   },
   {
@@ -132,6 +143,9 @@ export const TEMI: Tema[] = [
       q('Quali risultati avanzati potrei ottenere su https://www.esempio.it/ con i dati strutturati che ho già, e quali aggiungeresti?', ['nessuna'], ['schema_validate'], 'Risultati avanzati già idonei e quelli raggiungibili con poche aggiunte.'),
       q('Google rileva i risultati avanzati su https://www.esempio.it/ricetta/? Confronta con quello che dichiara la pagina.', ['search-console', 'nessuna'], ['gsc_inspect_url', 'schema_validate'], 'Risultati avanzati secondo Google e secondo il validatore, a confronto.'),
       q('L\'Organization nel JSON-LD della home di https://www.esempio.it ha i sameAs giusti verso Wikidata, Wikipedia e i profili social? Scrivimi quello corretto.', ['nessuna'], ['geo_entity', 'schema_validate'], 'I sameAs mancanti o sbagliati e il JSON-LD corretto, pronto da incollare.'),
+      q('Scrivimi il JSON-LD FAQPage per https://www.esempio.it/servizio/ usando solo domande e risposte già presenti nella pagina, e validalo.', ['nessuna'], ['geo_page_sections', 'schema_validate'], 'Il codice pronto e validato, con la nota che Google mostra le FAQ come risultato avanzato solo per pochi siti.'),
+      q('La pagina dell\'evento https://www.esempio.it/evento/ ha tutti i campi richiesti da Google: data, luogo, stato e biglietti?', ['nessuna'], ['schema_validate'], 'I campi obbligatori e consigliati per l\'evento, con quelli mancanti.'),
+      q('Per un\'attività locale: il JSON-LD LocalBusiness della home ha indirizzo, telefono, orari e coordinate coerenti con la pagina?', ['nessuna'], ['schema_validate'], 'I dati dell\'attività controllati e il JSON-LD corretto.'),
     ],
   },
   {
@@ -145,6 +159,8 @@ export const TEMI: Tema[] = [
       q('Confronta i Core Web Vitals reali su mobile e su desktop: dove va peggio?', ['api-key'], ['crux_query'], 'Le metriche per dispositivo a confronto.'),
       q('La pagina https://www.esempio.it/categoria/ è più lenta del resto del sito? Confronta pagina e origine.', ['api-key'], ['crux_query'], 'Metriche della singola pagina contro quelle di tutto il sito.'),
       q('Il test di laboratorio e i dati reali degli utenti dicono la stessa cosa? Se no, perché?', ['api-key'], ['psi_analyze', 'crux_query'], 'Le differenze tra laboratorio e campo, spiegate.'),
+      q('Tra le pagine con più clic da Google, quali non superano i Core Web Vitals? Partiamo dalle peggiori tra le più visitate.', ['search-console', 'api-key'], ['gsc_performance', 'crux_query'], 'Le pagine importanti con LCP, INP e CLS da migliorare, in ordine di traffico.'),
+      q('L\'INP del sito è peggiorato dopo l\'ultimo aggiornamento? Guarda l\'andamento delle ultime 10 settimane.', ['api-key'], ['crux_history'], 'La serie settimanale dell\'INP con il momento in cui è cambiato.'),
     ],
   },
   {
@@ -160,6 +176,8 @@ export const TEMI: Tema[] = [
       q('Dividi le sessioni per canale (organico, diretto, social, referral) e dimmi quale cresce di più.', ['analytics'], ['ga_report', 'ga_compare_periods'], 'Sessioni per canale con la variazione rispetto al periodo precedente.'),
       q('Quali pagine organiche hanno un tasso di coinvolgimento basso? Leggile e dimmi perché le persone se ne vanno.', ['analytics', 'nessuna'], ['ga_organic_landing_pages', 'geo_page_sections'], 'Le pagine poco coinvolgenti con ipotesi concrete sul testo.'),
       q('Chi arriva da ChatGPT e dagli altri assistenti AI converte più o meno di chi arriva da Google?', ['analytics'], ['ga_ai_referrals', 'ga_report'], 'Coinvolgimento e tasso di conversione degli assistenti AI a confronto con la ricerca organica.'),
+      q('Quali pagine di destinazione organiche convertono di più? Come posso portarci più traffico da Google?', ['analytics', 'search-console'], ['ga_organic_landing_pages', 'gsc_performance'], 'Le pagine che convertono meglio con le query su cui spingere.'),
+      q('In quali regioni d\'Italia convertono di più i visitatori che arrivano dalla ricerca organica?', ['analytics'], ['ga_report'], 'Sessioni e conversioni organiche per regione.'),
     ],
   },
   {
@@ -174,6 +192,8 @@ export const TEMI: Tema[] = [
       q('Ci sono query per cui vado bene su Google ma non su Bing, o il contrario?', ['bing', 'search-console'], ['bing_query_stats', 'gsc_performance'], 'Le query con le differenze più forti tra i due motori.'),
       q('Quanto vengono cercate queste keyword su Bing in Italia: "noleggio auto", "noleggio auto lungo termine", "noleggio furgoni"?', ['bing'], ['bing_keyword_stats'], 'Volumi di ricerca storici per ciascuna keyword.'),
       q('Quanto vale la keyword "hotel firenze" in Spagna su Bing?', ['bing'], ['bing_keyword_stats'], 'Il volume nel mercato indicato invece di quello predefinito.'),
+      q('Quali pagine hanno molti link in entrata secondo Bing ma pochi clic da Google? Sono pagine forti da valorizzare.', ['bing', 'search-console'], ['bing_inbound_links', 'gsc_performance'], 'Pagine con autorità ma poco traffico, con cosa migliorare.'),
+      q('Bing ha scansionato meno pagine del solito nelle ultime settimane? Ci sono stati picchi di errori 5xx?', ['bing'], ['bing_crawl'], 'L\'andamento della scansione con i giorni anomali e gli errori del server.'),
     ],
   },
   {
@@ -189,6 +209,8 @@ export const TEMI: Tema[] = [
       q('Scegli le 10 query con più potenziale, verifica su Bing quanto sono cercate e dimmi quali contenuti scrivere o aggiornare per prime.', ['search-console', 'bing'], ['gsc_striking_distance', 'bing_keyword_stats'], 'Una lista di contenuti ordinata per potenziale.'),
       q('Riassumi in 5 righe come sta andando il sito questa settimana rispetto alla precedente, per un messaggio al team.', ['search-console', 'analytics'], ['gsc_compare_periods', 'ga_compare_periods'], 'Un breve aggiornamento con i numeri essenziali.'),
       q('Nel report del mese aggiungi una sezione sulle visite dagli assistenti AI: quante, da quali, su quali pagine, rispetto al mese prima.', ['analytics'], ['ga_ai_referrals'], 'Una sezione pronta per il report, con i numeri e due righe di commento per il cliente.'),
+      q('Preparami una sintesi GEO per il cliente: crawler AI che passano, visite dagli assistenti, riconoscimento del brand come entità e presenza in Common Crawl.', ['cloudflare', 'analytics', 'nessuna'], ['cf_ai_crawlers', 'ga_ai_referrals', 'geo_entity', 'geo_common_crawl'], 'Una pagina di sintesi sulla visibilità nelle AI, con tre azioni.'),
+      q('Metti a confronto la mia home https://www.esempio.it con quella di https://www.concorrente.it: tecnica, dati strutturati, prestazioni e leggibilità per le AI.', ['nessuna', 'api-key'], ['tech_page_audit', 'schema_validate', 'psi_analyze', 'geo_page_metrics'], 'Una tabella di confronto con i punti in cui il concorrente è avanti.'),
     ],
   },
 ];

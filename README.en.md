@@ -63,7 +63,7 @@
 
 Plus 20 **prompts**, grouped by goal like Bing Webmaster Tools' prompt guide: understanding the data (traffic drops, monthly client report, traffic that doesn't convert, Google vs Bing, user questions), improving results (striking-distance queries, low-CTR titles and descriptions, keyword cannibalization, Core Web Vitals plan, editorial plan), getting cited by AI (traffic from AI assistants, does AI know who you are (entity and Common Crawl), which AI crawlers really read the site, GEO page audit, AI crawler access, competitor comparison, citable passage) and checks and fixes (technical audit, structured data, post-migration check). Inside the assistant the guide is the MCP resource `seomcp://prompt`. Details (Italian): [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/).
 
-**Ready-made questions:** 86 conversation starters in 10 themes (29 need no credentials), in [domande/](domande/README.md) (Italian) and as MCP resources inside seomcp: `seomcp://domande` (index) and `seomcp://domande/<theme>`.
+**Ready-made questions:** 108 conversation starters in 10 themes (36 need no credentials), in [domande/](domande/README.md) (Italian) and as MCP resources inside seomcp: `seomcp://domande` (index) and `seomcp://domande/<theme>`.
 
 ## Install
 

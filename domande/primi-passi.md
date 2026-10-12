@@ -37,6 +37,16 @@ Funzionano appena installato seomcp: leggono solo pagine pubbliche. Sostituisci 
     - Tool: `geo_page_metrics`
     - Risposta: Età del dominio, scadenza e catena di redirect da http.
 
+8. **Quali fonti posso collegare a seomcp e cosa serve per ciascuna? Dimmi da quale partire per avere più valore con meno fatica.**
+    - Serve: nessuna credenziale
+    - Tool: `seomcp_status`, `seomcp_guida`
+    - Risposta: Le fonti già configurate e quelle mancanti, con il primo passo consigliato.
+
+9. **Cosa posso chiedere a seomcp con le fonti che ho già collegato? Dammi 5 domande per cominciare.**
+    - Serve: nessuna credenziale
+    - Tool: `seomcp_guida`, `seomcp_status`
+    - Risposta: Prompt e domande scelti tra quelli che funzionano con la tua configurazione.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).

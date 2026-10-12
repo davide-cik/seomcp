@@ -32,6 +32,16 @@ Dati reali degli utenti Chrome (quelli che Google usa per il ranking) e test di 
     - Tool: `psi_analyze`, `crux_query`
     - Risposta: Le differenze tra laboratorio e campo, spiegate.
 
+7. **Tra le pagine con più clic da Google, quali non superano i Core Web Vitals? Partiamo dalle peggiori tra le più visitate.**
+    - Serve: Search Console + API key Google (PageSpeed e CrUX)
+    - Tool: `gsc_performance`, `crux_query`
+    - Risposta: Le pagine importanti con LCP, INP e CLS da migliorare, in ordine di traffico.
+
+8. **L'INP del sito è peggiorato dopo l'ultimo aggiornamento? Guarda l'andamento delle ultime 10 settimane.**
+    - Serve: API key Google (PageSpeed e CrUX)
+    - Tool: `crux_history`
+    - Risposta: La serie settimanale dell'INP con il momento in cui è cambiato.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).

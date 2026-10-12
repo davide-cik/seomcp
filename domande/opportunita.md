@@ -42,6 +42,21 @@ Dove si guadagna di più con meno lavoro: query vicine alla prima pagina, CTR ba
     - Tool: `bing_keyword_stats`, `gsc_performance`
     - Risposta: Volume della keyword su Bing e le query correlate già presenti su Google.
 
+9. **Ci sono query che portano impressioni a una pagina che non è la più adatta a rispondere? Indicami quale pagina dovrebbe posizionarsi.**
+    - Serve: Search Console
+    - Tool: `gsc_performance`, `geo_page_sections`
+    - Risposta: Le coppie query-pagina sbagliate, con la pagina giusta e cosa cambiare.
+
+10. **Quali pagine hanno perso posizioni ma non impressioni negli ultimi 3 mesi? Sono le prime da aggiornare.**
+    - Serve: Search Console
+    - Tool: `gsc_compare_periods`
+    - Risposta: Pagine ancora richieste ma in discesa, ordinate per clic a rischio.
+
+11. **Per le query in posizione 4-10 su Google, come va lo stesso sito su Bing? Dove conviene lavorare prima?**
+    - Serve: Search Console + Bing Webmaster Tools
+    - Tool: `gsc_striking_distance`, `bing_query_stats`
+    - Risposta: Le query vicine alla vetta sui due motori, con le priorità.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).

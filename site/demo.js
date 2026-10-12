@@ -8,6 +8,43 @@
 
   // Ogni risposta: tool usati e blocchi di contenuto ['p', testo] | ['ul', [voci]] | ['table', [intestazioni], [[righe]]].
   var ANSWERS = {
+    'Quante visite mi portano ChatGPT, Perplexity e gli altri assistenti AI, e su quali pagine?': {
+      tools: ['ga_ai_referrals · 28 giorni'],
+      blocks: [
+        ['p', 'Negli ultimi 28 giorni gli assistenti AI hanno portato 1.240 visite, l\'1,9% del traffico totale, contro le 870 del periodo precedente (+43%).'],
+        ['table', ['Assistente', 'Sessioni', 'Variaz.', 'Conv.'], [
+          ['ChatGPT', '820', '+51%', '3,4%'],
+          ['Perplexity', '260', '+22%', '4,1%'],
+          ['Gemini', '95', '+58%', '2,1%'],
+          ['Copilot', '65', '+8%', '1,5%'],
+        ]],
+        ['p', 'Arrivano soprattutto su /guide/scegliere-scarpe-trekking/ e /taglie/: sono le pagine che gli assistenti citano. Convertono meglio della ricerca organica (3,4% contro 2,2%). Il dato è una sottostima: le app spesso non passano il referrer.'],
+      ],
+    },
+    'Quali crawler AI passano davvero sul sito, e quali sto bloccando con robots.txt?': {
+      tools: ['cf_ai_crawlers · 28 giorni', 'geo_ai_access'],
+      blocks: [
+        ['table', ['Bot', 'Scopo', 'robots.txt', 'Richieste'], [
+          ['GPTBot', 'addestramento', 'bloccato', '0'],
+          ['OAI-SearchBot', 'ricerca e risposte', 'ammesso', '1.930'],
+          ['ChatGPT-User', 'lettura su richiesta', 'ammesso', '640'],
+          ['PerplexityBot', 'ricerca e risposte', 'bloccato', '0'],
+          ['ClaudeBot', 'addestramento', 'ammesso', '2.410'],
+        ]],
+        ['p', 'Attenzione: PerplexityBot è bloccato dalla regola "Disallow: /" del gruppo "*", quindi Perplexity non può leggere il sito per le sue risposte. Se vuoi essere citato, aggiungi un gruppo che lo ammette. OAI-SearchBot legge soprattutto le guide: sono le pagine su cui puntare.'],
+      ],
+    },
+    'Il mio brand è riconosciuto come entità da Wikidata e da Google?': {
+      tools: ['geo_entity'],
+      blocks: [
+        ['p', 'Sì su Wikidata: l\'entità Q123456 "azienda italiana di articoli sportivi" ha il tuo sito come sito ufficiale e una pagina Wikipedia in italiano. Il Knowledge Graph di Google la riconosce con la stessa descrizione.'],
+        ['ul', [
+          'Su Wikidata c\'è un omonimo (un film del 1998): il sito ufficiale vi distingue.',
+          'Nel JSON-LD della home l\'Organization non ha sameAs verso Wikidata né Wikipedia: aggiungili, aiutano le AI ad attribuirti i contenuti.',
+          'Su Wikidata manca il profilo LinkedIn, presente invece nel sito.',
+        ]],
+      ],
+    },
     'Quali query sono in posizione 4-20 negli ultimi 90 giorni?': {
       tools: ['gsc_striking_distance · 90 giorni'],
       blocks: [

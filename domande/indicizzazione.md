@@ -57,6 +57,11 @@ Se Google vede e indicizza le pagine giuste, e cosa lo impedisce.
     - Tool: `bing_crawl`
     - Risposta: Gli URL con problemi secondo Bing, a partire da quelli con più link interni.
 
+12. **Le 10 pagine con più clic sono tutte indicizzate, con il canonical giusto e presenti nella sitemap?**
+    - Serve: Search Console
+    - Tool: `gsc_performance`, `gsc_inspect_url`, `tech_site_check`
+    - Risposta: Per ogni pagina: indicizzazione, canonical scelto da Google e presenza nella sitemap.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).

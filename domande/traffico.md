@@ -47,6 +47,16 @@ Come va il sito su Google: clic, impressioni, posizioni e confronti tra periodi.
     - Tool: `gsc_compare_periods`, `gsc_performance`
     - Risposta: Una diagnosi del calo scomposta tra impressioni, CTR e posizione.
 
+10. **Quali pagine hanno guadagnato più clic nelle ultime 4 settimane, e cosa hanno in comune?**
+    - Serve: Search Console
+    - Tool: `gsc_compare_periods`
+    - Risposta: Le pagine in crescita con le query che le spingono e un'ipotesi sul perché.
+
+11. **Il traffico cala nel fine settimana o in certi giorni? Mostrami i clic giorno per giorno delle ultime 8 settimane.**
+    - Serve: Search Console
+    - Tool: `gsc_performance`
+    - Risposta: L'andamento giornaliero con gli schemi che si ripetono di settimana in settimana.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).

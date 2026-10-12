@@ -80,9 +80,9 @@ Oltre ai tool, seomcp offre 20 **prompt**: analisi già impostate che combinano 
 
 Dentro l'assistente la stessa guida è la risorsa MCP `seomcp://prompt`. Dettagli, argomenti e credenziali di ogni prompt: [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/). Approfondimenti: [docs/geo.md](docs/geo.md) e [docs/schema-validator.md](docs/schema-validator.md).
 
-### Domande pronte (86)
+### Domande pronte (108)
 
-Non sai da dove partire? L'archivio [domande/](domande/README.md) raccoglie 86 domande da copiare nell'assistente, divise in 10 temi: primi passi, traffico, opportunità, indicizzazione, GEO e AEO, dati strutturati, prestazioni, Analytics, Bing e report. Per ognuna c'è cosa serve (29 funzionano senza credenziali), quali tool usa e cosa aspettarsi.
+Non sai da dove partire? L'archivio [domande/](domande/README.md) raccoglie 108 domande da copiare nell'assistente, divise in 10 temi: primi passi, traffico, opportunità, indicizzazione, GEO e AEO, dati strutturati, prestazioni, Analytics, Bing e report. Per ognuna c'è cosa serve (36 funzionano senza credenziali), quali tool usa e cosa aspettarsi.
 
 Le stesse domande sono anche **risorse MCP** dentro seomcp: `seomcp://domande` è l'indice e `seomcp://domande/<tema>` contiene il singolo tema. Nei client che supportano le risorse si allegano alla chat; in Claude Code si richiamano con `@`. Oppure chiedi all'assistente: «Cosa posso chiedere a seomcp?».
 

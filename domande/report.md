@@ -42,6 +42,16 @@ Domande lunghe che combinano più fonti: utili per un cliente, per il capo o per
     - Tool: `ga_ai_referrals`
     - Risposta: Una sezione pronta per il report, con i numeri e due righe di commento per il cliente.
 
+9. **Preparami una sintesi GEO per il cliente: crawler AI che passano, visite dagli assistenti, riconoscimento del brand come entità e presenza in Common Crawl.**
+    - Serve: token Cloudflare (sola lettura) + Google Analytics 4
+    - Tool: `cf_ai_crawlers`, `ga_ai_referrals`, `geo_entity`, `geo_common_crawl`
+    - Risposta: Una pagina di sintesi sulla visibilità nelle AI, con tre azioni.
+
+10. **Metti a confronto la mia home https://www.esempio.it con quella di https://www.concorrente.it: tecnica, dati strutturati, prestazioni e leggibilità per le AI.**
+    - Serve: API key Google (PageSpeed e CrUX)
+    - Tool: `tech_page_audit`, `schema_validate`, `psi_analyze`, `geo_page_metrics`
+    - Risposta: Una tabella di confronto con i punti in cui il concorrente è avanti.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).

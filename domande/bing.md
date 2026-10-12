@@ -37,6 +37,16 @@ Bing conta anche per le AI: le sue ricerche alimentano Copilot e altri assistent
     - Tool: `bing_keyword_stats`
     - Risposta: Il volume nel mercato indicato invece di quello predefinito.
 
+8. **Quali pagine hanno molti link in entrata secondo Bing ma pochi clic da Google? Sono pagine forti da valorizzare.**
+    - Serve: Bing Webmaster Tools + Search Console
+    - Tool: `bing_inbound_links`, `gsc_performance`
+    - Risposta: Pagine con autorità ma poco traffico, con cosa migliorare.
+
+9. **Bing ha scansionato meno pagine del solito nelle ultime settimane? Ci sono stati picchi di errori 5xx?**
+    - Serve: Bing Webmaster Tools
+    - Tool: `bing_crawl`
+    - Risposta: L'andamento della scansione con i giorni anomali e gli errori del server.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).
