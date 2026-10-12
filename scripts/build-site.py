@@ -563,6 +563,7 @@ TOOL_GROUPS = [
         ("bing_query_stats", "Impressioni, clic e posizione media per query su Bing, per periodo o aggregate."),
         ("bing_page_stats", "Impressioni, clic e posizione media per pagina su Bing."),
         ("bing_keyword_stats", "Volumi di ricerca storici di una keyword su Bing, di default per Italia e italiano."),
+        ("bing_inbound_links", "Link in entrata secondo l'indice di Bing (Search Console non li dà via API): pagine più linkate, siti di provenienza e testi dei link. È una fotografia attuale, senza storico."),
         ("bing_list_sites", "I siti del tuo account Bing Webmaster Tools."),
     ]),
     ("core-web-vitals", "Core Web Vitals", "una API key gratuita di Google Cloud.", "/core-web-vitals/", [
@@ -582,6 +583,11 @@ TOOL_GROUPS = [
         ("tech_page_audit", "Controlli tecnici della pagina: catena di redirect, TTFB, peso e compressione, indicizzabilità, canonical, title e description, viewport, hreflang con link di ritorno, Open Graph e Twitter Card, immagini, gerarchia dei titoli, link, header di sicurezza."),
         ("tech_site_check", "Controlli tecnici del sito: sitemap (URL, lastmod, duplicati), un campione di URL della sitemap, la pagina 404 e un campione di link interni rotti o reindirizzati."),
     ]),
+    ("cloudflare", "Cloudflare", "un token Cloudflare in sola lettura.", None, [
+        ("cf_traffic", "Visite, richieste e pagine viste giorno per giorno secondo Cloudflare, che vede ogni richiesta: anche chi rifiuta i cookie o blocca gli script, che Analytics non conta."),
+        ("cf_ai_crawlers", "Quali crawler AI (GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, ChatGPT-User…) passano davvero sul sito, quante volte, su quali pagine e con quali risposte."),
+        ("cf_errors", "Le pagine che rispondono 404 o 5xx ai visitatori veri, con quante volte e in quanti giorni."),
+    ]),
     ("diagnostica", "Diagnostica", "", None, [
         ("seomcp_status", "Verifica quali fonti sono configurate e funzionanti, e spiega cosa fare per quelle che non lo sono."),
         ("seomcp_guida", "Cosa posso chiedere: restituisce i prompt divisi per obiettivo (capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni), con cosa serve e la domanda equivalente."),
@@ -594,6 +600,7 @@ GSC = ("Google Search Console", "search-console")
 GA = ("Google Analytics 4", "google-analytics")
 BING = ("Bing Webmaster Tools", "bing")
 KEY = ("API key Google", "api-key")
+CF = ("Cloudflare", "cloudflare")
 U = "https://www.tuosito.it"
 # Categorie per intento, come la Prompt Guide di Bing Webmaster Tools.
 # Ogni prompt: (nome, titolo, descrizione, argomenti, tool, credenziali, domanda equivalente);
@@ -659,6 +666,11 @@ PROMPT_AREAS = [
          [("url", "la pagina da analizzare")],
          ["geo_page_metrics", "geo_ai_access", "geo_page_sections"], None,
          "Analizza https://www.tuosito.it/guida dal punto di vista GEO: cosa cambio per farmi citare?"),
+        ("ai-che-leggono-il-sito", "Quali AI leggono davvero il mio sito?",
+         "Confronta i crawler AI che passano davvero sul sito (dati di Cloudflare) con quelli ammessi da robots.txt: chi legge cosa, chi è bloccato, quali pagine interessano ai motori AI.",
+         [("url", "il sito"), ("giorni", "il periodo, fino a 28, di default 28")],
+         ["cf_ai_crawlers", "geo_ai_access"], [CF],
+         "Quali crawler AI passano davvero sul mio sito, su quali pagine, e quali sto bloccando?"),
         ("sito-aperto-alle-ai", "Il mio sito è aperto alle AI?",
          "Spiega bot per bot quali crawler AI possono leggere il sito e per quale regola, distinguendo addestramento e risposte, anche alla luce della normativa europea.",
          [("url", "una pagina qualsiasi del sito")],
@@ -706,6 +718,7 @@ CRED_FOR_GROUP = {
     "geo": ("nessuna credenziale, le pagine sono pubbliche", "senza-credenziali"),
     "schema": ("nessuna credenziale", "senza-credenziali"),
     "tecnico": ("nessuna credenziale, le pagine sono pubbliche", "senza-credenziali"),
+    "cloudflare": ("un token Cloudflare in sola lettura", "cloudflare"),
 }
 
 
@@ -773,6 +786,7 @@ def credentials_page() -> str:
             <tr><td><a href="#search-console">Search Console</a></td><td>Service account o OAuth</td><td>10 minuti</td><td><a href="/tool/#search-console">{count["search-console"]} tool</a></td></tr>
             <tr><td><a href="#google-analytics">Analytics 4</a></td><td>Le stesse credenziali Google</td><td>3 minuti</td><td><a href="/tool/#google-analytics">{count["google-analytics"]} tool</a></td></tr>
             <tr><td><a href="#api-key">Core Web Vitals</a></td><td>API key Google Cloud</td><td>3 minuti</td><td><a href="/tool/#core-web-vitals">{count["core-web-vitals"]} tool</a></td></tr>
+            <tr><td><a href="#cloudflare">Cloudflare</a></td><td>Token in sola lettura</td><td>3 minuti</td><td><a href="/tool/#cloudflare">{count["cloudflare"]} tool</a></td></tr>
             <tr><td><a href="#bing">Bing Webmaster</a></td><td>API key Bing</td><td>2 minuti</td><td><a href="/tool/#bing">{count["bing"]} tool</a></td></tr>
           </tbody>
         </table>
@@ -927,8 +941,25 @@ npx -y {PKG} auth google</code></pre>
         <p>Variabile da impostare: <code>BING_WEBMASTER_API_KEY</code>. Facoltativa <code>SEOMCP_BING_SITE</code>, con l'URL esatto del sito come compare in Bing, per esempio <code>https://www.tuosito.it/</code>.</p>
       </section>
 
+      <section class="doc-block" id="cloudflare">
+        <h2>6. Cloudflare</h2>
+        <p>Solo se il sito passa da Cloudflare, anche con il piano gratuito. Cloudflare vede ogni richiesta: visite reali (anche di chi rifiuta i cookie), crawler AI che passano davvero ed errori 404 e 5xx. Il token è in sola lettura e non tocca il sito.</p>
+        <ol class="steps">
+          <li>
+            <h3>Crea un token personalizzato</h3>
+            <p><strong>Crea token → Token personalizzato</strong>, con due permessi: <strong>Zona → Zona → Lettura</strong> e <strong>Zona → Analisi → Lettura</strong> (in inglese <em>Zone → Zone → Read</em> e <em>Zone → Analytics → Read</em>). In <strong>Risorse della zona</strong> scegli i siti che ti interessano.</p>
+            <p class="links">{ext("https://dash.cloudflare.com/profile/api-tokens", "Token API di Cloudflare")}</p>
+          </li>
+          <li>
+            <h3>Copia il token</h3>
+            <p>Cloudflare lo mostra una sola volta. Da sapere: i bot sono riconosciuti dallo user-agent, che si può falsificare, e i numeri sono stime su un campione.</p>
+          </li>
+        </ol>
+        <p>Variabile da impostare: <code>SEOMCP_CLOUDFLARE_TOKEN</code>. Facoltativa <code>SEOMCP_CLOUDFLARE_ZONE</code>, il dominio predefinito, per esempio <code>tuosito.it</code>.</p>
+      </section>
+
       <section class="doc-block" id="configura">
-        <h2>6. Configura l'assistente</h2>
+        <h2>7. Configura l'assistente</h2>
         <p>Compila solo quello che hai e copia il risultato. <strong>I valori restano nel tuo browser:</strong> questa pagina non li salva e non li invia da nessuna parte. Se preferisci, lascia vuote le chiavi e scrivile direttamente nel file.</p>
         <form class="cfg" id="cfg" autocomplete="off" onsubmit="return false">
           <label class="cfg-wide">Assistente
@@ -950,13 +981,15 @@ npx -y {PKG} auth google</code></pre>
           <label>API key Google (Core Web Vitals) <input name="SEOMCP_GOOGLE_API_KEY" spellcheck="false"></label>
           <label>API key Bing <input name="BING_WEBMASTER_API_KEY" spellcheck="false"></label>
           <label>Sito Bing <input name="SEOMCP_BING_SITE" placeholder="https://www.tuosito.it/" spellcheck="false"></label>
+          <label>Token Cloudflare <input name="SEOMCP_CLOUDFLARE_TOKEN" spellcheck="false"></label>
+          <label>Dominio su Cloudflare <input name="SEOMCP_CLOUDFLARE_ZONE" placeholder="tuosito.it" spellcheck="false"></label>
         </form>
 <pre class="code" id="cfg-out"><code>Attiva JavaScript per generare la configurazione, oppure copiala dalla pagina del tuo assistente.</code></pre>
         <p class="small" id="cfg-guide">Dove incollarla: <a href="/installa/">guida del tuo assistente</a>.</p>
       </section>
 
       <section class="doc-block" id="verifica">
-        <h2>7. Verifica</h2>
+        <h2>8. Verifica</h2>
         <p>Prova ogni fonte configurata e ti dice esattamente cosa manca:</p>
 <pre class="code"><code>npx -y {PKG} doctor</code></pre>
         <p>Il comando legge le variabili dal terminale: per usarlo, impostale anche lì, oppure chiedi all'assistente di usare il tool <code>seomcp_status</code>, che fa lo stesso controllo.</p>
@@ -1014,7 +1047,7 @@ def prompts_page() -> str:
           <li><strong>Claude Desktop:</strong> dal pulsante <strong>+</strong> della chat scegli seomcp e poi il prompt.</li>
           <li><strong>GitHub Copilot in VS Code:</strong> nella chat digita <code>/mcp.seomcp.</code> e scegli il prompt.</li>
           <li><strong>Altri assistenti:</strong> se non mostrano i prompt, fai la stessa domanda a parole. Ogni prompt qui sotto ha l'esempio pronto: i tool sono gli stessi, cambia solo che l'analisi la imposti tu.</li>
-          <li><strong>Altre 71 domande pronte</strong>, divise per tema, sono dentro seomcp come risorse MCP (<code>seomcp://domande</code>) e su <a href="https://github.com/davide-cik/seomcp/tree/main/domande" target="_blank" rel="noopener">GitHub</a>. Oppure chiedi all'assistente: «Cosa posso chiedere a seomcp?».</li>
+          <li><strong>Altre 75 domande pronte</strong>, divise per tema, sono dentro seomcp come risorse MCP (<code>seomcp://domande</code>) e su <a href="https://github.com/davide-cik/seomcp/tree/main/domande" target="_blank" rel="noopener">GitHub</a>. Oppure chiedi all'assistente: «Cosa posso chiedere a seomcp?».</li>
         </ul>
       </section>
 

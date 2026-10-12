@@ -32,7 +32,8 @@
             <tr><td><a href="#search-console">Search Console</a></td><td>Service account o OAuth</td><td>10 minuti</td><td><a href="/tool/#search-console">6 tool</a></td></tr>
             <tr><td><a href="#google-analytics">Analytics 4</a></td><td>Le stesse credenziali Google</td><td>3 minuti</td><td><a href="/tool/#google-analytics">5 tool</a></td></tr>
             <tr><td><a href="#api-key">Core Web Vitals</a></td><td>API key Google Cloud</td><td>3 minuti</td><td><a href="/tool/#core-web-vitals">3 tool</a></td></tr>
-            <tr><td><a href="#bing">Bing Webmaster</a></td><td>API key Bing</td><td>2 minuti</td><td><a href="/tool/#bing">4 tool</a></td></tr>
+            <tr><td><a href="#cloudflare">Cloudflare</a></td><td>Token in sola lettura</td><td>3 minuti</td><td><a href="/tool/#cloudflare">3 tool</a></td></tr>
+            <tr><td><a href="#bing">Bing Webmaster</a></td><td>API key Bing</td><td>2 minuti</td><td><a href="/tool/#bing">5 tool</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -186,8 +187,25 @@ npx -y @contentisking/seomcp auth google</code></pre>
         <p>Variabile da impostare: <code>BING_WEBMASTER_API_KEY</code>. Facoltativa <code>SEOMCP_BING_SITE</code>, con l'URL esatto del sito come compare in Bing, per esempio <code>https://www.tuosito.it/</code>.</p>
       </section>
 
+      <section class="doc-block" id="cloudflare">
+        <h2>6. Cloudflare</h2>
+        <p>Solo se il sito passa da Cloudflare, anche con il piano gratuito. Cloudflare vede ogni richiesta: visite reali (anche di chi rifiuta i cookie), crawler AI che passano davvero ed errori 404 e 5xx. Il token è in sola lettura e non tocca il sito.</p>
+        <ol class="steps">
+          <li>
+            <h3>Crea un token personalizzato</h3>
+            <p><strong>Crea token → Token personalizzato</strong>, con due permessi: <strong>Zona → Zona → Lettura</strong> e <strong>Zona → Analisi → Lettura</strong> (in inglese <em>Zone → Zone → Read</em> e <em>Zone → Analytics → Read</em>). In <strong>Risorse della zona</strong> scegli i siti che ti interessano.</p>
+            <p class="links"><a class="go" href="https://dash.cloudflare.com/profile/api-tokens" target="_blank" rel="noopener">Token API di Cloudflare ↗</a></p>
+          </li>
+          <li>
+            <h3>Copia il token</h3>
+            <p>Cloudflare lo mostra una sola volta. Da sapere: i bot sono riconosciuti dallo user-agent, che si può falsificare, e i numeri sono stime su un campione.</p>
+          </li>
+        </ol>
+        <p>Variabile da impostare: <code>SEOMCP_CLOUDFLARE_TOKEN</code>. Facoltativa <code>SEOMCP_CLOUDFLARE_ZONE</code>, il dominio predefinito, per esempio <code>tuosito.it</code>.</p>
+      </section>
+
       <section class="doc-block" id="configura">
-        <h2>6. Configura l'assistente</h2>
+        <h2>7. Configura l'assistente</h2>
         <p>Compila solo quello che hai e copia il risultato. <strong>I valori restano nel tuo browser:</strong> questa pagina non li salva e non li invia da nessuna parte. Se preferisci, lascia vuote le chiavi e scrivile direttamente nel file.</p>
         <form class="cfg" id="cfg" autocomplete="off" onsubmit="return false">
           <label class="cfg-wide">Assistente
@@ -215,13 +233,15 @@ npx -y @contentisking/seomcp auth google</code></pre>
           <label>API key Google (Core Web Vitals) <input name="SEOMCP_GOOGLE_API_KEY" spellcheck="false"></label>
           <label>API key Bing <input name="BING_WEBMASTER_API_KEY" spellcheck="false"></label>
           <label>Sito Bing <input name="SEOMCP_BING_SITE" placeholder="https://www.tuosito.it/" spellcheck="false"></label>
+          <label>Token Cloudflare <input name="SEOMCP_CLOUDFLARE_TOKEN" spellcheck="false"></label>
+          <label>Dominio su Cloudflare <input name="SEOMCP_CLOUDFLARE_ZONE" placeholder="tuosito.it" spellcheck="false"></label>
         </form>
 <pre class="code" id="cfg-out"><code>Attiva JavaScript per generare la configurazione, oppure copiala dalla pagina del tuo assistente.</code></pre>
         <p class="small" id="cfg-guide">Dove incollarla: <a href="/installa/">guida del tuo assistente</a>.</p>
       </section>
 
       <section class="doc-block" id="verifica">
-        <h2>7. Verifica</h2>
+        <h2>8. Verifica</h2>
         <p>Prova ogni fonte configurata e ti dice esattamente cosa manca:</p>
 <pre class="code"><code>npx -y @contentisking/seomcp doctor</code></pre>
         <p>Il comando legge le variabili dal terminale: per usarlo, impostale anche lì, oppure chiedi all'assistente di usare il tool <code>seomcp_status</code>, che fa lo stesso controllo.</p>
@@ -230,7 +250,7 @@ npx -y @contentisking/seomcp auth google</code></pre>
           <li>Per revocare l'accesso: <a href="https://myaccount.google.com/linkedapps" target="_blank" rel="noopener">autorizzazioni del tuo account Google</a> per OAuth, eliminazione della chiave dal service account, rigenerazione della chiave Bing.</li>
         </ul>
       </section>
-      <script src="/credenziali.js?v=c0c25ed050" defer></script>
+      <script src="/credenziali.js?v=cd35cf165f" defer></script>
     </div>
   </main>
 

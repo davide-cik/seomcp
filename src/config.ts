@@ -19,11 +19,13 @@ const fileSchema = z
       })
       .optional(),
     bing: z.object({ apiKey: z.string().optional() }).optional(),
+    cloudflare: z.object({ apiToken: z.string().optional() }).optional(),
     defaults: z
       .object({
         gscSite: z.string().optional(),
         bingSite: z.string().optional(),
         gaProperty: z.string().optional(),
+        cloudflareZone: z.string().optional(),
         country: z.string().optional(),
         language: z.string().optional(),
       })
@@ -48,12 +50,15 @@ export interface SeoMcpConfig {
   bingApiKey?: string;
   /** API key Google Cloud per PageSpeed Insights e Chrome UX Report. */
   googleApiKey?: string;
+  /** Token Cloudflare in sola lettura per le statistiche. */
+  cloudflareToken?: string;
   /** Solo sviluppo: consente di analizzare indirizzi locali o privati (SEOMCP_ALLOW_PRIVATE=1). */
   allowPrivateFetch: boolean;
   defaults: {
     gscSite?: string;
     bingSite?: string;
     gaProperty?: string;
+    cloudflareZone?: string;
     country: string;
     language: string;
   };
@@ -88,11 +93,13 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): SeoMcpConfig {
     google,
     bingApiKey: env.BING_WEBMASTER_API_KEY || file.bing?.apiKey || undefined,
     googleApiKey: env.SEOMCP_GOOGLE_API_KEY || file.google?.apiKey || undefined,
+    cloudflareToken: env.SEOMCP_CLOUDFLARE_TOKEN || file.cloudflare?.apiToken || undefined,
     allowPrivateFetch: env.SEOMCP_ALLOW_PRIVATE === '1',
     defaults: {
       gscSite: env.SEOMCP_GSC_SITE || file.defaults?.gscSite,
       bingSite: env.SEOMCP_BING_SITE || file.defaults?.bingSite,
       gaProperty: env.SEOMCP_GA_PROPERTY || file.defaults?.gaProperty,
+      cloudflareZone: env.SEOMCP_CLOUDFLARE_ZONE || file.defaults?.cloudflareZone,
       country: env.SEOMCP_COUNTRY || file.defaults?.country || 'it',
       language: env.SEOMCP_LANGUAGE || file.defaults?.language || 'it-IT',
     },

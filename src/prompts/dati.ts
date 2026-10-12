@@ -207,4 +207,25 @@ ${NON_CONFIGURATA}
 
 ${REGOLE}`),
   );
+
+  server.registerPrompt(
+    'ai-che-leggono-il-sito',
+    {
+      title: 'Quali AI leggono davvero il mio sito?',
+      description: 'Confronta i crawler AI che passano davvero sul sito (dati di Cloudflare) con quelli ammessi da robots.txt: chi legge cosa, chi è bloccato, quali pagine interessano ai motori AI.',
+      argsSchema: { url: z.string().describe('Il sito, es. https://www.esempio.it'), giorni: z.string().optional().describe('Periodo in giorni, fino a 28, default 28') },
+    },
+    ({ url, giorni: g }) =>
+      text(`Scopri quali motori AI leggono davvero ${url}.
+
+1. Con cf_ai_crawlers (ultimi ${g ?? '28'} giorni) prendi i crawler AI che hanno visitato il sito: richieste, giorni attivi, pagine più lette, stati di risposta.
+2. Con geo_ai_access leggi cosa permette robots.txt a ciascun bot, divisi tra addestramento, ricerca e risposte, lettura su richiesta.
+3. Incrocia i due dati in una tabella: bot, azienda, scopo, permesso da robots.txt (sì/no), visite reali, pagine più lette.
+4. Segnala le incoerenze: bot bloccati che passano comunque (robots.txt non rispettato, o user-agent falsificato), bot permessi che non passano mai, bot di risposta (OAI-SearchBot, PerplexityBot, ChatGPT-User…) che ricevono errori 403/404/5xx.
+5. Indica quali pagine interessano di più ai motori AI e se sono quelle che il sito vorrebbe far citare; chiudi con 3 azioni.
+
+Se Cloudflare non è configurato, usa solo geo_ai_access, spiega che senza i dati di traffico si vede solo cosa è permesso, e indica seomcp_status per attivarlo.
+
+${REGOLE}`),
+  );
 }

@@ -4,6 +4,7 @@ import { dirname, join, resolve } from 'node:path';
 import { openBrowser, runGoogleOAuthFlow, serviceAccountEmail, createGoogleAuth } from '../auth/google.js';
 import { loadConfig, readConfigFile, writeConfigFile, type ConfigFile, type GoogleConfig, type SeoMcpConfig } from '../config.js';
 import { BingClient } from '../core/bing.js';
+import { CloudflareClient } from '../core/cloudflare.js';
 import { SeoMcpError } from '../core/errors.js';
 import { GaClient } from '../core/ga.js';
 import { GscClient } from '../core/gsc.js';
@@ -31,7 +32,7 @@ const DOMANDE_URL = 'https://github.com/davide-cik/seomcp/tree/main/domande';
 /** Variabili d'ambiente che, se impostate, prevalgono su config.json. */
 const ENV_OVERRIDES = [
   'GOOGLE_APPLICATION_CREDENTIALS', 'SEOMCP_GOOGLE_CLIENT_ID', 'SEOMCP_GOOGLE_CLIENT_SECRET', 'SEOMCP_GOOGLE_API_KEY',
-  'BING_WEBMASTER_API_KEY', 'SEOMCP_GSC_SITE', 'SEOMCP_GA_PROPERTY', 'SEOMCP_BING_SITE',
+  'BING_WEBMASTER_API_KEY', 'SEOMCP_GSC_SITE', 'SEOMCP_GA_PROPERTY', 'SEOMCP_BING_SITE', 'SEOMCP_CLOUDFLARE_TOKEN', 'SEOMCP_CLOUDFLARE_ZONE',
 ];
 
 const errText = (err: unknown) =>
@@ -50,6 +51,7 @@ export async function runSetup(): Promise<number> {
     await stepGoogle(p, config, draft);
     await stepApiKey(p, draft);
     await stepBing(p, draft);
+    await stepCloudflare(p, draft);
 
     writeConfigFile(config.configFile, draft);
     p.say(`\n✅ Configurazione salvata in ${config.configFile} (leggibile solo dal tuo utente).`);
@@ -96,7 +98,7 @@ async function retry<T>(p: Prompter, what: string, fn: () => Promise<T>): Promis
 // ---------- Google: Search Console e Analytics ----------
 
 async function stepGoogle(p: Prompter, config: SeoMcpConfig, draft: ConfigFile): Promise<void> {
-  p.say('\n━━ 1/3 · Google Search Console e Analytics 4\n');
+  p.say('\n━━ 1/4 · Google Search Console e Analytics 4\n');
   const g = draft.google ?? {};
   const current = g.serviceAccountFile
     ? `service account (${serviceAccountEmail(g.serviceAccountFile) ?? g.serviceAccountFile})`
@@ -250,7 +252,7 @@ async function setupOAuth(p: Prompter, config: SeoMcpConfig, draft: ConfigFile):
 // ---------- API key per i Core Web Vitals ----------
 
 async function stepApiKey(p: Prompter, draft: ConfigFile): Promise<void> {
-  p.say('\n━━ 2/3 · Core Web Vitals (PageSpeed Insights e Chrome UX Report)\n');
+  p.say('\n━━ 2/4 · Core Web Vitals (PageSpeed Insights e Chrome UX Report)\n');
   const current = draft.google?.apiKey;
   p.say(`Attuale: ${current ? `API key ${maskSecret(current)}` : 'non configurata'}`);
   if (!(await p.confirm(current ? 'Vuoi cambiarla?' : 'La configuriamo? Serve una API key gratuita di Google Cloud', !current))) return;
@@ -270,7 +272,7 @@ async function stepApiKey(p: Prompter, draft: ConfigFile): Promise<void> {
 // ---------- Bing ----------
 
 async function stepBing(p: Prompter, draft: ConfigFile): Promise<void> {
-  p.say('\n━━ 3/3 · Bing Webmaster Tools\n');
+  p.say('\n━━ 3/4 · Bing Webmaster Tools\n');
   const current = draft.bing?.apiKey;
   p.say(`Attuale: ${current ? `API key ${maskSecret(current)}` : 'non configurato'}`);
   if (!(await p.confirm(current ? 'Vuoi cambiarla?' : 'Colleghiamo Bing?', !current))) return;
@@ -288,6 +290,32 @@ async function stepBing(p: Prompter, draft: ConfigFile): Promise<void> {
   if (result.sites.length) {
     const i = await p.choose('Sito Bing predefinito:', result.sites, 'nessuno');
     draft.defaults = { ...draft.defaults, bingSite: i >= 0 ? result.sites[i] : undefined };
+  }
+}
+
+// ---------- Cloudflare ----------
+
+async function stepCloudflare(p: Prompter, draft: ConfigFile): Promise<void> {
+  p.say('\n━━ 4/4 · Cloudflare (visite reali, crawler AI, errori 404 e 5xx)\n');
+  const current = draft.cloudflare?.apiToken;
+  p.say(`Attuale: ${current ? `token ${maskSecret(current)}` : 'non configurato'}`);
+  p.say('Solo se il sito passa da Cloudflare. Il token è in sola lettura: non tocca il sito.');
+  if (!(await p.confirm(current ? 'Vuoi cambiarlo?' : 'Colleghiamo Cloudflare?', false))) return;
+  p.say('Crea token → Token personalizzato, con i permessi "Zone → Zone → Read" e "Zone → Analytics → Read",');
+  p.say('e in "Zone Resources" scegli le zone dei tuoi siti.');
+  await link(p, 'Token API di Cloudflare', CONSOLE.cloudflareTokens);
+  const result = await retry(p, 'Cloudflare', async () => {
+    const t = await p.askSecret('Token di Cloudflare (Invio per saltare):');
+    if (!t) return undefined;
+    const zones = await new CloudflareClient({ apiToken: t }).listZones();
+    return { token: t, zones: zones.map((z) => z.name) };
+  });
+  if (!result) return;
+  draft.cloudflare = { apiToken: result.token };
+  p.say(`✅ Cloudflare: ${result.zones.length} zone.`);
+  if (result.zones.length) {
+    const i = await p.choose('Zona predefinita:', result.zones, 'nessuna');
+    draft.defaults = { ...draft.defaults, cloudflareZone: i >= 0 ? result.zones[i] : undefined };
   }
 }
 

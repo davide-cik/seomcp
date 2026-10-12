@@ -24,10 +24,14 @@ describe('server MCP', () => {
       pagespeed: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
     const { tools } = await client.listTools();
     expect(tools.map((t) => t.name).sort()).toEqual([
+      'bing_inbound_links',
       'bing_keyword_stats',
       'bing_list_sites',
       'bing_page_stats',
       'bing_query_stats',
+      'cf_ai_crawlers',
+      'cf_errors',
+      'cf_traffic',
       'crux_history',
       'crux_query',
       'ga_compare_periods',
@@ -129,6 +133,7 @@ describe('server MCP', () => {
     const client = await connect({ gsc: notConfigured, bing: notConfigured, ga: notConfigured, pagespeed: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
     const { prompts } = await client.listPrompts();
     expect(prompts.map((p) => p.name).sort()).toEqual([
+      'ai-che-leggono-il-sito',
       'audit-geo-pagina',
       'audit-tecnico',
       'calo-traffico',

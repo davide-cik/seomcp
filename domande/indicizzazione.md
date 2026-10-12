@@ -27,17 +27,22 @@ Se Google vede e indicizza le pagine giuste, e cosa lo impedisce.
     - Tool: `tech_page_audit`, `gsc_inspect_url`
     - Risposta: Canonical dichiarato, sua risposta e canonical scelto da Google.
 
-6. **Gli hreflang di https://www.esempio.it/ sono corretti? Le versioni nelle altre lingue rimandano a questa pagina?**
+6. **Quali pagine rispondono 404 o 5xx ai visitatori veri nelle ultime 4 settimane? Separa le pagine reali dai tentativi dei bot.**
+    - Serve: token Cloudflare (sola lettura)
+    - Tool: `cf_errors`
+    - Risposta: Le pagine con errori, quante volte e in quanti giorni, con quelle da correggere per prime.
+
+7. **Gli hreflang di https://www.esempio.it/ sono corretti? Le versioni nelle altre lingue rimandano a questa pagina?**
     - Serve: nessuna credenziale
     - Tool: `tech_page_audit`
     - Risposta: Codici lingua, x-default, autoreferenza e link di ritorno a campione.
 
-7. **Controlla una per una la home e le 5 pagine principali: ci sono noindex nascosti, title mancanti o description troppo lunghe?**
+8. **Controlla una per una la home e le 5 pagine principali: ci sono noindex nascosti, title mancanti o description troppo lunghe?**
     - Serve: nessuna credenziale
     - Tool: `tech_page_audit`
     - Risposta: Per ogni pagina, i problemi di indicizzabilità e di meta.
 
-8. **Quali header di sicurezza mancano sul sito e quanto pesano le pagine principali?**
+9. **Quali header di sicurezza mancano sul sito e quanto pesano le pagine principali?**
     - Serve: nessuna credenziale
     - Tool: `tech_page_audit`
     - Risposta: Header di sicurezza presenti e mancanti, peso e compressione delle pagine.

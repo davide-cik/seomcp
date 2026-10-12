@@ -4,12 +4,13 @@ import { SeoMcpError } from './core/errors.js';
 import { GaClient } from './core/ga.js';
 import { GscClient } from './core/gsc.js';
 import { PageSpeedClient } from './core/pagespeed.js';
+import { CloudflareClient } from './core/cloudflare.js';
 import { createGoogleAuth, serviceAccountEmail } from './auth/google.js';
 import type { SeoMcpConfig } from './config.js';
 import { DOCS } from './links.js';
 
 export interface DiagnosticItem {
-  source: 'google' | 'analytics' | 'bing' | 'pagespeed' | 'config';
+  source: 'google' | 'analytics' | 'bing' | 'pagespeed' | 'cloudflare' | 'config';
   status: 'ok' | 'warn' | 'error' | 'off';
   message: string;
   hint?: string;
@@ -38,6 +39,7 @@ export async function runDiagnostics(config: SeoMcpConfig): Promise<DiagnosticIt
   if (config.google.mode !== 'none') items.push(await checkAnalytics(config));
   items.push(await checkBing(config));
   items.push(await checkPageSpeed(config));
+  items.push(await checkCloudflare(config));
   return items;
 }
 
@@ -160,6 +162,29 @@ async function checkPageSpeed(config: SeoMcpConfig): Promise<DiagnosticItem> {
     return { source: 'pagespeed', status: 'ok', message: 'Chrome UX Report OK. Per PageSpeed Insights assicurati che anche la "PageSpeed Insights API" sia abilitata.' };
   } catch (err) {
     return toItem('pagespeed', err);
+  }
+}
+
+/** Cloudflare: elenca le zone visibili dal token. */
+async function checkCloudflare(config: SeoMcpConfig): Promise<DiagnosticItem> {
+  if (!config.cloudflareToken) {
+    return {
+      source: 'cloudflare',
+      status: 'off',
+      message: 'Statistiche di Cloudflare non configurate (facoltative).',
+      hint: `Per attivarle esegui "seomcp setup" oppure imposta SEOMCP_CLOUDFLARE_TOKEN. Guida: ${DOCS.credentials}#cloudflare`,
+    };
+  }
+  try {
+    const zones = await new CloudflareClient({ apiToken: config.cloudflareToken }).listZones();
+    const names = zones.map((z) => z.name);
+    const def = config.defaults.cloudflareZone;
+    if (def && !names.some((n) => def.toLowerCase().endsWith(n))) {
+      return { source: 'cloudflare', status: 'warn', message: `La zona predefinita "${def}" non è tra quelle del token: ${names.join(', ') || 'nessuna'}`, hint: 'Correggi SEOMCP_CLOUDFLARE_ZONE o i permessi del token.' };
+    }
+    return { source: 'cloudflare', status: names.length ? 'ok' : 'warn', message: names.length ? `Cloudflare OK: ${names.length} zone — ${names.join(', ')}` : 'Token di Cloudflare valido, ma nessuna zona visibile.', hint: names.length ? undefined : 'Aggiungi al token le zone dei tuoi siti (Zone Resources).' };
+  } catch (err) {
+    return toItem('cloudflare', err);
   }
 }
 

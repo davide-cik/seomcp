@@ -49,4 +49,30 @@ describe('parseBingDate', () => {
     expect(parseBingDate('/Date(1735689600000-0800)/')).toBe('2025-01-01');
     expect(parseBingDate('2025-01-01')).toBe('2025-01-01');
   });
+
+  it('link in entrata: GetLinkCounts paginato fino a TotalPages', async () => {
+    const fetchMock = vi.fn(async (u: URL) => {
+      const page = Number(new URL(String(u)).searchParams.get('page'));
+      return jsonResponse({ d: { Links: [{ Url: `https://www.esempio.it/p${page}`, Count: 10 - page }], TotalPages: 2 } });
+    });
+    const client = new BingClient({ apiKey: 'k', fetch: fetchMock as unknown as typeof fetch });
+    const res = await client.getLinkCounts('https://www.esempio.it/');
+    expect(res.links).toEqual([{ url: 'https://www.esempio.it/p0', count: 10 }, { url: 'https://www.esempio.it/p1', count: 9 }]);
+    expect(res.truncated).toBe(false);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it('link in entrata: GetUrlLinks riprova con il formato JSON se Bing risponde InvalidUrl', async () => {
+    const seen: string[] = [];
+    const fetchMock = vi.fn(async (u: URL) => {
+      const link = new URL(String(u)).searchParams.get('link')!;
+      seen.push(link);
+      if (!link.startsWith('"')) return jsonResponse({ ErrorCode: 7, Message: 'ERROR!!! InvalidUrl' }, 400);
+      return jsonResponse({ d: { Details: [{ Url: 'https://blog.altro.it/articolo', AnchorText: 'guida SEO' }], TotalPages: 1 } });
+    });
+    const client = new BingClient({ apiKey: 'k', fetch: fetchMock as unknown as typeof fetch });
+    const res = await client.getUrlLinks('https://www.esempio.it/', 'https://www.esempio.it/guida');
+    expect(res).toEqual([{ source: 'https://blog.altro.it/articolo', anchor: 'guida SEO' }]);
+    expect(seen).toEqual(['https://www.esempio.it/guida', '"https://www.esempio.it/guida"']);
+  });
 });

@@ -37,4 +37,5 @@ export const CONSOLE = {
   analyticsAdmin: 'https://analytics.google.com/analytics/web/#/?pagename=admin',
   googlePermissions: 'https://myaccount.google.com/linkedapps',
   bingWebmaster: 'https://www.bing.com/webmasters/',
+  cloudflareTokens: 'https://dash.cloudflare.com/profile/api-tokens',
 };

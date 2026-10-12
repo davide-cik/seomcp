@@ -1,4 +1,5 @@
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import type { CloudflareClient } from '../core/cloudflare.js';
 import { z } from 'zod';
 import type { BingClient } from '../core/bing.js';
 import { lastNDays, isIsoDate } from '../core/dates.js';
@@ -15,9 +16,11 @@ export interface ToolContext {
   bing: () => BingClient;
   ga: () => GaClient;
   pagespeed: () => PageSpeedClient;
+  /** Statistiche di Cloudflare: facoltativo, come le altre fonti. */
+  cloudflare?: () => CloudflareClient;
   /** Opzioni per lo scaricamento delle pagine (analisi GEO). */
   fetchOptions?: FetchOptions;
-  defaults: { gscSite?: string; bingSite?: string; gaProperty?: string; country: string; language: string };
+  defaults: { gscSite?: string; bingSite?: string; gaProperty?: string; cloudflareZone?: string; country: string; language: string };
   diagnose: () => Promise<DiagnosticItem[]>;
 }
 

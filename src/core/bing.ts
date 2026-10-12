@@ -1,6 +1,18 @@
 import { SeoMcpError } from './errors.js';
 import type { BingKeywordStatsRow, BingSite, BingStatsRow } from './types.js';
 
+export interface BingLinkCount {
+  /** Pagina del tuo sito che riceve link. */
+  url: string;
+  count: number;
+}
+
+export interface BingLinkDetail {
+  /** Pagina esterna che contiene il link. */
+  source: string;
+  anchor: string;
+}
+
 export const BING_API_BASE = 'https://ssl.bing.com/webmaster/api.svc/json';
 
 export interface BingClientOptions {
@@ -62,6 +74,51 @@ export class BingClient {
     }));
   }
 
+  /**
+   * Pagine del sito che ricevono link da altri siti, con il numero di link (GetLinkCounts).
+   * È una fotografia attuale: l'API non ha lo storico. Si ferma dopo `maxPages` pagine di risultati.
+   */
+  async getLinkCounts(siteUrl: string, maxPages = 10): Promise<{ links: BingLinkCount[]; truncated: boolean }> {
+    const links: BingLinkCount[] = [];
+    let page = 0;
+    let total = 1;
+    while (page < total && page < maxPages) {
+      const data = await this.get<{ Links?: Array<{ Url: string; Count?: number }>; TotalPages?: number } | null>('GetLinkCounts', { siteUrl, page: String(page) });
+      for (const l of data?.Links ?? []) links.push({ url: l.Url, count: l.Count ?? 0 });
+      total = data?.TotalPages ?? 0;
+      page++;
+    }
+    return { links, truncated: page < total };
+  }
+
+  /**
+   * Pagine esterne che linkano a una pagina del sito, con il testo del link (GetUrlLinks).
+   * Il parametro `link` si passa come lo restituisce GetLinkCounts; se Bing lo rifiuta si riprova
+   * nella forma JSON tra virgolette dell'esempio ufficiale.
+   */
+  async getUrlLinks(siteUrl: string, link: string, maxPages = 3): Promise<BingLinkDetail[]> {
+    const details: BingLinkDetail[] = [];
+    let form: 'plain' | 'json' = 'plain';
+    let page = 0;
+    let total = 1;
+    while (page < total && page < maxPages) {
+      let data: { Details?: Array<{ Url: string; AnchorText?: string }>; TotalPages?: number } | null;
+      try {
+        data = await this.get('GetUrlLinks', { siteUrl, link: form === 'plain' ? link : JSON.stringify(link), page: String(page) });
+      } catch (err) {
+        if (form === 'plain' && page === 0 && /InvalidUrl|ErrorCode 7/i.test((err as Error).message)) {
+          form = 'json';
+          continue;
+        }
+        throw err;
+      }
+      for (const d of data?.Details ?? []) details.push({ source: d.Url, anchor: d.AnchorText ?? '' });
+      total = data?.TotalPages ?? 0;
+      page++;
+    }
+    return details;
+  }
+
   private async get<T>(method: string, params: Record<string, string>): Promise<T> {
     const url = new URL(`${this.baseUrl}/${method}`);
     for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
@@ -96,7 +153,7 @@ export class BingClient {
           'Verifica che il sito sia aggiunto e verificato nel tuo account e che l\'URL coincida (es. "https://www.esempio.it/").',
         );
       }
-      throw new SeoMcpError('UPSTREAM_ERROR', `Errore dalla Bing Webmaster API: ${detail}`);
+      throw new SeoMcpError('UPSTREAM_ERROR', `Errore dalla Bing Webmaster API: ${detail}${body?.ErrorCode ? ` (ErrorCode ${body.ErrorCode})` : ''}`);
     }
     return body?.d as T;
   }

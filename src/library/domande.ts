@@ -6,7 +6,7 @@
  */
 
 /** Cosa serve per far funzionare la domanda. */
-export type Fonte = 'nessuna' | 'search-console' | 'analytics' | 'bing' | 'api-key';
+export type Fonte = 'nessuna' | 'search-console' | 'analytics' | 'bing' | 'api-key' | 'cloudflare';
 
 export interface Domanda {
   testo: string;
@@ -29,6 +29,7 @@ export const FONTI: Record<Fonte, string> = {
   analytics: 'Google Analytics 4',
   bing: 'Bing Webmaster Tools',
   'api-key': 'API key Google (PageSpeed e CrUX)',
+  cloudflare: 'token Cloudflare (sola lettura)',
 };
 
 const q = (testo: string, fonti: Fonte[], tool: string[], risposta: string): Domanda => ({ testo, fonti, tool, risposta });
@@ -59,6 +60,7 @@ export const TEMI: Tema[] = [
       q('Da quali paesi e da quali dispositivi arrivano i clic? Qualcosa è cambiato negli ultimi tre mesi?', ['search-console'], ['gsc_performance', 'gsc_compare_periods'], 'Ripartizione per paese e dispositivo, con le differenze tra periodi.'),
       q('Quali sono le 20 pagine con più clic da Google e qual è la loro posizione media?', ['search-console'], ['gsc_performance'], 'Classifica delle pagine con clic, impressioni, CTR e posizione.'),
       q('Quanto traffico arriva da Google Immagini e da Discover, e su quali pagine?', ['search-console'], ['gsc_performance'], 'I dati per tipo di ricerca immagini e Discover, pagina per pagina.'),
+      q('Quante visite reali ha avuto il sito negli ultimi 7 giorni secondo Cloudflare, comprese quelle di chi rifiuta i cookie? Confrontale con Google Analytics.', ['cloudflare', 'analytics'], ['cf_traffic', 'ga_report'], 'Visite e pagine viste giorno per giorno, con la differenza rispetto ad Analytics.'),
       q('Quanta parte dei clic viene dal brand? Separa le query che contengono il nome del sito da tutte le altre.', ['search-console'], ['gsc_performance'], 'Clic e impressioni di brand e non brand, con le quote.'),
       q('Il calo di clic delle ultime settimane dipende da meno impressioni, da un CTR più basso o da posizioni peggiori?', ['search-console'], ['gsc_compare_periods', 'gsc_performance'], 'Una diagnosi del calo scomposta tra impressioni, CTR e posizione.'),
     ],
@@ -88,6 +90,7 @@ export const TEMI: Tema[] = [
       q('Fai un audit tecnico di https://www.esempio.it: redirect, sitemap, pagina 404 e link interni rotti, con le correzioni in ordine di urgenza.', ['nessuna'], ['tech_page_audit', 'tech_site_check'], 'Un elenco di problemi tecnici ordinato per impatto.'),
       q('La versione http e quella senza www arrivano alla home con un solo redirect permanente?', ['nessuna'], ['tech_page_audit'], 'La catena di redirect passo per passo, con il tipo di ogni redirect.'),
       q('Il canonical di https://www.esempio.it/categoria/ punta a una pagina che funziona? E Google lo rispetta?', ['nessuna', 'search-console'], ['tech_page_audit', 'gsc_inspect_url'], 'Canonical dichiarato, sua risposta e canonical scelto da Google.'),
+      q('Quali pagine rispondono 404 o 5xx ai visitatori veri nelle ultime 4 settimane? Separa le pagine reali dai tentativi dei bot.', ['cloudflare'], ['cf_errors'], 'Le pagine con errori, quante volte e in quanti giorni, con quelle da correggere per prime.'),
       q('Gli hreflang di https://www.esempio.it/ sono corretti? Le versioni nelle altre lingue rimandano a questa pagina?', ['nessuna'], ['tech_page_audit'], 'Codici lingua, x-default, autoreferenza e link di ritorno a campione.'),
       q('Controlla una per una la home e le 5 pagine principali: ci sono noindex nascosti, title mancanti o description troppo lunghe?', ['nessuna'], ['tech_page_audit'], 'Per ogni pagina, i problemi di indicizzabilità e di meta.'),
       q('Quali header di sicurezza mancano sul sito e quanto pesano le pagine principali?', ['nessuna'], ['tech_page_audit'], 'Header di sicurezza presenti e mancanti, peso e compressione delle pagine.'),
@@ -100,6 +103,7 @@ export const TEMI: Tema[] = [
     domande: [
       q('Perché ChatGPT cita la pagina del mio concorrente https://www.concorrente.it/guida/ e non la mia https://www.esempio.it/guida/? Confronta le due pagine.', ['nessuna'], ['geo_page_metrics'], 'Le differenze misurabili tra le due pagine che contano per la citabilità.'),
       q('Riscrivi la sezione "Quanto costa" di https://www.esempio.it/servizio/ perché un assistente AI possa citarla da sola.', ['nessuna'], ['geo_page_sections'], 'La sezione riscritta, autonoma e con una risposta diretta.'),
+      q('Quali crawler AI hanno visitato davvero il sito questo mese, e quali pagine hanno letto?', ['cloudflare'], ['cf_ai_crawlers'], 'Bot per bot: richieste, giorni attivi, pagine più lette e risposte ricevute.'),
       q('Il mio robots.txt blocca i bot che servono per comparire nelle risposte delle AI, oltre a quelli di addestramento?', ['nessuna'], ['geo_ai_access'], 'Quali bot di risposta sono bloccati, distinti da quelli di addestramento.'),
       q('Ho un llms.txt? È fatto bene? Se manca, scrivimene uno per il mio sito.', ['nessuna'], ['geo_ai_access'], 'Stato del file llms.txt e una proposta pronta da pubblicare.'),
       q('Analizza https://www.esempio.it/guida/ sezione per sezione: quali sezioni sono troppo lunghe, senza dati o senza fonti?', ['nessuna'], ['geo_page_sections'], 'Le misure di ogni sezione con le correzioni da fare.'),
@@ -155,6 +159,7 @@ export const TEMI: Tema[] = [
     intro: 'Bing conta anche per le AI: le sue ricerche alimentano Copilot e altri assistenti.',
     domande: [
       q('Su Bing come va la query "corso SEO" rispetto a Google?', ['bing', 'search-console'], ['bing_query_stats', 'gsc_performance'], 'Impressioni, clic e posizione sui due motori a confronto.'),
+      q('Quali siti linkano al mio secondo Bing, a quali pagine e con quale testo?', ['bing'], ['bing_inbound_links'], 'Le pagine più linkate, i domini di provenienza e i testi dei link: una fotografia attuale.'),
       q('Quali sono le pagine con più clic su Bing negli ultimi tre mesi?', ['bing'], ['bing_page_stats'], 'Classifica delle pagine su Bing.'),
       q('Ci sono query per cui vado bene su Google ma non su Bing, o il contrario?', ['bing', 'search-console'], ['bing_query_stats', 'gsc_performance'], 'Le query con le differenze più forti tra i due motori.'),
       q('Quanto vengono cercate queste keyword su Bing in Italia: "noleggio auto", "noleggio auto lungo termine", "noleggio furgoni"?', ['bing'], ['bing_keyword_stats'], 'Volumi di ricerca storici per ciascuna keyword.'),

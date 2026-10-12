@@ -42,6 +42,7 @@ export const PROMPT_GUIDE: PromptCategory[] = [
     titolo: 'Farsi citare dalle AI',
     intro: 'GEO e AEO: farsi leggere, capire e citare da ChatGPT, Perplexity, Gemini e dalle AI Overviews di Google.',
     prompt: [
+      { nome: 'ai-che-leggono-il-sito', titolo: 'Quali AI leggono davvero il mio sito?', serve: 'Cloudflare', chiedi: 'Quali crawler AI passano davvero sul mio sito, su quali pagine, e quali sto bloccando?' },
       { nome: 'audit-geo-pagina', titolo: 'Audit GEO della pagina', serve: 'nessuna credenziale', chiedi: 'Analizza questa pagina dal punto di vista GEO: cosa cambio per farmi citare dalle AI?' },
       { nome: 'sito-aperto-alle-ai', titolo: 'Il mio sito è aperto alle AI?', serve: 'nessuna credenziale', chiedi: 'Quali crawler AI possono leggere il mio sito? E quali sto bloccando senza volerlo?' },
       { nome: 'confronto-concorrenti', titolo: 'Perché citano loro e non me?', serve: 'nessuna credenziale', chiedi: 'Perché ChatGPT cita la pagina del mio concorrente e non la mia? Confronta le due pagine.' },

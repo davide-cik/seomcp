@@ -32,12 +32,17 @@ Come va il sito su Google: clic, impressioni, posizioni e confronti tra periodi.
     - Tool: `gsc_performance`
     - Risposta: I dati per tipo di ricerca immagini e Discover, pagina per pagina.
 
-7. **Quanta parte dei clic viene dal brand? Separa le query che contengono il nome del sito da tutte le altre.**
+7. **Quante visite reali ha avuto il sito negli ultimi 7 giorni secondo Cloudflare, comprese quelle di chi rifiuta i cookie? Confrontale con Google Analytics.**
+    - Serve: token Cloudflare (sola lettura) + Google Analytics 4
+    - Tool: `cf_traffic`, `ga_report`
+    - Risposta: Visite e pagine viste giorno per giorno, con la differenza rispetto ad Analytics.
+
+8. **Quanta parte dei clic viene dal brand? Separa le query che contengono il nome del sito da tutte le altre.**
     - Serve: Search Console
     - Tool: `gsc_performance`
     - Risposta: Clic e impressioni di brand e non brand, con le quote.
 
-8. **Il calo di clic delle ultime settimane dipende da meno impressioni, da un CTR più basso o da posizioni peggiori?**
+9. **Il calo di clic delle ultime settimane dipende da meno impressioni, da un CTR più basso o da posizioni peggiori?**
     - Serve: Search Console
     - Tool: `gsc_compare_periods`, `gsc_performance`
     - Risposta: Una diagnosi del calo scomposta tra impressioni, CTR e posizione.

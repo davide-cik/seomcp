@@ -1,12 +1,12 @@
 # seomcp
 
-**Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, analisi GEO/AEO, validatore schema.org e controlli tecnici dentro il tuo assistente AI.** Open source, gratuito, in italiano.
+**Search Console, Analytics 4, Bing Webmaster, Cloudflare, Core Web Vitals, analisi GEO/AEO, validatore schema.org e controlli tecnici dentro il tuo assistente AI.** Open source, gratuito, in italiano.
 
 [![npm](https://img.shields.io/npm/v/@contentisking/seomcp)](https://www.npmjs.com/package/@contentisking/seomcp)
 
 [🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · Licenza [MIT](LICENSE)
 
-`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights e Chrome UX Report, e di analizzare le pagine pubbliche: accesso dei crawler AI, dati strutturati, redirect, canonical, sitemap e link rotti. **26 tool e 17 prompt, tutti in sola lettura.** Così puoi chiedere, in italiano:
+`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights e Chrome UX Report, e di analizzare le pagine pubbliche: accesso dei crawler AI, dati strutturati, redirect, canonical, sitemap e link rotti. **30 tool e 18 prompt, tutti in sola lettura.** Così puoi chiedere, in italiano:
 
 > Quali query sono in posizione 4-20 negli ultimi 90 giorni, e quali pagine dovrei ottimizzare per prime?
 >
@@ -26,7 +26,7 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 - **Codice piccolo e leggibile.** Circa 4.800 righe di TypeScript in [`src/`](src): leggerlo prima di installarlo è alla portata di chiunque.
 - **Nessun uso improprio della Google Indexing API**, che Google riserva alle offerte di lavoro e alle dirette video.
 
-## Tool disponibili (26)
+## Tool disponibili (30)
 
 | Tool | Cosa fa |
 |---|---|
@@ -56,25 +56,29 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 | `bing_query_stats` | Performance per query su Bing |
 | `bing_page_stats` | Performance per pagina su Bing |
 | `bing_keyword_stats` | Volumi di ricerca di una keyword (default Italia / italiano) |
+| `bing_inbound_links` | Link in entrata secondo Bing: pagine più linkate, siti di provenienza, testi dei link (fotografia attuale) |
+| `cf_traffic` | Cloudflare: visite e pagine viste reali, anche di chi rifiuta i cookie |
+| `cf_ai_crawlers` | Cloudflare: crawler AI che passano davvero, su quali pagine e con quali risposte |
+| `cf_errors` | Cloudflare: pagine che rispondono 404 o 5xx ai visitatori |
 
 Le analisi più complesse (cannibalizzazione, content gap, report) le fa l'assistente ragionando sui dati: non serve codificarle nel server.
 
-### Prompt (17)
+### Prompt (18)
 
-Oltre ai tool, seomcp offre 17 **prompt**: analisi già impostate che combinano più tool e chiudono con le correzioni in ordine di impatto. Sono divisi per obiettivo, come la guida dei prompt di Bing Webmaster Tools:
+Oltre ai tool, seomcp offre 18 **prompt**: analisi già impostate che combinano più tool e chiudono con le correzioni in ordine di impatto. Sono divisi per obiettivo, come la guida dei prompt di Bing Webmaster Tools:
 
 | Obiettivo | Prompt |
 |---|---|
 | **Capire i dati** | Perché sto perdendo traffico? · Report mensile per il cliente · Traffico che non converte · Google e Bing a confronto · Rispondo alle domande dei miei utenti? |
 | **Migliorare i risultati** | Opportunità a distanza di tiro · Title e description che non convincono · Pagine in concorrenza tra loro · Piano per i Core Web Vitals · Piano editoriale per le risposte AI |
-| **Farsi citare dalle AI** | Audit GEO della pagina · Il mio sito è aperto alle AI? · Perché citano loro e non me? · Rendi citabile questo passaggio |
+| **Farsi citare dalle AI** | Quali AI leggono davvero il mio sito? · Audit GEO della pagina · Il mio sito è aperto alle AI? · Perché citano loro e non me? · Rendi citabile questo passaggio |
 | **Controlli e correzioni** | Audit tecnico del sito · Correggi i miei dati strutturati · Controllo dopo una migrazione |
 
 Dentro l'assistente la stessa guida è la risorsa MCP `seomcp://prompt`. Dettagli, argomenti e credenziali di ogni prompt: [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/). Approfondimenti: [docs/geo.md](docs/geo.md) e [docs/schema-validator.md](docs/schema-validator.md).
 
-### Domande pronte (71)
+### Domande pronte (75)
 
-Non sai da dove partire? L'archivio [domande/](domande/README.md) raccoglie 71 domande da copiare nell'assistente, divise in 10 temi: primi passi, traffico, opportunità, indicizzazione, GEO e AEO, dati strutturati, prestazioni, Analytics, Bing e report. Per ognuna c'è cosa serve (25 funzionano senza credenziali), quali tool usa e cosa aspettarsi.
+Non sai da dove partire? L'archivio [domande/](domande/README.md) raccoglie 75 domande da copiare nell'assistente, divise in 10 temi: primi passi, traffico, opportunità, indicizzazione, GEO e AEO, dati strutturati, prestazioni, Analytics, Bing e report. Per ognuna c'è cosa serve (25 funzionano senza credenziali), quali tool usa e cosa aspettarsi.
 
 Le stesse domande sono anche **risorse MCP** dentro seomcp: `seomcp://domande` è l'indice e `seomcp://domande/<tema>` contiene il singolo tema. Nei client che supportano le risorse si allegano alla chat; in Claude Code si richiamano con `@`. Oppure chiedi all'assistente: «Cosa posso chiedere a seomcp?».
 
@@ -269,6 +273,8 @@ Il comando prova ogni fonte e ti dice esattamente cosa manca. Ad esempio: "aggiu
 | `SEOMCP_GA_PROPERTY` | ID numerico della proprietà GA4 predefinita, es. `123456789` |
 | `SEOMCP_GOOGLE_API_KEY` | API key Google Cloud per PageSpeed Insights e Chrome UX Report |
 | `SEOMCP_BING_SITE` | Sito Bing predefinito, es. `https://www.tuosito.it/` |
+| `SEOMCP_CLOUDFLARE_TOKEN` | Token Cloudflare in sola lettura (Zone → Zone → Read, Zone → Analytics → Read) |
+| `SEOMCP_CLOUDFLARE_ZONE` | Dominio Cloudflare predefinito, es. `tuosito.it` |
 | `SEOMCP_COUNTRY` / `SEOMCP_LANGUAGE` | Mercato per i volumi keyword Bing (default `it` / `it-IT`) |
 | `SEOMCP_ALLOW_PRIVATE` | Solo sviluppo: `1` per analizzare con i tool GEO anche indirizzi locali (es. staging) |
 | `SEOMCP_CONFIG_DIR` | Cartella di configurazione (default `~/.config/seomcp`) |

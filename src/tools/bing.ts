@@ -103,4 +103,67 @@ export function registerBingTools(server: McpServer, ctx: ToolContext): void {
         return { keyword: args.keyword, country, language, rows };
       }),
   );
+
+  server.registerTool(
+    'bing_inbound_links',
+    {
+      title: 'Bing: link in entrata',
+      description:
+        "Link in entrata secondo l'indice di Bing (dato che Search Console non fornisce via API): quali pagine del sito ricevono link e quanti, e per le più linkate i siti di provenienza e il testo dei link. È una fotografia attuale: l'API di Bing non dà l'andamento nel tempo.",
+      inputSchema: {
+        siteUrl,
+        detailPages: z.number().int().min(0).max(20).default(5).describe('Per quante delle pagine più linkate leggere i siti di provenienza e i testi dei link.'),
+      },
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    (args) =>
+      run(async () => {
+        const site = resolveSite(args.siteUrl, ctx.defaults.bingSite, 'bing');
+        const bing = ctx.bing();
+        const { links, truncated } = await bing.getLinkCounts(site);
+        const pages = [...links].sort((a, b) => b.count - a.count);
+        const totalLinks = pages.reduce((n, p) => n + p.count, 0);
+        if (!pages.length) {
+          return {
+            siteUrl: site,
+            totalLinks: 0,
+            pages: [],
+            note: "Bing non ha restituito link in entrata. Può significare che non ne ha trovati, ma nel 2026 l'API restituisce a volte elenchi vuoti anche per siti con link: non va letto come 'zero link'. Confronta con il report Backlink nell'interfaccia di Bing Webmaster Tools.",
+          };
+        }
+
+        const domains = new Map<string, { links: number; pages: Set<string> }>();
+        const anchors = new Map<string, number>();
+        const detail: Array<{ page: string; inboundLinks: number; sources: Array<{ source: string; anchor: string }> }> = [];
+        for (const p of pages.slice(0, args.detailPages)) {
+          const sources = await bing.getUrlLinks(site, p.url).catch(() => []);
+          detail.push({ page: p.url, inboundLinks: p.count, sources: sources.slice(0, 50) });
+          for (const d of sources) {
+            let host = d.source;
+            try { host = new URL(d.source).hostname.replace(/^www\./, ''); } catch {}
+            const e = domains.get(host) ?? { links: 0, pages: new Set<string>() };
+            e.links++;
+            e.pages.add(p.url);
+            domains.set(host, e);
+            const a = d.anchor.trim().toLowerCase();
+            if (a) anchors.set(a, (anchors.get(a) ?? 0) + 1);
+          }
+        }
+
+        return {
+          siteUrl: site,
+          totalLinks,
+          linkedPages: pages.length,
+          truncated,
+          topPages: pages.slice(0, 50),
+          referringDomains: [...domains.entries()]
+            .map(([domain, v]) => ({ domain, links: v.links, linkedPages: v.pages.size }))
+            .sort((a, b) => b.links - a.links)
+            .slice(0, 50),
+          topAnchors: [...anchors.entries()].map(([anchor, n]) => ({ anchor, links: n })).sort((a, b) => b.links - a.links).slice(0, 30),
+          detail,
+          note: `Domini e testi dei link sono calcolati sulle ${detail.length} pagine più linkate. L'API di Bing non fornisce l'andamento nel tempo: per seguirlo confronta questa fotografia con una successiva.`,
+        };
+      }),
+  );
 }

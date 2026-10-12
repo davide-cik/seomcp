@@ -2,6 +2,10 @@
 
 ## 0.1.40 — 2026-10-12
 
+- **Cloudflare** (token in sola lettura, anche piano gratuito): `cf_traffic` (visite reali, anche di chi rifiuta i cookie), `cf_ai_crawlers` (crawler AI che passano davvero e su quali pagine), `cf_errors` (404 e 5xx visti dai visitatori). Nuovo passaggio in `seomcp setup`, in `doctor` e nella pagina Credenziali.
+- **`bing_inbound_links`**: link in entrata secondo Bing (pagine più linkate, domini di provenienza, testi dei link). Fotografia attuale: l'API di Bing non ha lo storico.
+- Prompt `ai-che-leggono-il-sito`: crawler AI reali (Cloudflare) a confronto con i permessi di robots.txt. 18 prompt, 30 tool, 75 domande nell'archivio.
+
 - **9 nuovi prompt sui dati** (Search Console, Analytics, Bing, Core Web Vitals): `calo-traffico`, `opportunita-distanza-di-tiro`, `title-description-ctr`, `cannibalizzazione`, `traffico-che-non-converte`, `report-mensile`, `piano-core-web-vitals`, `controllo-migrazione`, `google-vs-bing`. In tutto 17 prompt.
 - Tool **`seomcp_guida`**: restituisce i prompt divisi per obiettivo, così l'assistente risponde a «cosa posso chiedere?» in qualsiasi client. 26 tool in tutto.
 - **Guida ai prompt** divisa per obiettivo (capire i dati, migliorare i risultati, farsi citare dalle AI, controlli e correzioni) come risorsa MCP `seomcp://prompt` e nella pagina `/prompt/` del sito.

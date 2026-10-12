@@ -1,12 +1,12 @@
 # seomcp
 
-**Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO analysis, a schema.org validator and technical SEO checks inside your AI assistant.** Open source, free, made in Italy.
+**Search Console, Analytics 4, Bing Webmaster, Cloudflare, Core Web Vitals, GEO/AEO analysis, a schema.org validator and technical SEO checks inside your AI assistant.** Open source, free, made in Italy.
 
 [![npm](https://img.shields.io/npm/v/@contentisking/seomcp)](https://www.npmjs.com/package/@contentisking/seomcp)
 
 [🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · [MIT](LICENSE) license
 
-`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **26 tools and 17 prompts, all read-only.** Ask things like:
+`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **30 tools and 18 prompts, all read-only.** Ask things like:
 
 > Which queries rank in positions 4-20 over the last 90 days, and which pages should I optimize first?
 >
@@ -22,7 +22,7 @@
 - **Small, readable codebase.** About 4,800 lines of TypeScript in [`src/`](src), easy to audit before you install it.
 - **No misuse of the Google Indexing API**, which Google reserves for job postings and livestreams.
 
-## Tools (26)
+## Tools (30)
 
 | Tool | What it does |
 |---|---|
@@ -52,10 +52,14 @@
 | `bing_query_stats` | Bing performance by query |
 | `bing_page_stats` | Bing performance by page |
 | `bing_keyword_stats` | Keyword search volume (defaults to Italy / Italian; set `country` and `language` for other markets) |
+| `bing_inbound_links` | Inbound links according to Bing: most linked pages, referring sites, anchor texts (current snapshot) |
+| `cf_traffic` | Cloudflare: real visits and page views, including visitors who reject cookies |
+| `cf_ai_crawlers` | Cloudflare: AI crawlers that actually visit, which pages and which responses |
+| `cf_errors` | Cloudflare: pages returning 404 or 5xx to visitors |
 
-Plus 17 **prompts**, grouped by goal like Bing Webmaster Tools' prompt guide: understanding the data (traffic drops, monthly client report, traffic that doesn't convert, Google vs Bing, user questions), improving results (striking-distance queries, low-CTR titles and descriptions, keyword cannibalization, Core Web Vitals plan, editorial plan), getting cited by AI (GEO page audit, AI crawler access, competitor comparison, citable passage) and checks and fixes (technical audit, structured data, post-migration check). Inside the assistant the guide is the MCP resource `seomcp://prompt`. Details (Italian): [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/).
+Plus 18 **prompts**, grouped by goal like Bing Webmaster Tools' prompt guide: understanding the data (traffic drops, monthly client report, traffic that doesn't convert, Google vs Bing, user questions), improving results (striking-distance queries, low-CTR titles and descriptions, keyword cannibalization, Core Web Vitals plan, editorial plan), getting cited by AI (which AI crawlers really read the site, GEO page audit, AI crawler access, competitor comparison, citable passage) and checks and fixes (technical audit, structured data, post-migration check). Inside the assistant the guide is the MCP resource `seomcp://prompt`. Details (Italian): [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/).
 
-**Ready-made questions:** 71 conversation starters in 10 themes (25 need no credentials), in [domande/](domande/README.md) (Italian) and as MCP resources inside seomcp: `seomcp://domande` (index) and `seomcp://domande/<theme>`.
+**Ready-made questions:** 75 conversation starters in 10 themes (25 need no credentials), in [domande/](domande/README.md) (Italian) and as MCP resources inside seomcp: `seomcp://domande` (index) and `seomcp://domande/<theme>`.
 
 ## Install
 

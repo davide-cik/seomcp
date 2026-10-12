@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tutti i tool e i prompt · seomcp</title>
-  <meta name="description" content="I 26 tool e i 17 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.">
+  <meta name="description" content="I 30 tool e i 18 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.">
   <link rel="canonical" href="https://seomcp.contentisking.guru/tool/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Tutti i tool e i prompt · seomcp">
-  <meta property="og:description" content="I 26 tool e i 17 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.">
+  <meta property="og:description" content="I 30 tool e i 18 prompt di seomcp in dettaglio: Search Console, Analytics 4, Bing Webmaster, Core Web Vitals, GEO/AEO, validatore schema.org e controlli tecnici.">
   <meta property="og:url" content="https://seomcp.contentisking.guru/tool/">
   <meta property="og:locale" content="it_IT">
   <link rel="stylesheet" href="/style.css?v=384644d0d1">
@@ -21,7 +21,7 @@
   <main id="main" class="doc">
     <div class="wrap">
       <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp</a> › Tool</nav>
-      <h1>26 tool e 17 prompt</h1>
+      <h1>30 tool e 18 prompt</h1>
       <p class="lead">Tutti in sola lettura: seomcp legge i dati, non modifica nulla. Collega solo le fonti che usi: ogni gruppo indica cosa serve, e la pagina <a href="/credenziali/">Credenziali</a> spiega come ottenerlo con i link diretti.</p>
 
       <section class="doc-block" id="search-console">
@@ -48,12 +48,13 @@
         </dl>
       </section>
       <section class="doc-block" id="bing">
-        <h2>Bing Webmaster Tools <span class="area-count">4 tool</span></h2>
+        <h2>Bing Webmaster Tools <span class="area-count">5 tool</span></h2>
         <p class="small">Richiede: <a href="/credenziali/#bing">una API key di Bing Webmaster Tools</a>.</p>
         <dl class="tools">
           <dt id="bing_query_stats"><code>bing_query_stats</code></dt><dd>Impressioni, clic e posizione media per query su Bing, per periodo o aggregate.</dd>
           <dt id="bing_page_stats"><code>bing_page_stats</code></dt><dd>Impressioni, clic e posizione media per pagina su Bing.</dd>
           <dt id="bing_keyword_stats"><code>bing_keyword_stats</code></dt><dd>Volumi di ricerca storici di una keyword su Bing, di default per Italia e italiano.</dd>
+          <dt id="bing_inbound_links"><code>bing_inbound_links</code></dt><dd>Link in entrata secondo l&#x27;indice di Bing (Search Console non li dà via API): pagine più linkate, siti di provenienza e testi dei link. È una fotografia attuale, senza storico.</dd>
           <dt id="bing_list_sites"><code>bing_list_sites</code></dt><dd>I siti del tuo account Bing Webmaster Tools.</dd>
         </dl>
       </section>
@@ -90,6 +91,15 @@
           <dt id="tech_site_check"><code>tech_site_check</code></dt><dd>Controlli tecnici del sito: sitemap (URL, lastmod, duplicati), un campione di URL della sitemap, la pagina 404 e un campione di link interni rotti o reindirizzati.</dd>
         </dl>
       </section>
+      <section class="doc-block" id="cloudflare">
+        <h2>Cloudflare <span class="area-count">3 tool</span></h2>
+        <p class="small">Richiede: <a href="/credenziali/#cloudflare">un token Cloudflare in sola lettura</a>.</p>
+        <dl class="tools">
+          <dt id="cf_traffic"><code>cf_traffic</code></dt><dd>Visite, richieste e pagine viste giorno per giorno secondo Cloudflare, che vede ogni richiesta: anche chi rifiuta i cookie o blocca gli script, che Analytics non conta.</dd>
+          <dt id="cf_ai_crawlers"><code>cf_ai_crawlers</code></dt><dd>Quali crawler AI (GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, ChatGPT-User…) passano davvero sul sito, quante volte, su quali pagine e con quali risposte.</dd>
+          <dt id="cf_errors"><code>cf_errors</code></dt><dd>Le pagine che rispondono 404 o 5xx ai visitatori veri, con quante volte e in quanti giorni.</dd>
+        </dl>
+      </section>
       <section class="doc-block" id="diagnostica">
         <h2>Diagnostica <span class="area-count">2 tool</span></h2>
         <dl class="tools">
@@ -99,8 +109,8 @@
       </section>
 
       <section class="doc-block" id="prompt">
-        <h2>I prompt <span class="area-count">17</span></h2>
-        <p>Oltre ai tool ci sono 17 prompt: analisi già impostate che combinano più tool e guidano l'assistente dai numeri alle correzioni. Sono divisi per <a href="/prompt/#capire-i-dati">Capire i dati</a>, <a href="/prompt/#migliorare">Migliorare i risultati</a>, <a href="/prompt/#farsi-citare">Farsi citare dalle AI</a> e <a href="/prompt/#controlli">Controlli e correzioni</a>.</p>
+        <h2>I prompt <span class="area-count">18</span></h2>
+        <p>Oltre ai tool ci sono 18 prompt: analisi già impostate che combinano più tool e guidano l'assistente dai numeri alle correzioni. Sono divisi per <a href="/prompt/#capire-i-dati">Capire i dati</a>, <a href="/prompt/#migliorare">Migliorare i risultati</a>, <a href="/prompt/#farsi-citare">Farsi citare dalle AI</a> e <a href="/prompt/#controlli">Controlli e correzioni</a>.</p>
         <p class="area-more"><a href="/prompt/">Tutti i prompt in dettaglio →</a></p>
       </section>
 
