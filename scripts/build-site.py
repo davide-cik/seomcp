@@ -143,7 +143,7 @@ CLIENTS = [
         "lang": "json",
         "code": mcp_servers_json(),
         "code_note": "Se il file contiene già altre impostazioni, aggiungi solo il blocco <code>mcpServers</code>.",
-        "verify": "Avvia <code>gemini</code> e digita <code>/mcp</code>: <code>seomcp</code> deve comparire con i suoi 26 tool.",
+        "verify": "Avvia <code>gemini</code> e digita <code>/mcp</code>: <code>seomcp</code> deve comparire con i suoi tool.",
         "tips": ["Dal giugno 2026 Gemini CLI richiede una chiave API Gemini a pagamento o una licenza enterprise."],
         "web": "L'app Gemini sul web non supporta server MCP locali: serve Gemini CLI.",
     },
@@ -348,16 +348,18 @@ GA_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp
           <li>Il traffico organico di questo mese è calato rispetto all'anno scorso? Su quali pagine di destinazione?</li>
           <li>Da Bing arrivano visitatori più o meno coinvolti rispetto a Google?</li>
           <li>Quante persone stanno leggendo il nuovo articolo in questo momento?</li>
+          <li>Quante visite mi portano ChatGPT, Perplexity e gli altri assistenti AI, e su quali pagine arrivano?</li>
         </ul>
       </section>
 
       <section class="doc-block">
-        <h2>I 5 tool</h2>
+        <h2>I 6 tool</h2>
         <dl class="tools">
           <dt><code>ga_organic_landing_pages</code></dt><dd>Pagine di destinazione della ricerca organica, anche per singolo motore: sessioni, coinvolgimento, eventi chiave, ricavi.</dd>
           <dt><code>ga_compare_periods</code></dt><dd>Confronto con il periodo precedente o con l'anno prima, su qualsiasi metrica, con i cali e le crescite più forti.</dd>
           <dt><code>ga_report</code></dt><dd>Report libero con dimensioni, metriche e filtri a scelta, per le domande che gli altri tool non coprono.</dd>
           <dt><code>ga_realtime</code></dt><dd>Utenti attivi negli ultimi 30 minuti, per pagina, paese o dispositivo.</dd>
+          <dt><code>ga_ai_referrals</code></dt><dd>Visite dagli assistenti AI (ChatGPT, Perplexity, Gemini, Copilot, Claude…): per assistente sessioni, coinvolgimento, conversioni, ricavi e pagine di destinazione, con il confronto sul periodo prima. È una sottostima: le app spesso non passano il referrer.</dd>
           <dt><code>ga_list_properties</code></dt><dd>Le proprietà GA4 a cui hai accesso, con il loro ID.</dd>
         </dl>
         <p class="small">Tutti in sola lettura: seomcp chiede a Google solo lo scope <code>analytics.readonly</code>.</p>
@@ -466,14 +468,17 @@ GEO_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomc
           <dt><code>geo_ai_access</code></dt><dd>Per ogni bot AI (GPTBot, ClaudeBot, PerplexityBot, Google-Extended…) consentito o bloccato e da quale regola, diviso tra addestramento, risposte e letture su richiesta. Più llms.txt, Content Signals di Cloudflare e riserva TDM europea.</dd>
           <dt><code>geo_page_metrics</code></dt><dd>Struttura, titoli a domanda, risposta in apertura, sezioni, dati numerici, freschezza, autore, fonti citate, dati strutturati con le proprietà mancanti, entità con sameAs. E per il sito: HTTPS ed età del dominio.</dd>
           <dt><code>geo_page_sections</code></dt><dd>Il testo della pagina diviso per titoli, con le misure di ogni sezione: la materia prima per valutare le risposte passaggio per passaggio.</dd>
+          <dt><code>geo_entity</code></dt><dd>Il brand è un'entità riconosciuta da Wikidata e dal Knowledge Graph di Google, con il sito come sito ufficiale? E l'Organization nei dati strutturati del sito ha i sameAs verso Wikidata e Wikipedia? Le AI citano più volentieri fonti che sanno attribuire.</dd>
+          <dt><code>geo_common_crawl</code></dt><dd>Le pagine del sito sono in Common Crawl, l'archivio pubblico con cui si addestrano molti modelli? Pagine, home e risposte negli ultimi crawl.</dd>
         </dl>
-        <p class="small">Funzionano subito, senza credenziali: le pagine analizzate sono pubbliche.</p>
+        <p class="small">Funzionano subito, senza credenziali: le pagine analizzate sono pubbliche. Solo il Knowledge Graph di Google chiede la <a href="/credenziali/#api-key">API key</a> di PageSpeed, con la Knowledge Graph Search API abilitata.</p>
       </section>
 
       <section class="doc-block">
         <h2>Spunti di conversazione</h2>
-        <p>Sei prompt pronti guidano l'assistente dall'analisi dei numeri al racconto e alle azioni. Si richiamano dal menu del tuo assistente (in Claude Code con <code>/</code>).</p>
+        <p>Sette prompt pronti guidano l'assistente dall'analisi dei numeri al racconto e alle azioni. Si richiamano dal menu del tuo assistente (in Claude Code con <code>/</code>).</p>
         <ul class="prompts plain">
+          <li><strong>Le AI sanno chi sono?</strong> Entità su Wikidata e Google, sameAs del sito e presenza in Common Crawl.</li>
           <li><strong>Audit GEO della pagina</strong>: le misure interpretate, con le correzioni in ordine di impatto.</li>
           <li><strong>Rispondo alle domande dei miei utenti?</strong> Le query a domanda di Search Console confrontate con le sezioni della pagina.</li>
           <li><strong>Perché citano loro e non me?</strong> Le tue misure accanto a quelle dei concorrenti.</li>
@@ -558,6 +563,7 @@ TOOL_GROUPS = [
         ("ga_compare_periods", "Confronto tra periodi su qualsiasi metrica, con i cali e le crescite più forti."),
         ("ga_report", "Report libero con dimensioni, metriche e filtri a scelta."),
         ("ga_realtime", "Utenti attivi negli ultimi 30 minuti, per pagina, paese o dispositivo."),
+        ("ga_ai_referrals", "Visite dagli assistenti AI (ChatGPT, Perplexity, Gemini, Copilot, Claude, Le Chat…): per assistente sessioni, coinvolgimento, conversioni, ricavi e pagine di destinazione, con il confronto sul periodo prima e la quota sul traffico totale."),
         ("ga_list_properties", "Le proprietà GA4 accessibili, con il loro ID."),
     ]),
     ("bing", "Bing Webmaster Tools", "una API key di Bing Webmaster Tools.", None, [
@@ -565,6 +571,7 @@ TOOL_GROUPS = [
         ("bing_page_stats", "Impressioni, clic e posizione media per pagina su Bing."),
         ("bing_keyword_stats", "Volumi di ricerca storici di una keyword su Bing, di default per Italia e italiano."),
         ("bing_inbound_links", "Link in entrata secondo l'indice di Bing (Search Console non li dà via API): pagine più linkate, siti di provenienza e testi dei link. È una fotografia attuale, senza storico."),
+        ("bing_crawl", "Come Bing scansiona il sito: pagine scansionate e nell'indice giorno per giorno, risposte 2xx, 3xx, 4xx e 5xx, blocchi di robots.txt, e gli URL con problemi di scansione ordinati per link interni."),
         ("bing_list_sites", "I siti del tuo account Bing Webmaster Tools."),
     ]),
     ("core-web-vitals", "Core Web Vitals", "una API key gratuita di Google Cloud.", "/core-web-vitals/", [
@@ -576,6 +583,8 @@ TOOL_GROUPS = [
         ("geo_ai_access", "Per ogni crawler AI, diviso per scopo, se può leggere il sito e per quale regola di robots.txt. Più llms.txt, Content Signals, riserva TDM europea e direttive della pagina."),
         ("geo_page_metrics", "Misure della pagina come la legge un crawler AI: struttura, risposta in apertura, sezioni, dati, freschezza, autore, fonti, dati strutturati, entità. Più HTTPS ed età del dominio."),
         ("geo_page_sections", "Il testo della pagina diviso per titoli, con le misure di ogni sezione."),
+        ("geo_entity", "Il brand è un'entità riconosciuta? Wikidata e Knowledge Graph di Google: descrizione, tipo, sito ufficiale, pagine Wikipedia, profili; più i sameAs dell'Organization nei dati strutturati del sito."),
+        ("geo_common_crawl", "Le pagine del sito sono in Common Crawl, l'archivio con cui si addestrano molti modelli? Pagine, home e risposte negli ultimi crawl."),
     ]),
     ("schema", "Validatore schema.org", "nessuna credenziale.", "/schema/", [
         ("schema_validate", "Valida il JSON-LD di una pagina o incollato: sintassi, vocabolario ufficiale schema.org, requisiti di Google per i risultati avanzati, coerenza con la pagina."),
@@ -662,6 +671,16 @@ PROMPT_AREAS = [
          "Fammi un piano editoriale con le domande degli utenti a cui il sito non risponde ancora."),
     ]),
     ("farsi-citare", "Farsi citare dalle AI", "GEO e AEO: farsi leggere, capire e citare da ChatGPT, Perplexity, Gemini e dalle AI Overviews di Google.", [
+        ("traffico-dalle-ai", "Quanto traffico mi portano le AI?",
+         "Visite da ChatGPT, Perplexity, Gemini, Copilot e dagli altri assistenti: quante sono, se crescono, su quali pagine arrivano e se convertono, accanto ai crawler AI che leggono il sito.",
+         [("url", "il sito, facoltativo"), ("giorni", "il periodo, di default 28")],
+         ["ga_ai_referrals", "ga_report", "geo_page_metrics", "cf_ai_crawlers"], [GA],
+         "Quante visite mi portano ChatGPT, Perplexity e gli altri assistenti AI, su quali pagine, e convertono?"),
+        ("le-ai-sanno-chi-sono", "Le AI sanno chi sono?",
+         "Il brand è un'entità riconosciuta da Wikidata e dal Knowledge Graph di Google? Il sito è collegato con i sameAs? Le pagine sono in Common Crawl, l'archivio con cui si addestrano molti modelli?",
+         [("url", "la home del sito"), ("nome", "il nome del brand, facoltativo")],
+         ["geo_entity", "geo_common_crawl", "geo_ai_access", "schema_validate"], None,
+         f"Il mio brand è riconosciuto come entità da Wikidata e da Google? E le pagine di {U} sono in Common Crawl?"),
         ("audit-geo-pagina", "Audit GEO della pagina",
          "Interpreta le misure GEO di una pagina (risposta in apertura, sezioni, dati, fonti, autore, freschezza, accesso dei crawler AI) e propone le correzioni in ordine di impatto.",
          [("url", "la pagina da analizzare")],
@@ -707,6 +726,8 @@ PROMPT_AREAS = [
     ]),
 ]
 PROMPTS = [p for *_, items in PROMPT_AREAS for p in items]
+# Domande dell'archivio, contate dal sorgente (una chiamata q(...) per domanda).
+DOMANDE = len(re.findall(r"^\s*q\('", (ROOT / "src" / "library" / "domande.ts").read_text(), re.M))
 
 # Tool e prompt già nel repository ma non ancora nel pacchetto npm (la versione pubblicata la legge published_version()).
 # Il sito li segna "in arrivo": dopo il rilascio svuota l'insieme e rigenera il sito.
@@ -774,7 +795,7 @@ def tools_page() -> str:
 
 GCP = "https://console.cloud.google.com"
 GOOGLE_APIS = ["searchconsole.googleapis.com", "analyticsdata.googleapis.com", "analyticsadmin.googleapis.com",
-               "chromeuxreport.googleapis.com", "pagespeedonline.googleapis.com"]
+               "chromeuxreport.googleapis.com", "pagespeedonline.googleapis.com", "kgsearch.googleapis.com"]
 
 
 def ext(url: str, label: str) -> str:
@@ -829,8 +850,8 @@ def credentials_page() -> str:
           </li>
           <li>
             <h3>Abilita le API con un clic</h3>
-            <p>Il link ti chiede di scegliere il progetto e poi abilita insieme le cinque API: Search Console, Analytics Data, Analytics Admin, Chrome UX Report e PageSpeed Insights. Abilitarle tutte non costa nulla e da sole non danno accesso a niente.</p>
-            <p class="links">{ext(f"{GCP}/flows/enableapi?apiid=" + ",".join(GOOGLE_APIS), "Abilita le 5 API")}</p>
+            <p>Il link ti chiede di scegliere il progetto e poi abilita insieme le sei API: Search Console, Analytics Data, Analytics Admin, Chrome UX Report, PageSpeed Insights e Knowledge Graph Search. Abilitarle tutte non costa nulla e da sole non danno accesso a niente.</p>
+            <p class="links">{ext(f"{GCP}/flows/enableapi?apiid=" + ",".join(GOOGLE_APIS), f"Abilita le {len(GOOGLE_APIS)} API")}</p>
           </li>
         </ol>
       </section>
@@ -925,7 +946,7 @@ npx -y {PKG} auth google</code></pre>
 
       <section class="doc-block" id="api-key">
         <h2>4. API key per i Core Web Vitals</h2>
-        <p>Una chiave gratuita per PageSpeed Insights e Chrome UX Report. I dati sono pubblici: la chiave non dà accesso al tuo account.</p>
+        <p>Una chiave gratuita per PageSpeed Insights e Chrome UX Report, e facoltativamente per il Knowledge Graph di Google (il tool <a href="/tool/#geo_entity"><code>geo_entity</code></a>). I dati sono pubblici: la chiave non dà accesso al tuo account.</p>
         <ol class="steps">
           <li>
             <h3>Crea la chiave</h3>
@@ -934,7 +955,7 @@ npx -y {PKG} auth google</code></pre>
           </li>
           <li>
             <h3>Limitala</h3>
-            <p>Apri la chiave appena creata e in <strong>Restrizioni API</strong> scegli <strong>Limita chiave</strong> con le sole <em>Chrome UX Report API</em> e <em>PageSpeed Insights API</em>: se finisse nelle mani sbagliate, non servirebbe ad altro.</p>
+            <p>Apri la chiave appena creata e in <strong>Restrizioni API</strong> scegli <strong>Limita chiave</strong> con le sole <em>Chrome UX Report API</em> e <em>PageSpeed Insights API</em>, più la <em>Knowledge Graph Search API</em> se vuoi il controllo delle entità: se finisse nelle mani sbagliate, non servirebbe ad altro.</p>
           </li>
         </ol>
         <p>Variabile da impostare: <code>SEOMCP_GOOGLE_API_KEY</code>. Cosa puoi chiedere: <a href="/core-web-vitals/">pagina Core Web Vitals</a>.</p>
@@ -1031,6 +1052,10 @@ def prompts_page() -> str:
             args_html = ", ".join(f"<code>{a}</code> ({html.escape(d)})" for a, d in args)
             cred_html = (" + ".join(f'<a href="/credenziali/#{c[1]}">{html.escape(c[0])}</a>' for c in cred) if cred
                          else '<a href="/credenziali/#senza-credenziali">nessuna</a>')
+            if pname == "traffico-dalle-ai":
+                cred_html += ' (con <a href="/credenziali/#cloudflare">Cloudflare</a> aggiunge i crawler AI reali)'
+            if pname == "le-ai-sanno-chi-sono":
+                cred_html += ' (con la <a href="/credenziali/#api-key">API key Google</a> aggiunge il Knowledge Graph)'
             if pname == "audit-tecnico":
                 cred_html += ' (con la <a href="/credenziali/#api-key">API key Google</a> aggiunge anche PageSpeed e i Core Web Vitals reali)'
             cards.append(f"""        <article class="prompt-card" id="{pname}">
@@ -1064,7 +1089,7 @@ def prompts_page() -> str:
           <li><strong>Claude Desktop:</strong> dal pulsante <strong>+</strong> della chat scegli seomcp e poi il prompt.</li>
           <li><strong>GitHub Copilot in VS Code:</strong> nella chat digita <code>/mcp.seomcp.</code> e scegli il prompt.</li>
           <li><strong>Altri assistenti:</strong> se non mostrano i prompt, fai la stessa domanda a parole. Ogni prompt qui sotto ha l'esempio pronto: i tool sono gli stessi, cambia solo che l'analisi la imposti tu.</li>
-          <li><strong>Altre 75 domande pronte</strong>, divise per tema, sono dentro seomcp come risorse MCP (<code>seomcp://domande</code>) e su <a href="https://github.com/davide-cik/seomcp/tree/main/domande" target="_blank" rel="noopener">GitHub</a>. Oppure chiedi all'assistente: «Cosa posso chiedere a seomcp?».</li>
+          <li><strong>Altre {DOMANDE} domande pronte</strong>, divise per tema, sono dentro seomcp come risorse MCP (<code>seomcp://domande</code>) e su <a href="https://github.com/davide-cik/seomcp/tree/main/domande" target="_blank" rel="noopener">GitHub</a>. Oppure chiedi all'assistente: «Cosa posso chiedere a seomcp?».</li>
         </ul>
       </section>
 
@@ -1104,7 +1129,7 @@ CF_PAGE = f"""      <nav class="crumbs" aria-label="Percorso"><a href="/">seomcp
 
       <section class="doc-block">
         <h2>Permesso e realtà: i crawler AI</h2>
-        <p>robots.txt dice quali crawler AI <em>possono</em> leggere il sito; Cloudflare dice quali passano <em>davvero</em>, e su quali pagine. Il prompt <a href="/prompt/#ai-che-leggono-il-sito">Quali AI leggono davvero il mio sito?</a> mette insieme le due cose: <a href="/tool/#cf_ai_crawlers"><code>cf_ai_crawlers</code></a> per le visite reali, <a href="/tool/#geo_ai_access"><code>geo_ai_access</code></a> per le regole. Così scopri i bot che bloccavi senza volerlo, quelli che passano nonostante il divieto e le pagine che interessano di più ai motori AI.</p>
+        <p>robots.txt dice quali crawler AI <em>possono</em> leggere il sito; Cloudflare dice quali passano <em>davvero</em>, e su quali pagine. Il prompt <a href="/prompt/#ai-che-leggono-il-sito">Quali AI leggono davvero il mio sito?</a> mette insieme le due cose: <a href="/tool/#cf_ai_crawlers"><code>cf_ai_crawlers</code></a> per le visite reali, <a href="/tool/#geo_ai_access"><code>geo_ai_access</code></a> per le regole. Così scopri i bot che bloccavi senza volerlo, quelli che passano nonostante il divieto e le pagine che interessano di più ai motori AI. L'ultimo passo sono le visite: con Google Analytics, <a href="/tool/#ga_ai_referrals"><code>ga_ai_referrals</code></a> dice quante persone arrivano davvero da ChatGPT, Perplexity e gli altri assistenti.</p>
         <p class="links"><a href="/geo/">GEO e AEO: farsi citare dai motori AI →</a></p>
       </section>
 

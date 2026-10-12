@@ -18,6 +18,8 @@ export interface ToolContext {
   pagespeed: () => PageSpeedClient;
   /** Statistiche di Cloudflare: facoltativo, come le altre fonti. */
   cloudflare?: () => CloudflareClient;
+  /** API key Google (la stessa di PageSpeed): serve anche per il Knowledge Graph, facoltativa. */
+  googleApiKey?: string;
   /** Opzioni per lo scaricamento delle pagine (analisi GEO). */
   fetchOptions?: FetchOptions;
   defaults: { gscSite?: string; bingSite?: string; gaProperty?: string; cloudflareZone?: string; country: string; language: string };

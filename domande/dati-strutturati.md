@@ -32,6 +32,11 @@ JSON-LD validato con il vocabolario ufficiale di schema.org e i requisiti di Goo
     - Tool: `gsc_inspect_url`, `schema_validate`
     - Risposta: Risultati avanzati secondo Google e secondo il validatore, a confronto.
 
+7. **L'Organization nel JSON-LD della home di https://www.esempio.it ha i sameAs giusti verso Wikidata, Wikipedia e i profili social? Scrivimi quello corretto.**
+    - Serve: nessuna credenziale
+    - Tool: `geo_entity`, `schema_validate`
+    - Risposta: I sameAs mancanti o sbagliati e il JSON-LD corretto, pronto da incollare.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).

@@ -66,7 +66,7 @@ describe('archivio di domande', () => {
     const client = await connect();
     const all = JSON.parse(((await client.callTool({ name: 'seomcp_guida', arguments: {} })).content as Array<{ text: string }>)[0]!.text);
     expect(all.categorie.map((c: { slug: string }) => c.slug)).toEqual(PROMPT_GUIDE.map((c) => c.slug));
-    expect(all.categorie.flatMap((c: { prompt: unknown[] }) => c.prompt).length).toBe(18);
+    expect(all.categorie.flatMap((c: { prompt: unknown[] }) => c.prompt).length).toBe(20);
     const one = JSON.parse(((await client.callTool({ name: 'seomcp_guida', arguments: { categoria: 'capire-i-dati' } })).content as Array<{ text: string }>)[0]!.text);
     expect(one.categorie).toHaveLength(1);
     expect(one.categorie[0].prompt[0].chiedi_cosi).toMatch(/\?/);

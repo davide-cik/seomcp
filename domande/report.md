@@ -37,6 +37,11 @@ Domande lunghe che combinano più fonti: utili per un cliente, per il capo o per
     - Tool: `gsc_compare_periods`, `ga_compare_periods`
     - Risposta: Un breve aggiornamento con i numeri essenziali.
 
+8. **Nel report del mese aggiungi una sezione sulle visite dagli assistenti AI: quante, da quali, su quali pagine, rispetto al mese prima.**
+    - Serve: Google Analytics 4
+    - Tool: `ga_ai_referrals`
+    - Risposta: Una sezione pronta per il report, con i numeri e due righe di commento per il cliente.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).

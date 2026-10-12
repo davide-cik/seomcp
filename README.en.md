@@ -6,7 +6,7 @@
 
 [🇮🇹 Versione italiana](README.md) · [Website](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · [MIT](LICENSE) license
 
-`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, Cloudflare, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **30 tools and 18 prompts, all read-only.** Ask things like:
+`seomcp` is an [MCP](https://modelcontextprotocol.io) server that lets your AI assistant (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe and other MCP clients) read your sites' data from Search Console, Google Analytics 4, Bing Webmaster Tools, Cloudflare, PageSpeed Insights and the Chrome UX Report, and analyze public pages: AI crawler access, structured data, redirects, canonicals, sitemaps and broken links. **34 tools and 20 prompts, all read-only.** Ask things like:
 
 > Which queries rank in positions 4-20 over the last 90 days, and which pages should I optimize first?
 >
@@ -18,11 +18,11 @@
 
 - **Read-only.** It only requests the `webmasters.readonly` and `analytics.readonly` Google scopes and cannot change anything in your properties.
 - **Your credentials stay on your machine.** No intermediate server, no third-party gateway, no telemetry.
-- **Official libraries only:** the MCP SDK, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin`, `@googleapis/pagespeedonline`, `@googleapis/chromeuxreport` and `google-auth-library`. Bing is a plain REST call. HTML parsing: `htmlparser2` (the engine behind cheerio).
-- **Small, readable codebase.** About 4,800 lines of TypeScript in [`src/`](src), easy to audit before you install it.
+- **Official libraries only:** the MCP SDK, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin`, `@googleapis/pagespeedonline`, `@googleapis/chromeuxreport` and `google-auth-library`. Bing, Wikidata, the Knowledge Graph and Common Crawl are plain REST calls to their public APIs. HTML parsing: `htmlparser2` (the engine behind cheerio).
+- **Small, readable codebase.** About 7,700 lines of TypeScript in [`src/`](src), easy to audit before you install it.
 - **No misuse of the Google Indexing API**, which Google reserves for job postings and livestreams.
 
-## Tools (30)
+## Tools (34)
 
 | Tool | What it does |
 |---|---|
@@ -39,12 +39,15 @@
 | `ga_organic_landing_pages` | Organic search landing pages: sessions, engagement, key events, revenue |
 | `ga_compare_periods` | Period comparison on any metric: losers and gainers |
 | `ga_realtime` | Active users in the last 30 minutes |
+| `ga_ai_referrals` | Visits from AI assistants (ChatGPT, Perplexity, Gemini, Copilot, Claude…): per assistant, with landing pages, conversions and change vs the previous period |
 | `crux_query` | Real-user Core Web Vitals from Chrome (LCP, INP, CLS): rating and distribution |
 | `crux_history` | Weekly trend of real-user Core Web Vitals, up to 40 weeks |
 | `psi_analyze` | PageSpeed Insights test: scores, metrics, opportunities and SEO audits |
 | `geo_ai_access` | GEO: which AI crawlers can read the site (robots.txt, llms.txt, Content Signals, TDMRep) |
 | `geo_page_metrics` | GEO/AEO: page metrics as an AI crawler sees it, plus HTTPS and domain age |
 | `geo_page_sections` | GEO/AEO: page text split into sections, with per-section metrics |
+| `geo_entity` | GEO: is the brand an entity on Wikidata and in Google's Knowledge Graph, linked to the site via sameAs? |
+| `geo_common_crawl` | GEO: are the site's pages in Common Crawl, the archive many models are trained on? |
 | `schema_validate` | schema.org validator: official vocabulary, Google rich result requirements, consistency with the page. Also on pasted JSON-LD |
 | `tech_page_audit` | Technical page checks: redirects, TTFB, indexability, canonical, hreflang, Open Graph, images, headings, security headers |
 | `tech_site_check` | Technical site checks: sitemap, URL sample, 404 page, broken internal links |
@@ -53,13 +56,14 @@
 | `bing_page_stats` | Bing performance by page |
 | `bing_keyword_stats` | Keyword search volume (defaults to Italy / Italian; set `country` and `language` for other markets) |
 | `bing_inbound_links` | Inbound links according to Bing: most linked pages, referring sites, anchor texts (current snapshot) |
+| `bing_crawl` | Crawling according to Bing: pages in the index, responses, errors and URLs with issues |
 | `cf_traffic` | Cloudflare: real visits and page views, including visitors who reject cookies |
 | `cf_ai_crawlers` | Cloudflare: AI crawlers that actually visit, which pages and which responses |
 | `cf_errors` | Cloudflare: pages returning 404 or 5xx to visitors |
 
-Plus 18 **prompts**, grouped by goal like Bing Webmaster Tools' prompt guide: understanding the data (traffic drops, monthly client report, traffic that doesn't convert, Google vs Bing, user questions), improving results (striking-distance queries, low-CTR titles and descriptions, keyword cannibalization, Core Web Vitals plan, editorial plan), getting cited by AI (which AI crawlers really read the site, GEO page audit, AI crawler access, competitor comparison, citable passage) and checks and fixes (technical audit, structured data, post-migration check). Inside the assistant the guide is the MCP resource `seomcp://prompt`. Details (Italian): [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/).
+Plus 20 **prompts**, grouped by goal like Bing Webmaster Tools' prompt guide: understanding the data (traffic drops, monthly client report, traffic that doesn't convert, Google vs Bing, user questions), improving results (striking-distance queries, low-CTR titles and descriptions, keyword cannibalization, Core Web Vitals plan, editorial plan), getting cited by AI (traffic from AI assistants, does AI know who you are (entity and Common Crawl), which AI crawlers really read the site, GEO page audit, AI crawler access, competitor comparison, citable passage) and checks and fixes (technical audit, structured data, post-migration check). Inside the assistant the guide is the MCP resource `seomcp://prompt`. Details (Italian): [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/).
 
-**Ready-made questions:** 75 conversation starters in 10 themes (25 need no credentials), in [domande/](domande/README.md) (Italian) and as MCP resources inside seomcp: `seomcp://domande` (index) and `seomcp://domande/<theme>`.
+**Ready-made questions:** 86 conversation starters in 10 themes (29 need no credentials), in [domande/](domande/README.md) (Italian) and as MCP resources inside seomcp: `seomcp://domande` (index) and `seomcp://domande/<theme>`.
 
 ## Install
 
@@ -69,7 +73,7 @@ Requires **Node.js 22+**. Configure only the sources you use.
 
 Manual setup:
 
-1. **Credentials:** see the setup guides for [Google](docs/google-setup.md), [Google Analytics](docs/google-analytics-setup.md), [PageSpeed/CrUX](docs/pagespeed-setup.md) and [Bing](docs/bing-setup.md). They are in Italian, and the steps are the same in English UIs. **Cloudflare** (optional, free plan included) needs a read-only token with *Zone → Zone → Read* and *Zone → Analytics → Read*; leave the token's IP filter empty if your connection has a dynamic IP, as most home connections do. What you get and how to enable it: [Cloudflare page](https://seomcp.contentisking.guru/cloudflare/) (Italian). The [credentials page](https://seomcp.contentisking.guru/credenziali/) (Italian) has direct links to every console screen, a one-click link that enables all five Google APIs, and a generator that fills in the config for your assistant.
+1. **Credentials:** see the setup guides for [Google](docs/google-setup.md), [Google Analytics](docs/google-analytics-setup.md), [PageSpeed/CrUX](docs/pagespeed-setup.md) and [Bing](docs/bing-setup.md). They are in Italian, and the steps are the same in English UIs. **Cloudflare** (optional, free plan included) needs a read-only token with *Zone → Zone → Read* and *Zone → Analytics → Read*; leave the token's IP filter empty if your connection has a dynamic IP, as most home connections do. What you get and how to enable it: [Cloudflare page](https://seomcp.contentisking.guru/cloudflare/) (Italian). The [credentials page](https://seomcp.contentisking.guru/credenziali/) (Italian) has direct links to every console screen, a one-click link that enables all six Google APIs, and a generator that fills in the config for your assistant.
 2. **Claude Code:**
 
    ```bash

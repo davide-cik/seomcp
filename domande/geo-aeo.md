@@ -17,40 +17,65 @@ Come leggono il sito ChatGPT, Perplexity, Gemini e le AI Overviews, e come rende
     - Tool: `cf_ai_crawlers`
     - Risposta: Bot per bot: richieste, giorni attivi, pagine più lette e risposte ricevute.
 
-4. **Il mio robots.txt blocca i bot che servono per comparire nelle risposte delle AI, oltre a quelli di addestramento?**
+4. **Quante visite mi portano ChatGPT, Perplexity e gli altri assistenti AI questo mese, su quali pagine arrivano e convertono?**
+    - Serve: Google Analytics 4
+    - Tool: `ga_ai_referrals`
+    - Risposta: Visite per assistente con la variazione sul mese prima, le pagine di destinazione e la quota sul traffico totale.
+
+5. **Il mio brand è riconosciuto come entità su Wikidata e da Google? Il sito https://www.esempio.it è collegato con i sameAs?**
+    - Serve: nessuna credenziale
+    - Tool: `geo_entity`
+    - Risposta: L'entità trovata, il sito ufficiale dichiarato, le pagine Wikipedia e i sameAs che mancano nei dati strutturati.
+
+6. **Le pagine di https://www.esempio.it sono in Common Crawl, l'archivio con cui si addestrano molti modelli AI?**
+    - Serve: nessuna credenziale
+    - Tool: `geo_common_crawl`
+    - Risposta: Quante pagine ci sono negli ultimi crawl, se c'è la home e con quali risposte.
+
+7. **Il mio robots.txt blocca i bot che servono per comparire nelle risposte delle AI, oltre a quelli di addestramento?**
     - Serve: nessuna credenziale
     - Tool: `geo_ai_access`
     - Risposta: Quali bot di risposta sono bloccati, distinti da quelli di addestramento.
 
-5. **Ho un llms.txt? È fatto bene? Se manca, scrivimene uno per il mio sito.**
+8. **Ho un llms.txt? È fatto bene? Se manca, scrivimene uno per il mio sito.**
     - Serve: nessuna credenziale
     - Tool: `geo_ai_access`
     - Risposta: Stato del file llms.txt e una proposta pronta da pubblicare.
 
-6. **Analizza https://www.esempio.it/guida/ sezione per sezione: quali sezioni sono troppo lunghe, senza dati o senza fonti?**
+9. **Analizza https://www.esempio.it/guida/ sezione per sezione: quali sezioni sono troppo lunghe, senza dati o senza fonti?**
     - Serve: nessuna credenziale
     - Tool: `geo_page_sections`
     - Risposta: Le misure di ogni sezione con le correzioni da fare.
 
-7. **Quali domande fanno le persone che arrivano su https://www.esempio.it/guida/, e a quali la pagina non risponde?**
+10. **Quali domande fanno le persone che arrivano su https://www.esempio.it/guida/, e a quali la pagina non risponde?**
     - Serve: Search Console
     - Tool: `gsc_performance`, `geo_page_sections`
     - Risposta: Le query a domanda della pagina, divise tra coperte e scoperte.
 
-8. **Fammi un piano editoriale con le domande degli utenti a cui il sito non risponde ancora.**
+11. **Fammi un piano editoriale con le domande degli utenti a cui il sito non risponde ancora.**
     - Serve: Search Console
     - Tool: `gsc_performance`, `geo_page_sections`
     - Risposta: Nuove sezioni, FAQ e pagine da scrivere, in ordine di priorità.
 
-9. **La pagina ha un autore riconoscibile, una data di aggiornamento recente e dati strutturati coerenti con il testo?**
+12. **La pagina ha un autore riconoscibile, una data di aggiornamento recente e dati strutturati coerenti con il testo?**
     - Serve: nessuna credenziale
     - Tool: `geo_page_metrics`, `schema_validate`
     - Risposta: Segnali di autorevolezza e freschezza, con cosa manca.
 
-10. **Il sito usa Content Signals o la riserva TDM europea? Cosa comporta per l'uso dei contenuti da parte delle AI?**
+13. **Il sito usa Content Signals o la riserva TDM europea? Cosa comporta per l'uso dei contenuti da parte delle AI?**
     - Serve: nessuna credenziale
     - Tool: `geo_ai_access`
     - Risposta: Le preferenze dichiarate sul sito e cosa significano.
+
+14. **Quali pagine leggono i crawler di OpenAI e Perplexity, e quali ricevono davvero visite da ChatGPT e Perplexity? Ci sono pagine lette ma mai cliccate?**
+    - Serve: token Cloudflare (sola lettura) + Google Analytics 4
+    - Tool: `cf_ai_crawlers`, `ga_ai_referrals`
+    - Risposta: Le pagine lette dai crawler messe accanto a quelle che portano visite, con quelle da migliorare.
+
+15. **Su Wikidata ci sono più entità con il nome del mio brand? Rischio di essere confuso con qualcos'altro?**
+    - Serve: nessuna credenziale
+    - Tool: `geo_entity`
+    - Risposta: Le entità omonime, quale è collegata al sito e come evitare la confusione.
 
 ---
 

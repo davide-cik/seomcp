@@ -17,17 +17,22 @@ Bing conta anche per le AI: le sue ricerche alimentano Copilot e altri assistent
     - Tool: `bing_page_stats`
     - Risposta: Classifica delle pagine su Bing.
 
-4. **Ci sono query per cui vado bene su Google ma non su Bing, o il contrario?**
+4. **Come scansiona Bing il mio sito? Pagine nell'indice, errori e URL con problemi.**
+    - Serve: Bing Webmaster Tools
+    - Tool: `bing_crawl`
+    - Risposta: Andamento della scansione e dell'indice, risposte 4xx e 5xx e gli URL da sistemare, ordinati per link interni.
+
+5. **Ci sono query per cui vado bene su Google ma non su Bing, o il contrario?**
     - Serve: Bing Webmaster Tools + Search Console
     - Tool: `bing_query_stats`, `gsc_performance`
     - Risposta: Le query con le differenze più forti tra i due motori.
 
-5. **Quanto vengono cercate queste keyword su Bing in Italia: "noleggio auto", "noleggio auto lungo termine", "noleggio furgoni"?**
+6. **Quanto vengono cercate queste keyword su Bing in Italia: "noleggio auto", "noleggio auto lungo termine", "noleggio furgoni"?**
     - Serve: Bing Webmaster Tools
     - Tool: `bing_keyword_stats`
     - Risposta: Volumi di ricerca storici per ciascuna keyword.
 
-6. **Quanto vale la keyword "hotel firenze" in Spagna su Bing?**
+7. **Quanto vale la keyword "hotel firenze" in Spagna su Bing?**
     - Serve: Bing Webmaster Tools
     - Tool: `bing_keyword_stats`
     - Risposta: Il volume nel mercato indicato invece di quello predefinito.

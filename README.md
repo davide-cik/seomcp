@@ -6,7 +6,7 @@
 
 [🇬🇧 English version](README.en.md) · [Sito](https://seomcp.contentisking.guru) · [npm](https://www.npmjs.com/package/@contentisking/seomcp) · Licenza [MIT](LICENSE)
 
-`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, Cloudflare, PageSpeed Insights e Chrome UX Report, e di analizzare le pagine pubbliche: accesso dei crawler AI, dati strutturati, redirect, canonical, sitemap e link rotti. **30 tool e 18 prompt, tutti in sola lettura.** Così puoi chiedere, in italiano:
+`seomcp` è un server [MCP](https://modelcontextprotocol.io) che permette al tuo assistente AI (Claude, ChatGPT, GitHub Copilot, Gemini CLI, Mistral Vibe e altri client MCP) di leggere i dati dei tuoi siti da Search Console, Google Analytics 4, Bing Webmaster Tools, Cloudflare, PageSpeed Insights e Chrome UX Report, e di analizzare le pagine pubbliche: accesso dei crawler AI, dati strutturati, redirect, canonical, sitemap e link rotti. **34 tool e 20 prompt, tutti in sola lettura.** Così puoi chiedere, in italiano:
 
 > Quali query sono in posizione 4-20 negli ultimi 90 giorni, e quali pagine dovrei ottimizzare per prime?
 >
@@ -22,11 +22,11 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 
 - **Sola lettura.** Chiede a Google solo gli scope `webmasters.readonly` e `analytics.readonly`: non può modificare nulla nelle tue proprietà.
 - **Le credenziali restano sul tuo computer.** Nessun server intermedio, nessun gateway di terzi, nessuna telemetria.
-- **Solo librerie ufficiali:** l'SDK MCP, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin`, `@googleapis/pagespeedonline`, `@googleapis/chromeuxreport` e `google-auth-library`. Bing è una semplice chiamata REST. Per leggere l'HTML delle pagine: `htmlparser2`, la libreria usata da cheerio.
-- **Codice piccolo e leggibile.** Circa 4.800 righe di TypeScript in [`src/`](src): leggerlo prima di installarlo è alla portata di chiunque.
+- **Solo librerie ufficiali:** l'SDK MCP, `@googleapis/searchconsole`, `@googleapis/analyticsdata`, `@googleapis/analyticsadmin`, `@googleapis/pagespeedonline`, `@googleapis/chromeuxreport` e `google-auth-library`. Bing, Wikidata, Knowledge Graph e Common Crawl sono semplici chiamate REST alle loro API pubbliche. Per leggere l'HTML delle pagine: `htmlparser2`, la libreria usata da cheerio.
+- **Codice piccolo e leggibile.** Circa 7.700 righe di TypeScript in [`src/`](src): leggerlo prima di installarlo è alla portata di chiunque.
 - **Nessun uso improprio della Google Indexing API**, che Google riserva alle offerte di lavoro e alle dirette video.
 
-## Tool disponibili (30)
+## Tool disponibili (34)
 
 | Tool | Cosa fa |
 |---|---|
@@ -43,12 +43,15 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 | `ga_organic_landing_pages` | Pagine di destinazione della ricerca organica: sessioni, coinvolgimento, conversioni, ricavi |
 | `ga_compare_periods` | Confronto tra periodi su qualsiasi metrica: cali e crescite |
 | `ga_realtime` | Utenti attivi negli ultimi 30 minuti |
+| `ga_ai_referrals` | Visite dagli assistenti AI (ChatGPT, Perplexity, Gemini, Copilot, Claude…): per assistente, con pagine di destinazione, conversioni e confronto col periodo prima |
 | `crux_query` | Core Web Vitals reali degli utenti Chrome (LCP, INP, CLS): giudizio e distribuzione |
 | `crux_history` | Andamento settimanale dei Core Web Vitals reali, fino a 40 settimane |
 | `psi_analyze` | Test PageSpeed Insights: punteggi, metriche, opportunità e controlli SEO |
 | `geo_ai_access` | GEO: quali crawler AI possono leggere il sito (robots.txt, llms.txt, Content Signals, TDMRep) |
 | `geo_page_metrics` | GEO/AEO: misure della pagina come la vede un crawler AI, più HTTPS ed età del dominio |
 | `geo_page_sections` | GEO/AEO: il testo della pagina diviso in sezioni, con le misure di ciascuna |
+| `geo_entity` | GEO: il brand è un'entità su Wikidata e nel Knowledge Graph di Google, collegata al sito con sameAs? |
+| `geo_common_crawl` | GEO: le pagine sono in Common Crawl, l'archivio con cui si addestrano molti modelli? |
 | `schema_validate` | Validatore schema.org: vocabolario ufficiale, requisiti Google per i risultati avanzati, coerenza con la pagina. Anche su JSON-LD incollato |
 | `tech_page_audit` | Controlli tecnici della pagina: redirect, TTFB, indicizzabilità, canonical, hreflang, Open Graph, immagini, titoli, header di sicurezza |
 | `tech_site_check` | Controlli tecnici del sito: sitemap, campione di URL, pagina 404, link interni rotti |
@@ -57,28 +60,29 @@ Affidare le credenziali di Search Console a uno strumento è una decisione seria
 | `bing_page_stats` | Performance per pagina su Bing |
 | `bing_keyword_stats` | Volumi di ricerca di una keyword (default Italia / italiano) |
 | `bing_inbound_links` | Link in entrata secondo Bing: pagine più linkate, siti di provenienza, testi dei link (fotografia attuale) |
+| `bing_crawl` | Scansione secondo Bing: pagine nell'indice, risposte, errori e URL con problemi |
 | `cf_traffic` | Cloudflare: visite e pagine viste reali, anche di chi rifiuta i cookie |
 | `cf_ai_crawlers` | Cloudflare: crawler AI che passano davvero, su quali pagine e con quali risposte |
 | `cf_errors` | Cloudflare: pagine che rispondono 404 o 5xx ai visitatori |
 
 Le analisi più complesse (cannibalizzazione, content gap, report) le fa l'assistente ragionando sui dati: non serve codificarle nel server.
 
-### Prompt (18)
+### Prompt (20)
 
-Oltre ai tool, seomcp offre 18 **prompt**: analisi già impostate che combinano più tool e chiudono con le correzioni in ordine di impatto. Sono divisi per obiettivo, come la guida dei prompt di Bing Webmaster Tools:
+Oltre ai tool, seomcp offre 20 **prompt**: analisi già impostate che combinano più tool e chiudono con le correzioni in ordine di impatto. Sono divisi per obiettivo, come la guida dei prompt di Bing Webmaster Tools:
 
 | Obiettivo | Prompt |
 |---|---|
 | **Capire i dati** | Perché sto perdendo traffico? · Report mensile per il cliente · Traffico che non converte · Google e Bing a confronto · Rispondo alle domande dei miei utenti? |
 | **Migliorare i risultati** | Opportunità a distanza di tiro · Title e description che non convincono · Pagine in concorrenza tra loro · Piano per i Core Web Vitals · Piano editoriale per le risposte AI |
-| **Farsi citare dalle AI** | Quali AI leggono davvero il mio sito? · Audit GEO della pagina · Il mio sito è aperto alle AI? · Perché citano loro e non me? · Rendi citabile questo passaggio |
+| **Farsi citare dalle AI** | Quanto traffico mi portano le AI? · Le AI sanno chi sono? · Quali AI leggono davvero il mio sito? · Audit GEO della pagina · Il mio sito è aperto alle AI? · Perché citano loro e non me? · Rendi citabile questo passaggio |
 | **Controlli e correzioni** | Audit tecnico del sito · Correggi i miei dati strutturati · Controllo dopo una migrazione |
 
 Dentro l'assistente la stessa guida è la risorsa MCP `seomcp://prompt`. Dettagli, argomenti e credenziali di ogni prompt: [seomcp.contentisking.guru/prompt](https://seomcp.contentisking.guru/prompt/). Approfondimenti: [docs/geo.md](docs/geo.md) e [docs/schema-validator.md](docs/schema-validator.md).
 
-### Domande pronte (75)
+### Domande pronte (86)
 
-Non sai da dove partire? L'archivio [domande/](domande/README.md) raccoglie 75 domande da copiare nell'assistente, divise in 10 temi: primi passi, traffico, opportunità, indicizzazione, GEO e AEO, dati strutturati, prestazioni, Analytics, Bing e report. Per ognuna c'è cosa serve (25 funzionano senza credenziali), quali tool usa e cosa aspettarsi.
+Non sai da dove partire? L'archivio [domande/](domande/README.md) raccoglie 86 domande da copiare nell'assistente, divise in 10 temi: primi passi, traffico, opportunità, indicizzazione, GEO e AEO, dati strutturati, prestazioni, Analytics, Bing e report. Per ognuna c'è cosa serve (29 funzionano senza credenziali), quali tool usa e cosa aspettarsi.
 
 Le stesse domande sono anche **risorse MCP** dentro seomcp: `seomcp://domande` è l'indice e `seomcp://domande/<tema>` contiene il singolo tema. Nei client che supportano le risorse si allegano alla chat; in Claude Code si richiamano con `@`. Oppure chiedi all'assistente: «Cosa posso chiedere a seomcp?».
 

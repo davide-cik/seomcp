@@ -172,4 +172,27 @@ ${REGOLE}`),
 
 ${REGOLE}`),
   );
+
+  server.registerPrompt(
+    'le-ai-sanno-chi-sono',
+    {
+      title: 'Le AI sanno chi sono?',
+      description: "Verifica se il brand è un'entità riconosciuta (Wikidata, Knowledge Graph di Google), se il sito è collegato a quell'entità con i dati strutturati e se le pagine sono in Common Crawl, l'archivio con cui si addestrano molti modelli.",
+      argsSchema: {
+        url: z.string().describe('La home del sito, es. https://www.esempio.it'),
+        nome: z.string().optional().describe('Il nome del brand, se diverso da quello nei dati strutturati'),
+      },
+    },
+    ({ url, nome }) =>
+      text(`Scopri cosa sanno le AI di ${nome ? `${nome} (${url})` : url}: chi è, se il sito è riconosciuto come fonte ufficiale, se le pagine sono nei dati di addestramento.
+
+1. Con geo_entity (url${nome ? ` e nome "${nome}"` : ''}) verifica se esiste un'entità su Wikidata e nel Knowledge Graph di Google collegata al sito: descrizione, tipo, sito ufficiale dichiarato, pagine Wikipedia, profili. Se ci sono più entità con lo stesso nome, indica quale è quella giusta e il rischio di confusione.
+2. Dai dati strutturati del sito (siteMarkup di geo_entity) controlla l'Organization: nome coerente con l'entità, logo, sameAs verso Wikidata, Wikipedia e i profili ufficiali. Se serve, valida il JSON-LD con schema_validate.
+3. Con geo_common_crawl controlla se le pagine del sito sono negli ultimi crawl di Common Crawl e con geo_ai_access se CCBot e gli altri crawler di addestramento sono ammessi da robots.txt. Spiega cosa comporta esserci o no, senza dare per scontato che l'utente voglia essere nei dati di addestramento.
+4. Chiudi con le azioni in ordine di impatto: entità da creare o correggere su Wikidata (solo se il brand ha i requisiti di notorietà, senza inventare fonti), sameAs da aggiungere con il JSON-LD pronto da incollare, coerenza di nome e descrizione tra sito, profili e Wikidata, scelte su robots.txt.
+
+Se il Knowledge Graph non è disponibile (manca la API key Google o la Knowledge Graph Search API non è abilitata), dillo in una riga e prosegui con Wikidata. Se l'indice di Common Crawl non risponde, dillo e suggerisci di riprovare più tardi.
+
+${REGOLE}`),
+  );
 }

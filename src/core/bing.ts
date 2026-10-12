@@ -119,6 +119,39 @@ export class BingClient {
     return details;
   }
 
+  /** Statistiche di scansione giorno per giorno, ultimi 6 mesi circa (GetCrawlStats). */
+  async getCrawlStats(siteUrl: string): Promise<BingCrawlStats[]> {
+    const data = await this.get<RawCrawlStats[]>('GetCrawlStats', { siteUrl });
+    return (data ?? [])
+      .map((r) => ({
+        date: parseBingDate(r.Date),
+        crawledPages: r.CrawledPages ?? 0,
+        crawlErrors: r.CrawlErrors ?? 0,
+        inIndex: r.InIndex ?? 0,
+        inLinks: r.InLinks ?? 0,
+        code2xx: r.Code2xx ?? 0,
+        code301: r.Code301 ?? 0,
+        code302: r.Code302 ?? 0,
+        code4xx: r.Code4xx ?? 0,
+        code5xx: r.Code5xx ?? 0,
+        allOtherCodes: r.AllOtherCodes ?? 0,
+        blockedByRobotsTxt: r.BlockedByRobotsTxt ?? 0,
+        containsMalware: r.ContainsMalware ?? 0,
+      }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+  }
+
+  /** URL con problemi di scansione (GetCrawlIssues). Le correzioni spariscono dall'elenco dopo qualche giorno. */
+  async getCrawlIssues(siteUrl: string): Promise<BingCrawlIssue[]> {
+    const data = await this.get<RawCrawlIssue[]>('GetCrawlIssues', { siteUrl });
+    return (data ?? []).map((r) => ({
+      url: r.Url,
+      httpCode: r.HttpCode ?? 0,
+      issues: decodeCrawlIssues(r.Issues),
+      inLinks: r.InLinks ?? 0,
+    }));
+  }
+
   private async get<T>(method: string, params: Record<string, string>): Promise<T> {
     const url = new URL(`${this.baseUrl}/${method}`);
     for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
@@ -157,6 +190,79 @@ export class BingClient {
     }
     return body?.d as T;
   }
+}
+
+export interface BingCrawlStats {
+  date: string;
+  crawledPages: number;
+  crawlErrors: number;
+  inIndex: number;
+  inLinks: number;
+  code2xx: number;
+  code301: number;
+  code302: number;
+  code4xx: number;
+  code5xx: number;
+  allOtherCodes: number;
+  blockedByRobotsTxt: number;
+  containsMalware: number;
+}
+
+export interface BingCrawlIssue {
+  url: string;
+  httpCode: number;
+  issues: BingCrawlIssueType[];
+  inLinks: number;
+}
+
+/** Valori dell'enum a bit UrlWithCrawlIssues.CrawlIssues della Bing Webmaster API. */
+export const BING_CRAWL_ISSUES = {
+  Code301: 1,
+  Code302: 2,
+  Code4xx: 4,
+  Code5xx: 8,
+  BlockedByRobotsTxt: 16,
+  ContainsMalware: 32,
+  ImportantUrlBlockedByRobotsTxt: 64,
+  DnsErrors: 128,
+  TimeOutErrors: 256,
+} as const;
+
+export type BingCrawlIssueType = keyof typeof BING_CRAWL_ISSUES;
+
+/** Il campo Issues arriva come numero (somma di bit) nel JSON, o come nomi separati da spazi/virgole nell'XML. */
+export function decodeCrawlIssues(value: number | string | undefined | null): BingCrawlIssueType[] {
+  const names = Object.keys(BING_CRAWL_ISSUES) as BingCrawlIssueType[];
+  if (typeof value === 'number') return names.filter((n) => (value & BING_CRAWL_ISSUES[n]) !== 0);
+  if (typeof value === 'string') {
+    if (/^\d+$/.test(value.trim())) return decodeCrawlIssues(Number(value));
+    const parts = value.split(/[\s,]+/);
+    return names.filter((n) => parts.includes(n));
+  }
+  return [];
+}
+
+interface RawCrawlStats {
+  Date: string;
+  CrawledPages?: number;
+  CrawlErrors?: number;
+  InIndex?: number;
+  InLinks?: number;
+  Code2xx?: number;
+  Code301?: number;
+  Code302?: number;
+  Code4xx?: number;
+  Code5xx?: number;
+  AllOtherCodes?: number;
+  BlockedByRobotsTxt?: number;
+  ContainsMalware?: number;
+}
+
+interface RawCrawlIssue {
+  Url: string;
+  HttpCode?: number;
+  Issues?: number | string;
+  InLinks?: number;
 }
 
 interface RawSite {

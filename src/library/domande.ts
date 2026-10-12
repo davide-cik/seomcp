@@ -94,6 +94,8 @@ export const TEMI: Tema[] = [
       q('Gli hreflang di https://www.esempio.it/ sono corretti? Le versioni nelle altre lingue rimandano a questa pagina?', ['nessuna'], ['tech_page_audit'], 'Codici lingua, x-default, autoreferenza e link di ritorno a campione.'),
       q('Controlla una per una la home e le 5 pagine principali: ci sono noindex nascosti, title mancanti o description troppo lunghe?', ['nessuna'], ['tech_page_audit'], 'Per ogni pagina, i problemi di indicizzabilità e di meta.'),
       q('Quali header di sicurezza mancano sul sito e quanto pesano le pagine principali?', ['nessuna'], ['tech_page_audit'], 'Header di sicurezza presenti e mancanti, peso e compressione delle pagine.'),
+      q('Quante pagine del sito ha nell\'indice Bing, e il numero cresce o cala negli ultimi mesi?', ['bing'], ['bing_crawl'], 'Pagine nell\'indice di Bing all\'inizio e alla fine del periodo, con l\'andamento della scansione.'),
+      q('Bing segnala pagine importanti bloccate da robots.txt o che rispondono con errori?', ['bing'], ['bing_crawl'], 'Gli URL con problemi secondo Bing, a partire da quelli con più link interni.'),
     ],
   },
   {
@@ -104,6 +106,9 @@ export const TEMI: Tema[] = [
       q('Perché ChatGPT cita la pagina del mio concorrente https://www.concorrente.it/guida/ e non la mia https://www.esempio.it/guida/? Confronta le due pagine.', ['nessuna'], ['geo_page_metrics'], 'Le differenze misurabili tra le due pagine che contano per la citabilità.'),
       q('Riscrivi la sezione "Quanto costa" di https://www.esempio.it/servizio/ perché un assistente AI possa citarla da sola.', ['nessuna'], ['geo_page_sections'], 'La sezione riscritta, autonoma e con una risposta diretta.'),
       q('Quali crawler AI hanno visitato davvero il sito questo mese, e quali pagine hanno letto?', ['cloudflare'], ['cf_ai_crawlers'], 'Bot per bot: richieste, giorni attivi, pagine più lette e risposte ricevute.'),
+      q('Quante visite mi portano ChatGPT, Perplexity e gli altri assistenti AI questo mese, su quali pagine arrivano e convertono?', ['analytics'], ['ga_ai_referrals'], 'Visite per assistente con la variazione sul mese prima, le pagine di destinazione e la quota sul traffico totale.'),
+      q('Il mio brand è riconosciuto come entità su Wikidata e da Google? Il sito https://www.esempio.it è collegato con i sameAs?', ['nessuna'], ['geo_entity'], "L'entità trovata, il sito ufficiale dichiarato, le pagine Wikipedia e i sameAs che mancano nei dati strutturati."),
+      q('Le pagine di https://www.esempio.it sono in Common Crawl, l\'archivio con cui si addestrano molti modelli AI?', ['nessuna'], ['geo_common_crawl'], 'Quante pagine ci sono negli ultimi crawl, se c\'è la home e con quali risposte.'),
       q('Il mio robots.txt blocca i bot che servono per comparire nelle risposte delle AI, oltre a quelli di addestramento?', ['nessuna'], ['geo_ai_access'], 'Quali bot di risposta sono bloccati, distinti da quelli di addestramento.'),
       q('Ho un llms.txt? È fatto bene? Se manca, scrivimene uno per il mio sito.', ['nessuna'], ['geo_ai_access'], 'Stato del file llms.txt e una proposta pronta da pubblicare.'),
       q('Analizza https://www.esempio.it/guida/ sezione per sezione: quali sezioni sono troppo lunghe, senza dati o senza fonti?', ['nessuna'], ['geo_page_sections'], 'Le misure di ogni sezione con le correzioni da fare.'),
@@ -111,6 +116,8 @@ export const TEMI: Tema[] = [
       q('Fammi un piano editoriale con le domande degli utenti a cui il sito non risponde ancora.', ['search-console'], ['gsc_performance', 'geo_page_sections'], 'Nuove sezioni, FAQ e pagine da scrivere, in ordine di priorità.'),
       q('La pagina ha un autore riconoscibile, una data di aggiornamento recente e dati strutturati coerenti con il testo?', ['nessuna'], ['geo_page_metrics', 'schema_validate'], 'Segnali di autorevolezza e freschezza, con cosa manca.'),
       q('Il sito usa Content Signals o la riserva TDM europea? Cosa comporta per l\'uso dei contenuti da parte delle AI?', ['nessuna'], ['geo_ai_access'], 'Le preferenze dichiarate sul sito e cosa significano.'),
+      q('Quali pagine leggono i crawler di OpenAI e Perplexity, e quali ricevono davvero visite da ChatGPT e Perplexity? Ci sono pagine lette ma mai cliccate?', ['cloudflare', 'analytics'], ['cf_ai_crawlers', 'ga_ai_referrals'], 'Le pagine lette dai crawler messe accanto a quelle che portano visite, con quelle da migliorare.'),
+      q('Su Wikidata ci sono più entità con il nome del mio brand? Rischio di essere confuso con qualcos\'altro?', ['nessuna'], ['geo_entity'], 'Le entità omonime, quale è collegata al sito e come evitare la confusione.'),
     ],
   },
   {
@@ -124,6 +131,7 @@ export const TEMI: Tema[] = [
       q('I dati strutturati dicono le stesse cose della pagina? Prezzo, autore, date e valutazioni coincidono con il testo?', ['nessuna'], ['schema_validate'], 'Le incoerenze tra JSON-LD e contenuto visibile.'),
       q('Quali risultati avanzati potrei ottenere su https://www.esempio.it/ con i dati strutturati che ho già, e quali aggiungeresti?', ['nessuna'], ['schema_validate'], 'Risultati avanzati già idonei e quelli raggiungibili con poche aggiunte.'),
       q('Google rileva i risultati avanzati su https://www.esempio.it/ricetta/? Confronta con quello che dichiara la pagina.', ['search-console', 'nessuna'], ['gsc_inspect_url', 'schema_validate'], 'Risultati avanzati secondo Google e secondo il validatore, a confronto.'),
+      q('L\'Organization nel JSON-LD della home di https://www.esempio.it ha i sameAs giusti verso Wikidata, Wikipedia e i profili social? Scrivimi quello corretto.', ['nessuna'], ['geo_entity', 'schema_validate'], 'I sameAs mancanti o sbagliati e il JSON-LD corretto, pronto da incollare.'),
     ],
   },
   {
@@ -151,6 +159,7 @@ export const TEMI: Tema[] = [
       q('Quante persone sono sul sito in questo momento e su quali pagine?', ['analytics'], ['ga_realtime'], 'Utenti attivi negli ultimi 30 minuti, per pagina.'),
       q('Dividi le sessioni per canale (organico, diretto, social, referral) e dimmi quale cresce di più.', ['analytics'], ['ga_report', 'ga_compare_periods'], 'Sessioni per canale con la variazione rispetto al periodo precedente.'),
       q('Quali pagine organiche hanno un tasso di coinvolgimento basso? Leggile e dimmi perché le persone se ne vanno.', ['analytics', 'nessuna'], ['ga_organic_landing_pages', 'geo_page_sections'], 'Le pagine poco coinvolgenti con ipotesi concrete sul testo.'),
+      q('Chi arriva da ChatGPT e dagli altri assistenti AI converte più o meno di chi arriva da Google?', ['analytics'], ['ga_ai_referrals', 'ga_report'], 'Coinvolgimento e tasso di conversione degli assistenti AI a confronto con la ricerca organica.'),
     ],
   },
   {
@@ -161,6 +170,7 @@ export const TEMI: Tema[] = [
       q('Su Bing come va la query "corso SEO" rispetto a Google?', ['bing', 'search-console'], ['bing_query_stats', 'gsc_performance'], 'Impressioni, clic e posizione sui due motori a confronto.'),
       q('Quali siti linkano al mio secondo Bing, a quali pagine e con quale testo?', ['bing'], ['bing_inbound_links'], 'Le pagine più linkate, i domini di provenienza e i testi dei link: una fotografia attuale.'),
       q('Quali sono le pagine con più clic su Bing negli ultimi tre mesi?', ['bing'], ['bing_page_stats'], 'Classifica delle pagine su Bing.'),
+      q('Come scansiona Bing il mio sito? Pagine nell\'indice, errori e URL con problemi.', ['bing'], ['bing_crawl'], 'Andamento della scansione e dell\'indice, risposte 4xx e 5xx e gli URL da sistemare, ordinati per link interni.'),
       q('Ci sono query per cui vado bene su Google ma non su Bing, o il contrario?', ['bing', 'search-console'], ['bing_query_stats', 'gsc_performance'], 'Le query con le differenze più forti tra i due motori.'),
       q('Quanto vengono cercate queste keyword su Bing in Italia: "noleggio auto", "noleggio auto lungo termine", "noleggio furgoni"?', ['bing'], ['bing_keyword_stats'], 'Volumi di ricerca storici per ciascuna keyword.'),
       q('Quanto vale la keyword "hotel firenze" in Spagna su Bing?', ['bing'], ['bing_keyword_stats'], 'Il volume nel mercato indicato invece di quello predefinito.'),
@@ -178,6 +188,7 @@ export const TEMI: Tema[] = [
       q('Ho appena fatto la migrazione del sito: controlla redirect, canonical, sitemap e indicizzazione delle 5 pagine più importanti, e confronta il traffico prima e dopo.', ['search-console', 'nessuna'], ['tech_page_audit', 'tech_site_check', 'gsc_inspect_url', 'gsc_compare_periods'], 'Un controllo post migrazione con i problemi trovati e l\'effetto sul traffico.'),
       q('Scegli le 10 query con più potenziale, verifica su Bing quanto sono cercate e dimmi quali contenuti scrivere o aggiornare per prime.', ['search-console', 'bing'], ['gsc_striking_distance', 'bing_keyword_stats'], 'Una lista di contenuti ordinata per potenziale.'),
       q('Riassumi in 5 righe come sta andando il sito questa settimana rispetto alla precedente, per un messaggio al team.', ['search-console', 'analytics'], ['gsc_compare_periods', 'ga_compare_periods'], 'Un breve aggiornamento con i numeri essenziali.'),
+      q('Nel report del mese aggiungi una sezione sulle visite dagli assistenti AI: quante, da quali, su quali pagine, rispetto al mese prima.', ['analytics'], ['ga_ai_referrals'], 'Una sezione pronta per il report, con i numeri e due righe di commento per il cliente.'),
     ],
   },
 ];

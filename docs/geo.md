@@ -47,6 +47,18 @@ I crawler AI (GPTBot, ClaudeBot, PerplexityBot…) **non eseguono JavaScript**: 
 
 Il contenuto principale diviso per titoli, con le misure di ogni sezione. È la materia prima per valutare se la pagina risponde alle domande.
 
+### `geo_entity`: il brand è un'entità riconosciuta?
+
+Cerca il brand su **Wikidata** (pubblica, senza credenziali) e nel **Knowledge Graph di Google** (con la API key di PageSpeed e la Knowledge Graph Search API abilitata): descrizione, tipo di entità, sito ufficiale dichiarato, pagine Wikipedia, profili social. Riconosce l'entità giusta dal sito ufficiale, anche quando ci sono omonimi. Legge poi l'`Organization` nei dati strutturati della home e controlla se i `sameAs` puntano a Wikidata e Wikipedia. Le AI citano più volentieri fonti che sanno attribuire a un'entità chiara.
+
+### `geo_common_crawl`: il sito è nei dati di addestramento?
+
+Interroga l'indice pubblico di **Common Crawl**, l'archivio del web usato per addestrare molti modelli linguistici: per gli ultimi crawl (circa uno al mese) quante pagine del sito ci sono, se c'è la home e con quali risposte. Completa `geo_ai_access`, che dice solo se CCBot è ammesso. L'indice è spesso lento o sovraccarico: ogni crawl riporta il suo esito e un errore non blocca gli altri.
+
+### Le visite dagli assistenti AI
+
+L'ultimo anello della catena è in Google Analytics: `ga_ai_referrals` conta le visite da ChatGPT, Perplexity, Gemini, Copilot, Claude e dagli altri assistenti, con le pagine di destinazione e le conversioni. È una sottostima: le app spesso non passano il referrer e i clic dalle AI Overviews di Google risultano come ricerca organica.
+
 ## I prompt
 
 | Prompt | Cosa fa |
@@ -57,6 +69,9 @@ Il contenuto principale diviso per titoli, con le misure di ogni sezione. È la 
 | `sito-aperto-alle-ai` | Spiega i permessi AI in chiaro, anche per la normativa europea |
 | `passaggio-citabile` | Riscrive una sezione perché sia citabile da sola |
 | `piano-editoriale-ai` | Dalle domande senza risposta ricava un piano di contenuti |
+| `le-ai-sanno-chi-sono` | Entità su Wikidata e Google, sameAs del sito e presenza in Common Crawl |
+| `traffico-dalle-ai` | Visite dagli assistenti AI, accanto ai crawler che leggono il sito |
+| `ai-che-leggono-il-sito` | Crawler AI reali (Cloudflare) a confronto con i permessi di robots.txt |
 
 In Claude Code i prompt compaiono come comandi `/mcp__seomcp__...`; in Claude Desktop nel menu `+` della chat.
 

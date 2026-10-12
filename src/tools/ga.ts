@@ -1,5 +1,6 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
+import { aggregateAiReferrals, AI_ASSISTANTS, aiSourceRegex } from '../core/ai-referrals.js';
 import { compareGaPeriods } from '../core/analysis.js';
 import { addDays, previousPeriod } from '../core/dates.js';
 import { SeoMcpError } from '../core/errors.js';
@@ -163,6 +164,67 @@ export function registerGaTools(server: McpServer, ctx: ToolContext): void {
           losers: rows.filter((r) => (r.delta[first] ?? 0) < 0).slice(0, args.limit),
           gainers: rows.filter((r) => (r.delta[first] ?? 0) > 0).reverse().slice(0, args.limit),
           comparedRows: rows.length,
+        };
+      }),
+  );
+
+  server.registerTool(
+    'ga_ai_referrals',
+    {
+      title: 'Analytics: visite dagli assistenti AI',
+      description:
+        "Visite che arrivano dagli assistenti AI (ChatGPT, Perplexity, Gemini, Copilot, Claude, Le Chat, DeepSeek, Grok…), riconosciute dalla sorgente della sessione: per assistente sessioni, coinvolgimento, eventi chiave, ricavi, pagine di destinazione e confronto con il periodo precedente, più la quota sul traffico totale. È il risultato finale della GEO: i crawler leggono (cf_ai_crawlers), le AI citano, le persone cliccano. Sottostima: le app spesso non passano il referrer.",
+      inputSchema: {
+        property,
+        ...dateRangeShape,
+        compare: z.boolean().default(true).describe('Confronta con il periodo precedente di pari durata.'),
+        pagesPerAssistant: z.number().int().min(1).max(50).default(10).describe('Pagine di destinazione da mostrare per ogni assistente.'),
+      },
+      annotations: { readOnlyHint: true },
+    },
+    (args) =>
+      run(async () => {
+        const prop = resolveProperty(args.property, ctx.defaults.gaProperty);
+        const current = resolveRange(args, GA_LAG_DAYS);
+        const previous = previousPeriod(current.startDate, current.endDate);
+        const aiFilter: GaFilter = { field: 'sessionSource', matchType: 'PARTIAL_REGEXP', value: aiSourceRegex() };
+        const ga = ctx.ga();
+        const [cur, prev, total] = await Promise.all([
+          ga.runReport({ property: prop, ...current, dimensions: ['sessionSource', 'landingPage'], metrics: ['sessions', 'engagedSessions', 'keyEvents', 'totalRevenue'], filters: [aiFilter], limit: 10_000 }),
+          args.compare
+            ? ga.runReport({ property: prop, ...previous, dimensions: ['sessionSource'], metrics: ['sessions'], filters: [aiFilter], limit: 1_000 })
+            : Promise.resolve(undefined),
+          ga.runReport({ property: prop, ...current, dimensions: [], metrics: ['sessions'], limit: 1 }),
+        ]);
+        const assistants = aggregateAiReferrals(cur.rows, prev?.rows ?? [], args.pagesPerAssistant);
+        const aiSessions = assistants.reduce((n, a) => n + a.sessions, 0);
+        const totalSessions = total.rows[0]?.metrics.sessions ?? 0;
+
+        const pages = new Map<string, { sessions: number; assistants: Set<string> }>();
+        for (const a of assistants) {
+          for (const p of a.topLandingPages) {
+            const e = pages.get(p.page) ?? { sessions: 0, assistants: new Set<string>() };
+            e.sessions += p.sessions;
+            e.assistants.add(a.assistant);
+            pages.set(p.page, e);
+          }
+        }
+        return {
+          property: prop,
+          current,
+          ...(args.compare ? { previous, previousAiSessions: assistants.reduce((n, a) => n + (a.previousSessions ?? 0), 0) } : {}),
+          totalSessions,
+          aiSessions,
+          aiSharePercent: totalSessions ? Math.round((aiSessions / totalSessions) * 10_000) / 100 : 0,
+          assistants,
+          topLandingPages: [...pages.entries()]
+            .sort((x, y) => y[1].sessions - x[1].sessions)
+            .slice(0, 20)
+            .map(([page, v]) => ({ page, sessions: v.sessions, assistants: [...v.assistants] })),
+          note:
+            'Sottostima: le app degli assistenti (ChatGPT, Perplexity…) spesso non passano il referrer e quelle visite finiscono in "Direct". I clic dalle AI Overviews e da AI Mode di Google risultano come google / organic e GA4 non li distingue. Assistenti riconosciuti dalla sorgente della sessione: ' +
+            AI_ASSISTANTS.map((a) => a.assistant).join(', ') +
+            '.',
         };
       }),
   );

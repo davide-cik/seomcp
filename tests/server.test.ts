@@ -24,6 +24,7 @@ describe('server MCP', () => {
       pagespeed: notConfigured, defaults: { country: 'it', language: 'it-IT' }, diagnose: async () => [] });
     const { tools } = await client.listTools();
     expect(tools.map((t) => t.name).sort()).toEqual([
+      'bing_crawl',
       'bing_inbound_links',
       'bing_keyword_stats',
       'bing_list_sites',
@@ -34,12 +35,15 @@ describe('server MCP', () => {
       'cf_traffic',
       'crux_history',
       'crux_query',
+      'ga_ai_referrals',
       'ga_compare_periods',
       'ga_list_properties',
       'ga_organic_landing_pages',
       'ga_realtime',
       'ga_report',
       'geo_ai_access',
+      'geo_common_crawl',
+      'geo_entity',
       'geo_page_metrics',
       'geo_page_sections',
       'gsc_compare_periods',
@@ -143,6 +147,7 @@ describe('server MCP', () => {
       'correggi-dati-strutturati',
       'domande-utenti',
       'google-vs-bing',
+      'le-ai-sanno-chi-sono',
       'opportunita-distanza-di-tiro',
       'passaggio-citabile',
       'piano-core-web-vitals',
@@ -151,6 +156,7 @@ describe('server MCP', () => {
       'sito-aperto-alle-ai',
       'title-description-ctr',
       'traffico-che-non-converte',
+      'traffico-dalle-ai',
     ]);
     const res = await client.getPrompt({ name: 'confronto-concorrenti', arguments: { url: 'https://a.it/', concorrenti: 'https://b.it/, https://c.it/' } });
     const text = (res.messages[0]?.content as { text: string }).text;

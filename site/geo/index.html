@@ -32,14 +32,17 @@
           <dt><code>geo_ai_access</code></dt><dd>Per ogni bot AI (GPTBot, ClaudeBot, PerplexityBot, Google-Extended…) consentito o bloccato e da quale regola, diviso tra addestramento, risposte e letture su richiesta. Più llms.txt, Content Signals di Cloudflare e riserva TDM europea.</dd>
           <dt><code>geo_page_metrics</code></dt><dd>Struttura, titoli a domanda, risposta in apertura, sezioni, dati numerici, freschezza, autore, fonti citate, dati strutturati con le proprietà mancanti, entità con sameAs. E per il sito: HTTPS ed età del dominio.</dd>
           <dt><code>geo_page_sections</code></dt><dd>Il testo della pagina diviso per titoli, con le misure di ogni sezione: la materia prima per valutare le risposte passaggio per passaggio.</dd>
+          <dt><code>geo_entity</code></dt><dd>Il brand è un'entità riconosciuta da Wikidata e dal Knowledge Graph di Google, con il sito come sito ufficiale? E l'Organization nei dati strutturati del sito ha i sameAs verso Wikidata e Wikipedia? Le AI citano più volentieri fonti che sanno attribuire.</dd>
+          <dt><code>geo_common_crawl</code></dt><dd>Le pagine del sito sono in Common Crawl, l'archivio pubblico con cui si addestrano molti modelli? Pagine, home e risposte negli ultimi crawl.</dd>
         </dl>
-        <p class="small">Funzionano subito, senza credenziali: le pagine analizzate sono pubbliche.</p>
+        <p class="small">Funzionano subito, senza credenziali: le pagine analizzate sono pubbliche. Solo il Knowledge Graph di Google chiede la <a href="/credenziali/#api-key">API key</a> di PageSpeed, con la Knowledge Graph Search API abilitata.</p>
       </section>
 
       <section class="doc-block">
         <h2>Spunti di conversazione</h2>
-        <p>Sei prompt pronti guidano l'assistente dall'analisi dei numeri al racconto e alle azioni. Si richiamano dal menu del tuo assistente (in Claude Code con <code>/</code>).</p>
+        <p>Sette prompt pronti guidano l'assistente dall'analisi dei numeri al racconto e alle azioni. Si richiamano dal menu del tuo assistente (in Claude Code con <code>/</code>).</p>
         <ul class="prompts plain">
+          <li><strong>Le AI sanno chi sono?</strong> Entità su Wikidata e Google, sameAs del sito e presenza in Common Crawl.</li>
           <li><strong>Audit GEO della pagina</strong>: le misure interpretate, con le correzioni in ordine di impatto.</li>
           <li><strong>Rispondo alle domande dei miei utenti?</strong> Le query a domanda di Search Console confrontate con le sezioni della pagina.</li>
           <li><strong>Perché citano loro e non me?</strong> Le tue misure accanto a quelle dei concorrenti.</li>

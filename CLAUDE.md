@@ -9,7 +9,7 @@ Guida per Claude Code (e per chi contribuisce) su questo repository.
 - Pacchetto npm: [`@contentisking/seomcp`](https://www.npmjs.com/package/@contentisking/seomcp) (si usa con `npx -y @contentisking/seomcp`)
 - Repository: `davide-cik/seomcp` (push via SSH)
 - Sito: https://seomcp.contentisking.guru (statico, servito da Nginx direttamente da `site/`)
-- Oggi: **30 tool, 18 prompt, risorse MCP** (guida ai prompt + archivio di 75 domande)
+- Oggi: **34 tool, 20 prompt, risorse MCP** (guida ai prompt + archivio di 86 domande)
 
 **Lingua:** tutto in **italiano** (codice commentato, messaggi, documentazione, sito). Il README ha anche la versione inglese `README.en.md`, da tenere allineata.
 
@@ -25,7 +25,7 @@ Guida per Claude Code (e per chi contribuisce) su questo repository.
 
 ```bash
 npm run typecheck        # tsc --noEmit
-npm test                 # vitest (oggi 124 test)
+npm test                 # vitest (oggi 135 test)
 npm run build            # dist/ (tsconfig.build.json)
 npm run dev              # avvia il server MCP da sorgente (stdio)
 npm run doctor           # verifica configurazione e credenziali

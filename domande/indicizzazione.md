@@ -47,6 +47,16 @@ Se Google vede e indicizza le pagine giuste, e cosa lo impedisce.
     - Tool: `tech_page_audit`
     - Risposta: Header di sicurezza presenti e mancanti, peso e compressione delle pagine.
 
+10. **Quante pagine del sito ha nell'indice Bing, e il numero cresce o cala negli ultimi mesi?**
+    - Serve: Bing Webmaster Tools
+    - Tool: `bing_crawl`
+    - Risposta: Pagine nell'indice di Bing all'inizio e alla fine del periodo, con l'andamento della scansione.
+
+11. **Bing segnala pagine importanti bloccate da robots.txt o che rispondono con errori?**
+    - Serve: Bing Webmaster Tools
+    - Tool: `bing_crawl`
+    - Risposta: Gli URL con problemi secondo Bing, a partire da quelli con più link interni.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).

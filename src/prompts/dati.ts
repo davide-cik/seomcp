@@ -179,6 +179,7 @@ ${REGOLE}`),
 2. Con gsc_performance individua le 10 pagine che portavano più clic prima della migrazione; per ognuna verifica con tech_page_audit la catena di redirect (un solo salto permanente verso la pagina giusta) e il canonical.
 3. Con gsc_inspect_url controlla che le nuove pagine siano indicizzate e che Google scelga il canonical giusto.
 4. Con gsc_compare_periods confronta clic e impressioni prima e dopo${data ? ` il ${data}` : ' la migrazione'}, separando le pagine migrate bene da quelle che hanno perso.
+   Se Bing è configurato, con bing_crawl controlla anche come Bing scansiona il sito nuovo: redirect, errori 4xx e 5xx, pagine nell'indice.
 5. Chiudi con una checklist: cosa è a posto, cosa correggere subito (redirect mancanti o a catena, canonical sbagliati, sitemap con vecchi URL, pagine non indicizzate), cosa monitorare nelle prossime settimane.
 
 ${NON_CONFIGURATA}
@@ -225,6 +226,29 @@ ${REGOLE}`),
 5. Indica quali pagine interessano di più ai motori AI e se sono quelle che il sito vorrebbe far citare; chiudi con 3 azioni.
 
 Se Cloudflare non è configurato, usa solo geo_ai_access, spiega che senza i dati di traffico si vede solo cosa è permesso, e indica seomcp_status per attivarlo.
+
+${REGOLE}`),
+  );
+
+  server.registerPrompt(
+    'traffico-dalle-ai',
+    {
+      title: 'Quanto traffico mi portano le AI?',
+      description: 'Visite da ChatGPT, Perplexity, Gemini, Copilot e dagli altri assistenti AI: quante sono, se crescono, su quali pagine arrivano e se convertono, messe accanto ai crawler AI che leggono il sito.',
+      argsSchema: { url: z.string().optional().describe('Il sito, es. https://www.esempio.it (per leggere le pagine e i crawler)'), giorni: z.string().optional().describe('Periodo in giorni, default 28') },
+    },
+    ({ url, giorni: g }) =>
+      text(`Misura il traffico che gli assistenti AI portano${url ? ` a ${url}` : ' al sito'}.
+
+1. Con ga_ai_referrals (ultimi ${g ?? '28'} giorni, confronto con il periodo precedente) prendi le visite per assistente: sessioni, variazione, coinvolgimento, eventi chiave, ricavi, e la quota sul traffico totale.
+2. Confronta la qualità con il resto del traffico: con ga_report (dimensione sessionDefaultChannelGroup, metriche sessions, engagementRate, sessionKeyEventRate) prendi i valori della ricerca organica e dici se chi arriva dalle AI è più o meno coinvolto e se converte di più o di meno.
+3. Elenca le pagine di destinazione più visitate dalle AI: sono le pagine che gli assistenti citano. Per le prime 3 leggi con geo_page_metrics cosa le rende citabili (risposta in apertura, dati, fonti, struttura).
+4. Se Cloudflare è configurato, con cf_ai_crawlers metti accanto i crawler degli stessi assistenti (GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot…): pagine molto lette dai crawler ma senza visite, o assistenti che passano ma non portano traffico.
+5. Chiudi con una tabella per assistente (sessioni, variazione, coinvolgimento, conversioni, pagine principali) e 3 azioni per aumentare le citazioni, partendo dalle pagine che funzionano già.
+
+Ricorda all'utente che il dato è una sottostima: le app degli assistenti spesso non passano il referrer e i clic dalle AI Overviews di Google risultano come ricerca organica.
+
+${NON_CONFIGURATA}
 
 ${REGOLE}`),
   );

@@ -1,6 +1,7 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { aggregateBingStats } from '../core/analysis.js';
+import type { BingCrawlStats } from '../core/bing.js';
 import type { BingStatsRow } from '../core/types.js';
 import { isoDate, resolveSite, run, type ToolContext } from './shared.js';
 
@@ -163,6 +164,60 @@ export function registerBingTools(server: McpServer, ctx: ToolContext): void {
           topAnchors: [...anchors.entries()].map(([anchor, n]) => ({ anchor, links: n })).sort((a, b) => b.links - a.links).slice(0, 30),
           detail,
           note: `Domini e testi dei link sono calcolati sulle ${detail.length} pagine più linkate. L'API di Bing non fornisce l'andamento nel tempo: per seguirlo confronta questa fotografia con una successiva.`,
+        };
+      }),
+  );
+
+  server.registerTool(
+    'bing_crawl',
+    {
+      title: 'Bing: scansione del sito',
+      description:
+        "Come Bing scansiona il sito: pagine scansionate, pagine nell'indice, risposte (2xx, 301, 302, 4xx, 5xx), bloccate da robots.txt ed errori, giorno per giorno negli ultimi mesi; più l'elenco degli URL con problemi di scansione (redirect, 4xx, 5xx, bloccati da robots.txt, malware, DNS, timeout) con i link interni che li raggiungono. Conta anche per le AI: Copilot e altri assistenti si appoggiano all'indice di Bing.",
+      inputSchema: {
+        siteUrl,
+        days: z.number().int().min(1).max(200).default(30).describe('Giorni di statistiche da restituire (Bing ne conserva circa 6 mesi).'),
+        issuesLimit: z.number().int().min(0).max(1000).default(100).describe('URL con problemi da restituire, ordinati per link interni.'),
+      },
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    (args) =>
+      run(async () => {
+        const site = resolveSite(args.siteUrl, ctx.defaults.bingSite, 'bing');
+        const bing = ctx.bing();
+        const [stats, issues] = await Promise.all([bing.getCrawlStats(site), bing.getCrawlIssues(site)]);
+        const daily = stats.slice(-args.days);
+        const sum = (k: Exclude<keyof BingCrawlStats, 'date' | 'inIndex' | 'inLinks'>) => daily.reduce((n, d) => n + d[k], 0);
+        const first = daily[0];
+        const last = daily[daily.length - 1];
+
+        const byType = new Map<string, number>();
+        for (const i of issues) for (const t of i.issues) byType.set(t, (byType.get(t) ?? 0) + 1);
+        return {
+          siteUrl: site,
+          period: first && last ? { from: first.date, to: last.date, days: daily.length } : null,
+          index: first && last ? { inIndexStart: first.inIndex, inIndexEnd: last.inIndex, change: last.inIndex - first.inIndex } : null,
+          totals: daily.length
+            ? {
+                crawledPages: sum('crawledPages'),
+                crawlErrors: sum('crawlErrors'),
+                code2xx: sum('code2xx'),
+                code301: sum('code301'),
+                code302: sum('code302'),
+                code4xx: sum('code4xx'),
+                code5xx: sum('code5xx'),
+                allOtherCodes: sum('allOtherCodes'),
+                blockedByRobotsTxt: sum('blockedByRobotsTxt'),
+                containsMalware: sum('containsMalware'),
+              }
+            : null,
+          daily,
+          issues: {
+            total: issues.length,
+            byType: Object.fromEntries([...byType.entries()].sort((a, b) => b[1] - a[1])),
+            urls: [...issues].sort((a, b) => b.inLinks - a.inLinks).slice(0, args.issuesLimit),
+          },
+          note: "Dati di Bing aggiornati una volta al giorno. Un URL corretto può restare nell'elenco dei problemi per qualche giorno. ImportantUrlBlockedByRobotsTxt indica pagine che Bing ritiene importanti ma che robots.txt blocca.",
         };
       }),
   );

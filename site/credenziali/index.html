@@ -28,12 +28,12 @@
         <table class="cred-table">
           <thead><tr><th>Fonte</th><th>Cosa serve</th><th>Tempo</th><th>Sblocca</th></tr></thead>
           <tbody>
-            <tr><td><a href="#senza-credenziali">GEO, schema.org, controlli tecnici</a></td><td>Niente</td><td>0 minuti</td><td><a href="/tool/#geo">6 tool</a> e <a href="/prompt/">6 prompt</a></td></tr>
+            <tr><td><a href="#senza-credenziali">GEO, schema.org, controlli tecnici</a></td><td>Niente</td><td>0 minuti</td><td><a href="/tool/#geo">8 tool</a> e <a href="/prompt/">7 prompt</a></td></tr>
             <tr><td><a href="#search-console">Search Console</a></td><td>Service account o OAuth</td><td>10 minuti</td><td><a href="/tool/#search-console">6 tool</a></td></tr>
-            <tr><td><a href="#google-analytics">Analytics 4</a></td><td>Le stesse credenziali Google</td><td>3 minuti</td><td><a href="/tool/#google-analytics">5 tool</a></td></tr>
+            <tr><td><a href="#google-analytics">Analytics 4</a></td><td>Le stesse credenziali Google</td><td>3 minuti</td><td><a href="/tool/#google-analytics">6 tool</a></td></tr>
             <tr><td><a href="#api-key">Core Web Vitals</a></td><td>API key Google Cloud</td><td>3 minuti</td><td><a href="/tool/#core-web-vitals">3 tool</a></td></tr>
             <tr><td><a href="#cloudflare">Cloudflare</a></td><td>Token in sola lettura</td><td>3 minuti</td><td><a href="/tool/#cloudflare">3 tool</a></td></tr>
-            <tr><td><a href="#bing">Bing Webmaster</a></td><td>API key Bing</td><td>2 minuti</td><td><a href="/tool/#bing">5 tool</a></td></tr>
+            <tr><td><a href="#bing">Bing Webmaster</a></td><td>API key Bing</td><td>2 minuti</td><td><a href="/tool/#bing">6 tool</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -60,8 +60,8 @@
           </li>
           <li>
             <h3>Abilita le API con un clic</h3>
-            <p>Il link ti chiede di scegliere il progetto e poi abilita insieme le cinque API: Search Console, Analytics Data, Analytics Admin, Chrome UX Report e PageSpeed Insights. Abilitarle tutte non costa nulla e da sole non danno accesso a niente.</p>
-            <p class="links"><a class="go" href="https://console.cloud.google.com/flows/enableapi?apiid=searchconsole.googleapis.com,analyticsdata.googleapis.com,analyticsadmin.googleapis.com,chromeuxreport.googleapis.com,pagespeedonline.googleapis.com" target="_blank" rel="noopener">Abilita le 5 API ↗</a></p>
+            <p>Il link ti chiede di scegliere il progetto e poi abilita insieme le sei API: Search Console, Analytics Data, Analytics Admin, Chrome UX Report, PageSpeed Insights e Knowledge Graph Search. Abilitarle tutte non costa nulla e da sole non danno accesso a niente.</p>
+            <p class="links"><a class="go" href="https://console.cloud.google.com/flows/enableapi?apiid=searchconsole.googleapis.com,analyticsdata.googleapis.com,analyticsadmin.googleapis.com,chromeuxreport.googleapis.com,pagespeedonline.googleapis.com,kgsearch.googleapis.com" target="_blank" rel="noopener">Abilita le 6 API ↗</a></p>
           </li>
         </ol>
       </section>
@@ -156,7 +156,7 @@ npx -y @contentisking/seomcp auth google</code></pre>
 
       <section class="doc-block" id="api-key">
         <h2>4. API key per i Core Web Vitals</h2>
-        <p>Una chiave gratuita per PageSpeed Insights e Chrome UX Report. I dati sono pubblici: la chiave non dà accesso al tuo account.</p>
+        <p>Una chiave gratuita per PageSpeed Insights e Chrome UX Report, e facoltativamente per il Knowledge Graph di Google (il tool <a href="/tool/#geo_entity"><code>geo_entity</code></a>). I dati sono pubblici: la chiave non dà accesso al tuo account.</p>
         <ol class="steps">
           <li>
             <h3>Crea la chiave</h3>
@@ -165,7 +165,7 @@ npx -y @contentisking/seomcp auth google</code></pre>
           </li>
           <li>
             <h3>Limitala</h3>
-            <p>Apri la chiave appena creata e in <strong>Restrizioni API</strong> scegli <strong>Limita chiave</strong> con le sole <em>Chrome UX Report API</em> e <em>PageSpeed Insights API</em>: se finisse nelle mani sbagliate, non servirebbe ad altro.</p>
+            <p>Apri la chiave appena creata e in <strong>Restrizioni API</strong> scegli <strong>Limita chiave</strong> con le sole <em>Chrome UX Report API</em> e <em>PageSpeed Insights API</em>, più la <em>Knowledge Graph Search API</em> se vuoi il controllo delle entità: se finisse nelle mani sbagliate, non servirebbe ad altro.</p>
           </li>
         </ol>
         <p>Variabile da impostare: <code>SEOMCP_GOOGLE_API_KEY</code>. Cosa puoi chiedere: <a href="/core-web-vitals/">pagina Core Web Vitals</a>.</p>

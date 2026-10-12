@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.56 — 2026-10-12
+
+- **`ga_ai_referrals`**: visite dagli assistenti AI (ChatGPT, Perplexity, Gemini, Copilot, Claude, Le Chat, DeepSeek, Grok e altri) in Google Analytics, per assistente: sessioni, coinvolgimento, conversioni, ricavi, pagine di destinazione, confronto con il periodo prima e quota sul traffico totale.
+- **`geo_entity`**: il brand è un'entità riconosciuta su Wikidata (senza credenziali) e nel Knowledge Graph di Google (API key di PageSpeed con la Knowledge Graph Search API)? Sito ufficiale, Wikipedia, profili, e i sameAs dell'Organization nei dati strutturati del sito.
+- **`geo_common_crawl`**: le pagine del sito sono in Common Crawl, l'archivio con cui si addestrano molti modelli? Pagine, home e risposte negli ultimi crawl; l'indice pubblico è spesso lento e ogni crawl riporta il suo esito.
+- **`bing_crawl`**: scansione secondo Bing (GetCrawlStats e GetCrawlIssues): pagine scansionate e nell'indice giorno per giorno, risposte, blocchi di robots.txt e URL con problemi. Usato anche nel prompt `controllo-migrazione`.
+- Prompt `traffico-dalle-ai` e `le-ai-sanno-chi-sono`. 34 tool, 20 prompt, 86 domande nell'archivio (11 nuove). Sito: tool, prompt, pagine GA, GEO e Cloudflare, credenziali (la API key può abilitare anche il Knowledge Graph).
+
 ## 0.1.55 — 2026-10-12
 
 - 0.1.54 pubblicata su npm (README con Cloudflare): versione aggiornata su sito e SEO Audit.

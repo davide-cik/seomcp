@@ -37,6 +37,11 @@ Cosa fanno le persone dopo aver cliccato: sessioni, coinvolgimento, eventi chiav
     - Tool: `ga_organic_landing_pages`, `geo_page_sections`
     - Risposta: Le pagine poco coinvolgenti con ipotesi concrete sul testo.
 
+8. **Chi arriva da ChatGPT e dagli altri assistenti AI converte più o meno di chi arriva da Google?**
+    - Serve: Google Analytics 4
+    - Tool: `ga_ai_referrals`, `ga_report`
+    - Risposta: Coinvolgimento e tasso di conversione degli assistenti AI a confronto con la ricerca organica.
+
 ---
 
 Questo file è generato da `src/library/domande.ts` con `npm run domande`: modifica lì le domande. In seomcp le stesse domande sono disponibili come risorse MCP (`seomcp://domande`).

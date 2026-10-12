@@ -30,7 +30,10 @@ export { techPageAudit, techSiteCheck, redirectChain, checkUrlStatus, analyzeHre
 export { fetchPage, isPrivateIp, type FetchedPage, type FetchOptions } from './core/fetch-page.js';
 export { domainInfo, httpsInfo, registeredDomain, siteTrust, type DomainInfo, type HttpsInfo } from './core/site-trust.js';
 export { extractPage, type ExtractedPage } from './core/html.js';
-export { BingClient, BING_API_BASE, parseBingDate, type BingClientOptions } from './core/bing.js';
+export { BingClient, BING_API_BASE, BING_CRAWL_ISSUES, decodeCrawlIssues, parseBingDate, type BingClientOptions, type BingCrawlStats, type BingCrawlIssue, type BingCrawlIssueType } from './core/bing.js';
+export { AI_ASSISTANTS, aiAssistantOf, aiSourceRegex, aggregateAiReferrals, type AiAssistant, type AiReferralSummary } from './core/ai-referrals.js';
+export { entityCheck, siteHost, websiteVariants, WIKIDATA_API, KG_API, type EntityOptions, type EntityReport, type WikidataEntity, type KnowledgeGraphEntity } from './core/entity.js';
+export { commonCrawlPresence, listCrawls, crawlPresence, CC_INDEX, type CommonCrawlOptions, type CrawlInfo, type CrawlPresence } from './core/common-crawl.js';
 export {
   comparePeriods,
   strikingDistance,
